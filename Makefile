@@ -3,7 +3,14 @@ CODEGEN    := go tool codegen
 IMAGE_REPO ?= daocloud/dc
 IMAGE_TAG  ?= latest
 
-.PHONY: bootstrap specsync codegen build image image-push clean
+VERSION    := $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
+COMMIT     := $(shell git rev-parse --short HEAD 2>/dev/null || echo none)
+DATE       := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
+LDFLAGS    := -ldflags "-X main.Version=$(VERSION) -X main.Commit=$(COMMIT) -X main.Date=$(DATE)"
+
+PLATFORMS  := linux/amd64 linux/arm64 darwin/amd64 darwin/arm64 windows/amd64 windows/arm64
+
+.PHONY: bootstrap specsync codegen build build-all image image-push clean
 
 bootstrap: specsync codegen
 
@@ -27,7 +34,15 @@ sync-one:
 		-skill-root skills
 
 build: internal/generated
-	go build -o bin/dc ./cmd/dc
+	go build $(LDFLAGS) -o bin/dc ./cmd/dc
+
+build-all: internal/generated
+	$(foreach platform,$(PLATFORMS), \
+		$(eval GOOS=$(word 1,$(subst /, ,$(platform)))) \
+		$(eval GOARCH=$(word 2,$(subst /, ,$(platform)))) \
+		$(eval EXT=$(if $(filter windows,$(GOOS)),.exe,)) \
+		GOOS=$(GOOS) GOARCH=$(GOARCH) go build $(LDFLAGS) \
+			-o bin/dc-$(GOOS)-$(GOARCH)$(EXT) ./cmd/dc;)
 
 internal/generated: .cache/specs-sync/ghippo/sync-state.yaml
 	$(CODEGEN) \
