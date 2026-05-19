@@ -1,0 +1,98 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+env:
+  GO_VERSION: '1.25'
+  BIN_NAME: dc
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: linux
+            arch: amd64
+          - os: linux
+            arch: arm64
+          - os: darwin
+            arch: amd64
+          - os: darwin
+            arch: arm64
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Get version
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+
+      - name: Build binary
+        id: build
+        env:
+          GOOS: ${{ matrix.os }}
+          GOARCH: ${{ matrix.arch }}
+          CGO_ENABLED: 0
+          VERSION: ${{ steps.version.outputs.version }}
+          COMMIT: ${{ github.sha }}
+        run: |
+          OUTPUT_NAME="${BIN_NAME}-${VERSION}-${GOOS}-${GOARCH}"
+          make build-bin BIN_OUT="${OUTPUT_NAME}" VERSION="${VERSION}" COMMIT="${COMMIT}"
+          gzip -k "${OUTPUT_NAME}"
+          echo "output=${OUTPUT_NAME}.gz" >> "$GITHUB_OUTPUT"
+
+      - name: Upload release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.version }}
+          ASSET: ${{ steps.build.outputs.output }}
+        run: gh release upload "$TAG" "$ASSET" --clobber --repo "$GITHUB_REPOSITORY"
+
+      - name: Upload artifact for checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: bin-${{ matrix.os }}-${{ matrix.arch }}
+          path: ${{ steps.build.outputs.output }}
+          retention-days: 1
+          if-no-files-found: error
+
+  checksum:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get version
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: bin-*
+          path: artifacts
+          merge-multiple: true
+
+      - name: Generate checksums
+        working-directory: artifacts
+        run: |
+          sha256sum * > checksums.txt
+          cat checksums.txt
+
+      - name: Upload checksums
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.version }}
+        run: gh release upload "$TAG" artifacts/checksums.txt --clobber --repo "$GITHUB_REPOSITORY"
