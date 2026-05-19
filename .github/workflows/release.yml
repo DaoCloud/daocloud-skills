@@ -6,13 +6,14 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 env:
   GO_VERSION: '1.25'
   BIN_NAME: dc
 
 jobs:
-  build:
+  build-binary:
     strategy:
       fail-fast: false
       matrix:
@@ -53,7 +54,7 @@ jobs:
           PKG_NAME="${BIN_NAME}-${VERSION}-${GOOS}-${GOARCH}"
           ARCHIVE="${PKG_NAME}.tar.gz"
           mkdir -p "dist/${PKG_NAME}"
-          make build-bin BIN_OUT="dist/${PKG_NAME}/${BIN_NAME}" VERSION="${VERSION}" COMMIT="${COMMIT}"
+          make build BIN_OUT="dist/${PKG_NAME}/${BIN_NAME}" VERSION="${VERSION}" COMMIT="${COMMIT}"
           cp -R skills "dist/${PKG_NAME}/skills"
           tar -czf "${ARCHIVE}" -C dist "${PKG_NAME}"
           echo "output=${ARCHIVE}" >> "$GITHUB_OUTPUT"
@@ -74,7 +75,7 @@ jobs:
           if-no-files-found: error
 
   checksum:
-    needs: build
+    needs: build-binary
     runs-on: ubuntu-latest
     steps:
       - name: Get version
@@ -99,3 +100,53 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.version }}
         run: gh release upload "$TAG" artifacts/checksums.txt --clobber --repo "$GITHUB_REPOSITORY"
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compute image metadata
+        id: meta
+        run: |
+          OWNER="$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')"
+          IMAGE="ghcr.io/${OWNER}/dc"
+          VERSION="${GITHUB_REF#refs/tags/}"
+          echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          TAGS="${IMAGE}:${VERSION}"
+          if [ "${{ github.event.release.prerelease }}" != "true" ]; then
+            TAGS="${TAGS}"$'\n'"${IMAGE}:latest"
+          fi
+          {
+            echo "tags<<EOF"
+            echo "${TAGS}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            VERSION=${{ steps.meta.outputs.version }}
+            COMMIT=${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

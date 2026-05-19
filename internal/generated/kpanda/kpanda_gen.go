@@ -164,7 +164,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "The name represents for the resource name. (path, required)", Required: true},
 			{Name: "version", Flag: "version", In: "query", GoType: "string", Help: "The version represents for the resource version. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "resources", DefaultColumns: []string{"name", "kind", "image"}},
+		Output: runtime.OutputHints{ListPath: "resources", DefaultColumns: []string{"name", "kind", "image"},
+		},
 	},
 	{
 		Group:       "Addon",
@@ -397,7 +398,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "Namespace represents which namespace the helmrelease belongs to. (path, required)", Required: true},
 			{Name: "helmrelease", Flag: "helmrelease", In: "path", GoType: "string", Help: "Name of the helmrelease. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"appVersion", "chart", "manifest", "status", "updated", "version"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"appVersion", "chart", "manifest", "status", "updated", "version"},
+		},
 	},
 	{
 		Group:       "Addon",
@@ -1268,7 +1270,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "configmap", Flag: "configmap", In: "path", GoType: "string", Help: "configmap (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "daemonsets", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp", "revision"}},
+		Output: runtime.OutputHints{ListPath: "daemonsets", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp", "revision"},
+		},
 	},
 	{
 		Group:       "Apps",
@@ -1389,7 +1392,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "secret", Flag: "secret", In: "path", GoType: "string", Help: "secret (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "daemonsets", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp", "revision"}},
+		Output: runtime.OutputHints{ListPath: "daemonsets", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp", "revision"},
+		},
 	},
 	{
 		Group:       "Apps",
@@ -1907,7 +1911,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "kindName", Flag: "kind-name", In: "query", GoType: "string", Help: "kindName (query)", Required: false},
 			{Name: "name", Flag: "name", In: "query", GoType: "string", Help: "The exact name of metric. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metricName", "timestamp", "value"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metricName", "timestamp", "value"},
+		},
 	},
 	{
 		Group:       "Autoscaling",
@@ -2439,7 +2444,8 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Cluster_ListAllClusterGPU",
 		Method:      "GET",
 		PathTpl:     "/apis/kpanda.io/v1alpha1/gpus",
-		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"uuid", "modelName", "memory"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"uuid", "modelName", "memory"},
+		},
 	},
 	{
 		Group:       "Cluster",
@@ -2452,7 +2458,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "Cluster represents which cluster belongs to. (path, required)", Required: true},
 			{Name: "namespaced", Flag: "namespaced", In: "query", GoType: "bool", Help: "namespaced indicates whether this resource is cluster or namespace scoped. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "resources", DefaultColumns: []string{"groupVersion"}},
+		Output: runtime.OutputHints{ListPath: "resources", DefaultColumns: []string{"groupVersion"},
+		},
 	},
 	{
 		Group:       "Cluster",
@@ -2468,7 +2475,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "filterBySnapshot", Flag: "filter-by-snapshot", In: "query", GoType: "bool", Help: "FilterBySnapshot is to list all the clusters which has snapshot if true, default false. (query)", Required: false},
 			{Name: "showShimCluster", Flag: "show-shim-cluster", In: "query", GoType: "bool", Help: "ShowShimCluster is used to control whether returned clusters contain shim cluster, default false. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "clusterSummary", DefaultColumns: []string{"name", "phase", "kubeSystemID"}},
+		Output: runtime.OutputHints{ListPath: "clusterSummary", DefaultColumns: []string{"name", "phase", "kubeSystemID"},
+		},
 	},
 	{
 		Group:       "Cluster",
@@ -2581,7 +2589,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "The cluster name of the clustersetting. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "network", DefaultColumns: []string{"name", "enabled", "externalAddress", "healthy", "intelligentDetection", "setting"}},
+		Output: runtime.OutputHints{ListPath: "network", DefaultColumns: []string{"name", "enabled", "externalAddress", "healthy", "intelligentDetection", "setting"},
+		},
 	},
 	{
 		Group:       "ClusterSetting",
@@ -2594,7 +2603,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "The cluster name of the clustersetting. (path, required)", Required: true},
 			{Name: "availableEnable", Flag: "available-enable", In: "query", GoType: "bool", Help: "if available_enable is true will return available gpu number (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "alias", "isDynamic"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "alias", "isDynamic"},
+		},
 	},
 	{
 		Group:       "ClusterSetting",
@@ -2606,7 +2616,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "The cluster name of the clustersetting. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "enabled", "externalAddress", "healthy", "intelligentDetection", "setting"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "enabled", "externalAddress", "healthy", "intelligentDetection", "setting"},
+		},
 	},
 	{
 		Group:       "ClusterSetting",
@@ -2622,7 +2633,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"settings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addonSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableHelmRepoRefresh": &runtime.SchemaSpec{Type: "boolean"}, "helmOperationBaseImage": &runtime.SchemaSpec{Type: "string"}, "helmOperationHistoryLimit": &runtime.SchemaSpec{Type: "integer"}, "helmOperationJobTemplateResources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "helmOperationTimeoutSecond": &runtime.SchemaSpec{Type: "string"}, "helmRepoRefreshInterval": &runtime.SchemaSpec{Type: "integer"}}}, "clusterKubeconfigSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"expireWarningThreshold": &runtime.SchemaSpec{Type: "string"}}}, "clusterlcmSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableDeletionProtection": &runtime.SchemaSpec{Type: "boolean"}, "enableLocalService": &runtime.SchemaSpec{Type: "boolean"}}}, "etcdBackupRestoreSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"baseImage": &runtime.SchemaSpec{Type: "string"}}}, "kubeanSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterOperationsBackEndLimit": &runtime.SchemaSpec{Type: "string"}}}, "network": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "externalAddress": &runtime.SchemaSpec{Type: "string"}, "healthy": &runtime.SchemaSpec{Type: "boolean"}, "intelligentDetection": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "setting": &runtime.SchemaSpec{Type: "string"}}}}, "plugins": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "externalAddress": &runtime.SchemaSpec{Type: "string"}, "healthy": &runtime.SchemaSpec{Type: "boolean"}, "intelligentDetection": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "setting": &runtime.SchemaSpec{Type: "string"}}}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "network", DefaultColumns: []string{"name", "enabled", "externalAddress", "healthy", "intelligentDetection", "setting"}},
+		Output: runtime.OutputHints{ListPath: "network", DefaultColumns: []string{"name", "enabled", "externalAddress", "healthy", "intelligentDetection", "setting"},
+		},
 	},
 	{
 		Group:       "Clusterlcm",
@@ -2713,7 +2725,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "The name of the cluster which needs to be create. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "preinstallAddons", DefaultColumns: []string{"repoUrl"}},
+		Output: runtime.OutputHints{ListPath: "preinstallAddons", DefaultColumns: []string{"repoUrl"},
+		},
 	},
 	{
 		Group:       "Clusterlcm",
@@ -2741,7 +2754,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 			{Name: "targetCluster", Flag: "target-cluster", In: "query", GoType: "string", Help: "targetCluster (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "upgradeHistories", DefaultColumns: []string{"phase", "changeTime", "kubeVersion"}},
+		Output: runtime.OutputHints{ListPath: "upgradeHistories", DefaultColumns: []string{"phase", "changeTime", "kubeVersion"},
+		},
 	},
 	{
 		Group:       "Clusterlcm",
@@ -2863,7 +2877,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespace": &runtime.SchemaSpec{Type: "string"}, "nodeNames": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "failedResults", DefaultColumns: []string{"error", "nodeName"}},
+		Output: runtime.OutputHints{ListPath: "failedResults", DefaultColumns: []string{"error", "nodeName"},
+		},
 	},
 	{
 		Group:       "Core",
@@ -3552,7 +3567,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster defines the cluster name. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "summary", DefaultColumns: []string{"node"}},
+		Output: runtime.OutputHints{ListPath: "summary", DefaultColumns: []string{"node"},
+		},
 	},
 	{
 		Group:       "Core",
@@ -3588,7 +3604,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "Cluster the namespace summary list belong to. (path, required)", Required: true},
 			{Name: "phase", Flag: "phase", In: "query", GoType: "string", Help: "Phases is used for filter. (query, one of: NAMESPACE_PHASE_UNSPECIFIED|Active|Terminating)", Required: false, Default: "NAMESPACE_PHASE_UNSPECIFIED", Enum: []string{"NAMESPACE_PHASE_UNSPECIFIED", "Active", "Terminating"}},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "phase", "cluster"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "phase", "cluster"},
+		},
 	},
 	{
 		Group:       "Core",
@@ -3627,7 +3644,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "phase", "creationTimestamp", "uid", "podCIDR", "unschedulable"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "phase", "creationTimestamp", "uid", "podCIDR", "unschedulable"},
+		},
 	},
 	{
 		Group:       "Core",
@@ -3743,7 +3761,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "allocatedResources", DefaultColumns: []string{"resourceName", "value"}},
+		Output: runtime.OutputHints{ListPath: "allocatedResources", DefaultColumns: []string{"resourceName", "value"},
+		},
 	},
 	{
 		Group:       "Core",
@@ -3886,7 +3905,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 			{Name: "node", Flag: "node", In: "path", GoType: "string", Help: "node (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "uid", "gpuMode"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "uid", "gpuMode"},
+		},
 	},
 	{
 		Group:       "Core",
@@ -4222,7 +4242,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"taints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"effect": &runtime.SchemaSpec{Type: "string"}, "key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "taints", DefaultColumns: []string{"effect", "key", "value"}},
+		Output: runtime.OutputHints{ListPath: "taints", DefaultColumns: []string{"effect", "key", "value"},
+		},
 	},
 	{
 		Group:       "Core",
@@ -4532,7 +4553,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "searchDeviceUUID", Flag: "search-device-uuid", In: "query", GoType: "string", Help: "searchDeviceUUID (query)", Required: false},
 			{Name: "searchGPUID", Flag: "search-gpuid", In: "query", GoType: "string", Help: "searchGPUID (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "cluster", "coreUtilization", "deviceUUID", "frameBufferMemoryUtilization", "nodeName"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "cluster", "coreUtilization", "deviceUUID", "frameBufferMemoryUtilization", "nodeName"},
+		},
 	},
 	{
 		Group:       "EtcdBackupRestore",
@@ -4617,7 +4639,8 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "EtcdBackupRestore_ListEtcdBackupClusters",
 		Method:      "GET",
 		PathTpl:     "/apis/kpanda.io/v1alpha1/etcdbackuprestore/clusters",
-		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "hasBackup", "kubeSystemID"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "hasBackup", "kubeSystemID"},
+		},
 	},
 	{
 		Group:       "EtcdBackupRestore",
@@ -4650,7 +4673,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "Cluster represents which cluster the etcd backup strategy belongs to. (path, required)", Required: true},
 			{Name: "strategy", Flag: "strategy", In: "path", GoType: "string", Help: "strategy represents the name of etcd backup strategy. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "externalUrl", "key", "lastModified", "size"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "externalUrl", "key", "lastModified", "size"},
+		},
 	},
 	{
 		Group:       "EtcdBackupRestore",
@@ -4986,7 +5010,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "Cluster is the ingressClass belongs to. (path, required)", Required: true},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "Namespace is the IngressClass to retrieve for a specific namespace scoped. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "kind", "isDefaultClass"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "kind", "isDefaultClass"},
+		},
 	},
 	{
 		Group:       "Networking",
@@ -5155,7 +5180,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "labels": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string"}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "roleRef": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "subject": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "subjects", DefaultColumns: []string{"name", "namespace", "kind", "APIGroup"}},
+		Output: runtime.OutputHints{ListPath: "subjects", DefaultColumns: []string{"name", "namespace", "kind", "APIGroup"},
+		},
 	},
 	{
 		Group:       "RBAC",
@@ -5189,7 +5215,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "labels": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string"}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "roleRef": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "subject": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "subjects", DefaultColumns: []string{"name", "namespace", "kind", "APIGroup"}},
+		Output: runtime.OutputHints{ListPath: "subjects", DefaultColumns: []string{"name", "namespace", "kind", "APIGroup"},
+		},
 	},
 	{
 		Group:       "RBAC",
@@ -5506,7 +5533,8 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "SettingService_GPUSetting",
 		Method:      "GET",
 		PathTpl:     "/apis/kpanda.io/v1alpha1/settings/gpu",
-		Output:      runtime.OutputHints{ListPath: "gpuSetting", DefaultColumns: []string{"type", "alias", "isDynamic"}},
+		Output: runtime.OutputHints{ListPath: "gpuSetting", DefaultColumns: []string{"type", "alias", "isDynamic"},
+		},
 	},
 	{
 		Group:       "Storage",
@@ -5789,7 +5817,8 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Workspace_ListWorkspaces",
 		Method:      "GET",
 		PathTpl:     "/apis/kpanda.io/v1alpha1/workspaces",
-		Output:      runtime.OutputHints{ListPath: "workspaces", DefaultColumns: []string{"id", "alias"}},
+		Output: runtime.OutputHints{ListPath: "workspaces", DefaultColumns: []string{"id", "alias"},
+		},
 	},
 	{
 		Group:       "Workspace",
@@ -5860,7 +5889,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabels": &runtime.SchemaSpec{Type: "object"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"time": &runtime.SchemaSpec{Type: "string"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
+		},
 	},
 	{
 		Group:       "insight",
@@ -5876,7 +5906,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabels": &runtime.SchemaSpec{Type: "object"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}, "step": &runtime.SchemaSpec{Type: "number"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
+		},
 	},
 	{
 		Group:       "insight",
@@ -5892,7 +5923,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}, "step": &runtime.SchemaSpec{Type: "number"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
+		},
 	},
 	{
 		Group:       "insight",
@@ -5908,6 +5940,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"time": &runtime.SchemaSpec{Type: "string"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
+		},
 	},
 }
