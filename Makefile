@@ -1,5 +1,5 @@
-SPECSYNC   := go tool specsync
-CODEGEN    := go tool codegen
+SPECSYNC   := go tool lathe specsync
+CODEGEN    := go tool lathe codegen
 IMAGE_REPO ?= daocloud/dc
 IMAGE_TAG  ?= latest
 
