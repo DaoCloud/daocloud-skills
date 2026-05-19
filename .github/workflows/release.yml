@@ -13,7 +13,7 @@ env:
   BIN_NAME: dc
 
 jobs:
-  build:
+  build-binary:
     strategy:
       fail-fast: false
       matrix:
@@ -75,7 +75,7 @@ jobs:
           if-no-files-found: error
 
   checksum:
-    needs: build
+    needs: build-binary
     runs-on: ubuntu-latest
     steps:
       - name: Get version
@@ -110,13 +110,14 @@ jobs:
       - name: Compute image metadata
         id: meta
         run: |
-          REPO="$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')"
+          OWNER="$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')"
+          IMAGE="ghcr.io/${OWNER}/dc"
           VERSION="${GITHUB_REF#refs/tags/}"
-          echo "image=ghcr.io/${REPO}" >> "$GITHUB_OUTPUT"
+          echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-          TAGS="ghcr.io/${REPO}:${VERSION}"
+          TAGS="${IMAGE}:${VERSION}"
           if [ "${{ github.event.release.prerelease }}" != "true" ]; then
-            TAGS="${TAGS}"$'\n'"ghcr.io/${REPO}:latest"
+            TAGS="${TAGS}"$'\n'"${IMAGE}:latest"
           fi
           {
             echo "tags<<EOF"
