@@ -50,10 +50,13 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
           COMMIT: ${{ github.sha }}
         run: |
-          OUTPUT_NAME="${BIN_NAME}-${VERSION}-${GOOS}-${GOARCH}"
-          make build-bin BIN_OUT="${OUTPUT_NAME}" VERSION="${VERSION}" COMMIT="${COMMIT}"
-          gzip -k "${OUTPUT_NAME}"
-          echo "output=${OUTPUT_NAME}.gz" >> "$GITHUB_OUTPUT"
+          PKG_NAME="${BIN_NAME}-${VERSION}-${GOOS}-${GOARCH}"
+          ARCHIVE="${PKG_NAME}.tar.gz"
+          mkdir -p "dist/${PKG_NAME}"
+          make build-bin BIN_OUT="dist/${PKG_NAME}/${BIN_NAME}" VERSION="${VERSION}" COMMIT="${COMMIT}"
+          cp -R skills "dist/${PKG_NAME}/skills"
+          tar -czf "${ARCHIVE}" -C dist "${PKG_NAME}"
+          echo "output=${ARCHIVE}" >> "$GITHUB_OUTPUT"
 
       - name: Upload release asset
         env:
@@ -65,7 +68,7 @@ jobs:
       - name: Upload artifact for checksum
         uses: actions/upload-artifact@v4
         with:
-          name: bin-${{ matrix.os }}-${{ matrix.arch }}
+          name: pkg-${{ matrix.os }}-${{ matrix.arch }}
           path: ${{ steps.build.outputs.output }}
           retention-days: 1
           if-no-files-found: error
@@ -81,7 +84,7 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: bin-*
+          pattern: pkg-*
           path: artifacts
           merge-multiple: true
 
