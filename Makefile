@@ -1,5 +1,4 @@
-SPECSYNC   := go tool specsync
-CODEGEN    := go tool codegen
+LATHE      := go tool lathe
 IMAGE_REPO ?= daocloud/dc
 IMAGE_TAG  ?= latest
 
@@ -8,10 +7,10 @@ IMAGE_TAG  ?= latest
 bootstrap: specsync codegen
 
 specsync:
-	$(SPECSYNC) -sources specs/sources.yaml
+	$(LATHE) specsync -sources specs/sources.yaml
 
 codegen:
-	$(CODEGEN) \
+	$(LATHE) codegen \
 		-manifest cli.yaml \
 		-sources specs/sources.yaml \
 		-overlay internal/overlay \
@@ -19,8 +18,8 @@ codegen:
 
 # sync and regenerate a single source; usage: make sync-one SOURCE=ghippo
 sync-one:
-	$(SPECSYNC) -sources specs/sources.yaml -source $(SOURCE)
-	$(CODEGEN) \
+	$(LATHE) specsync -sources specs/sources.yaml -source $(SOURCE)
+	$(LATHE) codegen \
 		-manifest cli.yaml \
 		-sources specs/sources.yaml \
 		-overlay internal/overlay \
@@ -30,14 +29,14 @@ build: internal/generated
 	go build -o bin/dc ./cmd/dc
 
 internal/generated: .cache/specs-sync/ghippo/sync-state.yaml
-	$(CODEGEN) \
+	$(LATHE) codegen \
 		-manifest cli.yaml \
 		-sources specs/sources.yaml \
 		-overlay internal/overlay \
 		-skill-root skills
 
 .cache/specs-sync/ghippo/sync-state.yaml:
-	$(SPECSYNC) -sources specs/sources.yaml
+	$(LATHE) specsync -sources specs/sources.yaml
 
 # dev: install dc to PATH and symlink skill into opencode for live debugging
 dev: build
