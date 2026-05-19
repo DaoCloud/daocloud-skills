@@ -36,36 +36,35 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
           cache: true
 
-      - name: Build
+      - name: Build Binary
         env:
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
           CGO_ENABLED: 0
         run: go build -trimpath -ldflags="-s -w" -o /dev/null ./cmd/dc
 
-  # TODO fix make bootstrap flaky
-#  generated-up-to-date:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Go
-#        uses: actions/setup-go@v5
-#        with:
-#          go-version: ${{ env.GO_VERSION }}
-#          cache: true
-#
-#      - name: Run bootstrap (specsync + codegen)
-#        run: make bootstrap
-#
-#      - name: Verify no diff in generated files
-#        run: |
-#          if ! git diff --exit-code; then
-#            echo "::error::Generated files are out of sync. Run 'make bootstrap' locally and commit the result."
-#            git status --short
-#            exit 1
-#          fi
+  generated-up-to-date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: true
+
+      - name: Run bootstrap (specsync + codegen)
+        run: make bootstrap
+
+      - name: Verify no diff in generated files
+        run: |
+          if ! git diff --exit-code; then
+            echo "::error::Generated files are out of sync. Run 'make bootstrap' locally and commit the result."
+            git status --short
+            exit 1
+          fi
 
   docker:
     runs-on: ubuntu-latest
