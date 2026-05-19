@@ -29,6 +29,7 @@ Use this skill when a user asks you to operate `dc`, inspect its API commands, o
 - Read `references/catalog.md` for the command discovery protocol and catalog field meanings.
 - Read `references/modules/container-management.md` for the `container-management` module command index.
 - Read `references/modules/global-management.md` for the `global-management` module command index.
+- Read `references/modules/insight.md` for the `insight` module command index.
 
 ## Rules
 
