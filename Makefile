@@ -6,7 +6,7 @@ BIN_OUT    ?= bin/dc
 VERSION    ?= dev
 COMMIT     ?= $(shell git rev-parse HEAD 2>/dev/null || echo none)
 DATE       ?= $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
-GO_LDFLAGS := -s -w -X main.Version=$(VERSION) -X main.Commit=$(COMMIT) -X main.Date=$(DATE)
+GO_LDFLAGS := -s -w -X 'main.Version=$(VERSION)' -X 'main.Commit=$(COMMIT)' -X 'main.Date=$(DATE)'
 
 .PHONY: bootstrap specsync codegen build build-bin image image-push clean
 
@@ -32,9 +32,6 @@ sync-one:
 		-skill-root skills
 
 build: internal/generated
-	go build -trimpath -ldflags="$(GO_LDFLAGS)" -o $(BIN_OUT) ./cmd/dc
-
-build-bin:
 	go build -trimpath -ldflags="$(GO_LDFLAGS)" -o $(BIN_OUT) ./cmd/dc
 
 internal/generated: .cache/specs-sync/ghippo/sync-state.yaml

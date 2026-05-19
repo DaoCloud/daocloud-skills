@@ -10,12 +10,12 @@ RUN go mod download
 
 COPY . .
 RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH \
-    go build -trimpath -o bin/dcectl ./cmd/dcectl
+    go build -trimpath -o bin/dc ./cmd/dc
 
 # ---- runtime stage ----
 FROM docker.m.daocloud.io/library/alpine:3.21
 
 RUN apk add --no-cache ca-certificates
 
-COPY --from=builder /src/bin/dcectl /app/dcectl
-COPY skills/dcectl /app/skills/dcectl
+COPY --from=builder /src/bin/dc /app/dc
+COPY skills/dc /app/skills/dc

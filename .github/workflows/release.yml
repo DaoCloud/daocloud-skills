@@ -53,7 +53,7 @@ jobs:
           PKG_NAME="${BIN_NAME}-${VERSION}-${GOOS}-${GOARCH}"
           ARCHIVE="${PKG_NAME}.tar.gz"
           mkdir -p "dist/${PKG_NAME}"
-          make build-bin BIN_OUT="dist/${PKG_NAME}/${BIN_NAME}" VERSION="${VERSION}" COMMIT="${COMMIT}"
+          make build BIN_OUT="dist/${PKG_NAME}/${BIN_NAME}" VERSION="${VERSION}" COMMIT="${COMMIT}"
           cp -R skills "dist/${PKG_NAME}/skills"
           tar -czf "${ARCHIVE}" -C dist "${PKG_NAME}"
           echo "output=${ARCHIVE}" >> "$GITHUB_OUTPUT"
