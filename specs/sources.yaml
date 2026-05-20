@@ -18,3 +18,13 @@ sources:
     swagger:
       files:
         - docs/openapi/kpanda/v0.46.0.json
+
+  insight:
+    display_name: insight
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    # pinned to main HEAD as of 2026-05-11; bump when upgrading kpanda version
+    pinned_tag: 4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/insight/v0.41.0.json
