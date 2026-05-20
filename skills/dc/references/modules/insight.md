@@ -718,7 +718,7 @@
 - Body: none
 - Flags:
   - `--id` (path, required, one of: METRICS|LOGGING|TRACING|GRAPH_VIRTUAL_NODE|LOG_ALERT|NET_FLOW|EVENT|SLOW_SQL): id
-- Example: `# id must be one of: # METRICS | LOGGING | TRACING | GRAPH_VIRTUAL_NODE # LOG_ALERT | NET_FLOW | EVENT | SLOW_SQL dc insight feature-gate get-feature-gate-by-id --id METRICS dc insight feature-gate get-feature-gate-by-id --id SLOW_SQL -o json`
+- Example: `# id must be one of: # METRICS | LOGGING | TRACING | GRAPH_VIRTUAL_NODE # LOG_ALERT | NET_FLOW | EVENT | SLOW_SQL dc insight featuregate get-feature-gate-by-id --id METRICS dc insight featuregate get-feature-gate-by-id --id SLOW_SQL -o json`
 
 ### `dc insight featuregate get-feature-gates`
 
@@ -728,7 +728,7 @@
 - Body: none
 - Flags: none
 - Output: list path `items`; columns `name`, `id`, `description`, `enabled`, `status`
-- Example: `dc insight feature-gate get-feature-gates dc insight feature-gate get-feature-gates -o json`
+- Example: `dc insight featuregate get-feature-gates dc insight featuregate get-feature-gates -o json`
 
 ## Insight
 
@@ -1512,7 +1512,7 @@
 - Body: required
 - Flags: none
 - Output: list path `edges`; columns `id`, `source`, `target`
-- Example: `# Service-level graph for a namespace in the last hour echo '{ "clusterNames": ["prod-1"], "namespaces": ["default"], "start": "1700000000000", "end": "1700003600000", "graphType": "service", "layer": "L7", "showUpDownRelatedNode": true, "showVirtualNode": false }' | dc insight service-graph get-graph --file - # Workload graph filtered by a specific service, with a 3-hop dependency depth echo '{ "clusterNames": ["prod-1"], "namespaces": ["default"], "services": ["my-app"], "workloads": ["my-app"], "start": "1700000000000", "end": "1700003600000", "graphType": "workload", "filters": { "aggType": "p99", "dependencyMaxDepth": 3, "clauses": [ {"field":"http.status_code","operation":"=","dataType":"string","stringValue":"500"} ] } }' | dc insight service-graph get-graph --file -`
+- Example: `# Service-level graph for a namespace in the last hour echo '{ "clusterNames": ["prod-1"], "namespaces": ["default"], "start": "1700000000000", "end": "1700003600000", "graphType": "service", "layer": "L7", "showUpDownRelatedNode": true, "showVirtualNode": false }' | dc insight servicegraph get-graph --file - # Workload graph filtered by a specific service, with a 3-hop dependency depth echo '{ "clusterNames": ["prod-1"], "namespaces": ["default"], "services": ["my-app"], "workloads": ["my-app"], "start": "1700000000000", "end": "1700003600000", "graphType": "workload", "filters": { "aggType": "p99", "dependencyMaxDepth": 3, "clauses": [ {"field":"http.status_code","operation":"=","dataType":"string","stringValue":"500"} ] } }' | dc insight servicegraph get-graph --file -`
 
 ### `dc insight servicegraph get-node-metrics`
 
@@ -1532,7 +1532,7 @@
   - `--cluster-name` (query): Required. e.g. clusterName=kpanda-global-cluster must give one of
   - `--span-kinds` (query): spanKinds is the list of span kinds to include (logical OR) in the
 - Output: list path `errorsRateMetrics`
-- Example: `# Last 30m of metrics for a single service node (endTime/lookback in unix ms) dc insight service-graph get-node-metrics \ --cluster-name prod-1 --namespace default --service my-app \ --end-time 1700003600000 --lookback 1800000 \ --step 60000 --rate-per 60000 \ --span-kinds SPAN_KIND_SERVER -o json # With extension filters (label selectors) dc insight service-graph get-node-metrics \ --cluster-name prod-1 --namespace default --service my-app \ --extension-filters 'skoala_registry=ire-111,instance=10.0.0.1' \ --end-time 1700003600000 --lookback 1800000 --step 60000`
+- Example: `# Last 30m of metrics for a single service node (endTime/lookback in unix ms) dc insight servicegraph get-node-metrics \ --cluster-name prod-1 --namespace default --service my-app \ --end-time 1700003600000 --lookback 1800000 \ --step 60000 --rate-per 60000 \ --span-kinds SPAN_KIND_SERVER -o json # With extension filters (label selectors) dc insight servicegraph get-node-metrics \ --cluster-name prod-1 --namespace default --service my-app \ --extension-filters 'skoala_registry=ire-111,instance=10.0.0.1' \ --end-time 1700003600000 --lookback 1800000 --step 60000`
 
 ## Tracing
 
@@ -1591,24 +1591,6 @@
   - `--span-kinds` (query): spanKinds is the list of span kinds to include (logical OR) in the resulting metrics aggregation.
 - Output: list path `metrics`; columns `operationName`, `spanKind`; pagination `offset`
 - Example: `dc insight tracing get-operation-detail \ --cluster-name prod-1 --namespace default --service-name my-app \ --end-time 1700003600000000 --lookback 1800000000 \ --step 60000000 --rate-per 60000000 \ --span-kinds SPAN_KIND_SERVER \ --sort 'p99:desc' --page 1 --page-size 50 -o json`
-
-### `dc insight tracing get-service-apdex`
-
-- Summary: Get Apdex score (satisfied/tolerating/frustrated) for a service
-- HTTP: `GET /apis/insight.io/v1alpha1/traces/apdex`
-- Auth: required
-- Body: none
-- Flags:
-  - `--cluster` (query): cluster
-  - `--cluster-name` (query): clusterName
-  - `--namespace` (query): Namespace
-  - `--name` (query): name
-  - `--apdex-threshold` (query, int64): Unit is milseconds.
-  - `--start-time` (query, int64): startTime
-  - `--end-time` (query, int64): endTime
-  - `--extension-filters` (query): extensionFilters
-- Output: list path `vector`
-- Example: `# Apdex with a 500ms threshold over the last hour dc insight tracing get-service-apdex \ --cluster-name prod-1 --namespace default --name my-app \ --apdex-threshold 500 \ --start-time 1700000000000 --end-time 1700003600000`
 
 ### `dc insight tracing get-service-detail`
 
