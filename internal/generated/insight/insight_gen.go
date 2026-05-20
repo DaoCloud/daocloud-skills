@@ -64,7 +64,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "step", Flag: "step", In: "query", GoType: "string", Help: "step unit is minute (query, int64)", Required: false, Format: "int64"},
 			{Name: "groupByType", Flag: "group-by-type", In: "query", GoType: "bool", Help: "groupByType (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"end", "start"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"end", "start"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -78,7 +79,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "notificationTemplate": &runtime.SchemaSpec{Type: "string"}, "notifyRepeatConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "severity": &runtime.SchemaSpec{Type: "string"}}}}, "receivers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"names": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "type": &runtime.SchemaSpec{Type: "string"}}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "description": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "string"}, "expr": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "logFilterCondition": &runtime.SchemaSpec{Type: "string"}, "logQueryString": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "severity": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}, "thresholdNum": &runtime.SchemaSpec{Type: "number"}, "thresholdSymbol": &runtime.SchemaSpec{Type: "string"}}}}, "targetType": &runtime.SchemaSpec{Type: "string"}, "targets": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"}},
+		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -132,7 +134,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "description": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "string"}, "expr": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "logFilterCondition": &runtime.SchemaSpec{Type: "string"}, "logQueryString": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "severity": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}, "thresholdNum": &runtime.SchemaSpec{Type: "number"}, "thresholdSymbol": &runtime.SchemaSpec{Type: "string"}}}}, "targetType": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"}},
+		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -146,7 +149,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"activeTimeInterval": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"timeRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}}}}, "weekdayRange": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "matches": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"}},
+		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -284,7 +288,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"}},
+		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -349,7 +354,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"}},
+		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -362,7 +368,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"}},
+		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -536,7 +543,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "targetType", Flag: "target-type", In: "query", GoType: "string", Help: "filter by target type (query, one of: TARGET_TYPE_UNSPECIFIED|GLOBAL|CLUSTER|NAMESPACE|NODE|DEPLOYMENT|STATEFULSET|DAEMONSET|POD)", Required: false, Default: "TARGET_TYPE_UNSPECIFIED", Enum: []string{"TARGET_TYPE_UNSPECIFIED", "GLOBAL", "CLUSTER", "NAMESPACE", "NODE", "DEPLOYMENT", "STATEFULSET", "DAEMONSET", "POD"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "targetType"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "targetType"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -574,7 +582,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "clusterName (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "namespace (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "id", "clusterName", "createAt", "description"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "id", "clusterName", "createAt", "description"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -645,7 +654,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "matches": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "namespace": &runtime.SchemaSpec{Type: "string"}, "size": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "id", "builtin", "clusterName", "description", "groupId"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "id", "builtin", "clusterName", "description", "groupId"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -688,7 +698,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "notificationTemplate": &runtime.SchemaSpec{Type: "string"}, "notifyRepeatConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "severity": &runtime.SchemaSpec{Type: "string"}}}}, "receivers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"names": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "type": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"}},
+		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -771,7 +782,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "description": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "string"}, "expr": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "logFilterCondition": &runtime.SchemaSpec{Type: "string"}, "logQueryString": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "severity": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}, "thresholdNum": &runtime.SchemaSpec{Type: "number"}, "thresholdSymbol": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"}},
+		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -788,7 +800,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"activeTimeInterval": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"timeRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}}}}, "weekdayRange": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "description": &runtime.SchemaSpec{Type: "string"}, "matches": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"}},
+		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"},
+		},
 	},
 	{
 		Group:       "Alert",
@@ -818,7 +831,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "yamlString": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "errors", DefaultColumns: []string{"code", "message"}},
+		Output: runtime.OutputHints{ListPath: "errors", DefaultColumns: []string{"code", "message"},
+		},
 	},
 	{
 		Group:       "Event",
@@ -903,7 +917,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "interval", Flag: "interval", In: "query", GoType: "string", Help: "interval e.g 1440s (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "Optional. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"normalCount", "timestamp", "warningCount"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"normalCount", "timestamp", "warningCount"},
+		},
 	},
 	{
 		Group:       "Event",
@@ -954,7 +969,8 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "FeatureGate_GetFeatureGates",
 		Method:      "GET",
 		PathTpl:     "/apis/insight.io/v1alpha1/feature-gates",
-		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "description", "enabled", "status"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "description", "enabled", "status"},
+		},
 	},
 	{
 		Group:       "Insight",
@@ -1053,7 +1069,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "namespaceFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "traceIdSearch": &runtime.SchemaSpec{Type: "string"}, "workloadFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "workloadSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "sorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "fileFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "nodeFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timestamp"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timestamp"},
+		},
 	},
 	{
 		Group:       "Log",
@@ -1067,7 +1084,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"after": &runtime.SchemaSpec{Type: "integer"}, "before": &runtime.SchemaSpec{Type: "integer"}, "endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}}}, "nanotimestamp": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "container": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "pod": &runtime.SchemaSpec{Type: "string"}}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "file": &runtime.SchemaSpec{Type: "string"}, "node": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timestamp"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timestamp"},
+		},
 	},
 	{
 		Group:       "Log",
@@ -1081,7 +1099,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "interval": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "namespaceFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "traceIdSearch": &runtime.SchemaSpec{Type: "string"}, "workloadFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "workloadSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "fileFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "nodeFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"count", "timestamp"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"count", "timestamp"},
+		},
 	},
 	{
 		Group:       "Log",
@@ -1108,7 +1127,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabel": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "extraLabel": &runtime.SchemaSpec{Type: "object"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"time": &runtime.SchemaSpec{Type: "string"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
+		},
 	},
 	{
 		Group:       "Metric",
@@ -1122,7 +1142,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabel": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "extraLabel": &runtime.SchemaSpec{Type: "object"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}, "step": &runtime.SchemaSpec{Type: "number"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
+		},
 	},
 	{
 		Group:       "Metric",
@@ -1185,7 +1206,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "time", Flag: "time", In: "query", GoType: "string", Help: "time unix timestamp .e.g. 1697597347 (query, int64)", Required: false, Format: "int64"},
 			{Name: "filters", Flag: "filters", In: "query", GoType: "[]string", Help: "default [CLUSTER_NORMAL_TOTAL, CLUSTER_TOTAL, NODE_NORMAL_TOTAL, NODE_TOTAL, DEPLOYMENT_NORMAL_TOTAL, DEPLOYMENT_TOTAL (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
+		},
 	},
 	{
 		Group:       "Overview",
@@ -1201,7 +1223,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "end unix timestamp .e.g. 1697597347 (query, int64)", Required: false, Format: "int64"},
 			{Name: "step", Flag: "step", In: "query", GoType: "string", Help: "step time step in second, default 60 (query, double)", Required: false, Format: "double"},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
+		},
 	},
 	{
 		Group:       "Overview",
@@ -1381,7 +1404,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1418,7 +1442,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1455,7 +1480,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1492,7 +1518,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1554,7 +1581,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "urls", DefaultColumns: []string{"en", "vendor", "zh"}},
+		Output: runtime.OutputHints{ListPath: "urls", DefaultColumns: []string{"en", "vendor", "zh"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1570,7 +1598,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1585,7 +1614,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "urls", DefaultColumns: []string{"en", "vendor", "zh"}},
+		Output: runtime.OutputHints{ListPath: "urls", DefaultColumns: []string{"en", "vendor", "zh"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1621,7 +1651,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "step", Flag: "step", In: "query", GoType: "string", Help: "Query resolution step width in duration format or float number of seconds. Optional. (query, double)", Required: false, Format: "double"},
 			{Name: "queryList", Flag: "query-list", In: "query", GoType: "[]string", Help: "Query list. support below metrics: (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "metrics", DefaultColumns: []string{"errorMessage", "status"}},
+		Output: runtime.OutputHints{ListPath: "metrics", DefaultColumns: []string{"errorMessage", "status"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1631,7 +1662,8 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Resource_GetServerComponentSummary",
 		Method:      "GET",
 		PathTpl:     "/apis/insight.io/v1alpha1/server/component",
-		Output:      runtime.OutputHints{ListPath: "summary", DefaultColumns: []string{"name", "phase", "creationTimestamp", "availability", "message", "version"}},
+		Output: runtime.OutputHints{ListPath: "summary", DefaultColumns: []string{"name", "phase", "creationTimestamp", "availability", "message", "version"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1647,7 +1679,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "workloadData", DefaultColumns: []string{"name", "workloadKind"}},
+		Output: runtime.OutputHints{ListPath: "workloadData", DefaultColumns: []string{"name", "workloadKind"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1663,7 +1696,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1719,7 +1753,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "showAllCluster", Flag: "show-all-cluster", In: "query", GoType: "bool", Help: "show_all_cluster default is false, will only return cluster with (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "accessScope", "kubeSystemId", "role"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "accessScope", "kubeSystemId", "role"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1821,7 +1856,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "namespaces", DefaultColumns: []string{"name", "role"}},
+		Output: runtime.OutputHints{ListPath: "namespaces", DefaultColumns: []string{"name", "role"},
+		},
 	},
 	{
 		Group:       "Resource",
@@ -1942,7 +1978,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterNames": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "clusters": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "end": &runtime.SchemaSpec{Type: "string"}, "extensionLabels": &runtime.SchemaSpec{Type: "string"}, "filters": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"aggType": &runtime.SchemaSpec{Type: "string"}, "clauses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dataType": &runtime.SchemaSpec{Type: "string"}, "field": &runtime.SchemaSpec{Type: "string"}, "floatValue": &runtime.SchemaSpec{Type: "number"}, "operation": &runtime.SchemaSpec{Type: "string"}, "stringValue": &runtime.SchemaSpec{Type: "string"}}}}, "dependencyMaxDepth": &runtime.SchemaSpec{Type: "integer"}}}, "graphType": &runtime.SchemaSpec{Type: "string"}, "layer": &runtime.SchemaSpec{Type: "string"}, "namespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "services": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "showUpDownRelatedNode": &runtime.SchemaSpec{Type: "boolean"}, "showVirtualNode": &runtime.SchemaSpec{Type: "boolean"}, "start": &runtime.SchemaSpec{Type: "string"}, "workloads": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "edges", DefaultColumns: []string{"id", "source", "target"}},
+		Output: runtime.OutputHints{ListPath: "edges", DefaultColumns: []string{"id", "source", "target"},
+		},
 	},
 	{
 		Group:       "ServiceGraph",
@@ -1981,7 +2018,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "clusterName (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "only for auth (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "traces", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "spanCount", "startTime"}},
+		Output: runtime.OutputHints{ListPath: "traces", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "spanCount", "startTime"},
+		},
 	},
 	{
 		Group:       "Tracing",
@@ -2128,7 +2166,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clauses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"boolValue": &runtime.SchemaSpec{Type: "boolean"}, "field": &runtime.SchemaSpec{Type: "string"}, "floatValue": &runtime.SchemaSpec{Type: "number"}, "operation": &runtime.SchemaSpec{Type: "string"}, "stringValue": &runtime.SchemaSpec{Type: "string"}}}}, "endTime": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "sort": &runtime.SchemaSpec{Type: "string"}, "startTime": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"duration", "sourcePod", "spanId", "startTime", "status", "traceId"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"duration", "sourcePod", "spanId", "startTime", "status", "traceId"},
+		},
 	},
 	{
 		Group:       "Tracing",
@@ -2242,7 +2281,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "durationMax": &runtime.SchemaSpec{Type: "string"}, "durationMin": &runtime.SchemaSpec{Type: "string"}, "end": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "onlyErrorSpans": &runtime.SchemaSpec{Type: "boolean"}, "operationName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "sort": &runtime.SchemaSpec{Type: "string"}, "spanId": &runtime.SchemaSpec{Type: "string"}, "spanKinds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "tags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "traceId": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "countItems", DefaultColumns: []string{"error", "normal", "timestamp", "total"}},
+		Output: runtime.OutputHints{ListPath: "countItems", DefaultColumns: []string{"error", "normal", "timestamp", "total"},
+		},
 	},
 	{
 		Group:       "Tracing",
@@ -2256,7 +2296,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "durationMax": &runtime.SchemaSpec{Type: "string"}, "durationMin": &runtime.SchemaSpec{Type: "string"}, "end": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "onlyErrorSpans": &runtime.SchemaSpec{Type: "boolean"}, "operationName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "sort": &runtime.SchemaSpec{Type: "string"}, "spanId": &runtime.SchemaSpec{Type: "string"}, "spanKinds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "tags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "traceId": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "serviceName", "spanId"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "serviceName", "spanId"},
+		},
 	},
 	{
 		Group:       "Tracing",
@@ -2273,7 +2314,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clauses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"boolValue": &runtime.SchemaSpec{Type: "boolean"}, "field": &runtime.SchemaSpec{Type: "string"}, "floatValue": &runtime.SchemaSpec{Type: "number"}, "operation": &runtime.SchemaSpec{Type: "string"}, "stringValue": &runtime.SchemaSpec{Type: "string"}}}}, "endTime": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "sort": &runtime.SchemaSpec{Type: "string"}, "startTime": &runtime.SchemaSpec{Type: "string"}, "topN": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "duration", DefaultColumns: []string{"timestamp", "value"}},
+		Output: runtime.OutputHints{ListPath: "duration", DefaultColumns: []string{"timestamp", "value"},
+		},
 	},
 	{
 		Group:       "Tracing",
@@ -2290,7 +2332,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clauses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"boolValue": &runtime.SchemaSpec{Type: "boolean"}, "field": &runtime.SchemaSpec{Type: "string"}, "floatValue": &runtime.SchemaSpec{Type: "number"}, "operation": &runtime.SchemaSpec{Type: "string"}, "stringValue": &runtime.SchemaSpec{Type: "string"}}}}, "endTime": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "sort": &runtime.SchemaSpec{Type: "string"}, "startTime": &runtime.SchemaSpec{Type: "string"}, "topN": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"address", "avgDuration", "errorRate", "sourceCluster", "sourceNamespace", "sourceService"}},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"address", "avgDuration", "errorRate", "sourceCluster", "sourceNamespace", "sourceService"},
+		},
 	},
 	{
 		Group:       "User",
