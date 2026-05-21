@@ -18,7 +18,7 @@
 - Body: required
 - Flags:
   - `--id` (path, required): required;
-- Example: `echo '{ "rule": { "name": "HighMem", "severity": "WARNING", "duration": "5m", "expr": "node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.1", "description": "memory low", "labels": {"team":"ops"}, "annotations": {"summary":"low memory on {{ $labels.instance }}"} } }' | dc insight alert add-group-rule --id <gid> --file -`
+- Example: `# rule.source 必填（METRIC_TPL | PROMQL | LOG_TPL | EVENT_TPL），见 create-group 说明 echo '{ "rule": { "name": "HighMem", "source": "PROMQL", "severity": "WARNING", "duration": "5m", "expr": "node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.1", "description": "memory low", "labels": {"team":"ops"}, "annotations": {"summary":"low memory on {{ $labels.instance }}"} } }' | dc insight alert add-group-rule --id <gid> --file -`
 
 ### `dc insight alert clean-alert-history`
 
@@ -47,7 +47,7 @@
   - `--step` (query, int64): step unit is minute
   - `--group-by-type` (query): groupByType
 - Output: list path `data`; columns `end`, `start`
-- Example: `# Count CRITICAL alerts in cluster within a time range (unix seconds) dc insight alert count-alert \ --cluster-name prod-1 \ --severity CRITICAL \ --start 1700000000 --end 1700600000 --step 60 \ --group-by-type=true`
+- Example: `# ⚠️ --start 与 --end（unix 秒）必填，缺失返回 HTTP 400 "value must be greater than 0" # --step 单位为分钟，0 表示返回时间范围内的总数（不分桶） END=$(date +%s); START=$((END - 86400)) dc insight alert count-alert \ --cluster-name kpanda-global-cluster \ --severity CRITICAL \ --start $START --end $END --step 60 \ --group-by-type=true -o json`
 
 ### `dc insight alert create-group`
 
@@ -57,7 +57,7 @@
 - Body: required
 - Flags: none
 - Output: list path `notifyRepeatConfig`; columns `interval`, `severity`
-- Example: `echo '{ "name": "node-health", "clusterName": "prod-1", "namespace": "insight-system", "description": "Node health alerts", "targetType": "NODE", "targets": ["*"], "receivers": [ {"type": "email", "names": ["ops-mail"]} ], "notifyRepeatConfig": [ {"severity": "CRITICAL", "interval": 300} ], "rules": [ { "name": "NodeDown", "description": "node unreachable for 5m", "severity": "CRITICAL", "duration": "5m", "expr": "up{job=\"node-exporter\"} == 0", "labels": {"team": "ops"}, "annotations": {"summary": "Node {{ $labels.instance }} down"} } ] }' | dc insight alert create-group --file -`
+- Example: `# ⚠️ 关键字段： # clusterName 必填 # rules[].source 必填，枚举：METRIC_TPL | PROMQL | LOG_TPL | EVENT_TPL # - METRIC_TPL 从指标模板派生（rules[].metricTpl 等） # - PROMQL 自定义 PromQL 表达式（最常用，rules[].expr） # - LOG_TPL 日志告警（额外字段：rules[].logTpl 等） # - EVENT_TPL 事件告警 # 缺少 source 会创建失败（典型表现：rule source unknown） echo '{ "name": "node-health", "clusterName": "kpanda-global-cluster", "namespace": "insight-system", "description": "Node health alerts", "targetType": "NODE", "targets": ["*"], "receivers": [ {"type": "email", "names": ["ops-mail"]} ], "notifyRepeatConfig": [ {"severity": "CRITICAL", "interval": 300} ], "rules": [ { "name": "NodeDown", "source": "PROMQL", "description": "node unreachable for 5m", "severity": "CRITICAL", "duration": "5m", "expr": "up{job=\"node-exporter\"} == 0", "labels": {"team": "ops"}, "annotations": {"summary": "Node {{ $labels.instance }} down"} } ] }' | dc insight alert create-group --file -`
 
 ### `dc insight alert create-inhibition`
 
@@ -67,7 +67,7 @@
 - Body: required
 - Flags: none
 - Output: list path `equal`
-- Example: `echo '{ "name": "cluster-down-suppresses-node", "clusterName": "prod-1", "namespace": "insight-system", "description": "if cluster is down, suppress node-level alerts", "equal": ["clusterName"], "sourceMatchers": [{"type":"=","key":"alertname","value":"ClusterDown"}], "targetMatchers": [{"type":"=","key":"severity","value":"WARNING"}] }' | dc insight alert create-inhibition --file -`
+- Example: `echo '{ "name": "cluster-down-suppresses-node", "clusterName": "prod-1", "namespace": "insight-system", "description": "if cluster is down, suppress node-level alerts", "equal": ["clusterName"], "sourceMatchers": [{"type":"EQUAL","key":"alertname","value":"ClusterDown"}], "targetMatchers": [{"type":"EQUAL","key":"severity","value":"WARNING"}] }' | dc insight alert create-inhibition --file - # matches/sourceMatchers/targetMatchers 的 type 同 silence：EQUAL / NOT_EQUAL / REGEXP`
 
 ### `dc insight alert create-provider`
 
@@ -105,7 +105,7 @@
 - Body: required
 - Flags: none
 - Output: list path `matches`; columns `type`, `key`, `value`
-- Example: `echo '{ "name": "maint-window", "clusterName": "prod-1", "namespace": "insight-system", "description": "weekly maintenance", "matches": [ {"type": "=", "key": "alertname", "value": "HighCPU"}, {"type": "=~", "key": "instance", "value": "node-.*"} ], "activeTimeInterval": { "weekdayRange": [0], "timeRanges": [{"start":"02:00","end":"04:00"}] } }' | dc insight alert create-silence --file -`
+- Example: `# ⚠️ matches[].type 是枚举字符串，不是 "=" / "=~"。可选： # EQUAL | NOT_EQUAL | REGEXP | MATCH_TYPE_UNSPECIFIED echo '{ "name": "maint-window", "clusterName": "kpanda-global-cluster", "namespace": "insight-system", "description": "weekly maintenance", "matches": [ {"type": "EQUAL", "key": "alertname", "value": "HighCPU"}, {"type": "REGEXP", "key": "instance", "value": "node-.*"} ], "activeTimeInterval": { "weekdayRange": [0], "timeRanges": [{"start":"02:00","end":"04:00"}] } }' | dc insight alert create-silence --file -`
 
 ### `dc insight alert create-template`
 
@@ -253,14 +253,14 @@
 
 ### `dc insight alert get-receiver`
 
-- Summary: Get a receiver by name
+- Summary: Get a receiver by name + type
 - HTTP: `GET /apis/insight.io/v1alpha1/alert/receivers/{name}`
 - Auth: required
 - Body: none
 - Flags:
   - `--name` (path, required): name
-  - `--type` (query, default `RECEIVER_TYPE_UNSPECIFIED`, one of: RECEIVER_TYPE_UNSPECIFIED|webhook|email|dingtalk|wecom|sms|message|lark): type
-- Example: `dc insight alert get-receiver --name ops-mail # Disambiguate when same name exists across types dc insight alert get-receiver --name ops-mail --type email -o json`
+  - `--type` (query, default `RECEIVER_TYPE_UNSPECIFIED`, one of: RECEIVER_TYPE_UNSPECIFIED|webhook|email|dingtalk|wecom|sms|message|lark): Required. webhook | email | dingtalk | wecom | sms | message | lark
+- Example: `# ⚠️ --type 必填（proto enum.defined_only），缺失返回 HTTP 400 "type cannot be empty" # type 取值：webhook | email | dingtalk | wecom | sms | message | lark dc insight alert get-receiver --name ops-mail --type email -o json dc insight alert get-receiver --name my-bot --type lark -o json`
 
 ### `dc insight alert get-rule-template`
 
@@ -489,7 +489,7 @@
 - Body: required
 - Flags: none
 - Output: list path `matrix`
-- Example: `echo '{ "group": {"clusterName":"prod-1","targetType":"CLUSTER","targets":["*"]}, "rule": {"expr":"vector(1)","duration":"1m","severity":"WARNING"}, "params":{"start":"1700000000","end":"1700001000","step":60} }' | dc insight alert preview-rule --file -`
+- Example: `# rule.source 必填（同 create-group / add-group-rule）；params 时间为 unix 秒字符串 END=$(date +%s); START=$((END - 3600)) echo '{ "group": {"clusterName":"kpanda-global-cluster","targetType":"CLUSTER","targets":["*"]}, "rule": {"source":"PROMQL","expr":"vector(1)","duration":"1m","severity":"WARNING"}, "params":{"start":"'"$START"'","end":"'"$END"'","step":60} }' | dc insight alert preview-rule --file -`
 
 ### `dc insight alert preview-silence`
 
@@ -499,7 +499,7 @@
 - Body: required
 - Flags: none
 - Output: list path `items`; columns `namespace`, `id`, `builtin`, `clusterName`, `description`, `groupId`
-- Example: `echo '{ "clusterName": "prod-1", "namespace": "insight-system", "size": "20", "matches": [{"type":"=","key":"alertname","value":"HighCPU"}] }' | dc insight alert preview-silence --file -`
+- Example: `# matches[].type 同 create-silence：EQUAL / NOT_EQUAL / REGEXP echo '{ "clusterName": "kpanda-global-cluster", "namespace": "insight-system", "size": "20", "matches": [{"type":"EQUAL","key":"alertname","value":"HighCPU"}] }' | dc insight alert preview-silence --file -`
 
 ### `dc insight alert preview-template`
 
@@ -508,7 +508,7 @@
 - Auth: required
 - Body: required
 - Flags: none
-- Example: `echo '{ "body": {"email":{"subject":"[T] {{ .CommonLabels.alertname }}","body":"x"}}, "data": { "status": "firing", "commonLabels": {"alertname":"HighCPU"}, "alerts": [{"status":"firing","labels":{"instance":"node1"},"annotations":{"summary":"cpu hot"}}] } }' | dc insight alert preview-template --file -`
+- Example: `# ⚠️ data 字段使用 commonLabels（驼峰），不是 labels；alerts[] 必填 # 模板里 {{ .CommonLabels.X }} 对应 body 输入的 data.commonLabels.X echo '{ "body": {"email":{"subject":"[T] {{ .CommonLabels.alertname }}","body":"x"}}, "data": { "status": "firing", "commonLabels": {"alertname":"HighCPU"}, "alerts": [{"status":"firing","labels":{"instance":"node1"},"annotations":{"summary":"cpu hot"}}] } }' | dc insight alert preview-template --file -`
 
 ### `dc insight alert test-receiver`
 
@@ -539,7 +539,7 @@
 - Flags:
   - `--id` (path, required): required; id is group id
   - `--name` (path, required): required;
-- Example: `echo '{ "severity": "CRITICAL", "duration": "10m", "expr": "rate(http_requests_total{code=~\"5..\"}[5m]) > 1", "description": "5xx rate too high" }' | dc insight alert update-group-rule --id <gid> --name HighErr --file -`
+- Example: `echo '{ "source": "PROMQL", "severity": "CRITICAL", "duration": "10m", "expr": "rate(http_requests_total{code=~\"5..\"}[5m]) > 1", "description": "5xx rate too high" }' | dc insight alert update-group-rule --id <gid> --name HighErr --file -`
 
 ### `dc insight alert update-inhibition`
 
@@ -550,7 +550,7 @@
 - Flags:
   - `--id` (path, required): id
 - Output: list path `equal`
-- Example: `echo '{ "description": "updated suppression", "equal": ["clusterName", "namespace"], "sourceMatchers": [{"type":"=","key":"alertname","value":"ClusterDown"}], "targetMatchers": [{"type":"=~","key":"severity","value":"WARNING|INFO"}] }' | dc insight alert update-inhibition --id <iid> --file -`
+- Example: `echo '{ "description": "updated suppression", "equal": ["clusterName", "namespace"], "sourceMatchers": [{"type":"EQUAL", "key":"alertname","value":"ClusterDown"}], "targetMatchers": [{"type":"REGEXP","key":"severity","value":"WARNING|INFO"}] }' | dc insight alert update-inhibition --id <iid> --file -`
 
 ### `dc insight alert update-provider`
 
@@ -592,7 +592,7 @@
 - Flags:
   - `--id` (path, required): id
 - Output: list path `matches`; columns `type`, `key`, `value`
-- Example: `echo '{ "description": "extended maintenance window", "matches": [ {"type": "=", "key": "alertname", "value": "HighCPU"}, {"type": "=~", "key": "instance", "value": "node-.*"} ], "activeTimeInterval": { "weekdayRange": [0, 6], "timeRanges": [{"start":"01:00","end":"05:00"}] } }' | dc insight alert update-silence --id <sid> --file -`
+- Example: `echo '{ "description": "extended maintenance window", "matches": [ {"type": "EQUAL", "key": "alertname", "value": "HighCPU"}, {"type": "REGEXP", "key": "instance", "value": "node-.*"} ], "activeTimeInterval": { "weekdayRange": [0, 6], "timeRanges": [{"start":"01:00","end":"05:00"}] } }' | dc insight alert update-silence --id <sid> --file -`
 
 ### `dc insight alert update-template`
 
@@ -624,7 +624,7 @@
 - Body: none
 - Flags: none
 - Output: list path `daemonSet`
-- Example: `dc insight event get-reasons dc insight event get-reasons -o json`
+- Example: `dc insight event get-reasons -o json # 返回字段（每项为字符串数组）： # node / daemonSet / deployment / job / pod / statefulSet`
 
 ### `dc insight event query-event-context`
 
@@ -636,15 +636,15 @@
   - `--cluster-name` (path, required): Required.
   - `--timestamp` (query): timestamp e.g. 2023-06-20T16:05:16.887681657Z
   - `--namespace` (query): Optional.
-  - `--filter.type` (query, default `TYPE_UNSPECIFIED`, one of: TYPE_UNSPECIFIED|Normal|Warning): TYPE_UNSPECIFIED | Normal | Warning
+  - `--filter.type` (query, default `TYPE_UNSPECIFIED`, one of: TYPE_UNSPECIFIED|Normal|Warning): 此接口忽略；仅 involve-object-kind/involve-object-name 生效
   - `--filter.involve-object-kind` (query): filter.involveObjectKind
   - `--filter.reason` (query): filter.reason
   - `--filter.involve-object-name` (query): fuzzy search
   - `--filter.message` (query): fuzzy search
-  - `--before` (query, int32): Optional.
-  - `--after` (query, int32): Optional.
+  - `--before` (query, default `50`, int32): Optional.
+  - `--after` (query, default `50`, int32): Optional.
 - Output: list path `items`; columns `metadata.name`, `metadata.namespace`, `type`, `metadata.creationTimestamp`, `action`, `clusterName`; pagination `cursor`
-- Example: `# 20 events before and 20 after a specific timestamp dc insight event query-event-context \ --cluster-name prod-1 --namespace default \ --timestamp 2024-06-24T07:15:32.123456789Z \ --filter.type Warning --filter.involve-object-kind Pod \ --before 20 --after 20 -o json`
+- Example: `# 重要：filter.involve-object-kind 或 filter.involve-object-name 至少传一个， # 否则后端返回 HTTP 400。filter 在该接口只识别这两个字段。 # # 推荐流程：先用 query-events 取锚点，再用 jq 提取 timestamp / involveObject 作参数 EVENT=$(dc insight event query-events \ --cluster-name kpanda-global-cluster --namespace insight-system \ --start-time 2026-05-21T17:00:00Z --end-time 2026-05-21T18:00:00Z \ --filter.type Warning --page 1 --page-size 1 -o json) TS=$(echo "$EVENT" | jq -r '.items[0].timestamp') NS=$(echo "$EVENT" | jq -r '.items[0].metadata.namespace') KIND=$(echo "$EVENT" | jq -r '.items[0].involveObject.kind') NAME=$(echo "$EVENT" | jq -r '.items[0].involveObject.name') dc insight event query-event-context \ --cluster-name kpanda-global-cluster --namespace "$NS" \ --timestamp "$TS" \ --filter.involve-object-kind "$KIND" \ --filter.involve-object-name "$NAME" \ --before 20 --after 20 -o json`
 
 ### `dc insight event query-event-count`
 
@@ -655,11 +655,11 @@
 - Flags:
   - `--cluster-name` (path, required): Required.
 - Output: list path `items`
-- Example: `echo '{ "namespace": "default", "startTime": "2024-06-24T07:00:00Z", "endTime": "2024-06-24T08:00:00Z", "filters": [ {"type":"Warning","involveObjectKind":"Pod","reason":"FailedScheduling"}, {"type":"Warning","involveObjectKind":"Node"} ] }' | dc insight event query-event-count --cluster-name prod-1 --file -`
+- Example: `# filters 列表：每项对应一个聚合通道；响应 items 是与 filters 等长的 int64 计数数组。 # 字段说明（每个 filter）： # type Normal | Warning（可省，省略表示不限） # involveObjectKind 关联对象类型，如 Pod / Node / Deployment # reason 事件原因（精确） # involveObjectName 关联对象名（模糊） # message 消息体（模糊） # 若 filters 省略，服务端使用默认 6 个通道： # imagePullFail / healthyCheckFail / podFailed / # podFailedScheduling / containerRestartingFailed / podFailedMount echo '{ "namespace": "insight-system", "startTime": "2026-05-21T17:00:00Z", "endTime": "2026-05-21T18:00:00Z", "filters": [ {"type":"Warning","involveObjectKind":"Pod","reason":"FailedScheduling"}, {"type":"Warning","involveObjectKind":"Node"} ] }' | dc insight event query-event-count --cluster-name kpanda-global-cluster --file - # 使用默认 filters（不传 filters 字段） echo '{ "namespace": "insight-system", "startTime": "2026-05-21T17:00:00Z", "endTime": "2026-05-21T18:00:00Z" }' | dc insight event query-event-count --cluster-name kpanda-global-cluster --file -`
 
 ### `dc insight event query-event-filter-options`
 
-- Summary: List available filter options (object kinds / reasons / etc.) for the event UI
+- Summary: List available filter options (object kinds / reasons) for the event UI
 - HTTP: `GET /apis/insight.io/v1alpha1/event/cluster/{clusterName}/events/filter-options`
 - Auth: required
 - Body: none
@@ -669,7 +669,7 @@
   - `--end-time` (query): endTime e.g. 2006-01-02T15:04:05.999999999Z07:00
   - `--namespace` (query): Optional.
 - Output: list path `involvedObjectKinds`
-- Example: `dc insight event query-event-filter-options \ --cluster-name prod-1 --namespace default \ --start-time 2024-06-24T07:00:00Z --end-time 2024-06-24T08:00:00Z`
+- Example: `dc insight event query-event-filter-options \ --cluster-name kpanda-global-cluster --namespace insight-system \ --start-time 2026-05-21T17:00:00Z --end-time 2026-05-21T18:00:00Z -o json # 返回字段： # involvedObjectKinds 当前窗口内出现过的对象类型（注意是 involvedObjectKinds，而事件对象本身用 involveObject） # reasons 当前窗口内出现过的 reason 列表`
 
 ### `dc insight event query-event-histogram`
 
@@ -684,7 +684,7 @@
   - `--interval` (query): interval e.g 1440s
   - `--namespace` (query): Optional.
 - Output: list path `items`; columns `normalCount`, `timestamp`, `warningCount`
-- Example: `dc insight event query-event-histogram \ --cluster-name prod-1 --namespace default \ --start-time 2024-06-24T07:00:00Z --end-time 2024-06-24T08:00:00Z \ --interval 60s -o json`
+- Example: `dc insight event query-event-histogram \ --cluster-name kpanda-global-cluster --namespace insight-system \ --start-time 2026-05-21T17:00:00Z --end-time 2026-05-21T18:00:00Z \ --interval 60s -o json # 返回结构： # items[].timestamp 桶起点 (RFC3339) # items[].normalCount Normal 事件数 # items[].warningCount Warning 事件数 # totalNormal 窗口内 Normal 总数 # totalWarning 窗口内 Warning 总数`
 
 ### `dc insight event query-events`
 
@@ -702,11 +702,11 @@
   - `--filter.reason` (query): filter.reason
   - `--filter.involve-object-name` (query): fuzzy search
   - `--filter.message` (query): fuzzy search
-  - `--sort` (query): sort determines the data list order.
+  - `--sort` (query): timestamp,desc (默认) | timestamp,asc | type,desc | type,asc
   - `--page` (query, default `1`, int32): Page is current page.
   - `--page-size` (query, default `20`, int32): Size is the data number shown per page.
 - Output: list path `items`; columns `metadata.name`, `metadata.namespace`, `type`, `metadata.creationTimestamp`, `action`, `clusterName`; pagination `offset`
-- Example: `# All Warning events in a namespace in the last hour dc insight event query-events \ --cluster-name prod-1 --namespace default \ --start-time 2024-06-24T07:00:00Z --end-time 2024-06-24T08:00:00Z \ --filter.type Warning \ --page 1 --page-size 50 -o json # Fuzzy search by reason + involved object + message dc insight event query-events \ --cluster-name prod-1 --namespace default \ --filter.reason FailedScheduling \ --filter.involve-object-kind Pod \ --filter.involve-object-name my-app \ --filter.message 'insufficient memory' \ --sort 'metadata.creationTimestamp:desc'`
+- Example: `# 最近 1 小时 insight-system 命名空间内的 Warning 事件 dc insight event query-events \ --cluster-name kpanda-global-cluster --namespace insight-system \ --start-time 2026-05-21T17:00:00Z --end-time 2026-05-21T18:00:00Z \ --filter.type Warning \ --page 1 --page-size 50 -o json # 按 reason + involveObject + message 模糊过滤 dc insight event query-events \ --cluster-name kpanda-global-cluster --namespace insight-system \ --filter.reason FailedScheduling \ --filter.involve-object-kind Pod \ --filter.involve-object-name insight-server \ --filter.message 'insufficient memory' \ --sort 'timestamp,desc' # 返回结构（items 数组每条）： # timestamp 唯一主键，RFC3339Nano，可作 query-event-context 的 --timestamp # type Normal | Warning # reason / message / action / count / firstTimestamp / lastTimestamp # metadata.namespace 命名空间 # metadata.name / uid 事件资源元信息 # involveObject.kind 关联对象类型 (注意：不是 involvedObject) # involveObject.name # involveObject.namespace # clusterName / clusterUuid`
 
 ## FeatureGate
 
@@ -789,11 +789,11 @@
 - Auth: required
 - Body: required
 - Flags: none
-- Example: `# Export up to 100k resource log lines as a file (response contains download info) echo '{ "maxLines": 100000, "fields": ["timestamp", "log", "kubernetes.pod_name", "kubernetes.container_name"], "queryLog": { "startTime": "1700000000000", "endTime": "1700003600000", "sorts": ["timestamp:asc"], "resource": { "clusterFilter": ["prod-1"], "namespaceFilter": ["default"], "workloadFilter": ["my-app"] } } }' | dc insight log download-log --file - # Export a context window around one log line echo '{ "maxLines": 200, "fields": ["timestamp", "log"], "queryLogContext": { "before": 100, "after": 100, "startTime": "1700000000000", "endTime": "1700003600000", "nanotimestamp": "1700001234567890000", "type": "resource", "resource": {"cluster":"prod-1","namespace":"default","pod":"my-app-abc","container":"app"} } }' | dc insight log download-log --file -`
+- Example: `KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId) # 字段说明： # type 导出格式枚举：TEXT(默认) / CSV / JSON # maxLines 导出上限 [0,10000]，0 视为 2000 # fields 列枚举（TEXT/CSV 生效；JSON 输出完整记录），可选值： # Timestamp | Cluster | Namespace | Pod | Container | Node | File # sorts 仅支持 "time,desc"（默认）或 "time,asc" # timeZone 导出时间戳的 IANA 时区，如 "Asia/Shanghai" # queryLog 或 queryLogContext，二选一（结构同 query-log / query-log-context） echo '{ "type": "CSV", "maxLines": 5000, "fields": ["Timestamp", "Cluster", "Namespace", "Pod", "Container"], "sorts": ["time,asc"], "timeZone": "Asia/Shanghai", "queryLog": { "startTime": "2026-05-21T00:00:00.000000000Z", "endTime": "2026-05-21T01:00:00.000000000Z", "sorts": ["time,asc"], "resource": { "clusterFilter": ["'"$KUBESYSTEMID"'"], "namespaceFilter": ["insight-system"], "workloadFilter": ["insight-server"] } } }' | dc insight log download-log --file - # 导出某条日志的上下文窗口 echo '{ "type": "TEXT", "maxLines": 200, "fields": ["Timestamp", "Pod", "Container"], "queryLogContext": { "before": 100, "after": 100, "startTime": "2026-05-21T00:00:00.000000000Z", "endTime": "2026-05-21T01:00:00.000000000Z", "nanotimestamp": "2026-05-21T00:30:12.123456789Z", "resource": { "cluster": "'"$KUBESYSTEMID"'", "namespace": "insight-system", "pod": "insight-server-0", "container": "insight-server" } } }' | dc insight log download-log --file -`
 
 ### `dc insight log list-log-file-paths`
 
-- Summary: List available system log file paths on a node
+- Summary: List system log file paths discovered on a node
 - HTTP: `GET /apis/insight.io/v1alpha1/log/filepaths`
 - Auth: required
 - Body: none
@@ -802,48 +802,48 @@
   - `--cluster-name` (query): clusterName
   - `--node` (query): node
 - Output: list path `paths`
-- Example: `# Files on a specific node dc insight log list-log-file-paths --cluster-name prod-1 --node node-1 dc insight log list-log-file-paths --cluster prod-1 --node node-1 -o json`
+- Example: `# 用集群名（服务端解析为 UUID） dc insight log list-log-file-paths --cluster-name kpanda-global-cluster --node node-1 # 或直接传 UUID KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId) dc insight log list-log-file-paths --cluster "$KUBESYSTEMID" --node node-1 -o json`
 
 ### `dc insight log query-log`
 
-- Summary: Query logs (resource / event / system) with filters and pagination
+- Summary: Query container or system logs with filters and pagination
 - HTTP: `POST /apis/insight.io/v1alpha1/log/query`
 - Auth: required
 - Body: required
 - Flags: none
 - Output: list path `items`; columns `log`, `timestamp`
-- Example: `# Resource (container) logs in a cluster + namespace echo '{ "startTime": "1700000000000", "endTime": "1700003600000", "page": 1, "pageSize": 100, "sorts": ["timestamp:desc"], "resource": { "clusterFilter": ["prod-1"], "namespaceFilter": ["default"], "workloadFilter": ["my-app"], "podSearch": ["my-app-"], "logSearch": ["error"], "luceneFilter": "level:ERROR AND NOT path:\"/health\"" } }' | dc insight log query-log --file - # System (node) logs echo '{ "startTime": "1700000000000", "endTime": "1700003600000", "system": { "clusterFilter": ["prod-1"], "nodeFilter": ["node-1"], "fileFilter": ["/var/log/syslog"], "logSearch": ["oom"] } }' | dc insight log query-log --file - # K8s event logs echo '{ "startTime": "1700000000000", "endTime": "1700003600000", "event": { "clusterFilter": ["prod-1"], "logSearch": ["FailedScheduling"] } }' | dc insight log query-log --file -`
+- Example: `# 1) 先拿到集群 UUID KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId) # 2) 容器日志：在 kpanda-global-cluster / insight-system 中检索包含 "error" 的日志 # 字段说明（resource filter）： # clusterFilter 集群 UUID 列表，必填且只能 1 个 # namespaceFilter 命名空间精确匹配（需配合 clusterFilter） # workloadFilter 工作负载精确匹配；workloadSearch 为模糊 # podFilter Pod 精确匹配；podSearch 为模糊 # containerFilter 容器精确匹配；containerSearch 为模糊 # logSearch 日志正文关键字（多值 AND） # traceIdSearch 精确匹配 trace_id # luceneFilter Lucene DSL，可选键： # kubernetes.namespace_name.keyword / kubernetes.pod_name.keyword / # kubernetes.container_name.keyword / trace_id.keyword / log # 顶层字段： # startTime/endTime RFC3339Nano，可空表示无界 # page/pageSize 分页（默认 1/10，pageSize 软上限 100） # sorts 仅支持 time 字段；格式 "time,desc" 或 "time,asc"，默认 "time,desc" echo '{ "startTime": "2026-05-21T00:00:00.000000000Z", "endTime": "2026-05-21T01:00:00.000000000Z", "page": 1, "pageSize": 100, "sorts": ["time,desc"], "resource": { "clusterFilter": ["'"$KUBESYSTEMID"'"], "namespaceFilter": ["insight-system"], "workloadFilter": ["insight-server"], "podSearch": ["insight-server"], "logSearch": ["error"], "luceneFilter": "kubernetes.container_name.keyword:insight-server AND log:error" } }' | dc insight log query-log --file - # 3) 系统日志（节点 syslog） # system filter 支持键：nodeFilter / fileFilter / logSearch / luceneFilter # luceneFilter 可用键：syslog.host.keyword / syslog.file.keyword / syslog.ident.keyword / log echo '{ "startTime": "2026-05-21T00:00:00.000000000Z", "endTime": "2026-05-21T01:00:00.000000000Z", "system": { "clusterFilter": ["'"$KUBESYSTEMID"'"], "nodeFilter": ["node-1"], "fileFilter": ["/var/log/messages"], "logSearch": ["oom"] } }' | dc insight log query-log --file - # 返回结构（items 数组每条）： # timestamp RFC3339Nano，可直接作为 query-log-context 的 nanotimestamp # log 日志正文 # labels.cluster 集群 UUID # labels.namespace 命名空间（resource filter 时） # labels.pod Pod 名称 # labels.container 容器名称 # labels.node / labels.file 节点 / 文件（system filter 时）`
 
 ### `dc insight log query-log-context`
 
-- Summary: Fetch surrounding log lines around a specific timestamp (context view)
+- Summary: Fetch lines before/after a specific log entry (context view)
 - HTTP: `POST /apis/insight.io/v1alpha1/log/context`
 - Auth: required
 - Body: required
 - Flags: none
 - Output: list path `items`; columns `log`, `timestamp`
-- Example: `# Get 50 lines before and 50 lines after a specific resource log entry echo '{ "before": 50, "after": 50, "startTime": "1700000000000", "endTime": "1700003600000", "nanotimestamp": "1700001234567890000", "type": "resource", "resource": { "cluster": "prod-1", "namespace": "default", "pod": "my-app-abc123", "container": "app" } }' | dc insight log query-log-context --file - # Context around a system log on a node echo '{ "before": 30, "after": 30, "startTime": "1700000000000", "endTime": "1700003600000", "nanotimestamp": "1700001234567890000", "type": "system", "system": {"cluster":"prod-1","node":"node-1","file":"/var/log/syslog"} }' | dc insight log query-log-context --file -`
+- Example: `KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId) # 容器日志上下文 # 字段说明： # before/after 锚点前/后行数，范围 [0,10000]，至少一个 > 0 # nanotimestamp 锚点行的 RFC3339Nano 时间戳（必填） # startTime/endTime 搜索窗口（可选） # resource filter (全部必填)：cluster=集群 UUID, namespace, pod, container # # 推荐流程：先用 query-log 取锚点，再用 jq 提取 timestamp 与 labels.* 作为参数 LOG_RESULT=$(echo '{ "startTime": "2026-05-21T00:00:00.000000000Z", "endTime": "2026-05-21T01:00:00.000000000Z", "page": 1, "pageSize": 1, "resource": { "clusterFilter": ["'"$KUBESYSTEMID"'"], "logSearch": ["error"] } }' | dc insight log query-log --file - -o json) TS=$(echo "$LOG_RESULT" | jq -r '.items[0].timestamp') NS=$(echo "$LOG_RESULT" | jq -r '.items[0].labels.namespace') POD=$(echo "$LOG_RESULT" | jq -r '.items[0].labels.pod') CT=$(echo "$LOG_RESULT" | jq -r '.items[0].labels.container') echo '{ "before": 50, "after": 50, "startTime": "2026-05-21T00:00:00.000000000Z", "endTime": "2026-05-21T01:00:00.000000000Z", "nanotimestamp": "'"$TS"'", "resource": { "cluster": "'"$KUBESYSTEMID"'", "namespace": "'"$NS"'", "pod": "'"$POD"'", "container": "'"$CT"'" } }' | dc insight log query-log-context --file - # 系统日志上下文（system filter 三字段全部必填：cluster / node / file） echo '{ "before": 30, "after": 30, "startTime": "2026-05-21T00:00:00.000000000Z", "endTime": "2026-05-21T01:00:00.000000000Z", "nanotimestamp": "2026-05-21T00:30:12.123456789Z", "system": { "cluster": "'"$KUBESYSTEMID"'", "node": "node-1", "file": "/var/log/messages" } }' | dc insight log query-log-context --file -`
 
 ### `dc insight log query-log-histogram`
 
-- Summary: Bucket log counts over time (histogram) for a query
+- Summary: Bucket log counts over time (histogram)
 - HTTP: `POST /apis/insight.io/v1alpha1/log/histogram`
 - Auth: required
 - Body: required
 - Flags: none
 - Output: list path `items`; columns `count`, `timestamp`
-- Example: `# 1-minute buckets of error logs across a namespace echo '{ "startTime": "1700000000000", "endTime": "1700003600000", "interval": "1m", "resource": { "clusterFilter": ["prod-1"], "namespaceFilter": ["default"], "logSearch": ["error"] } }' | dc insight log query-log-histogram --file -`
+- Example: `KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId) # 字段说明： # startTime/endTime RFC3339Nano（必填） # interval ES date_histogram 间隔，如 "1m"/"5m"/"1h"（必填） # resource/system 与 query-log 相同的 filter 二选一 echo '{ "startTime": "2026-05-21T00:00:00.000000000Z", "endTime": "2026-05-21T01:00:00.000000000Z", "interval": "1m", "resource": { "clusterFilter": ["'"$KUBESYSTEMID"'"], "namespaceFilter": ["insight-system"], "logSearch": ["error"] } }' | dc insight log query-log-histogram --file -`
 
 ### `dc insight log search-log`
 
-- Summary: Search logs by Elasticsearch index + ES DSL query
+- Summary: Raw Elasticsearch DSL passthrough (advanced)
 - HTTP: `GET /apis/insight.io/v1alpha1/log/search`
 - Auth: required
 - Body: none
 - Flags:
   - `--index` (query): index
   - `--query` (query): query
-- Example: `# --query must be a valid Elasticsearch DSL JSON body (passed as a query-string value). # Match a single field: dc insight log search-log \ --index insight-log \ --query '{"query":{"match":{"log":"timeout"}}}' # Bool query with filters + size/sort, against a namespace: dc insight log search-log \ --index insight-log \ --query '{ "size": 100, "sort": [{"@timestamp":"desc"}], "query": { "bool": { "must": [{"match": {"log": "error"}}], "filter": [ {"term": {"kubernetes.namespace_name": "default"}}, {"range": {"@timestamp": {"gte": "now-1h", "lte": "now"}}} ] } } }' -o json`
+- Example: `# --index 传 ILM 索引后缀（服务端会补前缀），常用 "insight-logs-*" # --query 必须是合法的 ES DSL JSON 字符串 dc insight log search-log \ --index 'insight-logs-*' \ --query '{"query":{"match":{"log":"timeout"}}}' # 在 insight-system 命名空间内查最近 1h 含 "error" 的日志 dc insight log search-log \ --index 'insight-logs-*' \ --query '{ "size": 100, "sort": [{"@timestamp":"desc"}], "query": { "bool": { "must": [{"match": {"log": "error"}}], "filter": [ {"term": {"kubernetes.namespace_name.keyword": "insight-system"}}, {"range": {"@timestamp": {"gte": "now-1h", "lte": "now"}}} ] } } }' -o json`
 
 ## Metric
 
@@ -855,7 +855,7 @@
 - Body: required
 - Flags: none
 - Output: list path `data`; columns `errorMessage`, `status`
-- Example: `# Instant snapshot of several SLO metrics, scoped to a cluster + namespace echo '{ "matchLabel": { "clusterName": "prod-1", "namespace": "default", "extraLabel": {"app": "my-app"} }, "param": {"time": "1700000000"}, "queryList": [ "sum(rate(http_requests_total[5m]))", "sum(rate(http_requests_total{code=~\"5..\"}[5m]))", "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))" ] }' | dc insight metric batch-query-metric --file -`
+- Example: `# matchLabel 字段说明： # clusterName 集群名（与 cluster 二选一） # cluster 集群 UUID（与 clusterName 二选一） # namespace 可选 # extraLabel 附加 label 过滤（map<string,string>），会注入到每条 query # param.time unix 秒 # queryList PromQL 数组，非空 echo '{ "matchLabel": { "clusterName": "kpanda-global-cluster", "namespace": "insight-system" }, "param": {"time": '"$(date +%s)"'}, "queryList": [ "up", "sum(rate(container_cpu_usage_seconds_total[5m]))" ] }' | dc insight metric batch-query-metric --file - -o json # 返回结构： # data[].data.vector[] 与 query-metric 同结构 # data[].status SUCCESS | FAIL # data[].errorMessage 失败时的错误信息 # data 数组按 queryList 顺序一一对应。`
 
 ### `dc insight metric batch-query-range-metric`
 
@@ -865,7 +865,7 @@
 - Body: required
 - Flags: none
 - Output: list path `data`; columns `errorMessage`, `status`
-- Example: `# 1-hour range of QPS, error rate, p99 latency in a single call echo '{ "matchLabel": { "clusterName": "prod-1", "namespace": "default", "extraLabel": {"app": "my-app"} }, "param": {"start": "1700000000", "end": "1700003600", "step": 30}, "queryList": [ "sum(rate(http_requests_total[5m]))", "sum(rate(http_requests_total{code=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m]))", "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))" ] }' | dc insight metric batch-query-range-metric --file -`
+- Example: `# param.start/end 为 unix 秒，step 为秒 (double) END=$(date +%s); START=$((END - 3600)) echo '{ "matchLabel": { "clusterName": "kpanda-global-cluster", "namespace": "insight-system" }, "param": {"start": '"$START"', "end": '"$END"', "step": 60}, "queryList": [ "up", "sum(rate(container_cpu_usage_seconds_total[5m]))" ] }' | dc insight metric batch-query-range-metric --file - -o json # 返回结构： # data[].data.matrix[] 与 query-range-metric 同结构 # data[].status SUCCESS | FAIL # data[].errorMessage # data 数组按 queryList 顺序一一对应。`
 
 ### `dc insight metric format-query`
 
@@ -874,7 +874,7 @@
 - Auth: required
 - Body: required
 - Flags: none
-- Example: `echo '{"query":"sum(rate(http_requests_total{code=~\"5..\"}[5m]))/sum(rate(http_requests_total[5m]))"}' \ | dc insight metric format-query --file -`
+- Example: `echo '{"query":"sum(rate(http_requests_total{code=~\"5..\"}[5m]))/sum(rate(http_requests_total[5m]))"}' \ | dc insight metric format-query --file - -o json # 返回结构：{ "query": "<格式化后的 PromQL>" }（对象，非数组）`
 
 ### `dc insight metric query-metric`
 
@@ -889,7 +889,7 @@
   - `--query` (query): query
   - `--time` (query, int64): Optional, current server time is used if the time parameter is omitted.
 - Output: list path `vector`
-- Example: `# Current up-status of all targets in a cluster dc insight metric query-metric \ --cluster-name prod-1 \ --query 'up' # Per-pod CPU usage in a namespace at a specific timestamp (unix seconds) dc insight metric query-metric \ --cluster-name prod-1 \ --namespace default \ --query 'sum(rate(container_cpu_usage_seconds_total{namespace="default"}[5m])) by (pod)' \ --time 1700000000 -o json`
+- Example: `# 用集群名 - 当前所有 targets 的 up 状态 dc insight metric query-metric \ --cluster-name kpanda-global-cluster \ --query 'up' -o json # 用集群 UUID（与 --cluster-name 二选一） KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId) dc insight metric query-metric --cluster "$KUBESYSTEMID" --query 'up' -o json # 指定命名空间 + 时间戳（unix 秒）的瞬时 CPU 查询 dc insight metric query-metric \ --cluster-name kpanda-global-cluster \ --namespace insight-system \ --query 'sum(rate(container_cpu_usage_seconds_total{namespace="insight-system"}[5m])) by (pod)' \ --time 1747850400 -o json # 返回结构：vector 数组，每项 { metric: {labels}, values: { timestamp, value } }`
 
 ### `dc insight metric query-range-metric`
 
@@ -906,21 +906,21 @@
   - `--end` (query, int64): end
   - `--step` (query, double): step
 - Output: list path `matrix`
-- Example: `# 1-hour CPU usage range, 30s step dc insight metric query-range-metric \ --cluster-name prod-1 \ --query 'sum(rate(container_cpu_usage_seconds_total[5m])) by (pod)' \ --start 1700000000 --end 1700003600 --step 30 -o json # Node memory utilization for a single node dc insight metric query-range-metric \ --cluster-name prod-1 \ --query 'node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes' \ --start 1700000000 --end 1700003600 --step 60`
+- Example: `# 最近 1 小时 up 指标，30s 采样 END=$(date +%s); START=$((END - 3600)) dc insight metric query-range-metric \ --cluster-name kpanda-global-cluster \ --query 'up' \ --start $START --end $END --step 30 -o json # insight-system 命名空间内 Pod CPU 使用率 dc insight metric query-range-metric \ --cluster-name kpanda-global-cluster \ --namespace insight-system \ --query 'sum(rate(container_cpu_usage_seconds_total[5m])) by (pod)' \ --start $START --end $END --step 60 -o json # 字段说明： # --start/--end unix 秒 (int64) # --step 采样间隔秒 (double)，可传小数 # 返回结构：matrix 数组，每项 { metric: {labels}, values: [{timestamp,value}, ...] }`
 
 ## Overview
 
 ### `dc insight overview get-resources-count`
 
-- Summary: Get global resource counts (clusters / nodes / pods / deployments) for the dashboard
+- Summary: Get global resource counts (clusters / nodes / pods / deployments / GPU / log / trace)
 - HTTP: `GET /apis/insight.io/v1alpha1/overview/resources/count`
 - Auth: required
 - Body: none
 - Flags:
   - `--time` (query, int64): time unix timestamp .e.g. 1697597347
-  - `--filters` (query): default [CLUSTER_NORMAL_TOTAL, CLUSTER_TOTAL, NODE_NORMAL_TOTAL, NODE_TOTAL, DEPLOYMENT_NORMAL_TOTAL, DEPLOYMENT_TOTAL
+  - `--filters` (query): 可重复传入。可选值： CLUSTER_TOTAL | CLUSTER_NORMAL_TOTAL NODE_TOTAL | NODE_NORMAL_TOTAL DEPLOYMENT_TOTAL | DEPLOYMENT_NORMAL_TOTAL STATEFULSET_TOTAL | STATEFULSET_NORMAL_TOTAL DAEMONSET_TOTAL | DAEMONSET_NORMAL_TOTAL JOB_TOTAL | JOB_NORMAL_TOTAL POD_TOTAL | POD_NORMAL_TOTAL GPU_COUNT | GPU_ALLOCATED_COUNT LOG_TOTAL | TRACE_TOTAL 省略时返回上述全部 16 项。
 - Output: list path `data`; columns `errorMessage`, `status`
-- Example: `# All defaults dc insight overview get-resources-count # At a specific point in time, only cluster + node totals dc insight overview get-resources-count \ --time 1700000000 \ --filters CLUSTER_TOTAL --filters CLUSTER_NORMAL_TOTAL \ --filters NODE_TOTAL --filters NODE_NORMAL_TOTAL -o json`
+- Example: `# 默认返回 16 个资源类型 dc insight overview get-resources-count -o json # 指定时间点（unix 秒）+ 仅查集群与节点 dc insight overview get-resources-count \ --time $(date +%s) \ --filters CLUSTER_TOTAL --filters CLUSTER_NORMAL_TOTAL \ --filters NODE_TOTAL --filters NODE_NORMAL_TOTAL -o json`
 
 ### `dc insight overview get-resources-range`
 
@@ -929,41 +929,41 @@
 - Auth: required
 - Body: none
 - Flags:
-  - `--filters` (query): default [NODE_TOTAL, POD_NORMAL_TOTAL, POD_ABNORMAL_TOTAL]
+  - `--filters` (query): 可重复传入。可选值： NODE_TOTAL | POD_TOTAL | POD_NORMAL_TOTAL | POD_ABNORMAL_TOTAL 省略时默认 [NODE_TOTAL, POD_NORMAL_TOTAL, POD_ABNORMAL_TOTAL]。
   - `--start` (query, int64): start unix timestamp .e.g. 1697597347
   - `--end` (query, int64): end unix timestamp .e.g. 1697597347
-  - `--step` (query, double): step time step in second, default 60
+  - `--step` (query, double): 采样间隔秒 (double)。默认 60。
 - Output: list path `data`; columns `errorMessage`, `status`
-- Example: `# 1-hour range with 60s step dc insight overview get-resources-range \ --start 1700000000 --end 1700003600 --step 60 \ --filters NODE_TOTAL --filters POD_NORMAL_TOTAL --filters POD_ABNORMAL_TOTAL -o json`
+- Example: `# 最近 1 小时，60s 采样 END=$(date +%s); START=$((END - 3600)) dc insight overview get-resources-range \ --start $START --end $END --step 60 \ --filters NODE_TOTAL --filters POD_NORMAL_TOTAL --filters POD_ABNORMAL_TOTAL -o json`
 
 ### `dc insight overview get-resources-usage`
 
-- Summary: Get top-N resource usage time series (CPU / memory) for clusters or nodes
+- Summary: Get top-N resource usage time series (CPU / memory / disk) for clusters or nodes
 - HTTP: `GET /apis/insight.io/v1alpha1/overview/resources/usage`
 - Auth: required
 - Body: none
 - Flags:
-  - `--filters` (query): default [CLUSTER_CPU_USAGE, NODE_CPU_USAGE]
-  - `--limit` (query, int64): limit The max element of result in desc order
+  - `--filters` (query): 可重复传入。可选值： CLUSTER_CPU_USAGE | CLUSTER_MEM_USAGE | CLUSTER_DISK_USAGE NODE_CPU_USAGE | NODE_MEM_USAGE | NODE_DISK_USAGE 省略时默认 [CLUSTER_CPU_USAGE, NODE_CPU_USAGE]。
+  - `--limit` (query, int64): Top-N 上限（按值降序）。默认 5。
   - `--start` (query, int64): start unix timestamp .e.g. 1697597347
   - `--end` (query, int64): end unix timestamp .e.g. 1697597347
-  - `--step` (query, double): step time step in second, default 60
+  - `--step` (query, double): 采样间隔秒 (double)。默认 60。
 - Output: list path `data`; columns `errorMessage`, `status`; pagination `cursor`
-- Example: `# Top 5 nodes by CPU usage over the last hour dc insight overview get-resources-usage \ --start 1700000000 --end 1700003600 --step 60 \ --filters NODE_CPU_USAGE --limit 5 -o json # Cluster-level CPU usage dc insight overview get-resources-usage \ --start 1700000000 --end 1700003600 --step 60 \ --filters CLUSTER_CPU_USAGE --limit 10`
+- Example: `END=$(date +%s); START=$((END - 3600)) # 节点 CPU 使用率 Top 5 dc insight overview get-resources-usage \ --start $START --end $END --step 60 \ --filters NODE_CPU_USAGE --limit 5 -o json # 集群级 CPU 使用率 dc insight overview get-resources-usage \ --start $START --end $END --step 60 \ --filters CLUSTER_CPU_USAGE --limit 10 -o json`
 
 ### `dc insight overview get-services-monitor`
 
-- Summary: Get a snapshot of service-level APM signals for the overview dashboard
+- Summary: Get a snapshot of service-level APM signals (avg latency / error rate)
 - HTTP: `GET /apis/insight.io/v1alpha1/overview/services/monitor`
 - Auth: required
 - Body: none
 - Flags:
-  - `--filters` (query): filter
-  - `--limit` (query, int64): limit The max element of result in desc order
+  - `--filters` (query): 可重复传入。可选值： AVG_LATENCY 返回值单位 ms ERR_RATE 返回值为百分比 省略时默认 [AVG_LATENCY, ERR_RATE]。
+  - `--limit` (query, int64): Top-N 上限（按值降序）。默认 5。
   - `--time` (query, int64): timestamp unix timestamp .e.g. 1697597347
   - `--span-kinds` (query): spanKinds is the list of span kinds to include (logical OR) in the resulting metrics aggregation.
 - Output: list path `data`; columns `errorMessage`, `status`; pagination `cursor`
-- Example: `dc insight overview get-services-monitor \ --time 1700003600 --limit 10 \ --span-kinds SPAN_KIND_SERVER -o json`
+- Example: `# 默认 - 平均延迟 + 错误率，Top 5 dc insight overview get-services-monitor -o json # 限制返回 10 条 dc insight overview get-services-monitor --limit 10 -o json # 指定时间点 + 仅统计 SERVER span dc insight overview get-services-monitor \ --time $(date +%s) --limit 5 \ --span-kinds SPAN_KIND_SERVER -o json`
 
 ## Probe
 
@@ -976,7 +976,7 @@
 - Flags:
   - `--cluster-name` (path, required): clusterName
   - `--namespace` (path, required): namespace
-- Example: `# HTTP 2xx probe against two URLs, scraped every 30s echo '{ "probe": { "jobName": "web-check", "module": "http_2xx", "interval": "30s", "scrapeTimeout": "10s", "prober": { "name": "blackbox-exporter", "url": "blackbox-exporter.insight-system.svc:9115", "scheme": "http", "path": "/probe" }, "targets": { "staticConfig": { "static": [ "https://example.com", "https://api.example.com/health" ], "labels": {"team": "ops"} } } } }' | dc insight probe add-probe \ --cluster-name prod-1 --namespace insight-system --file -`
+- Example: `# 1) 先查可用 prober + module dc insight probe list-probers --cluster-name kpanda-global-cluster -o json # 2) 用上一步返回的 prober.url / 选定 module 创建 # 字段说明（probe / ProbeSpec）： # jobName 必填，^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$，1~63 # module 必填，须在该 prober 的 modules 列表中 # 常见: http_2xx | HTTP_GET | HTTP_POST | TCP | POP3S | SSH # interval 抓取间隔（go duration），如 "30s" # scrapeTimeout 抓取超时 # prober { name, url, scheme(http/https), path(/probe), proxyUrl } # targets.staticConfig.static 目标地址列表 # targets.staticConfig.labels 附加 label（map<string,string>） # 可选：proxyUrl / enableHttp2 / followRedirects / sampleLimit / # honorTimestamps / honorLabels / relabelings / metricRelabelings echo '{ "probe": { "jobName": "web-check", "module": "http_2xx", "interval": "30s", "scrapeTimeout": "10s", "prober": { "name": "insight-agent-prometheus-blackbox-exporter", "url": "insight-agent-prometheus-blackbox-exporter.insight-system:9115", "scheme": "http", "path": "/probe" }, "targets": { "staticConfig": { "static": [ "https://example.com", "https://api.example.com/health" ], "labels": {"team": "ops"} } } } }' | dc insight probe add-probe \ --cluster-name kpanda-global-cluster --namespace insight-system --file -`
 
 ### `dc insight probe delete-probe`
 
@@ -988,7 +988,7 @@
   - `--cluster-name` (path, required): clusterName
   - `--namespace` (path, required): namespace
   - `--job-name` (path, required): jobName
-- Example: `dc insight probe delete-probe \ --cluster-name prod-1 --namespace insight-system --job-name web-check`
+- Example: `dc insight probe delete-probe \ --cluster-name kpanda-global-cluster --namespace insight-system \ --job-name web-check`
 
 ### `dc insight probe get-probe`
 
@@ -1000,7 +1000,7 @@
   - `--cluster-name` (path, required): clusterName
   - `--namespace` (path, required): namespace
   - `--job-name` (path, required): jobName
-- Example: `dc insight probe get-probe \ --cluster-name prod-1 --namespace insight-system --job-name web-check`
+- Example: `dc insight probe get-probe \ --cluster-name kpanda-global-cluster --namespace insight-system \ --job-name web-check -o json # 资源不存在时返回 HTTP 404。`
 
 ### `dc insight probe list-probers`
 
@@ -1011,7 +1011,7 @@
 - Flags:
   - `--cluster-name` (path, required): clusterName
 - Output: list path `probers`
-- Example: `dc insight probe list-probers --cluster-name prod-1 dc insight probe list-probers --cluster-name prod-1 -o json`
+- Example: `dc insight probe list-probers --cluster-name kpanda-global-cluster -o json # 返回结构： # probers[].prober ProberSpec { name, url, scheme, path, proxyUrl } # probers[].modules 该 prober 支持的模块名数组，例如： # [http_2xx, HTTP_GET, HTTP_POST, TCP, POP3S, SSH] # probers[].configmapMeta { clusterName, namespace, name, data } 模块定义来源`
 
 ### `dc insight probe list-probes`
 
@@ -1025,13 +1025,13 @@
   - `--fuzzy-name` (query): FuzzyName is used to fuzzy search by multiple parameters including name.
   - `--page` (query, default `1`, int32): Page is current page.
   - `--page-size` (query, default `20`, int32): Size is the data number shown per page.
-  - `--sorts` (query): sorts determines the data list order, do not support multiple sort option.
+  - `--sorts` (query): 单一排序字段，格式 "<field>[,asc|desc]"，仅省略方向时默认 desc。 支持：job_name,desc | job_name,asc | create_at,desc | create_at,asc 默认：create_at,desc
 - Output: list path `items`; columns `metadata.name`, `metadata.namespace`, `status.phase`, `kind`, `metadata.creationTimestamp`, `apiVersion`; pagination `offset`
-- Example: `dc insight probe list-probes --cluster-name prod-1 --namespace insight-system dc insight probe list-probes --cluster-name prod-1 --namespace insight-system \ --fuzzy-name web --sort 'metadata.creationTimestamp:desc' \ --page 1 --page-size 50 -o json`
+- Example: `dc insight probe list-probes \ --cluster-name kpanda-global-cluster --namespace insight-system -o json # 模糊搜索 + 分页 + 排序 dc insight probe list-probes \ --cluster-name kpanda-global-cluster --namespace insight-system \ --fuzzy-name http --sorts 'create_at,desc' \ --page 1 --page-size 50 -o json # 返回 items[] 每条结构： # kind / apiVersion / metadata # spec { jobName, module, prober, targets, interval, scrapeTimeout, ... } # status.phase Pending | Running | Failed`
 
 ### `dc insight probe update-probe`
 
-- Summary: Update a probe's interval / module / targets
+- Summary: Update a probe's interval / scrapeTimeout / module / targets
 - HTTP: `PUT /apis/insight.io/v1alpha1/clusters/{clusterName}/namespaces/{namespace}/probes/{jobName}`
 - Auth: required
 - Body: required
@@ -1039,7 +1039,7 @@
   - `--cluster-name` (path, required): clusterName
   - `--namespace` (path, required): namespace
   - `--job-name` (path, required): jobName
-- Example: `echo '{ "interval": "60s", "scrapeTimeout": "15s", "module": "http_2xx", "targets": { "staticConfig": { "static": ["https://example.com","https://api.example.com/health"], "labels": {"team": "ops", "tier": "edge"} } } }' | dc insight probe update-probe \ --cluster-name prod-1 --namespace insight-system --job-name web-check --file -`
+- Example: `# 只能更新这 4 个字段；其他 spec 字段（prober/relabelings/...) 需删了重建。 echo '{ "interval": "60s", "scrapeTimeout": "15s", "module": "http_2xx", "targets": { "staticConfig": { "static": ["https://example.com"], "labels": {"team": "ops", "tier": "edge"} } } }' | dc insight probe update-probe \ --cluster-name kpanda-global-cluster --namespace insight-system \ --job-name web-check --file -`
 
 ## Resource
 
@@ -1269,17 +1269,17 @@
   - `--step` (query, double): Query resolution step width in duration format or float number of seconds. Optional.
   - `--query-list` (query): Query list. support below metrics:
 - Output: list path `metrics`; columns `errorMessage`, `status`
-- Example: `# Last hour of pod metrics, 30s step dc insight resource get-pod-metrics \ --cluster prod-1 --namespace default --name my-app-abc123 \ --start 1700000000 --end 1700003600 --step 30 # With a specific metric list (PromQL-like keys, server-defined) dc insight resource get-pod-metrics \ --cluster prod-1 --namespace default --name my-app-abc123 \ --start 1700000000 --end 1700003600 --step 30 \ --query-list cpuUsage --query-list memoryUsage -o json`
+- Example: `# 时间格式：--start / --end 同时接受 unix 秒 (int) 或 RFC3339 字符串 # --step 单位为秒 END=$(date +%s); START=$((END - 3600)) # 最近 1 小时，30s 步长 dc insight resource get-pod-metrics \ --cluster kpanda-global-cluster --namespace kube-system \ --name coredns-6d4d6f8c7-x8zvw \ --start $START --end $END --step 30 -o json # 指定 metric 子集（PromQL-like keys，服务端定义） dc insight resource get-pod-metrics \ --cluster kpanda-global-cluster --namespace kube-system \ --name coredns-6d4d6f8c7-x8zvw \ --start $START --end $END --step 30 \ --query-list cpuUsage --query-list memoryUsage -o json # 输出：.metrics 字段（按 metric key 分组的时序数据）`
 
 ### `dc insight resource get-server-component-summary`
 
-- Summary: Get insight-server-side component status summary
+- Summary: Get insight-server-side component status summary (cluster-agnostic)
 - HTTP: `GET /apis/insight.io/v1alpha1/server/component`
 - Auth: required
 - Body: none
 - Flags: none
 - Output: list path `summary`; columns `name`, `phase`, `creationTimestamp`, `availability`, `message`, `version`
-- Example: `dc insight resource get-server-component-summary dc insight resource get-server-component-summary -o json`
+- Example: `# 不需要 --cluster 参数；查询 Insight 服务端各组件健康状态。 dc insight resource get-server-component-summary -o json`
 
 ### `dc insight resource get-service`
 
@@ -1396,7 +1396,7 @@
   - `--page` (query, default `1`, int32): Page is current page.
   - `--page-size` (query, default `20`, int32): Size is the data number shown per page.
 - Output: list path `items`; columns `name`, `namespace`, `phase`; pagination `offset`
-- Example: `dc insight resource list-deployments --cluster prod-1 dc insight resource list-deployments --cluster prod-1 --namespace default \ --phase WORKLOAD_STATE_NOT_READY -o json`
+- Example: `dc insight resource list-deployments --cluster kpanda-global-cluster dc insight resource list-deployments --cluster kpanda-global-cluster --namespace kube-system \ --phase WORKLOAD_STATE_NOT_READY -o json # 输出：.items[] 主要字段 name / namespace / tracingEnabled # （Deployment 详情通过 get-deployment 获取，含 conditions / metadata 等完整字段）`
 
 ### `dc insight resource list-jobs`
 
@@ -1423,7 +1423,7 @@
 - Flags:
   - `--cluster` (path, required): cluster
 - Output: list path `namespaces`; columns `name`, `role`
-- Example: `dc insight resource list-namespaces --cluster prod-1 dc insight resource list-namespaces --cluster prod-1 -o json`
+- Example: `# --cluster 必填（集群名或 UUID） dc insight resource list-namespaces --cluster kpanda-global-cluster -o json # 备注：返回的 items 仅包含被 Insight 监控覆盖的命名空间； # 如果为空，可能是该集群 insight-agent 未启用或采集尚未生效。`
 
 ### `dc insight resource list-nodes`
 
@@ -1484,7 +1484,7 @@
   - `--page` (query, default `1`, int32): Page is current page.
   - `--page-size` (query, default `20`, int32): Size is the data number shown per page.
 - Output: list path `items`; columns `name`, `namespace`, `tracingEnabled`; pagination `offset`
-- Example: `dc insight resource list-services --cluster prod-1 dc insight resource list-services --cluster prod-1 --namespace default --name my-app -o json`
+- Example: `dc insight resource list-services --cluster kpanda-global-cluster dc insight resource list-services --cluster kpanda-global-cluster \ --namespace kube-system --name coredns -o json # 输出：.items[] 主要字段 name / namespace / tracingEnabled`
 
 ### `dc insight resource list-statefulsets`
 
@@ -1512,7 +1512,7 @@
 - Body: required
 - Flags: none
 - Output: list path `edges`; columns `id`, `source`, `target`
-- Example: `# Service-level graph for a namespace in the last hour echo '{ "clusterNames": ["prod-1"], "namespaces": ["default"], "start": "1700000000000", "end": "1700003600000", "graphType": "service", "layer": "L7", "showUpDownRelatedNode": true, "showVirtualNode": false }' | dc insight servicegraph get-graph --file - # Workload graph filtered by a specific service, with a 3-hop dependency depth echo '{ "clusterNames": ["prod-1"], "namespaces": ["default"], "services": ["my-app"], "workloads": ["my-app"], "start": "1700000000000", "end": "1700003600000", "graphType": "workload", "filters": { "aggType": "p99", "dependencyMaxDepth": 3, "clauses": [ {"field":"http.status_code","operation":"=","dataType":"string","stringValue":"500"} ] } }' | dc insight servicegraph get-graph --file -`
+- Example: `# 时间用毫秒：bash 拼接示例 END=$(date +%s)000; START=$(($(date +%s) - 3600))000 # 基础查询（必填：clusterNames + start + end） echo '{ "clusterNames": ["kpanda-global-cluster"], "start": "'"$START"'", "end": "'"$END"'" }' | dc insight servicegraph get-graph --file - -o json # 按命名空间过滤 echo '{ "clusterNames": ["kpanda-global-cluster"], "namespaces": ["insight-system"], "start": "'"$START"'", "end": "'"$END"'" }' | dc insight servicegraph get-graph --file - -o json # 带 graphType / layer / 依赖深度过滤 # 注意：graphType / layer 是大写枚举字符串（非 "service" / "L7"），传错值会返回 HTTP 400 echo '{ "clusterNames": ["kpanda-global-cluster"], "namespaces": ["insight-system"], "services": ["insight-server"], "workloads": ["insight-server"], "start": "'"$START"'", "end": "'"$END"'", "graphType": "SERVICE_SCOPE", "layer": "KUBERNETES", "showUpDownRelatedNode": true, "filters": { "aggType": "INTERSECTION", "dependencyMaxDepth": 3, "clauses": [ {"dataType":"NODE_DATA","field":"SERVICE_NAME","operation":"CONTAIN","stringValue":"insight"} ] } }' | dc insight servicegraph get-graph --file - -o json # 请求体字段（BaseGraphQuery）： # clusterNames 集群名数组，必填 # clusters 集群 UUID 数组（与 clusterNames 二选一/并存） # start / end unix 毫秒字符串（必填） # namespaces / services / workloads 作用域过滤（可选） # extensionLabels 形如 "skoala_registry=ireg-1,instance_name=xxx" # layer 枚举 KUBERNETES | MESH | OS_LINUX(=VM) | INFRA | GENERAL # graphType 枚举 CLUSTER_SCOPE | NAMESPACE_SCOPE | SERVICE_SCOPE | # WORKLOAD_SCOPE | INSTANCE_SCOPE | MIXED # showVirtualNode 默认 false # showUpDownRelatedNode 默认 false；true 时展示上下游 # filters.aggType INTERSECTION（UNION 暂未支持） # filters.dependencyMaxDepth 依赖深度，默认 1 # filters.clauses[] { dataType=NODE_DATA, field, operation, stringValue|floatValue } # field=SERVICE_NAME 支持 CONTAIN/NOT_CONTAIN/EQUAL/NOT_EQUAL/REGEX_PATTERN # field=STATUS_ERROR_RATE 支持 LE/GE，使用 floatValue # field=STATUS_LATENCY 支持 LE/GE，使用 floatValue（单位 ms） # # 返回结构（Graph）： # nodes[] { id, parent, type(NodeType), metadata, position, statuses[] } # edges[] { id, source, target, statuses[], properties } # layer / graphType # Status.name 约定：requestsPerMinute / errorRate(%) / avgLatency(ms) / # replicas / availableReplicas / healthyStatus(0~3) ... # # ────────────────────────────────────────────────────────────────── # 数据分析指南 # ────────────────────────────────────────────────────────────────── # Edge.statuses 上的常见指标名： # request_total 总请求数 # request_failed_total 失败请求数 # request_per_second QPS # request_avg_latency 平均延迟（秒，展示时按需换算成 ms） # # 第一步：Node 数据分析 # 1.1 服务类型分布：按 nodes[].type 分组计数 # jq '.nodes | group_by(.type) # | map({type: .[0].type, count: length})' # # 1.2 服务依赖数 TOP5（作为 edge.source 出现的次数） # jq '.edges | group_by(.source) # | map({source: .[0].source, count: length}) # | sort_by(.count) | reverse | .[:5]' # # 1.3 服务被依赖数 TOP5（作为 edge.target 出现的次数） # jq '.edges | group_by(.target) # | map({target: .[0].target, count: length}) # | sort_by(.count) | reverse | .[:5]' # # 第二步：Edge 指标 TOP5 # 2.1 错误数 TOP5：按 statuses[name=request_failed_total].value 降序 # jq '.edges # | map(select(.statuses[]? # | .name == "request_failed_total" and .value > 0)) # | sort_by(.statuses[] | select(.name == "request_failed_total") | .value) # | reverse | .[:5] # | map({source, target, # failed: (.statuses[] | select(.name == "request_failed_total") | .value)})' # # 2.2 请求数 TOP5：按 statuses[name=request_total].value 降序 # jq '.edges # | sort_by(.statuses[] | select(.name == "request_total") | .value) # | reverse | .[:5] # | map({source, target, # total: (.statuses[] | select(.name == "request_total") | .value)})' # # 2.3 平均延迟 TOP5：按 statuses[name=request_avg_latency].value 降序 # jq '.edges # | sort_by(.statuses[] | select(.name == "request_avg_latency") | .value) # | reverse | .[:5] # | map({source, target, # latency: (.statuses[] | select(.name == "request_avg_latency") | .value)})' # 展示时给延迟带单位（ms / s）。 # # 第三步：汇总异常服务 # 综合上述结果，按严重度排序输出 service / issue 列表： # 请求错误 > 请求延迟高 > 请求太多 > 其他 # # 注意：node.id / edge.source / edge.target 中可能含集群 UUID。 # 展示给用户时应替换为集群名： # dc insight resource list-clusters -o json # | jq -r '.items[] | .kubeSystemId + " " + .name' # 用上面映射把 UUID 替换回名字再输出表格。`
 
 ### `dc insight servicegraph get-node-metrics`
 
@@ -1521,18 +1521,18 @@
 - Auth: required
 - Body: none
 - Flags:
-  - `--cluster` (query): Required. e.g. cluster = 7760a3f4-bfca-4c1e-8731-aea80838525f
+  - `--cluster` (query): 集群 UUID（与 --cluster-name 二选一，至少传一个）
   - `--namespace` (query): namespace
   - `--service` (query): service
   - `--extension-filters` (query): extension_filters eg. skoala_registry=ire-111,instance=xxx
   - `--end-time` (query, int64): end_time 结束时间 unix timestamp，单位 ms
-  - `--lookback` (query, int64): lookback 回退时间 unix timestamp，单位 ms
-  - `--step` (query, int64): step 时间步长 unix timestamp，单位 ms
+  - `--lookback` (query, int64): 回退时长 ms（必填）
+  - `--step` (query, int64): 采样步长 ms（必填）
   - `--rate-per` (query, int64): ratePer 变化率计算步长 unix timestamp，单位 ms
   - `--cluster-name` (query): Required. e.g. clusterName=kpanda-global-cluster must give one of
   - `--span-kinds` (query): spanKinds is the list of span kinds to include (logical OR) in the
 - Output: list path `errorsRateMetrics`
-- Example: `# Last 30m of metrics for a single service node (endTime/lookback in unix ms) dc insight servicegraph get-node-metrics \ --cluster-name prod-1 --namespace default --service my-app \ --end-time 1700003600000 --lookback 1800000 \ --step 60000 --rate-per 60000 \ --span-kinds SPAN_KIND_SERVER -o json # With extension filters (label selectors) dc insight servicegraph get-node-metrics \ --cluster-name prod-1 --namespace default --service my-app \ --extension-filters 'skoala_registry=ire-111,instance=10.0.0.1' \ --end-time 1700003600000 --lookback 1800000 --step 60000`
+- Example: `END=$(date +%s)000 # 单个服务节点 30 分钟指标（endTime/lookback/step/rate-per 单位都是 ms） dc insight servicegraph get-node-metrics \ --cluster-name kpanda-global-cluster --namespace insight-system \ --service insight-server \ --end-time $END --lookback 1800000 \ --step 60000 --rate-per 60000 \ --span-kinds SPAN_KIND_SERVER -o json # 用 extension-filters 做 label 选择 dc insight servicegraph get-node-metrics \ --cluster-name kpanda-global-cluster --namespace insight-system \ --service insight-server \ --extension-filters 'skoala_registry=ire-111,instance=10.0.0.1' \ --end-time $END --lookback 1800000 --step 60000 --rate-per 60000 -o json`
 
 ## Tracing
 
@@ -1548,7 +1548,7 @@
   - `--cluster-name` (query): clusterName
   - `--namespace` (query): only for auth
 - Output: list path `traces`; columns `duration`, `method`, `operationName`, `protocol`, `spanCount`, `startTime`
-- Example: `dc insight tracing find-jaeger-trace --trace-id <traceId> \ --cluster-name prod-1 --namespace default dc insight tracing find-jaeger-trace --trace-id <traceId> \ --cluster-name prod-1 --namespace default -o json`
+- Example: `# 必填：--trace-id / --cluster-name / --namespace dc insight tracing find-jaeger-trace --trace-id <traceId> \ --cluster-name kpanda-global-cluster --namespace insight-system -o json # 非法 trace id 时后端返回 "uninitialized TraceID is not allowed"`
 
 ### `dc insight tracing find-jaeger-traces`
 
@@ -1568,7 +1568,7 @@
   - `--cluster-name` (query): clusterName
   - `--namespace` (query): only for auth
 - Output: list path `traces`; columns `duration`, `method`, `operationName`, `protocol`, `spanCount`, `startTime`; pagination `cursor`
-- Example: `# All traces of a service in the last hour dc insight tracing find-jaeger-traces \ --cluster-name prod-1 --namespace default \ --service-name my-app \ --start 2024-06-24T07:00:00Z --end 2024-06-24T08:00:00Z \ --limit 50 # Slow traces (>500ms) for a specific operation dc insight tracing find-jaeger-traces \ --cluster-name prod-1 --namespace default \ --service-name my-app --operation-name 'GET /api/v1/orders' \ --duration-min 500ms --duration-max 5s \ --start 2024-06-24T07:00:00Z --end 2024-06-24T08:00:00Z -o json`
+- Example: `# 最近 1 小时某服务的全部 trace dc insight tracing find-jaeger-traces \ --cluster-name kpanda-global-cluster --namespace ghippo-system \ --service-name ghippo-apiserver \ --start "$(date -u -v-1H +%Y-%m-%dT%H:%M:%SZ)" \ --end "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \ --limit 50 -o json # 慢 trace（>500ms）+ 指定 operation dc insight tracing find-jaeger-traces \ --cluster-name kpanda-global-cluster --namespace ghippo-system \ --service-name ghippo-apiserver --operation-name 'GET /api/v1/orders' \ --duration-min 500ms --duration-max 5s \ --start "$(date -u -v-1H +%Y-%m-%dT%H:%M:%SZ)" \ --end "$(date -u +%Y-%m-%dT%H:%M:%SZ)" -o json # 输出：.traces[] 含 duration / method / operationName / protocol / spanCount / startTime`
 
 ### `dc insight tracing get-operation-detail`
 
@@ -1590,7 +1590,7 @@
   - `--rate-per` (query, int64): ratePer is the duration in which the per-second rate of change is calculated for a cumulative counter metric.
   - `--span-kinds` (query): spanKinds is the list of span kinds to include (logical OR) in the resulting metrics aggregation.
 - Output: list path `metrics`; columns `operationName`, `spanKind`; pagination `offset`
-- Example: `dc insight tracing get-operation-detail \ --cluster-name prod-1 --namespace default --service-name my-app \ --end-time 1700003600000000 --lookback 1800000000 \ --step 60000000 --rate-per 60000000 \ --span-kinds SPAN_KIND_SERVER \ --sort 'p99:desc' --page 1 --page-size 50 -o json`
+- Example: `END=$(date +%s)000 # 必填：--cluster-name --namespace --service-name dc insight tracing get-operation-detail \ --cluster-name kpanda-global-cluster --namespace ghippo-system \ --service-name ghippo-apiserver \ --end-time $END --lookback 1800000 \ --step 60000 --rate-per 60000 \ --span-kinds SPAN_KIND_SERVER \ --sort 'p99,desc' --page 1 --page-size 50 -o json # 输出：.metrics[] per-operation 的速率 / 错误率 / 延迟分位`
 
 ### `dc insight tracing get-service-detail`
 
@@ -1612,7 +1612,7 @@
   - `--rate-per` (query, int64): ratePer is the duration in which the per-second rate of change is calculated for a cumulative counter metric.
   - `--span-kinds` (query): spanKinds is the list of span kinds to include (logical OR) in the resulting metrics aggregation.
 - Output: list path `errorsRateMetrics`
-- Example: `dc insight tracing get-service-detail \ --cluster-name prod-1 --namespace default \ --service-names my-app --group-by-operation=true \ --end-time 1700003600000000 --lookback 1800000000 \ --step 60000000 --rate-per 60000000 \ --span-kinds SPAN_KIND_SERVER -o json`
+- Example: `END=$(date +%s)000 # 必填：--cluster-name --namespace --service-names dc insight tracing get-service-detail \ --cluster-name kpanda-global-cluster --namespace insight-system \ --service-names insight-agent --group-by-operation=true \ --end-time $END --lookback 1800000 \ --step 60000 --rate-per 60000 \ --span-kinds SPAN_KIND_SERVER -o json # 输出（皆为 SampleStream 时序数组）： # .reqRateMetric 吞吐 # .errorsRateMetrics 错误率 # .p50Metrics / .p75Metrics / .p95Metrics 延迟分位`
 
 ### `dc insight tracing get-service-pods`
 
@@ -1634,7 +1634,7 @@
   - `--rate-per` (query, int64): ratePer is the duration in which the per-second rate of change is calculated for a cumulative counter metric.
   - `--span-kinds` (query): spanKinds is the list of span kinds to include (logical OR) in the resulting metrics aggregation.
 - Output: list path `items`; columns `namespace`, `clusterName`, `podName`, `reqPercentage`; pagination `offset`
-- Example: `dc insight tracing get-service-pods --name my-app \ --cluster-name prod-1 --namespace default \ --end-time 1700003600000000 --lookback 1800000000 \ --sort 'reqPercentage:desc' --page 1 --page-size 50 -o json`
+- Example: `END=$(date +%s)000 # 必填：--name --cluster-name --namespace dc insight tracing get-service-pods --name ghippo-apiserver \ --cluster-name kpanda-global-cluster --namespace ghippo-system \ --end-time $END --lookback 1800000 \ --sort 'reqPercentage,desc' --page 1 --page-size 50 -o json # 输出：.items[] 含 podName / namespace / clusterName / reqPercentage`
 
 ### `dc insight tracing get-services`
 
@@ -1646,7 +1646,7 @@
   - `--namespace` (query): Optional.
   - `--extension-filters` (query): Support extension search
   - `--end-time` (query, int64): end_time is the ending time of the time series query range.
-  - `--lookback` (query, int64): lookback is the duration from the end_time to look back on for metrics data points.
+  - `--lookback` (query, int64): 回退时长 ms
   - `--span-kinds` (query): spanKinds is the list of span kinds to include (logical OR) in the resulting metrics aggregation.
   - `--page` (query, default `1`, int32): Page is current page.
   - `--page-size` (query, default `20`, int32): Size is the data number shown per page.
@@ -1654,7 +1654,7 @@
   - `--cluster` (query): cluster
   - `--cluster-name` (query): clusterName
 - Output: list path `items`; columns `namespace`, `errorRate`, `repLatency`, `reqRate`, `serviceName`; pagination `offset`
-- Example: `# Top services by request rate in the last 30m (lookback = 30*60*1e6 us) dc insight tracing get-services \ --cluster-name prod-1 --namespace default \ --end-time 1700003600000000 --lookback 1800000000 \ --span-kinds SPAN_KIND_SERVER --sort 'reqRate:desc' \ --page 1 --page-size 50 -o json`
+- Example: `END=$(date +%s)000 # 默认全 namespace；可加 --namespace 过滤 dc insight tracing get-services \ --cluster-name kpanda-global-cluster \ --end-time $END --lookback 1800000 \ --span-kinds SPAN_KIND_SERVER --sort 'reqRate,desc' \ --page 1 --page-size 50 -o json # 输出：.items[] 含 namespace / serviceName / errorRate / repLatency / reqRate`
 
 ### `dc insight tracing get-slow-sql-spans`
 
@@ -1665,7 +1665,7 @@
 - Flags:
   - `--cluster-name` (path, required): Required.
 - Output: list path `items`; columns `duration`, `sourcePod`, `spanId`, `startTime`, `status`, `traceId`
-- Example: `echo '{ "namespace": "default", "startTime": "1700000000000", "endTime": "1700003600000", "sort": "duration:desc", "page": 1, "pageSize": 50, "clauses": [ {"field":"db.statement","operation":"contains","stringValue":"SELECT"}, {"field":"duration","operation":">","floatValue":1000} ] }' | dc insight tracing get-slow-sql-spans --cluster-name prod-1 --file -`
+- Example: `# sort 支持：startTimeMillis,desc | startTimeMillis,asc | duration,desc | duration,asc echo '{ "namespace": "ghippo-system", "startTime": "2026-05-21T07:00:00.000Z", "endTime": "2026-05-21T08:00:00.000Z", "sort": "duration,desc", "page": 1, "pageSize": 50, "clauses": [ {"field":"db.statement","operation":"CONTAIN","stringValue":"SELECT"}, {"field":"duration","operation":"GT","floatValue":1000} ] }' | dc insight tracing get-slow-sql-spans \ --cluster-name kpanda-global-cluster --file - -o json # 输出：.items[] 含 duration / sourcePod / spanId / startTime / status / traceId`
 
 ### `dc insight tracing get-tag-values`
 
@@ -1683,7 +1683,7 @@
   - `--start` (query): e.g. 2022-06-24T08:00:47.850Z
   - `--end` (query): e.g. 2022-06-24T08:00:47.850Z
 - Output: list path `values`; pagination `cursor`
-- Example: `dc insight tracing get-tag-values --name http.status_code \ --cluster prod-1 --namespace default --service-names my-app \ --search 5 --limit 100 \ --start 2024-06-24T07:00:00Z --end 2024-06-24T08:00:00Z`
+- Example: `# 必填：--name (tag key) --cluster --namespace dc insight tracing get-tag-values --name http.status_code \ --cluster kpanda-global-cluster --namespace ghippo-system \ --service-names ghippo-apiserver --limit 100 -o json # 输出：.values[]`
 
 ### `dc insight tracing get-tags`
 
@@ -1700,7 +1700,7 @@
   - `--start` (query): e.g. 2022-06-24T08:00:47.850Z
   - `--end` (query): e.g. 2022-06-24T08:00:47.850Z
 - Output: list path `tags`; pagination `cursor`
-- Example: `dc insight tracing get-tags --cluster prod-1 --namespace default \ --service-names my-app --limit 500 \ --start 2024-06-24T07:00:00Z --end 2024-06-24T08:00:00Z`
+- Example: `# 必填：--cluster --namespace；--start / --end 默认 [now-15m, now] dc insight tracing get-tags \ --cluster kpanda-global-cluster --namespace ghippo-system \ --service-names ghippo-apiserver --limit 500 \ --start 2026-05-21T07:00:00Z --end 2026-05-21T08:00:00Z -o json # 输出：.tags[]`
 
 ### `dc insight tracing list-service-names`
 
@@ -1716,7 +1716,7 @@
   - `--start` (query): e.g. 2022-06-24T08:00:47.850Z
   - `--end` (query): e.g. 2022-06-24T08:00:47.850Z
 - Output: list path `services`
-- Example: `dc insight tracing list-service-names --cluster-name prod-1 --namespace default dc insight tracing list-service-names --cluster-name prod-1 --namespace default \ --start 2024-06-24T07:00:00Z --end 2024-06-24T08:00:00Z --max-size 500 -o json`
+- Example: `# ⚠️ --namespace 必填，缺失返回 HTTP 400 dc insight tracing list-service-names \ --cluster-name kpanda-global-cluster --namespace insight-system -o json # 输出：.services[]`
 
 ### `dc insight tracing query-metadata`
 
@@ -1728,7 +1728,7 @@
   - `--cluster-name` (path, required): Required.
   - `--type` (path, required, one of: DATABASE_ADDRESS|DATABASE_SYSTEM|SQL_STATEMENT): type
 - Output: list path `items`
-- Example: `# All SQL statements seen in the last hour for a namespace echo '{ "namespace": "default", "startTime": "1700000000000", "endTime": "1700003600000", "limit": 100, "clauses": [ {"field":"db.system","operation":"=","stringValue":"mysql"} ] }' | dc insight tracing query-metadata --cluster-name prod-1 --type SQL_STATEMENT --file - # type must be one of: DATABASE_ADDRESS | DATABASE_SYSTEM | SQL_STATEMENT echo '{ "namespace":"default", "startTime":"1700000000000","endTime":"1700003600000","limit":50 }' | dc insight tracing query-metadata --cluster-name prod-1 --type DATABASE_ADDRESS --file -`
+- Example: `# --type 必填，枚举：DATABASE_ADDRESS | DATABASE_SYSTEM | SQL_STATEMENT echo '{ "namespace": "ghippo-system", "startTime": "2026-05-21T07:00:00.000Z", "endTime": "2026-05-21T08:00:00.000Z", "limit": 100, "clauses": [ {"field":"db.system","operation":"EQUAL","stringValue":"mysql"} ] }' | dc insight tracing query-metadata \ --cluster-name kpanda-global-cluster --type SQL_STATEMENT --file - -o json # 输出：.items[]`
 
 ### `dc insight tracing query-operations`
 
@@ -1744,7 +1744,7 @@
   - `--start` (query): e.g. 2022-06-24T08:00:47.850Z
   - `--end` (query): e.g. 2022-06-24T08:00:47.850Z
 - Output: list path `operations`
-- Example: `dc insight tracing query-operations \ --cluster-name prod-1 --namespace default --service-name my-app \ --start 2024-06-24T07:00:00Z --end 2024-06-24T08:00:00Z --max-size 200`
+- Example: `# 必填：--cluster-name --namespace --service-name dc insight tracing query-operations \ --cluster-name kpanda-global-cluster --namespace ghippo-system \ --service-name ghippo-apiserver --max-size 200 -o json # 输出：.operations[]`
 
 ### `dc insight tracing query-span-histogram`
 
@@ -1754,7 +1754,7 @@
 - Body: required
 - Flags: none
 - Output: list path `countItems`; columns `error`, `normal`, `timestamp`, `total`
-- Example: `echo '{ "clusterName": "prod-1", "namespace": "default", "serviceName": ["my-app"], "start": "1700000000000", "end": "1700003600000", "interval": "1m", "onlyErrorSpans": false }' | dc insight tracing query-span-histogram --file -`
+- Example: `# ⚠️ start/end 必须 RFC3339；传 unix ms 会导致分桶数异常（实测 60001 桶） echo '{ "clusterName": "kpanda-global-cluster", "namespace": "ghippo-system", "serviceName": ["ghippo-apiserver"], "start": "2026-05-21T07:00:00.000Z", "end": "2026-05-21T08:00:00.000Z", "interval": "1m", "onlyErrorSpans": false }' | dc insight tracing query-span-histogram --file - -o json # 输出： # .countItems[] { timestamp(ms), normal, error, total } # .durationItems[] { timestamp(ms), p75Duration, p95Duration, p99Duration, avgDuration (ns) }`
 
 ### `dc insight tracing query-spans`
 
@@ -1764,7 +1764,7 @@
 - Body: required
 - Flags: none
 - Output: list path `items`; columns `duration`, `method`, `operationName`, `protocol`, `serviceName`, `spanId`
-- Example: `# Error spans for a service in a time range, sorted by duration desc echo '{ "clusterName": "prod-1", "namespace": "default", "serviceName": ["my-app"], "operationName": ["GET /api/v1/orders"], "start": "1700000000000", "end": "1700003600000", "durationMin": "200ms", "onlyErrorSpans": true, "sort": "duration:desc", "page": 1, "pageSize": 50, "tags": [ {"key":"http.status_code","operation":"=","value":"500"} ] }' | dc insight tracing query-spans --file -`
+- Example: `# ⚠️ POST body 中 start / end 必须是 RFC3339(Nano) 字符串，不是 unix ms # sort 支持：startTime,desc | startTime,asc | duration,desc | duration,asc（默认 startTime,desc） echo '{ "clusterName": "kpanda-global-cluster", "namespace": "ghippo-system", "serviceName": ["ghippo-apiserver"], "operationName": ["GET /api/v1/orders"], "start": "2026-05-21T07:00:00.000Z", "end": "2026-05-21T08:00:00.000Z", "durationMin": "200ms", "onlyErrorSpans": true, "sort": "duration,desc", "page": 1, "pageSize": 50, "tags": [ {"key":"http.status_code","operation":"EQUAL","value":"500"} ] }' | dc insight tracing query-spans --file - -o json # 字段说明： # clusterName / cluster 二选一 # namespace 必填 # serviceName / operationName 字符串数组 # durationMin/durationMax go duration: ns/us/ms/s/m/h # tags[].operation FilterOperator # CONTAIN/NOT_CONTAIN/EQUAL/NOT_EQUAL/REGEX_PATTERN/ # LT/LE/GT/GE/EQ/NE # onlyErrorSpans 仅返回错误 span # spanKinds 可选，默认 [SPAN_KIND_SERVER, SPAN_KIND_CLIENT] # 输出：.items[] 含 duration / method / operationName / protocol / serviceName / spanId`
 
 ### `dc insight tracing statement-histogram`
 
@@ -1775,7 +1775,7 @@
 - Flags:
   - `--cluster-name` (path, required): Required.
 - Output: list path `duration`; columns `timestamp`, `value`
-- Example: `echo '{ "namespace": "default", "startTime": "1700000000000", "endTime": "1700003600000", "interval": "1m", "topN": "10", "sort": "duration:desc", "clauses": [ {"field":"db.system","operation":"=","stringValue":"mysql"} ] }' | dc insight tracing statement-histogram --cluster-name prod-1 --file -`
+- Example: `# sort 支持（proto canonical，逗号分隔，默认 request_count,desc）： # request_count,desc | request_count,asc # avg_duration,desc | avg_duration,asc # error_requests,desc| error_requests,asc # error_rate,desc | error_rate,asc # @timestamp,desc | @timestamp,asc echo '{ "namespace": "ghippo-system", "startTime": "2026-05-21T07:00:00.000Z", "endTime": "2026-05-21T08:00:00.000Z", "interval": "1m", "topN": 10, "sort": "avg_duration,desc", "clauses": [ {"field":"db.system","operation":"EQUAL","stringValue":"mysql"} ] }' | dc insight tracing statement-histogram \ --cluster-name kpanda-global-cluster --file - -o json # 输出（按时间桶的 BucketHistogram 数组）： # .total 调用次数 # .duration 平均耗时（ns） # .errors 错误次数 # .errorRate 错误率 # .sourcePods 调用容器组`
 
 ### `dc insight tracing statement-top-k`
 
@@ -1786,7 +1786,7 @@
 - Flags:
   - `--cluster-name` (path, required): Required.
 - Output: list path `items`; columns `address`, `avgDuration`, `errorRate`, `sourceCluster`, `sourceNamespace`, `sourceService`
-- Example: `echo '{ "namespace": "default", "startTime": "1700000000000", "endTime": "1700003600000", "interval": "5m", "topN": "20", "sort": "avgDuration:desc" }' | dc insight tracing statement-top-k --cluster-name prod-1 --file -`
+- Example: `echo '{ "namespace": "ghippo-system", "startTime": "2026-05-21T07:00:00.000Z", "endTime": "2026-05-21T08:00:00.000Z", "topN": 20, "sort": "avg_duration,desc" }' | dc insight tracing statement-top-k \ --cluster-name kpanda-global-cluster --file - -o json # 输出：.items[] 含 address / system / sourceCluster / sourceNamespace / # sourceService / statement / totalCount / avgDuration(ns) / errorRate`
 
 ## User
 
