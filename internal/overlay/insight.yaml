@@ -1602,13 +1602,13 @@ commands:
       #   filters.clauses[]   { dataType=NODE_DATA, field, operation, stringValue|floatValue }
       #     field=SERVICE_NAME      支持 CONTAIN/NOT_CONTAIN/EQUAL/NOT_EQUAL/REGEX_PATTERN
       #     field=STATUS_ERROR_RATE 支持 LE/GE，使用 floatValue
-      #     field=STATUS_LATENCY    支持 LE/GE，使用 floatValue（单位 ms）
+      #     field=STATUS_LATENCY    支持 LE/GE，使用 floatValue（单位秒）
       #
       # 返回结构（Graph）：
       #   nodes[]   { id, parent, type(NodeType), metadata, position, statuses[] }
       #   edges[]   { id, source, target, statuses[], properties }
       #   layer / graphType
-      #   Status.name 约定：requestsPerMinute / errorRate(%) / avgLatency(ms) /
+      #   Status.name 约定：requestsPerMinute / errorRate(%) / avgLatency(秒) /
       #                     replicas / availableReplicas / healthyStatus(0~3) ...
       #
       # ──────────────────────────────────────────────────────────────────
@@ -1618,7 +1618,7 @@ commands:
       #   request_total          总请求数
       #   request_failed_total   失败请求数
       #   request_per_second     QPS
-      #   request_avg_latency    平均延迟（秒，展示时按需换算成 ms）
+      #   request_avg_latency    平均延迟（秒）
       #
       # 第一步：Node 数据分析
       #   1.1 服务类型分布：按 nodes[].type 分组计数
@@ -1658,7 +1658,7 @@ commands:
       #          | reverse | .[:5]
       #          | map({source, target,
       #                 latency: (.statuses[] | select(.name == "request_avg_latency") | .value)})'
-      #       展示时给延迟带单位（ms / s）。
+      #       值单位为秒，展示时可换算为 ms 并标注单位。
       #
       # 第三步：汇总异常服务
       #   综合上述结果，按严重度排序输出 service / issue 列表：
