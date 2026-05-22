@@ -1268,22 +1268,18 @@ commands:
     short: "Search Jaeger traces by service / operation / duration window"
     aliases: [ls-traces]
     example: |
-      # 最近 1 小时某服务的全部 trace
       dc insight tracing find-jaeger-traces \
         --cluster-name kpanda-global-cluster --namespace ghippo-system \
         --service-name ghippo-apiserver \
-        --start "$(date -u -v-1H +%Y-%m-%dT%H:%M:%SZ)" \
-        --end   "$(date -u           +%Y-%m-%dT%H:%M:%SZ)" \
+        --start 2026-05-21T07:00:00Z --end 2026-05-21T08:00:00Z \
         --limit 50 -o json
-
-      # 慢 trace（>500ms）+ 指定 operation
+      # 上例：最近 1 小时某服务的全部 trace；--start/--end 为 RFC3339，替换为实际窗口即可
+      # 慢 trace（>500ms）+ 指定 operation：
       dc insight tracing find-jaeger-traces \
         --cluster-name kpanda-global-cluster --namespace ghippo-system \
         --service-name ghippo-apiserver --operation-name 'GET /api/v1/orders' \
         --duration-min 500ms --duration-max 5s \
-        --start "$(date -u -v-1H +%Y-%m-%dT%H:%M:%SZ)" \
-        --end   "$(date -u           +%Y-%m-%dT%H:%M:%SZ)" -o json
-
+        --start 2026-05-21T07:00:00Z --end 2026-05-21T08:00:00Z -o json
       # 输出：.traces[] 含 duration / method / operationName / protocol / spanCount / startTime
 
   find-jaeger-trace:
@@ -1554,17 +1550,14 @@ commands:
   get-graph:
     short: "Get service / workload / namespace topology graph"
     example: |
-      # 时间用毫秒：bash 拼接示例
       END=$(date +%s)000; START=$(($(date +%s) - 3600))000
-
-      # 基础查询（必填：clusterNames + start + end）
       echo '{
         "clusterNames": ["kpanda-global-cluster"],
         "start": "'"$START"'",
         "end":   "'"$END"'"
       }' | dc insight servicegraph get-graph --file - -o json
-
-      # 按命名空间过滤
+      # 上例：基础查询（必填 clusterNames + start + end），start/end 为 unix 毫秒字符串
+      # 按命名空间过滤：
       echo '{
         "clusterNames": ["kpanda-global-cluster"],
         "namespaces":   ["insight-system"],
