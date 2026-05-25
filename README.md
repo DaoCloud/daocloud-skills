@@ -13,6 +13,7 @@ Currently supported products:
 |---|---|
 | `global-management` | Global Management — users, groups, workspaces, roles, audit |
 | `container-management` | Container Management — clusters, namespaces, workloads, storage |
+| `insight` | Insight — observability, metrics, alerting, and related operations |
 
 ## Prerequisites
 
@@ -33,7 +34,111 @@ make build
 make dev
 ```
 
-The `make dev` target installs `dc` to `/usr/local/bin` and symlinks `skills/dc` into `~/.agents/skills/dc` for live use in an AI agent runtime.
+The `make dev` target installs `dc` to `/usr/local/bin` and symlinks `skills/dc` into `~/.agents/skills/dc` for live local development in an AI agent runtime.
+
+## Install the Skill
+
+Install the `dc` skill globally:
+
+```bash
+npx skills add daocloud/daocloud-skills -g
+```
+
+For non-interactive installs, add confirmation flags:
+
+```bash
+npx -y skills add daocloud/daocloud-skills -g -y
+```
+
+The `-g` flag installs the skill into the selected agent's user-level skills directory, so it is available across projects. Omit `-g` if you want to install the skill only for the current project.
+
+This installs the skill only. The skill helps an AI agent use `dc`, but it does not install the `dc` CLI. Install the CLI separately before running DCE operations.
+
+### Install for a Specific Agent
+
+Use `--agent` to install the `dc` skill for a specific AI coding agent. Common client targets include:
+
+**Claude Code**
+
+```bash
+npx skills add daocloud/daocloud-skills -g --skill dc --agent claude-code
+```
+
+**Codex**
+
+```bash
+npx skills add daocloud/daocloud-skills -g --skill dc --agent codex
+```
+
+**Cursor**
+
+```bash
+npx skills add daocloud/daocloud-skills -g --skill dc --agent cursor
+```
+
+Use `--agent` more than once to install the same skill into multiple agents:
+
+```bash
+npx skills add daocloud/daocloud-skills -g \
+  --skill dc \
+  --agent claude-code \
+  --agent codex \
+  --agent cursor
+```
+
+This installs the skill from the repository's default branch. To inspect available skills before installing:
+
+```bash
+npx skills add daocloud/daocloud-skills --list
+```
+
+To uninstall the global `dc` skill, use `remove` with the same agent target:
+
+```bash
+npx skills remove -g dc --agent codex
+```
+
+After installation, open a new agent session and ask it to use the `dc` skill for DCE operations, for example:
+
+```text
+Use the dc skill to list DCE clusters.
+```
+
+## Install the CLI
+
+For regular users, download a prebuilt archive from GitHub Releases:
+
+```bash
+VERSION=v0.1.0-rc.4
+OS=linux
+ARCH=amd64
+PKG="dc-${VERSION}-${OS}-${ARCH}"
+
+curl -fL "https://github.com/DaoCloud/daocloud-skills/releases/download/${VERSION}/${PKG}.tar.gz" -o dc.tar.gz
+tar -xzf dc.tar.gz
+sudo install -m 0755 "${PKG}/dc" /usr/local/bin/dc
+```
+
+Use `OS=darwin` for macOS and `OS=linux` for Linux. Use `ARCH=arm64` for Apple Silicon or ARM64 Linux, and `ARCH=amd64` for Intel macOS or x86_64 Linux.
+
+Verify the CLI is available:
+
+```bash
+dc --help
+```
+
+For source builds from this repository:
+
+```bash
+make build
+sudo cp bin/dc /usr/local/bin/dc
+```
+
+For local development, use `make dev` to build the CLI, copy it to `/usr/local/bin/dc`, and symlink the local skill directory:
+
+```bash
+make dev
+```
 
 ## Usage
 
