@@ -5,7 +5,7 @@ const os = require("os");
 const crypto = require("crypto");
 
 const VERSION = require("../package.json").version;
-const REPO = "Frapschen/daocloud-skills";
+const REPO = "DaoCloud/daocloud-skills";
 const NAME = "dc";
 const ALLOWED_HOSTS = new Set([
   "github.com",
