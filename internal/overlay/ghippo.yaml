@@ -56,8 +56,8 @@ commands:
     short: "List platform users"
     aliases: [ls-users]
     example: |
-      dc global-management users list-users
-      dc global-management users list-users --page-size 50 -o json
+      dce global-management users list-users
+      dce global-management users list-users --page-size 50 -o json
     params:
       keyword:
         help: "Filter by username or email"
@@ -70,7 +70,7 @@ commands:
   create-user:
     short: "Create a new platform user"
     example: |
-      dc global-management users create-user \
+      dce global-management users create-user \
         --set name=alice \
         --set password=changeme \
         --set description="Alice from dev team" \
@@ -86,7 +86,7 @@ commands:
   update-user:
     short: "Update user profile"
     example: |
-      dc global-management users update-user --id <id> \
+      dce global-management users update-user --id <id> \
         --set email=newemail@example.com \
         --set firstname=Alice \
         --set lastname=Smith \
@@ -96,7 +96,7 @@ commands:
   set-user-password:
     short: "Set or reset a user's password"
     example: |
-      dc global-management users set-user-password --id <id> \
+      dce global-management users set-user-password --id <id> \
         --set password=NewP@ssw0rd
 
   reset-user-m-f-a:
@@ -115,10 +115,10 @@ commands:
     example: |
       # Add roles
       echo '{"addRoles":["Admin"],"removeRoles":[]}' | \
-        dc global-management users update-user-roles --id <id> --file -
+        dce global-management users update-user-roles --id <id> --file -
       # Remove roles
       echo '{"addRoles":[],"removeRoles":["Editor"]}' | \
-        dc global-management users update-user-roles --id <id> --file -
+        dce global-management users update-user-roles --id <id> --file -
 
   list-user-groups:
     short: "List groups a user belongs to"
@@ -131,7 +131,7 @@ commands:
   create-user-access-token:
     short: "Create an access token for a user"
     example: |
-      dc global-management users create-user-access-token --id <id> \
+      dce global-management users create-user-access-token --id <id> \
         --set name=my-token \
         --set expiredAt=2026-12-31T00:00:00Z
 
@@ -154,7 +154,7 @@ commands:
   create-group:
     short: "Create a user group"
     example: |
-      dc global-management group create-group \
+      dce global-management group create-group \
         --set name=dev-team \
         --set description="Development team"
 
@@ -168,7 +168,7 @@ commands:
   update-group:
     short: "Update a user group"
     example: |
-      dc global-management group update-group --id <id> \
+      dce global-management group update-group --id <id> \
         --set name=dev-team-renamed \
         --set description="Renamed team"
 
@@ -177,8 +177,8 @@ commands:
     short: "List workspaces"
     aliases: [ls-ws, ls-workspaces]
     example: |
-      dc global-management workspace list-workspaces
-      dc global-management workspace list-workspaces -o json
+      dce global-management workspace list-workspaces
+      dce global-management workspace list-workspaces -o json
     params:
       page:
         default: "1"
@@ -189,7 +189,7 @@ commands:
     short: "Create a workspace"
     example: |
       # alias is the display name; parentFolderId=0 places it under root
-      dc global-management workspace create-workspace \
+      dce global-management workspace create-workspace \
         --set alias=my-workspace \
         --set parentFolderId=0
 
@@ -216,7 +216,7 @@ commands:
     short: "Create a folder"
     example: |
       # alias is the display name; parentFolderId=0 places it under root
-      dc global-management workspace create-folder \
+      dce global-management workspace create-folder \
         --set alias=my-folder \
         --set parentFolderId=0
 
@@ -229,13 +229,13 @@ commands:
   update-folder:
     short: "Update a folder"
     example: |
-      dc global-management workspace update-folder --folder-id <id> \
+      dce global-management workspace update-folder --folder-id <id> \
         --set alias=new-folder-name
 
   authorize:
     short: "Grant a role to a user or group within a folder"
     example: |
-      dc global-management workspace authorize --folder-id <folderId> \
+      dce global-management workspace authorize --folder-id <folderId> \
         --set memberId=<userId> \
         --set memberType=user \
         --set memberName=alice \
@@ -262,7 +262,7 @@ commands:
         "perms": [
           {"gproduct": "ghippo", "resourceType": "User", "action": "get"}
         ]
-      }' | dc global-management role create-role --file -
+      }' | dce global-management role create-role --file -
 
   get-role:
     short: "Get role details"
@@ -278,7 +278,7 @@ commands:
         "perms": [
           {"gproduct": "ghippo", "resourceType": "User", "action": "get"}
         ]
-      }' | dc global-management role update-role --name <name> --file -
+      }' | dce global-management role update-role --name <name> --file -
 
   list-all-permissions:
     short: "List all available permissions"
@@ -313,7 +313,7 @@ commands:
     short: "List audit log entries"
     aliases: [ls-audit]
     example: |
-      dc global-management audit list-audits --page-size 100 -o json
+      dce global-management audit list-audits --page-size 100 -o json
     params:
       page:
         default: "1"

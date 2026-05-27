@@ -1,4 +1,4 @@
-// Package dceskills embeds the root cli.yaml so cmd/dc/main.go can
+// Package dceskills embeds the root cli.yaml so cmd/dce/main.go can
 // access it via a plain import without filesystem path traversal.
 package dceskills
 

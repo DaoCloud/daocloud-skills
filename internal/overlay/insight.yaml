@@ -18,11 +18,11 @@ commands:
     aliases: [ls-alerts]
     example: |
       # Active alerts in a cluster
-      dc insight alert list-alerts --cluster-name prod-1 --severity CRITICAL
+      dce insight alert list-alerts --cluster-name prod-1 --severity CRITICAL
       # Alert history (resolved=true)
-      dc insight alert list-alerts --resolved=true --page 1 --page-size 50 -o json
+      dce insight alert list-alerts --resolved=true --page 1 --page-size 50 -o json
       # Filter by group / rule
-      dc insight alert list-alerts --group-id <gid> --rule-name "HighCPU"
+      dce insight alert list-alerts --group-id <gid> --rule-name "HighCPU"
     params:
       page:      { default: "1" }
       pageSize:  { default: "20" }
@@ -35,8 +35,8 @@ commands:
     short: "Get a single alert by ID"
     aliases: [describe-alert]
     example: |
-      dc insight alert get-alert --id <alertId>
-      dc insight alert get-alert --id <alertId> --resolved=true
+      dce insight alert get-alert --id <alertId>
+      dce insight alert get-alert --id <alertId> --resolved=true
 
   count-alert:
     short: "Count alerts grouped by time/severity/target"
@@ -44,7 +44,7 @@ commands:
       # ⚠️ --start 与 --end（unix 秒）必填，缺失返回 HTTP 400 "value must be greater than 0"
       # --step 单位为分钟，0 表示返回时间范围内的总数（不分桶）
       END=$(date +%s); START=$((END - 86400))
-      dc insight alert count-alert \
+      dce insight alert count-alert \
         --cluster-name kpanda-global-cluster \
         --severity CRITICAL \
         --start $START --end $END --step 60 \
@@ -53,7 +53,7 @@ commands:
   clean-alert-history:
     short: "Trigger cleanup of alert history (respects retention config)"
     example: |
-      dc insight alert clean-alert-history
+      dce insight alert clean-alert-history
 
   # ── 告警 - 告警组 (Group) ─────────────────────────────────────────────
   list-groups:
@@ -61,11 +61,11 @@ commands:
     aliases: [ls-groups]
     example: |
       # All alert groups
-      dc insight alert list-groups
+      dce insight alert list-groups
       # Filter by name (fuzzy) within a cluster + namespace
-      dc insight alert list-groups --name node --cluster-name prod-1 --namespace insight-system
+      dce insight alert list-groups --name node --cluster-name prod-1 --namespace insight-system
       # Only built-in groups, page through results
-      dc insight alert list-groups --builtin=true --page 1 --page-size 50 -o json
+      dce insight alert list-groups --builtin=true --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -74,8 +74,8 @@ commands:
     short: "Get an alert group by ID"
     aliases: [describe-group]
     example: |
-      dc insight alert get-group --id <gid>
-      dc insight alert get-group --id <gid> -o json
+      dce insight alert get-group --id <gid>
+      dce insight alert get-group --id <gid> -o json
 
   create-group:
     short: "Create an alert group (with rules / receivers)"
@@ -113,7 +113,7 @@ commands:
             "annotations": {"summary": "Node {{ $labels.instance }} down"}
           }
         ]
-      }' | dc insight alert create-group --file -
+      }' | dce insight alert create-group --file -
 
   update-group:
     short: "Update an alert group (description / receivers / notify only)"
@@ -123,12 +123,12 @@ commands:
         "notificationTemplate": "default",
         "receivers": [{"type":"email","names":["ops-mail"]}],
         "notifyRepeatConfig": [{"severity":"WARNING","interval":600}]
-      }' | dc insight alert update-group --id <gid> --file -
+      }' | dce insight alert update-group --id <gid> --file -
 
   delete-group:
     short: "Delete an alert group"
     example: |
-      dc insight alert delete-group --id <gid>
+      dce insight alert delete-group --id <gid>
 
   validate-group:
     short: "Validate a group definition (PrometheusRule YAML)"
@@ -137,7 +137,7 @@ commands:
         "clusterName": "prod-1",
         "namespace": "insight-system",
         "yamlString": "groups:\n- name: my\n  rules:\n  - alert: A\n    expr: vector(1)\n"
-      }' | dc insight alert validate-group --file -
+      }' | dce insight alert validate-group --file -
 
   # ── 告警 - 告警规则 (GroupRule) ───────────────────────────────────────
   list-group-rules:
@@ -145,11 +145,11 @@ commands:
     aliases: [ls-group-rules]
     example: |
       # All rules in a group
-      dc insight alert list-group-rules --id <gid>
+      dce insight alert list-group-rules --id <gid>
       # Filter by name + severity
-      dc insight alert list-group-rules --id <gid> --name HighCPU --severity CRITICAL
+      dce insight alert list-group-rules --id <gid> --name HighCPU --severity CRITICAL
       # Only firing rules, paged
-      dc insight alert list-group-rules --id <gid> --status FIRING --page 1 --page-size 50 -o json
+      dce insight alert list-group-rules --id <gid> --status FIRING --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -159,7 +159,7 @@ commands:
   get-group-rule:
     short: "Get a single rule by group id + rule name"
     example: |
-      dc insight alert get-group-rule --id <gid> --name HighCPU
+      dce insight alert get-group-rule --id <gid> --name HighCPU
 
   add-group-rule:
     short: "Add a rule to an existing group"
@@ -176,7 +176,7 @@ commands:
           "labels": {"team":"ops"},
           "annotations": {"summary":"low memory on {{ $labels.instance }}"}
         }
-      }' | dc insight alert add-group-rule --id <gid> --file -
+      }' | dce insight alert add-group-rule --id <gid> --file -
 
   update-group-rule:
     short: "Update a rule in a group"
@@ -187,12 +187,12 @@ commands:
         "duration": "10m",
         "expr": "rate(http_requests_total{code=~\"5..\"}[5m]) > 1",
         "description": "5xx rate too high"
-      }' | dc insight alert update-group-rule --id <gid> --name HighErr --file -
+      }' | dce insight alert update-group-rule --id <gid> --name HighErr --file -
 
   delete-group-rule:
     short: "Delete a rule from a group"
     example: |
-      dc insight alert delete-group-rule --id <gid> --name HighCPU
+      dce insight alert delete-group-rule --id <gid> --name HighCPU
 
   preview-rule:
     short: "Preview a rule's evaluation (matrix output) before saving"
@@ -203,7 +203,7 @@ commands:
         "group": {"clusterName":"kpanda-global-cluster","targetType":"CLUSTER","targets":["*"]},
         "rule":  {"source":"PROMQL","expr":"vector(1)","duration":"1m","severity":"WARNING"},
         "params":{"start":"'"$START"'","end":"'"$END"'","step":60}
-      }' | dc insight alert preview-rule --file -
+      }' | dce insight alert preview-rule --file -
 
   # ── 告警 - 通知接收人 (Receiver) ──────────────────────────────────────
   list-receivers:
@@ -211,11 +211,11 @@ commands:
     aliases: [ls-receivers]
     example: |
       # All receivers
-      dc insight alert list-receivers
+      dce insight alert list-receivers
       # Only email receivers, exact name match
-      dc insight alert list-receivers --type email --name ops-mail --exact-search=true
+      dce insight alert list-receivers --type email --name ops-mail --exact-search=true
       # Paged JSON output
-      dc insight alert list-receivers --page 1 --page-size 50 -o json
+      dce insight alert list-receivers --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -227,8 +227,8 @@ commands:
     example: |
       # ⚠️ --type 必填（proto enum.defined_only），缺失返回 HTTP 400 "type cannot be empty"
       # type 取值：webhook | email | dingtalk | wecom | sms | message | lark
-      dc insight alert get-receiver --name ops-mail --type email -o json
-      dc insight alert get-receiver --name my-bot   --type lark  -o json
+      dce insight alert get-receiver --name ops-mail --type email -o json
+      dce insight alert get-receiver --name my-bot   --type lark  -o json
     params:
       type: { help: "Required. webhook | email | dingtalk | wecom | sms | message | lark" }
 
@@ -241,7 +241,7 @@ commands:
         "type": "email",
         "description": "ops mailing list",
         "email": {"to": ["ops@example.com"]}
-      }' | dc insight alert create-receiver --file -
+      }' | dce insight alert create-receiver --file -
 
       # Webhook receiver with bearer token
       echo '{
@@ -254,7 +254,7 @@ commands:
             "tlsConfig": {"insecureSkipVerify": false}
           }
         }
-      }' | dc insight alert create-receiver --file -
+      }' | dce insight alert create-receiver --file -
 
   update-receiver:
     short: "Update a notification receiver"
@@ -264,12 +264,12 @@ commands:
         "type": "email",
         "description": "updated mailing list",
         "email": {"to": ["ops@example.com", "oncall@example.com"]}
-      }' | dc insight alert update-receiver --name ops-mail --file -
+      }' | dce insight alert update-receiver --name ops-mail --file -
 
   delete-receiver:
     short: "Delete a notification receiver"
     example: |
-      dc insight alert delete-receiver --name ops-mail
+      dce insight alert delete-receiver --name ops-mail
 
   test-receiver:
     short: "Send a test message to a receiver definition"
@@ -278,21 +278,21 @@ commands:
         "name": "ops-mail",
         "type": "email",
         "email": {"to": ["ops@example.com"]}
-      }' | dc insight alert test-receiver --file -
+      }' | dce insight alert test-receiver --file -
 
   get-smtp-status:
     short: "Check whether SMTP is configured (required for email receivers)"
     example: |
-      dc insight alert get-smtp-status
-      dc insight alert get-smtp-status -o json
+      dce insight alert get-smtp-status
+      dce insight alert get-smtp-status -o json
 
   # ── 告警 - SMS Provider ───────────────────────────────────────────────
   list-providers:
     short: "List SMS providers (Aliyun / Tencent / custom)"
     example: |
-      dc insight alert list-providers
-      dc insight alert list-providers --name aliyun --exact-search=true
-      dc insight alert list-providers --page 1 --page-size 50 -o json
+      dce insight alert list-providers
+      dce insight alert list-providers --name aliyun --exact-search=true
+      dce insight alert list-providers --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -300,8 +300,8 @@ commands:
   get-provider:
     short: "Get an SMS provider by name"
     example: |
-      dc insight alert get-provider --name aliyun-sms
-      dc insight alert get-provider --name aliyun-sms -o json
+      dce insight alert get-provider --name aliyun-sms
+      dce insight alert get-provider --name aliyun-sms -o json
 
   create-provider:
     short: "Create an SMS provider"
@@ -316,7 +316,7 @@ commands:
           "signName": "MyCompany",
           "templateCode": "SMS_123"
         }
-      }' | dc insight alert create-provider --file -
+      }' | dce insight alert create-provider --file -
 
   update-provider:
     short: "Update an SMS provider"
@@ -330,21 +330,21 @@ commands:
           "signName": "MyCompany",
           "templateCode": "SMS_456"
         }
-      }' | dc insight alert update-provider --name aliyun-sms --file -
+      }' | dce insight alert update-provider --name aliyun-sms --file -
 
   delete-provider:
     short: "Delete an SMS provider"
     example: |
-      dc insight alert delete-provider --name aliyun-sms
+      dce insight alert delete-provider --name aliyun-sms
 
   # ── 告警 - 通知模板 (Template) ────────────────────────────────────────
   list-templates:
     short: "List notification templates"
     aliases: [ls-templates]
     example: |
-      dc insight alert list-templates
-      dc insight alert list-templates --name crit --exact-search=false
-      dc insight alert list-templates --builtin=true --page 1 --page-size 50 -o json
+      dce insight alert list-templates
+      dce insight alert list-templates --name crit --exact-search=false
+      dce insight alert list-templates --builtin=true --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -352,8 +352,8 @@ commands:
   list-template-summary:
     short: "List notification template summaries (lightweight)"
     example: |
-      dc insight alert list-template-summary
-      dc insight alert list-template-summary --builtin=true -o json
+      dce insight alert list-template-summary
+      dce insight alert list-template-summary --builtin=true -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -361,8 +361,8 @@ commands:
   get-template:
     short: "Get a notification template by name"
     example: |
-      dc insight alert get-template --name crit-email
-      dc insight alert get-template --name crit-email -o json
+      dce insight alert get-template --name crit-email
+      dce insight alert get-template --name crit-email -o json
 
   create-template:
     short: "Create a notification template (body per channel)"
@@ -378,7 +378,7 @@ commands:
           "dingtalk": "**[CRITICAL]** {{ .CommonLabels.alertname }}",
           "wecom": "[CRITICAL] {{ .CommonLabels.alertname }}"
         }
-      }' | dc insight alert create-template --file -
+      }' | dce insight alert create-template --file -
 
   update-template:
     short: "Update a notification template"
@@ -391,12 +391,12 @@ commands:
             "body":    "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
           }
         }
-      }' | dc insight alert update-template --name crit-email --file -
+      }' | dce insight alert update-template --name crit-email --file -
 
   delete-template:
     short: "Delete a notification template"
     example: |
-      dc insight alert delete-template --name crit-email
+      dce insight alert delete-template --name crit-email
 
   preview-template:
     short: "Render a notification template against sample alert data"
@@ -410,15 +410,15 @@ commands:
           "commonLabels": {"alertname":"HighCPU"},
           "alerts": [{"status":"firing","labels":{"instance":"node1"},"annotations":{"summary":"cpu hot"}}]
         }
-      }' | dc insight alert preview-template --file -
+      }' | dce insight alert preview-template --file -
 
   # ── 告警 - 规则模板 (RuleTemplate) ────────────────────────────────────
   list-rule-templates:
     short: "List alert rule templates (reusable rule bundles)"
     example: |
-      dc insight alert list-rule-templates
-      dc insight alert list-rule-templates --target-type NODE --builtin=false
-      dc insight alert list-rule-templates --name node --page 1 --page-size 50 -o json
+      dce insight alert list-rule-templates
+      dce insight alert list-rule-templates --target-type NODE --builtin=false
+      dce insight alert list-rule-templates --name node --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -428,14 +428,14 @@ commands:
   list-rule-template-summary:
     short: "List rule template summaries (id/name/targetType only)"
     example: |
-      dc insight alert list-rule-template-summary
-      dc insight alert list-rule-template-summary --target-type CLUSTER -o json
+      dce insight alert list-rule-template-summary
+      dce insight alert list-rule-template-summary --target-type CLUSTER -o json
 
   get-rule-template:
     short: "Get a rule template by ID"
     example: |
-      dc insight alert get-rule-template --id <rtid>
-      dc insight alert get-rule-template --id <rtid> -o json
+      dce insight alert get-rule-template --id <rtid>
+      dce insight alert get-rule-template --id <rtid> -o json
 
   create-rule-template:
     short: "Create a rule template (bundle of rules)"
@@ -448,7 +448,7 @@ commands:
           {"name":"NodeDown","severity":"CRITICAL","duration":"5m","expr":"up == 0"},
           {"name":"NodeHighLoad","severity":"WARNING","duration":"10m","expr":"node_load5 > 8"}
         ]
-      }' | dc insight alert create-rule-template --file -
+      }' | dce insight alert create-rule-template --file -
 
   update-rule-template:
     short: "Update a rule template"
@@ -459,12 +459,12 @@ commands:
           {"name":"NodeDown","severity":"CRITICAL","duration":"10m","expr":"up == 0"},
           {"name":"NodeHighLoad","severity":"WARNING","duration":"15m","expr":"node_load5 > 10"}
         ]
-      }' | dc insight alert update-rule-template --id <rtid> --file -
+      }' | dce insight alert update-rule-template --id <rtid> --file -
 
   delete-rule-template:
     short: "Delete a rule template"
     example: |
-      dc insight alert delete-rule-template --id <rtid>
+      dce insight alert delete-rule-template --id <rtid>
 
   # ── 告警 - 静默 (Silence) ─────────────────────────────────────────────
   list-silences:
@@ -472,17 +472,17 @@ commands:
     aliases: [ls-silences]
     example: |
       # All silences (active and expired)
-      dc insight alert list-silences
+      dce insight alert list-silences
       # Only currently-active silences
-      dc insight alert list-silences --expired=false
+      dce insight alert list-silences --expired=false
       # Filter by cluster + namespace
-      dc insight alert list-silences --cluster-name prod-1 --namespace insight-system -o json
+      dce insight alert list-silences --cluster-name prod-1 --namespace insight-system -o json
 
   get-silence:
     short: "Get a silence by ID"
     example: |
-      dc insight alert get-silence --id <sid>
-      dc insight alert get-silence --id <sid> -o json
+      dce insight alert get-silence --id <sid>
+      dce insight alert get-silence --id <sid> -o json
 
   create-silence:
     short: "Create an alert silence (label matchers + optional schedule)"
@@ -502,7 +502,7 @@ commands:
           "weekdayRange": [0],
           "timeRanges": [{"start":"02:00","end":"04:00"}]
         }
-      }' | dc insight alert create-silence --file -
+      }' | dce insight alert create-silence --file -
 
   update-silence:
     short: "Update an alert silence"
@@ -517,12 +517,12 @@ commands:
           "weekdayRange": [0, 6],
           "timeRanges": [{"start":"01:00","end":"05:00"}]
         }
-      }' | dc insight alert update-silence --id <sid> --file -
+      }' | dce insight alert update-silence --id <sid> --file -
 
   delete-silence:
     short: "Delete an alert silence"
     example: |
-      dc insight alert delete-silence --id <sid>
+      dce insight alert delete-silence --id <sid>
 
   preview-silence:
     short: "Preview which alerts a silence definition would match"
@@ -533,16 +533,16 @@ commands:
         "namespace": "insight-system",
         "size": "20",
         "matches": [{"type":"EQUAL","key":"alertname","value":"HighCPU"}]
-      }' | dc insight alert preview-silence --file -
+      }' | dce insight alert preview-silence --file -
 
   # ── 告警 - 抑制 (Inhibition) ──────────────────────────────────────────
   list-inhibitions:
     short: "List inhibition rules"
     aliases: [ls-inhibitions]
     example: |
-      dc insight alert list-inhibitions
-      dc insight alert list-inhibitions --cluster-name prod-1 --namespace insight-system
-      dc insight alert list-inhibitions --name cluster-down --page 1 --page-size 50 -o json
+      dce insight alert list-inhibitions
+      dce insight alert list-inhibitions --cluster-name prod-1 --namespace insight-system
+      dce insight alert list-inhibitions --name cluster-down --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -550,8 +550,8 @@ commands:
   get-inhibition:
     short: "Get an inhibition by ID"
     example: |
-      dc insight alert get-inhibition --id <iid>
-      dc insight alert get-inhibition --id <iid> -o json
+      dce insight alert get-inhibition --id <iid>
+      dce insight alert get-inhibition --id <iid> -o json
 
   create-inhibition:
     short: "Create an inhibition rule (source matchers suppress target matchers)"
@@ -564,7 +564,7 @@ commands:
         "equal": ["clusterName"],
         "sourceMatchers": [{"type":"EQUAL","key":"alertname","value":"ClusterDown"}],
         "targetMatchers": [{"type":"EQUAL","key":"severity","value":"WARNING"}]
-      }' | dc insight alert create-inhibition --file -
+      }' | dce insight alert create-inhibition --file -
 
       # matches/sourceMatchers/targetMatchers 的 type 同 silence：EQUAL / NOT_EQUAL / REGEXP
 
@@ -576,12 +576,12 @@ commands:
         "equal": ["clusterName", "namespace"],
         "sourceMatchers": [{"type":"EQUAL", "key":"alertname","value":"ClusterDown"}],
         "targetMatchers": [{"type":"REGEXP","key":"severity","value":"WARNING|INFO"}]
-      }' | dc insight alert update-inhibition --id <iid> --file -
+      }' | dce insight alert update-inhibition --id <iid> --file -
 
   delete-inhibition:
     short: "Delete an inhibition rule"
     example: |
-      dc insight alert delete-inhibition --id <iid>
+      dce insight alert delete-inhibition --id <iid>
 
   # ── 日志 (Log) ────────────────────────────────────────────────────────
   # 日志分两类（event 已废弃）：
@@ -594,14 +594,14 @@ commands:
   # clusterFilter 接受 **集群 UUID (kube-system 命名空间的 UID)**，不是集群名。
   # 每次查询只能传一个 UUID；namespaceFilter 必须配合 clusterFilter 使用。
   # 取 UUID：
-  #   dc insight resource get-cluster --name kpanda-global-cluster -o json \
+  #   dce insight resource get-cluster --name kpanda-global-cluster -o json \
   #     | jq -r .kubeSystemId
   # 下文示例统一使用占位 <KUBESYSTEMID>，请替换为该命令返回值。
   query-log:
     short: "Query container or system logs with filters and pagination"
     example: |
       # 1) 先拿到集群 UUID
-      KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
+      KUBESYSTEMID=$(dce insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
 
       # 2) 容器日志：在 kpanda-global-cluster / insight-system 中检索包含 "error" 的日志
       # 字段说明（resource filter）：
@@ -633,7 +633,7 @@ commands:
           "logSearch":       ["error"],
           "luceneFilter":    "kubernetes.container_name.keyword:insight-server AND log:error"
         }
-      }' | dc insight log query-log --file -
+      }' | dce insight log query-log --file -
 
       # 3) 系统日志（节点 syslog）
       # system filter 支持键：nodeFilter / fileFilter / logSearch / luceneFilter
@@ -647,7 +647,7 @@ commands:
           "fileFilter":    ["/var/log/messages"],
           "logSearch":     ["oom"]
         }
-      }' | dc insight log query-log --file -
+      }' | dce insight log query-log --file -
 
       # 返回结构（items 数组每条）：
       #   timestamp                 RFC3339Nano，可直接作为 query-log-context 的 nanotimestamp
@@ -661,7 +661,7 @@ commands:
   query-log-context:
     short: "Fetch lines before/after a specific log entry (context view)"
     example: |
-      KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
+      KUBESYSTEMID=$(dce insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
 
       # 容器日志上下文
       # 字段说明：
@@ -679,7 +679,7 @@ commands:
           "clusterFilter": ["'"$KUBESYSTEMID"'"],
           "logSearch": ["error"]
         }
-      }' | dc insight log query-log --file - -o json)
+      }' | dce insight log query-log --file - -o json)
 
       TS=$(echo "$LOG_RESULT" | jq -r '.items[0].timestamp')
       NS=$(echo "$LOG_RESULT" | jq -r '.items[0].labels.namespace')
@@ -698,7 +698,7 @@ commands:
           "pod":       "'"$POD"'",
           "container": "'"$CT"'"
         }
-      }' | dc insight log query-log-context --file -
+      }' | dce insight log query-log-context --file -
 
       # 系统日志上下文（system filter 三字段全部必填：cluster / node / file）
       echo '{
@@ -712,12 +712,12 @@ commands:
           "node":    "node-1",
           "file":    "/var/log/messages"
         }
-      }' | dc insight log query-log-context --file -
+      }' | dce insight log query-log-context --file -
 
   query-log-histogram:
     short: "Bucket log counts over time (histogram)"
     example: |
-      KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
+      KUBESYSTEMID=$(dce insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
 
       # 字段说明：
       #   startTime/endTime  RFC3339Nano（必填）
@@ -732,19 +732,19 @@ commands:
           "namespaceFilter": ["insight-system"],
           "logSearch":       ["error"]
         }
-      }' | dc insight log query-log-histogram --file -
+      }' | dce insight log query-log-histogram --file -
 
   search-log:
     short: "Raw Elasticsearch DSL passthrough (advanced)"
     example: |
       # --index 传 ILM 索引后缀（服务端会补前缀），常用 "insight-logs-*"
       # --query 必须是合法的 ES DSL JSON 字符串
-      dc insight log search-log \
+      dce insight log search-log \
         --index 'insight-logs-*' \
         --query '{"query":{"match":{"log":"timeout"}}}'
 
       # 在 insight-system 命名空间内查最近 1h 含 "error" 的日志
-      dc insight log search-log \
+      dce insight log search-log \
         --index 'insight-logs-*' \
         --query '{
           "size": 100,
@@ -765,15 +765,15 @@ commands:
     aliases: [ls-log-file-paths]
     example: |
       # 用集群名（服务端解析为 UUID）
-      dc insight log list-log-file-paths --cluster-name kpanda-global-cluster --node node-1
+      dce insight log list-log-file-paths --cluster-name kpanda-global-cluster --node node-1
       # 或直接传 UUID
-      KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
-      dc insight log list-log-file-paths --cluster "$KUBESYSTEMID" --node node-1 -o json
+      KUBESYSTEMID=$(dce insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
+      dce insight log list-log-file-paths --cluster "$KUBESYSTEMID" --node node-1 -o json
 
   download-log:
     short: "Export logs (or a context window) to a downloadable file"
     example: |
-      KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
+      KUBESYSTEMID=$(dce insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
 
       # 字段说明：
       #   type            导出格式枚举：TEXT(默认) / CSV / JSON
@@ -799,7 +799,7 @@ commands:
             "workloadFilter":  ["insight-server"]
           }
         }
-      }' | dc insight log download-log --file -
+      }' | dce insight log download-log --file -
 
       # 导出某条日志的上下文窗口
       echo '{
@@ -819,7 +819,7 @@ commands:
             "container": "insight-server"
           }
         }
-      }' | dc insight log download-log --file -
+      }' | dce insight log download-log --file -
 
   # ── 指标 (Metric) ─────────────────────────────────────────────────────
   # 透传 Prometheus 查询 API；time / start / end 单位为 unix 秒 (int64)，step 为秒 (double)。
@@ -828,16 +828,16 @@ commands:
     short: "Run a PromQL instant query (Prometheus /api/v1/query)"
     example: |
       # 用集群名 - 当前所有 targets 的 up 状态
-      dc insight metric query-metric \
+      dce insight metric query-metric \
         --cluster-name kpanda-global-cluster \
         --query 'up' -o json
 
       # 用集群 UUID（与 --cluster-name 二选一）
-      KUBESYSTEMID=$(dc insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
-      dc insight metric query-metric --cluster "$KUBESYSTEMID" --query 'up' -o json
+      KUBESYSTEMID=$(dce insight resource get-cluster --name kpanda-global-cluster -o json | jq -r .kubeSystemId)
+      dce insight metric query-metric --cluster "$KUBESYSTEMID" --query 'up' -o json
 
       # 指定命名空间 + 时间戳（unix 秒）的瞬时 CPU 查询
-      dc insight metric query-metric \
+      dce insight metric query-metric \
         --cluster-name kpanda-global-cluster \
         --namespace insight-system \
         --query 'sum(rate(container_cpu_usage_seconds_total{namespace="insight-system"}[5m])) by (pod)' \
@@ -850,13 +850,13 @@ commands:
     example: |
       # 最近 1 小时 up 指标，30s 采样
       END=$(date +%s); START=$((END - 3600))
-      dc insight metric query-range-metric \
+      dce insight metric query-range-metric \
         --cluster-name kpanda-global-cluster \
         --query 'up' \
         --start $START --end $END --step 30 -o json
 
       # insight-system 命名空间内 Pod CPU 使用率
-      dc insight metric query-range-metric \
+      dce insight metric query-range-metric \
         --cluster-name kpanda-global-cluster \
         --namespace insight-system \
         --query 'sum(rate(container_cpu_usage_seconds_total[5m])) by (pod)' \
@@ -887,7 +887,7 @@ commands:
           "up",
           "sum(rate(container_cpu_usage_seconds_total[5m]))"
         ]
-      }' | dc insight metric batch-query-metric --file - -o json
+      }' | dce insight metric batch-query-metric --file - -o json
 
       # 返回结构：
       #   data[].data.vector[]  与 query-metric 同结构
@@ -910,7 +910,7 @@ commands:
           "up",
           "sum(rate(container_cpu_usage_seconds_total[5m]))"
         ]
-      }' | dc insight metric batch-query-range-metric --file - -o json
+      }' | dce insight metric batch-query-range-metric --file - -o json
 
       # 返回结构：
       #   data[].data.matrix[]  与 query-range-metric 同结构
@@ -922,7 +922,7 @@ commands:
     short: "Pretty-print / normalize a PromQL expression (server-side formatter)"
     example: |
       echo '{"query":"sum(rate(http_requests_total{code=~\"5..\"}[5m]))/sum(rate(http_requests_total[5m]))"}' \
-        | dc insight metric format-query --file - -o json
+        | dce insight metric format-query --file - -o json
 
       # 返回结构：{ "query": "<格式化后的 PromQL>" }（对象，非数组）
 
@@ -938,15 +938,15 @@ commands:
     short: "List all clusters known to Insight"
     aliases: [ls-clusters]
     example: |
-      dc insight resource list-clusters
+      dce insight resource list-clusters
       # Include clusters that have not enabled monitoring
-      dc insight resource list-clusters --show-all-cluster=true -o json
+      dce insight resource list-clusters --show-all-cluster=true -o json
 
   list-cluster-summary:
     short: "List clusters with status/version/role summary"
     example: |
-      dc insight resource list-cluster-summary
-      dc insight resource list-cluster-summary --phase RUNNING --version v1.28 \
+      dce insight resource list-cluster-summary
+      dce insight resource list-cluster-summary --phase RUNNING --version v1.28 \
         --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
@@ -957,20 +957,20 @@ commands:
     short: "Get cluster details by name"
     aliases: [describe-cluster]
     example: |
-      dc insight resource get-cluster --name prod-1
-      dc insight resource get-cluster --name prod-1 -o json
+      dce insight resource get-cluster --name prod-1
+      dce insight resource get-cluster --name prod-1 -o json
 
   get-agent-summary:
     short: "Get the insight-agent component summary for a cluster"
     example: |
-      dc insight resource get-agent-summary --cluster prod-1
-      dc insight resource get-agent-summary --cluster prod-1 -o json
+      dce insight resource get-agent-summary --cluster prod-1
+      dce insight resource get-agent-summary --cluster prod-1 -o json
 
   get-server-component-summary:
     short: "Get insight-server-side component status summary (cluster-agnostic)"
     example: |
       # 不需要 --cluster 参数；查询 Insight 服务端各组件健康状态。
-      dc insight resource get-server-component-summary -o json
+      dce insight resource get-server-component-summary -o json
 
   # 命名空间 (Namespace)
   list-namespaces:
@@ -978,7 +978,7 @@ commands:
     aliases: [ls-namespaces]
     example: |
       # --cluster 必填（集群名或 UUID）
-      dc insight resource list-namespaces --cluster kpanda-global-cluster -o json
+      dce insight resource list-namespaces --cluster kpanda-global-cluster -o json
 
       # 备注：返回的 items 仅包含被 Insight 监控覆盖的命名空间；
       # 如果为空，可能是该集群 insight-agent 未启用或采集尚未生效。
@@ -986,16 +986,16 @@ commands:
   get-namespace:
     short: "Get a namespace by cluster + name"
     example: |
-      dc insight resource get-namespace --cluster prod-1 --name kube-system
+      dce insight resource get-namespace --cluster prod-1 --name kube-system
 
   # 节点 (Node)
   list-nodes:
     short: "List nodes in a cluster"
     aliases: [ls-nodes]
     example: |
-      dc insight resource list-nodes --cluster prod-1
-      dc insight resource list-nodes --cluster prod-1 --phase NODE_PHASE_NOT_READY -o json
-      dc insight resource list-nodes --cluster prod-1 --name node- --page 1 --page-size 50
+      dce insight resource list-nodes --cluster prod-1
+      dce insight resource list-nodes --cluster prod-1 --phase NODE_PHASE_NOT_READY -o json
+      dce insight resource list-nodes --cluster prod-1 --name node- --page 1 --page-size 50
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -1005,23 +1005,23 @@ commands:
     short: "Get node details by cluster + name"
     aliases: [describe-node]
     example: |
-      dc insight resource get-node --cluster prod-1 --name node-1
-      dc insight resource get-node --cluster prod-1 --name node-1 -o json
+      dce insight resource get-node --cluster prod-1 --name node-1
+      dce insight resource get-node --cluster prod-1 --name node-1 -o json
 
   get-node-gpu-dashboards:
     short: "Get GPU dashboard URLs for a node"
     example: |
-      dc insight resource get-node-gpu-dashboards --cluster prod-1 --name node-1
-      dc insight resource get-node-gpu-dashboards --cluster prod-1 --name node-1 -o json
+      dce insight resource get-node-gpu-dashboards --cluster prod-1 --name node-1
+      dce insight resource get-node-gpu-dashboards --cluster prod-1 --name node-1 -o json
 
   # Pod
   list-pods:
     short: "List pods in a cluster"
     aliases: [ls-pods]
     example: |
-      dc insight resource list-pods --cluster prod-1
-      dc insight resource list-pods --cluster prod-1 --namespace default --phase POD_PHASE_RUNNING
-      dc insight resource list-pods --cluster prod-1 --name my-app --page 1 --page-size 50 -o json
+      dce insight resource list-pods --cluster prod-1
+      dce insight resource list-pods --cluster prod-1 --namespace default --phase POD_PHASE_RUNNING
+      dce insight resource list-pods --cluster prod-1 --name my-app --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -1031,8 +1031,8 @@ commands:
     short: "Get pod details by cluster + namespace + name"
     aliases: [describe-pod]
     example: |
-      dc insight resource get-pod --cluster prod-1 --namespace default --name my-app-abc123
-      dc insight resource get-pod --cluster prod-1 --namespace default --name my-app-abc123 -o json
+      dce insight resource get-pod --cluster prod-1 --namespace default --name my-app-abc123
+      dce insight resource get-pod --cluster prod-1 --namespace default --name my-app-abc123 -o json
 
   get-pod-metrics:
     short: "Get pod metrics over a time range (CPU / memory / network)"
@@ -1042,13 +1042,13 @@ commands:
       END=$(date +%s); START=$((END - 3600))
 
       # 最近 1 小时，30s 步长
-      dc insight resource get-pod-metrics \
+      dce insight resource get-pod-metrics \
         --cluster kpanda-global-cluster --namespace kube-system \
         --name coredns-6d4d6f8c7-x8zvw \
         --start $START --end $END --step 30 -o json
 
       # 指定 metric 子集（PromQL-like keys，服务端定义）
-      dc insight resource get-pod-metrics \
+      dce insight resource get-pod-metrics \
         --cluster kpanda-global-cluster --namespace kube-system \
         --name coredns-6d4d6f8c7-x8zvw \
         --start $START --end $END --step 30 \
@@ -1059,13 +1059,13 @@ commands:
   get-pod-gpu-dashboards:
     short: "Get GPU dashboard URLs for a pod"
     example: |
-      dc insight resource get-pod-gpu-dashboards \
+      dce insight resource get-pod-gpu-dashboards \
         --cluster prod-1 --namespace default --name my-gpu-pod
 
   get-pod-jvm-dashboards:
     short: "Get JVM dashboard URLs for a pod (Java workloads)"
     example: |
-      dc insight resource get-pod-jvm-dashboards \
+      dce insight resource get-pod-jvm-dashboards \
         --cluster prod-1 --namespace default --name my-java-pod \
         --start 1700000000 --end 1700003600 --step 30
 
@@ -1073,9 +1073,9 @@ commands:
     short: "List containers within a pod"
     aliases: [ls-pod-containers]
     example: |
-      dc insight resource list-pod-containers \
+      dce insight resource list-pod-containers \
         --cluster prod-1 --namespace default --name my-app-abc123
-      dc insight resource list-pod-containers \
+      dce insight resource list-pod-containers \
         --cluster prod-1 --namespace default --name my-app-abc123 \
         --page 1 --page-size 50 -o json
     params:
@@ -1087,8 +1087,8 @@ commands:
     short: "List Deployments in a cluster"
     aliases: [ls-deployments]
     example: |
-      dc insight resource list-deployments --cluster kpanda-global-cluster
-      dc insight resource list-deployments --cluster kpanda-global-cluster --namespace kube-system \
+      dce insight resource list-deployments --cluster kpanda-global-cluster
+      dce insight resource list-deployments --cluster kpanda-global-cluster --namespace kube-system \
         --phase WORKLOAD_STATE_NOT_READY -o json
 
       # 输出：.items[] 主要字段 name / namespace / tracingEnabled
@@ -1102,14 +1102,14 @@ commands:
     short: "Get a Deployment by cluster + namespace + name"
     aliases: [describe-deployment]
     example: |
-      dc insight resource get-deployment --cluster prod-1 --namespace default --name my-app
+      dce insight resource get-deployment --cluster prod-1 --namespace default --name my-app
 
   get-deployment-pods:
     short: "List pods belonging to a Deployment"
     example: |
-      dc insight resource get-deployment-pods \
+      dce insight resource get-deployment-pods \
         --cluster prod-1 --namespace default --name my-app
-      dc insight resource get-deployment-pods \
+      dce insight resource get-deployment-pods \
         --cluster prod-1 --namespace default --name my-app \
         --pod my-app-abc --page 1 --page-size 50 -o json
     params:
@@ -1121,8 +1121,8 @@ commands:
     short: "List StatefulSets in a cluster"
     aliases: [ls-statefulsets]
     example: |
-      dc insight resource list-statefulsets --cluster prod-1
-      dc insight resource list-statefulsets --cluster prod-1 --namespace default \
+      dce insight resource list-statefulsets --cluster prod-1
+      dce insight resource list-statefulsets --cluster prod-1 --namespace default \
         --phase WORKLOAD_STATE_RUNNING -o json
     params:
       page:     { default: "1" }
@@ -1133,12 +1133,12 @@ commands:
     short: "Get a StatefulSet by cluster + namespace + name"
     aliases: [describe-statefulset]
     example: |
-      dc insight resource get-statefulset --cluster prod-1 --namespace default --name my-db
+      dce insight resource get-statefulset --cluster prod-1 --namespace default --name my-db
 
   get-statefulset-pods:
     short: "List pods belonging to a StatefulSet"
     example: |
-      dc insight resource get-statefulset-pods \
+      dce insight resource get-statefulset-pods \
         --cluster prod-1 --namespace default --name my-db \
         --page 1 --page-size 50 -o json
     params:
@@ -1150,8 +1150,8 @@ commands:
     short: "List DaemonSets in a cluster"
     aliases: [ls-daemonsets]
     example: |
-      dc insight resource list-daemonsets --cluster prod-1
-      dc insight resource list-daemonsets --cluster prod-1 --namespace kube-system \
+      dce insight resource list-daemonsets --cluster prod-1
+      dce insight resource list-daemonsets --cluster prod-1 --namespace kube-system \
         --phase WORKLOAD_STATE_NOT_READY -o json
     params:
       page:     { default: "1" }
@@ -1162,12 +1162,12 @@ commands:
     short: "Get a DaemonSet by cluster + namespace + name"
     aliases: [describe-daemonset]
     example: |
-      dc insight resource get-daemonset --cluster prod-1 --namespace kube-system --name fluent-bit
+      dce insight resource get-daemonset --cluster prod-1 --namespace kube-system --name fluent-bit
 
   get-daemonset-pods:
     short: "List pods belonging to a DaemonSet"
     example: |
-      dc insight resource get-daemonset-pods \
+      dce insight resource get-daemonset-pods \
         --cluster prod-1 --namespace kube-system --name fluent-bit \
         --page 1 --page-size 50 -o json
     params:
@@ -1179,8 +1179,8 @@ commands:
     short: "List Jobs in a cluster"
     aliases: [ls-jobs]
     example: |
-      dc insight resource list-jobs --cluster prod-1
-      dc insight resource list-jobs --cluster prod-1 --namespace default \
+      dce insight resource list-jobs --cluster prod-1
+      dce insight resource list-jobs --cluster prod-1 --namespace default \
         --phase JOB_STATE_FAILED -o json
     params:
       page:     { default: "1" }
@@ -1191,12 +1191,12 @@ commands:
     short: "Get a Job by cluster + namespace + name"
     aliases: [describe-job]
     example: |
-      dc insight resource get-job --cluster prod-1 --namespace default --name backup-20240101
+      dce insight resource get-job --cluster prod-1 --namespace default --name backup-20240101
 
   get-job-pods:
     short: "List pods belonging to a Job"
     example: |
-      dc insight resource get-job-pods \
+      dce insight resource get-job-pods \
         --cluster prod-1 --namespace default --name backup-20240101 \
         --page 1 --page-size 50 -o json
     params:
@@ -1207,8 +1207,8 @@ commands:
     short: "List CronJobs in a cluster"
     aliases: [ls-cronjobs]
     example: |
-      dc insight resource list-cronjobs --cluster prod-1
-      dc insight resource list-cronjobs --cluster prod-1 --namespace default \
+      dce insight resource list-cronjobs --cluster prod-1
+      dce insight resource list-cronjobs --cluster prod-1 --namespace default \
         --phase JOB_STATE_RUNNING -o json
     params:
       page:     { default: "1" }
@@ -1219,12 +1219,12 @@ commands:
     short: "Get a CronJob by cluster + namespace + name"
     aliases: [describe-cronjob]
     example: |
-      dc insight resource get-cronjob --cluster prod-1 --namespace default --name nightly-backup
+      dce insight resource get-cronjob --cluster prod-1 --namespace default --name nightly-backup
 
   get-cronjob-pods:
     short: "List pods spawned by a CronJob"
     example: |
-      dc insight resource get-cronjob-pods \
+      dce insight resource get-cronjob-pods \
         --cluster prod-1 --namespace default --name nightly-backup \
         --page 1 --page-size 50 -o json
     params:
@@ -1236,8 +1236,8 @@ commands:
     short: "List Services in a cluster"
     aliases: [ls-services]
     example: |
-      dc insight resource list-services --cluster kpanda-global-cluster
-      dc insight resource list-services --cluster kpanda-global-cluster \
+      dce insight resource list-services --cluster kpanda-global-cluster
+      dce insight resource list-services --cluster kpanda-global-cluster \
         --namespace kube-system --name coredns -o json
 
       # 输出：.items[] 主要字段 name / namespace / tracingEnabled
@@ -1249,7 +1249,7 @@ commands:
     short: "Get a Service (with linked workloads) by cluster + namespace + name"
     aliases: [describe-service]
     example: |
-      dc insight resource get-service --cluster prod-1 --namespace default --name my-app
+      dce insight resource get-service --cluster prod-1 --namespace default --name my-app
 
   # ── 链路追踪 (Tracing) ────────────────────────────────────────────────
   # 时间格式按接口分三类：
@@ -1268,14 +1268,14 @@ commands:
     short: "Search Jaeger traces by service / operation / duration window"
     aliases: [ls-traces]
     example: |
-      dc insight tracing find-jaeger-traces \
+      dce insight tracing find-jaeger-traces \
         --cluster-name kpanda-global-cluster --namespace ghippo-system \
         --service-name ghippo-apiserver \
         --start 2026-05-21T07:00:00Z --end 2026-05-21T08:00:00Z \
         --limit 50 -o json
       # 上例：最近 1 小时某服务的全部 trace；--start/--end 为 RFC3339，替换为实际窗口即可
       # 慢 trace（>500ms）+ 指定 operation：
-      dc insight tracing find-jaeger-traces \
+      dce insight tracing find-jaeger-traces \
         --cluster-name kpanda-global-cluster --namespace ghippo-system \
         --service-name ghippo-apiserver --operation-name 'GET /api/v1/orders' \
         --duration-min 500ms --duration-max 5s \
@@ -1287,7 +1287,7 @@ commands:
     aliases: [describe-trace]
     example: |
       # 必填：--trace-id / --cluster-name / --namespace
-      dc insight tracing find-jaeger-trace --trace-id <traceId> \
+      dce insight tracing find-jaeger-trace --trace-id <traceId> \
         --cluster-name kpanda-global-cluster --namespace insight-system -o json
 
       # 非法 trace id 时后端返回 "uninitialized TraceID is not allowed"
@@ -1312,7 +1312,7 @@ commands:
         "tags": [
           {"key":"http.status_code","operation":"EQUAL","value":"500"}
         ]
-      }' | dc insight tracing query-spans --file - -o json
+      }' | dce insight tracing query-spans --file - -o json
 
       # 字段说明：
       #   clusterName / cluster        二选一
@@ -1338,7 +1338,7 @@ commands:
         "end":   "2026-05-21T08:00:00.000Z",
         "interval": "1m",
         "onlyErrorSpans": false
-      }' | dc insight tracing query-span-histogram --file - -o json
+      }' | dce insight tracing query-span-histogram --file - -o json
 
       # 输出：
       #   .countItems[]     { timestamp(ms), normal, error, total }
@@ -1348,7 +1348,7 @@ commands:
     short: "List operations (endpoints) for a service in a cluster"
     example: |
       # 必填：--cluster-name --namespace --service-name
-      dc insight tracing query-operations \
+      dce insight tracing query-operations \
         --cluster-name kpanda-global-cluster --namespace ghippo-system \
         --service-name ghippo-apiserver --max-size 200 -o json
 
@@ -1359,7 +1359,7 @@ commands:
     aliases: [ls-service-names]
     example: |
       # ⚠️ --namespace 必填，缺失返回 HTTP 400
-      dc insight tracing list-service-names \
+      dce insight tracing list-service-names \
         --cluster-name kpanda-global-cluster --namespace insight-system -o json
 
       # 输出：.services[]
@@ -1368,7 +1368,7 @@ commands:
     short: "List span tag keys discovered for a service / namespace"
     example: |
       # 必填：--cluster --namespace；--start / --end 默认 [now-15m, now]
-      dc insight tracing get-tags \
+      dce insight tracing get-tags \
         --cluster kpanda-global-cluster --namespace ghippo-system \
         --service-names ghippo-apiserver --limit 500 \
         --start 2026-05-21T07:00:00Z --end 2026-05-21T08:00:00Z -o json
@@ -1379,7 +1379,7 @@ commands:
     short: "List values seen for a given tag key"
     example: |
       # 必填：--name (tag key) --cluster --namespace
-      dc insight tracing get-tag-values --name http.status_code \
+      dce insight tracing get-tag-values --name http.status_code \
         --cluster kpanda-global-cluster --namespace ghippo-system \
         --service-names ghippo-apiserver --limit 100 -o json
 
@@ -1398,7 +1398,7 @@ commands:
     example: |
       END=$(date +%s)000
       # 默认全 namespace；可加 --namespace 过滤
-      dc insight tracing get-services \
+      dce insight tracing get-services \
         --cluster-name kpanda-global-cluster \
         --end-time $END --lookback 1800000 \
         --span-kinds SPAN_KIND_SERVER --sort 'reqRate,desc' \
@@ -1416,7 +1416,7 @@ commands:
     example: |
       END=$(date +%s)000
       # 必填：--cluster-name --namespace --service-names
-      dc insight tracing get-service-detail \
+      dce insight tracing get-service-detail \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --service-names insight-agent --group-by-operation=true \
         --end-time $END --lookback 1800000 \
@@ -1433,7 +1433,7 @@ commands:
     example: |
       END=$(date +%s)000
       # 必填：--name --cluster-name --namespace
-      dc insight tracing get-service-pods --name ghippo-apiserver \
+      dce insight tracing get-service-pods --name ghippo-apiserver \
         --cluster-name kpanda-global-cluster --namespace ghippo-system \
         --end-time $END --lookback 1800000 \
         --sort 'reqPercentage,desc' --page 1 --page-size 50 -o json
@@ -1448,7 +1448,7 @@ commands:
     example: |
       END=$(date +%s)000
       # 必填：--cluster-name --namespace --service-name
-      dc insight tracing get-operation-detail \
+      dce insight tracing get-operation-detail \
         --cluster-name kpanda-global-cluster --namespace ghippo-system \
         --service-name ghippo-apiserver \
         --end-time $END --lookback 1800000 \
@@ -1476,7 +1476,7 @@ commands:
         "clauses": [
           {"field":"db.system","operation":"EQUAL","stringValue":"mysql"}
         ]
-      }' | dc insight tracing query-metadata \
+      }' | dce insight tracing query-metadata \
             --cluster-name kpanda-global-cluster --type SQL_STATEMENT --file - -o json
 
       # 输出：.items[]
@@ -1500,7 +1500,7 @@ commands:
         "clauses": [
           {"field":"db.system","operation":"EQUAL","stringValue":"mysql"}
         ]
-      }' | dc insight tracing statement-histogram \
+      }' | dce insight tracing statement-histogram \
             --cluster-name kpanda-global-cluster --file - -o json
 
       # 输出（按时间桶的 BucketHistogram 数组）：
@@ -1519,7 +1519,7 @@ commands:
         "endTime":   "2026-05-21T08:00:00.000Z",
         "topN":      20,
         "sort":      "avg_duration,desc"
-      }' | dc insight tracing statement-top-k \
+      }' | dce insight tracing statement-top-k \
             --cluster-name kpanda-global-cluster --file - -o json
 
       # 输出：.items[] 含 address / system / sourceCluster / sourceNamespace /
@@ -1540,7 +1540,7 @@ commands:
           {"field":"db.statement","operation":"CONTAIN","stringValue":"SELECT"},
           {"field":"duration","operation":"GT","floatValue":1000}
         ]
-      }' | dc insight tracing get-slow-sql-spans \
+      }' | dce insight tracing get-slow-sql-spans \
             --cluster-name kpanda-global-cluster --file - -o json
 
       # 输出：.items[] 含 duration / sourcePod / spanId / startTime / status / traceId
@@ -1555,7 +1555,7 @@ commands:
         "clusterNames": ["kpanda-global-cluster"],
         "start": "'"$START"'",
         "end":   "'"$END"'"
-      }' | dc insight servicegraph get-graph --file - -o json
+      }' | dce insight servicegraph get-graph --file - -o json
       # 上例：基础查询（必填 clusterNames + start + end），start/end 为 unix 毫秒字符串
       # 按命名空间过滤：
       echo '{
@@ -1563,7 +1563,7 @@ commands:
         "namespaces":   ["insight-system"],
         "start": "'"$START"'",
         "end":   "'"$END"'"
-      }' | dc insight servicegraph get-graph --file - -o json
+      }' | dce insight servicegraph get-graph --file - -o json
 
       # 带 graphType / layer / 依赖深度过滤
       # 注意：graphType / layer 是大写枚举字符串（非 "service" / "L7"），传错值会返回 HTTP 400
@@ -1584,7 +1584,7 @@ commands:
             {"dataType":"NODE_DATA","field":"SERVICE_NAME","operation":"CONTAIN","stringValue":"insight"}
           ]
         }
-      }' | dc insight servicegraph get-graph --file - -o json
+      }' | dce insight servicegraph get-graph --file - -o json
 
       # 请求体字段（BaseGraphQuery）：
       #   clusterNames        集群名数组，必填
@@ -1666,7 +1666,7 @@ commands:
       #
       # 注意：node.id / edge.source / edge.target 中可能含集群 UUID。
       # 展示给用户时应替换为集群名：
-      #   dc insight resource list-clusters -o json
+      #   dce insight resource list-clusters -o json
       #     | jq -r '.items[] | .kubeSystemId + " " + .name'
       # 用上面映射把 UUID 替换回名字再输出表格。
 
@@ -1676,7 +1676,7 @@ commands:
       END=$(date +%s)000
 
       # 单个服务节点 30 分钟指标（endTime/lookback/step/rate-per 单位都是 ms）
-      dc insight servicegraph get-node-metrics \
+      dce insight servicegraph get-node-metrics \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --service insight-server \
         --end-time $END --lookback 1800000 \
@@ -1684,7 +1684,7 @@ commands:
         --span-kinds SPAN_KIND_SERVER -o json
 
       # 用 extension-filters 做 label 选择
-      dc insight servicegraph get-node-metrics \
+      dce insight servicegraph get-node-metrics \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --service insight-server \
         --extension-filters 'skoala_registry=ire-111,instance=10.0.0.1' \
@@ -1718,14 +1718,14 @@ commands:
     aliases: [ls-events]
     example: |
       # 最近 1 小时 insight-system 命名空间内的 Warning 事件
-      dc insight event query-events \
+      dce insight event query-events \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --start-time 2026-05-21T17:00:00Z --end-time 2026-05-21T18:00:00Z \
         --filter.type Warning \
         --page 1 --page-size 50 -o json
 
       # 按 reason + involveObject + message 模糊过滤
-      dc insight event query-events \
+      dce insight event query-events \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --filter.reason FailedScheduling \
         --filter.involve-object-kind Pod \
@@ -1756,7 +1756,7 @@ commands:
       # 否则后端返回 HTTP 400。filter 在该接口只识别这两个字段。
       #
       # 推荐流程：先用 query-events 取锚点，再用 jq 提取 timestamp / involveObject 作参数
-      EVENT=$(dc insight event query-events \
+      EVENT=$(dce insight event query-events \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --start-time 2026-05-21T17:00:00Z --end-time 2026-05-21T18:00:00Z \
         --filter.type Warning --page 1 --page-size 1 -o json)
@@ -1766,7 +1766,7 @@ commands:
       KIND=$(echo "$EVENT" | jq -r '.items[0].involveObject.kind')
       NAME=$(echo "$EVENT" | jq -r '.items[0].involveObject.name')
 
-      dc insight event query-event-context \
+      dce insight event query-event-context \
         --cluster-name kpanda-global-cluster --namespace "$NS" \
         --timestamp "$TS" \
         --filter.involve-object-kind "$KIND" \
@@ -1798,19 +1798,19 @@ commands:
           {"type":"Warning","involveObjectKind":"Pod","reason":"FailedScheduling"},
           {"type":"Warning","involveObjectKind":"Node"}
         ]
-      }' | dc insight event query-event-count --cluster-name kpanda-global-cluster --file -
+      }' | dce insight event query-event-count --cluster-name kpanda-global-cluster --file -
 
       # 使用默认 filters（不传 filters 字段）
       echo '{
         "namespace": "insight-system",
         "startTime": "2026-05-21T17:00:00Z",
         "endTime":   "2026-05-21T18:00:00Z"
-      }' | dc insight event query-event-count --cluster-name kpanda-global-cluster --file -
+      }' | dce insight event query-event-count --cluster-name kpanda-global-cluster --file -
 
   query-event-histogram:
     short: "Bucket event counts over time (normal vs warning)"
     example: |
-      dc insight event query-event-histogram \
+      dce insight event query-event-histogram \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --start-time 2026-05-21T17:00:00Z --end-time 2026-05-21T18:00:00Z \
         --interval 60s -o json
@@ -1825,7 +1825,7 @@ commands:
   query-event-filter-options:
     short: "List available filter options (object kinds / reasons) for the event UI"
     example: |
-      dc insight event query-event-filter-options \
+      dce insight event query-event-filter-options \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --start-time 2026-05-21T17:00:00Z --end-time 2026-05-21T18:00:00Z -o json
 
@@ -1836,7 +1836,7 @@ commands:
   get-reasons:
     short: "Get the predefined event reason vocabulary grouped by object kind"
     example: |
-      dc insight event get-reasons -o json
+      dce insight event get-reasons -o json
 
       # 返回字段（每项为字符串数组）：
       #   node / daemonSet / deployment / job / pod / statefulSet
@@ -1851,10 +1851,10 @@ commands:
     short: "Get global resource counts (clusters / nodes / pods / deployments / GPU / log / trace)"
     example: |
       # 默认返回 16 个资源类型
-      dc insight overview get-resources-count -o json
+      dce insight overview get-resources-count -o json
 
       # 指定时间点（unix 秒）+ 仅查集群与节点
-      dc insight overview get-resources-count \
+      dce insight overview get-resources-count \
         --time $(date +%s) \
         --filters CLUSTER_TOTAL --filters CLUSTER_NORMAL_TOTAL \
         --filters NODE_TOTAL --filters NODE_NORMAL_TOTAL -o json
@@ -1878,7 +1878,7 @@ commands:
     example: |
       # 最近 1 小时，60s 采样
       END=$(date +%s); START=$((END - 3600))
-      dc insight overview get-resources-range \
+      dce insight overview get-resources-range \
         --start $START --end $END --step 60 \
         --filters NODE_TOTAL --filters POD_NORMAL_TOTAL --filters POD_ABNORMAL_TOTAL -o json
     params:
@@ -1895,12 +1895,12 @@ commands:
     example: |
       END=$(date +%s); START=$((END - 3600))
       # 节点 CPU 使用率 Top 5
-      dc insight overview get-resources-usage \
+      dce insight overview get-resources-usage \
         --start $START --end $END --step 60 \
         --filters NODE_CPU_USAGE --limit 5 -o json
 
       # 集群级 CPU 使用率
-      dc insight overview get-resources-usage \
+      dce insight overview get-resources-usage \
         --start $START --end $END --step 60 \
         --filters CLUSTER_CPU_USAGE --limit 10 -o json
     params:
@@ -1919,13 +1919,13 @@ commands:
     short: "Get a snapshot of service-level APM signals (avg latency / error rate)"
     example: |
       # 默认 - 平均延迟 + 错误率，Top 5
-      dc insight overview get-services-monitor -o json
+      dce insight overview get-services-monitor -o json
 
       # 限制返回 10 条
-      dc insight overview get-services-monitor --limit 10 -o json
+      dce insight overview get-services-monitor --limit 10 -o json
 
       # 指定时间点 + 仅统计 SERVER span
-      dc insight overview get-services-monitor \
+      dce insight overview get-services-monitor \
         --time $(date +%s) --limit 5 \
         --span-kinds SPAN_KIND_SERVER -o json
     params:
@@ -1952,7 +1952,7 @@ commands:
     short: "List blackbox-exporter probers available in a cluster"
     aliases: [ls-probers]
     example: |
-      dc insight probe list-probers --cluster-name kpanda-global-cluster -o json
+      dce insight probe list-probers --cluster-name kpanda-global-cluster -o json
 
       # 返回结构：
       #   probers[].prober          ProberSpec { name, url, scheme, path, proxyUrl }
@@ -1964,11 +1964,11 @@ commands:
     short: "List probes in a cluster + namespace"
     aliases: [ls-probes]
     example: |
-      dc insight probe list-probes \
+      dce insight probe list-probes \
         --cluster-name kpanda-global-cluster --namespace insight-system -o json
 
       # 模糊搜索 + 分页 + 排序
-      dc insight probe list-probes \
+      dce insight probe list-probes \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --fuzzy-name http --sorts 'create_at,desc' \
         --page 1 --page-size 50 -o json
@@ -1992,7 +1992,7 @@ commands:
     short: "Get a probe by cluster + namespace + jobName"
     aliases: [describe-probe]
     example: |
-      dc insight probe get-probe \
+      dce insight probe get-probe \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --job-name web-check -o json
 
@@ -2002,7 +2002,7 @@ commands:
     short: "Create a probe (PrometheusOperator Probe / blackbox-exporter)"
     example: |
       # 1) 先查可用 prober + module
-      dc insight probe list-probers --cluster-name kpanda-global-cluster -o json
+      dce insight probe list-probers --cluster-name kpanda-global-cluster -o json
 
       # 2) 用上一步返回的 prober.url / 选定 module 创建
       # 字段说明（probe / ProbeSpec）：
@@ -2038,7 +2038,7 @@ commands:
             }
           }
         }
-      }' | dc insight probe add-probe \
+      }' | dce insight probe add-probe \
             --cluster-name kpanda-global-cluster --namespace insight-system --file -
 
   update-probe:
@@ -2055,26 +2055,26 @@ commands:
             "labels": {"team": "ops", "tier": "edge"}
           }
         }
-      }' | dc insight probe update-probe \
+      }' | dce insight probe update-probe \
             --cluster-name kpanda-global-cluster --namespace insight-system \
             --job-name web-check --file -
 
   delete-probe:
     short: "Delete a probe by cluster + namespace + jobName"
     example: |
-      dc insight probe delete-probe \
+      dce insight probe delete-probe \
         --cluster-name kpanda-global-cluster --namespace insight-system \
         --job-name web-check
 
   # ── 用户 (User) ───────────────────────────────────────────────────────
-  # 注意：此 list-users 与 ghippo 的 list-users 不同，命令前缀是 `dc insight user`
+  # 注意：此 list-users 与 ghippo 的 list-users 不同，命令前缀是 `dce insight user`
   list-users:
     short: "List Insight users (Insight-side user view, not ghippo)"
     aliases: [ls-users]
     example: |
-      dc insight user list-users
+      dce insight user list-users
       # Fuzzy search by name + paged JSON output
-      dc insight user list-users --search alice --page 1 --page-size 50 -o json
+      dce insight user list-users --search alice --page 1 --page-size 50 -o json
     params:
       page:     { default: "1" }
       pageSize: { default: "20" }
@@ -2084,8 +2084,8 @@ commands:
     short: "List all Insight feature gates and their enabled status"
     aliases: [ls-feature-gates]
     example: |
-      dc insight featuregate get-feature-gates
-      dc insight featuregate get-feature-gates -o json
+      dce insight featuregate get-feature-gates
+      dce insight featuregate get-feature-gates -o json
 
   get-feature-gate-by-id:
     short: "Get a single feature gate by ID"
@@ -2093,33 +2093,33 @@ commands:
       # id must be one of:
       #   METRICS | LOGGING | TRACING | GRAPH_VIRTUAL_NODE
       #   LOG_ALERT | NET_FLOW | EVENT | SLOW_SQL
-      dc insight featuregate get-feature-gate-by-id --id METRICS
-      dc insight featuregate get-feature-gate-by-id --id SLOW_SQL -o json
+      dce insight featuregate get-feature-gate-by-id --id METRICS
+      dce insight featuregate get-feature-gate-by-id --id SLOW_SQL -o json
 
   # ── 全局配置 (GlobalConfig) ───────────────────────────────────────────
   get-version:
     short: "Get Insight server version info"
     example: |
-      dc insight insight get-version
-      dc insight insight get-version -o json
+      dce insight insight get-version
+      dce insight insight get-version -o json
 
   get-global-config:
     short: "Get Insight global configuration (retention, thresholds)"
     example: |
-      dc insight insight get-global-config
-      dc insight insight get-global-config -o json
+      dce insight insight get-global-config
+      dce insight insight get-global-config -o json
 
   get-userinfo:
     short: "Get current user's Insight permissions and accessible resource types"
     example: |
-      dc insight insight get-userinfo
-      dc insight insight get-userinfo -o json
+      dce insight insight get-userinfo
+      dce insight insight get-userinfo -o json
 
   update-global-config:
     short: "Update Insight global configuration (retention, thresholds)"
     example: |
       # Update retention windows and APM thresholds
-      dc insight insight update-global-config \
+      dce insight insight update-global-config \
         --set logRetentionTime=7d \
         --set k8sEventLogRetentionTime=7d \
         --set skoalaLogRetentionTime=7d \
@@ -2145,13 +2145,13 @@ commands:
         "slowSqlThreshold": 1000,
         "latencyThresholds": [500, 1000],
         "errorRateThresholds": [0.01, 0.05]
-      }' | dc insight insight update-global-config --file -
+      }' | dce insight insight update-global-config --file -
 
   get-helm-install-config:
     short: "Generate Helm install parameters for the Insight agent chart"
     example: |
       # Get install params for insight-agent chart
-      dc insight insight get-helm-install-config \
+      dce insight insight get-helm-install-config \
         --set chartName=insight-agent \
         --set version=0.30.0
 
@@ -2163,4 +2163,4 @@ commands:
           "global.exporters.logging.enabled": true,
           "global.exporters.metrics.enabled": true
         }
-      }' | dc insight insight get-helm-install-config --file -
+      }' | dce insight insight get-helm-install-config --file -

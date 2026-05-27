@@ -1,8 +1,8 @@
 LATHE      := go tool lathe
-IMAGE_REPO ?= daocloud/dc
+IMAGE_REPO ?= daocloud/dce
 IMAGE_TAG  ?= latest
 
-BIN_OUT    ?= bin/dc
+BIN_OUT    ?= bin/dce
 VERSION    ?= dev
 COMMIT     ?= $(shell git rev-parse HEAD 2>/dev/null || echo none)
 DATE       ?= $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
@@ -32,32 +32,32 @@ sync-one:
 		-skill-root skills
 
 build:
-	go build -trimpath -ldflags="$(GO_LDFLAGS)" -o $(BIN_OUT) ./cmd/dc
+	go build -trimpath -ldflags="$(GO_LDFLAGS)" -o $(BIN_OUT) ./cmd/dce
 
-# dev: install dc to PATH and symlink skill into opencode for live debugging
+# dev: install dce to PATH and symlink skill into opencode for live debugging
 dev: build
 	@mkdir -p ~/.agents/skills
-	@if [ ! -f skills/dc/_meta.json ]; then \
-		echo '{"slug":"dc","version":"dev"}' > skills/dc/_meta.json; \
+	@if [ ! -f skills/dce/_meta.json ]; then \
+		echo '{"slug":"dce","version":"dev"}' > skills/dce/_meta.json; \
 	fi
-	@if [ -L ~/.agents/skills/dc ]; then \
+	@if [ -L ~/.agents/skills/dce ]; then \
 		echo "skill symlink already exists"; \
-	elif [ -d ~/.agents/skills/dc ]; then \
-		echo "warning: ~/.agents/skills/dc is a real directory, remove it first"; \
+	elif [ -d ~/.agents/skills/dce ]; then \
+		echo "warning: ~/.agents/skills/dce is a real directory, remove it first"; \
 		exit 1; \
 	else \
-		ln -s "$(CURDIR)/skills/dc" ~/.agents/skills/dc; \
-		echo "skill symlinked: ~/.agents/skills/dc -> $(CURDIR)/skills/dc"; \
+		ln -s "$(CURDIR)/skills/dce" ~/.agents/skills/dce; \
+		echo "skill symlinked: ~/.agents/skills/dce -> $(CURDIR)/skills/dce"; \
 	fi
-	@if command -v dc >/dev/null 2>&1 && [ "$$(which dc)" != "$(CURDIR)/bin/dc" ]; then \
-		echo "note: dc in PATH is $$(which dc), not $(CURDIR)/bin/dc"; \
+	@if command -v dce >/dev/null 2>&1 && [ "$$(which dce)" != "$(CURDIR)/bin/dce" ]; then \
+		echo "note: dce in PATH is $$(which dce), not $(CURDIR)/bin/dce"; \
 	fi
-	cp bin/dc /usr/local/bin/dc
+	cp bin/dce /usr/local/bin/dce
 	@echo "done — restart opencode to pick up skill changes"
 
 dev-clean:
-	rm -f ~/.agents/skills/dc
-	rm -f /usr/local/bin/dc
+	rm -f ~/.agents/skills/dce
+	rm -f /usr/local/bin/dce
 
 image:
 	docker buildx build \

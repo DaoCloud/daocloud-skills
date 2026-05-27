@@ -1,0 +1,4 @@
+interface:
+  display_name: "dce CLI"
+  short_description: "Use the dce generated CLI"
+  default_prompt: "Use $dce to find and run the right dce command."

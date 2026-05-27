@@ -1,4 +1,0 @@
-interface:
-  display_name: "dc CLI"
-  short_description: "Use the dc generated CLI"
-  default_prompt: "Use $dc to find and run the right dc command."

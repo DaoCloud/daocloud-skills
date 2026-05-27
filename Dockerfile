@@ -12,15 +12,15 @@ RUN go mod download
 
 COPY . .
 RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH \
-    make build BIN_OUT=/out/dc VERSION=$VERSION COMMIT=$COMMIT
+    make build BIN_OUT=/out/dce VERSION=$VERSION COMMIT=$COMMIT
 
 # ---- runtime stage ----
 FROM docker.m.daocloud.io/library/alpine:3.21
 
 RUN apk add --no-cache ca-certificates
 
-COPY --from=builder /out/dc /app/dc
-COPY skills/dc /app/skills/dc
+COPY --from=builder /out/dce /app/dce
+COPY skills/dce /app/skills/dce
 
 WORKDIR /app
-ENTRYPOINT ["/app/dc"]
+ENTRYPOINT ["/app/dce"]

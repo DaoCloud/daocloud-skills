@@ -41,7 +41,7 @@ jobs:
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
           CGO_ENABLED: 0
-        run: go build -trimpath -ldflags="-s -w" -o /dev/null ./cmd/dc
+        run: go build -trimpath -ldflags="-s -w" -o /dev/null ./cmd/dce
 
   verify-up-to-date:
     runs-on: ubuntu-latest
@@ -79,7 +79,7 @@ jobs:
         id: meta
         run: |
           OWNER="$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')"
-          echo "image=ghcr.io/${OWNER}/dc" >> "$GITHUB_OUTPUT"
+          echo "image=ghcr.io/${OWNER}/dce" >> "$GITHUB_OUTPUT"
           echo "sha_short=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
           if [ "${GITHUB_EVENT_NAME}" = "push" ] && [ "${GITHUB_REF}" = "refs/heads/main" ]; then
             echo "push=true" >> "$GITHUB_OUTPUT"

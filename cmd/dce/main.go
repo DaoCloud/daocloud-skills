@@ -39,7 +39,7 @@ func main() {
 
 	if err := root.Execute(); err != nil {
 		if errors.Is(err, runtime.ErrNotAuthenticated) {
-			fmt.Fprintf(os.Stderr, "not logged in — run: dc auth login --hostname <host>\n")
+			fmt.Fprintf(os.Stderr, "not logged in — run: dce auth login --hostname <host>\n")
 			os.Exit(2)
 		}
 		os.Exit(1)

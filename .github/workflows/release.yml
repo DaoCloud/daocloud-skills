@@ -10,7 +10,7 @@ permissions:
 
 env:
   GO_VERSION: '1.25'
-  BIN_NAME: dc
+  BIN_NAME: dce
 
 jobs:
   build-binary:
@@ -156,7 +156,7 @@ jobs:
         id: meta
         run: |
           OWNER="$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')"
-          IMAGE="ghcr.io/${OWNER}/dc"
+          IMAGE="ghcr.io/${OWNER}/dce"
           VERSION="${GITHUB_REF#refs/tags/}"
           echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"

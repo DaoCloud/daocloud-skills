@@ -13,8 +13,8 @@ OpenAPI Spec (JSON)
       ↓  specsync  拉取并缓存到 .cache/
       ↓  codegen   读取 Spec + Overlay 生成 Go 代码和 Skill 文档
       ↓
-bin/dc          ← 可执行 CLI，子命令按产品分组
-skills/dc/      ← AI Agent Skill（SKILL.md + references/）
+bin/dce          ← 可执行 CLI，子命令按产品分组
+skills/dce/      ← AI Agent Skill（SKILL.md + references/）
 ```
 
 ### 关键文件
@@ -25,7 +25,7 @@ skills/dc/      ← AI Agent Skill（SKILL.md + references/）
 | `internal/overlay/<product>.yaml` | 对生成结果做增量修改：隐藏内部 API、补充 short/alias/example/默认分页 |
 | `cli.yaml` | CLI 名称和 auth 校验接口 |
 | `internal/generated/modules_gen.go` | **自动生成**，把所有产品模块挂载到 cobra root，不要手改 |
-| `skills/dc/references/modules/<product>.md` | **自动生成**，AI Agent 用的命令索引 |
+| `skills/dce/references/modules/<product>.md` | **自动生成**，AI Agent 用的命令索引 |
 
 ---
 
@@ -63,7 +63,7 @@ make sync-one SOURCE=mspider
 执行后：
 - Spec 文件缓存到 `.cache/specs-sync/mspider/`
 - `internal/generated/mspider/` 下生成 Go 命令代码
-- `skills/dc/references/modules/mspider.md` 生成命令索引
+- `skills/dce/references/modules/mspider.md` 生成命令索引
 - `internal/generated/modules_gen.go` 自动追加 mspider 模块
 
 ### 第三步：创建 Overlay 文件
@@ -86,7 +86,7 @@ commands:
     short: "List managed services in the mesh"
     aliases: [ls, ls-svc]
     example: |
-      dc mspider service list-services --mesh default-mesh
+      dce mspider service list-services --mesh default-mesh
     params:
       page:
         default: "1"
@@ -120,16 +120,16 @@ make codegen
 make build
 
 # 检查新产品的子命令是否挂载
-./bin/dc mspider --help
+./bin/dce mspider --help
 
 # 搜索验证
-./bin/dc search "list services" --json
+./bin/dce search "list services" --json
 ```
 
 ### 第五步：构建并推送镜像
 
 ```bash
-make image-push IMAGE_REPO=release-ci.daocloud.io/clawos/dc-cli IMAGE_TAG=v0.x.x
+make image-push IMAGE_REPO=release-ci.daocloud.io/clawos/dce-cli IMAGE_TAG=v0.x.x
 ```
 
 ---
@@ -152,7 +152,7 @@ make build
 
 **Q: codegen 生成的命令太多，怎么批量屏蔽？**
 
-在 overlay 里用 `ignore: true` 逐条屏蔽，或者先不加 overlay 跑一次 `make build`，通过 `./bin/dc <product> --help` 看有哪些命令，再决定屏蔽哪些。
+在 overlay 里用 `ignore: true` 逐条屏蔽，或者先不加 overlay 跑一次 `make build`，通过 `./bin/dce <product> --help` 看有哪些命令，再决定屏蔽哪些。
 
 **Q: 新产品的 auth 路径和 ghippo 不同怎么办？**
 

@@ -1,5 +1,5 @@
 cli:
-  name: dc
+  name: dce
   short: "Command-line tool for DaoCloud Enterprise (DCE)"
 
 auth:
