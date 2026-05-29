@@ -30,6 +30,7 @@ Use this skill when a user asks you to operate `dce`, inspect its API commands, 
 - Read `references/modules/container-management.md` for the `container-management` module command index.
 - Read `references/modules/global-management.md` for the `global-management` module command index.
 - Read `references/modules/insight.md` for the `insight` module command index.
+- Read `references/modules/operations-management.md` for the `operations-management` module command index.
 
 ## Rules
 

@@ -28,3 +28,12 @@ sources:
     swagger:
       files:
         - docs/openapi/insight/v0.41.0.json
+
+  gmagpie:
+    display_name: operations-management
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: 0bb0ec92f301b9c8a56deafebd4138e333f92cec
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/gmagpie/v0.13.0.json

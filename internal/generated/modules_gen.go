@@ -4,6 +4,7 @@ package generated
 
 import (
 	ghippo "github.com/DaoCloud/daocloud-skills/internal/generated/ghippo"
+	gmagpie "github.com/DaoCloud/daocloud-skills/internal/generated/gmagpie"
 	insight "github.com/DaoCloud/daocloud-skills/internal/generated/insight"
 	kpanda "github.com/DaoCloud/daocloud-skills/internal/generated/kpanda"
 	"github.com/spf13/cobra"
@@ -15,6 +16,9 @@ import (
 // app.NewApp() so the framework package never imports downstream code.
 func MountModules(root *cobra.Command) error {
 	if err := ghippo.Mount(root); err != nil {
+		return err
+	}
+	if err := gmagpie.Mount(root); err != nil {
 		return err
 	}
 	if err := insight.Mount(root); err != nil {

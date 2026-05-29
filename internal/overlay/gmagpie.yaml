@@ -1,0 +1,222 @@
+commands:
+  # Keep only list-* APIs for gmagpie.
+  # Everything else is ignored to reduce surface area.
+  export-clusters-fee:      { ignore: true }
+  export-namespaces-fee:    { ignore: true }
+  export-nodes-fee:         { ignore: true }
+  export-pods-fee:          { ignore: true }
+  export-workspaces-fee:    { ignore: true }
+
+  check-gpu-metrics:        { ignore: true }
+  create-gpu-metrics:       { ignore: true }
+  delete-gpu-metrics:       { ignore: true }
+  get-gpu-metrics:          { ignore: true }
+  update-gpu-metrics:       { ignore: true }
+
+  get-gpu-models:           { ignore: true }
+  get-price:                { ignore: true }
+  update-price:             { ignore: true }
+
+  export-alarm:             { ignore: true }
+  export-audit-resource:    { ignore: true }
+  export-audit-user:        { ignore: true }
+  export-clusters:          { ignore: true }
+  export-namespaces:        { ignore: true }
+  export-nodes:             { ignore: true }
+  export-pods:              { ignore: true }
+  export-workspaces:        { ignore: true }
+
+  recalculate-report:       { ignore: true }
+
+  change-switch:            { ignore: true }
+  get-export-uri:           { ignore: true }
+  get-switch:               { ignore: true }
+  list-gpu-metrics:         { ignore: true }
+
+  # ── Cost allocation (Fee) ──────────────────────────────────────────────
+  list-clusters-fee:
+    short: "List cluster cost allocation records"
+    aliases: [ls-clusters-fee]
+    example: |
+      dce operations-management fee list-clusters-fee --page 1 --page-size 20
+      dce operations-management fee list-clusters-fee --start 2026-05-01 --end 2026-05-28 --search prod -o json
+    params:
+      start: { help: "Start time for the cost query window" }
+      end: { help: "End time for the cost query window" }
+      page: { default: "1" }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+
+  list-namespaces-fee:
+    short: "List namespace cost allocation records"
+    aliases: [ls-namespaces-fee]
+    example: |
+      dce operations-management fee list-namespaces-fee --workspace <workspace> --page 1 --page-size 20
+      dce operations-management fee list-namespaces-fee --start 2026-05-01 --end 2026-05-28 -o json
+    params:
+      start: { help: "Start time for the cost query window" }
+      end: { help: "End time for the cost query window" }
+      page: { default: "1" }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+      workspace: { help: "Filter by workspace name or ID" }
+
+  list-nodes-fee:
+    short: "List node cost allocation records"
+    aliases: [ls-nodes-fee]
+    example: |
+      dce operations-management fee list-nodes-fee --cluster <cluster> --page 1 --page-size 20
+      dce operations-management fee list-nodes-fee --start 2026-05-01 --end 2026-05-28 -o json
+    params:
+      start: { help: "Start time for the cost query window" }
+      end: { help: "End time for the cost query window" }
+      page: { default: "1" }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+      cluster: { help: "Filter by cluster name or ID" }
+
+  list-pods-fee:
+    short: "List pod cost allocation records"
+    aliases: [ls-pods-fee]
+    example: |
+      dce operations-management fee list-pods-fee --cluster <cluster> --namespace <namespace> --page 1 --page-size 20
+      dce operations-management fee list-pods-fee --workspace <workspace> --search app -o json
+    params:
+      start: { help: "Start time for the cost query window" }
+      end: { help: "End time for the cost query window" }
+      page: { default: "1" }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+      workspace: { help: "Filter by workspace name or ID" }
+      namespace: { help: "Filter by namespace" }
+      cluster: { help: "Filter by cluster name or ID" }
+
+  list-workspaces-fee:
+    short: "List workspace cost allocation records"
+    aliases: [ls-workspaces-fee]
+    example: |
+      dce operations-management fee list-workspaces-fee --page 1 --page-size 20
+      dce operations-management fee list-workspaces-fee --start 2026-05-01 --end 2026-05-28 --search team -o json
+    params:
+      start: { help: "Start time for the cost query window" }
+      end: { help: "End time for the cost query window" }
+      page: { default: "1" }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+
+  # ── Permissions ───────────────────────────────────────────────────────
+  list-permissions:
+    short: "List operations-management permission definitions"
+    aliases: [ls-permissions]
+    example: |
+      dce operations-management permissionservice list-permissions -o json
+
+  # ── Reports ───────────────────────────────────────────────────────────
+  list-alarms:
+    short: "List alarm report records"
+    aliases: [ls-alarms]
+    example: |
+      dce operations-management report list-alarms --page 1 --page-size 20
+      dce operations-management report list-alarms --start 2026-05-01 --end 2026-05-28 --search warning -o json
+    params:
+      start: { help: "Start time for the report query window" }
+      end: { help: "End time for the report query window" }
+      page: { default: "1", help: "Page is current page." }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+
+  list-audit-resources:
+    short: "List audit report records grouped by resource"
+    aliases: [ls-audit-resources]
+    example: |
+      dce operations-management report list-audit-resources --page 1 --page-size 20
+      dce operations-management report list-audit-resources --start 2026-05-01 --end 2026-05-28 --search delete -o json
+    params:
+      start: { help: "Start time for the report query window" }
+      end: { help: "End time for the report query window" }
+      page: { default: "1", help: "Page is current page." }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+
+  list-audit-users:
+    short: "List audit report records grouped by user"
+    aliases: [ls-audit-users]
+    example: |
+      dce operations-management report list-audit-users --page 1 --page-size 20
+      dce operations-management report list-audit-users --start 2026-05-01 --end 2026-05-28 --search alice -o json
+    params:
+      start: { help: "Start time for the report query window" }
+      end: { help: "End time for the report query window" }
+      page: { default: "1", help: "Page is current page." }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+
+  list-clusters:
+    short: "List cluster report records"
+    aliases: [ls-clusters]
+    example: |
+      dce operations-management report list-clusters --page 1 --page-size 20
+      dce operations-management report list-clusters --start 2026-05-01 --end 2026-05-28 --search prod -o json
+    params:
+      start: { help: "Start time for the report query window" }
+      end: { help: "End time for the report query window" }
+      page: { default: "1", help: "Page is current page." }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+
+  list-namespaces:
+    short: "List namespace report records"
+    aliases: [ls-namespaces]
+    example: |
+      dce operations-management report list-namespaces --workspace <workspace> --page 1 --page-size 20
+      dce operations-management report list-namespaces --start 2026-05-01 --end 2026-05-28 -o json
+    params:
+      start: { help: "Start time for the report query window" }
+      end: { help: "End time for the report query window" }
+      page: { default: "1", help: "Page is current page." }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+      workspace: { help: "Filter by workspace name or ID" }
+
+  list-nodes:
+    short: "List node report records"
+    aliases: [ls-nodes]
+    example: |
+      dce operations-management report list-nodes --cluster <cluster> --page 1 --page-size 20
+      dce operations-management report list-nodes --start 2026-05-01 --end 2026-05-28 -o json
+    params:
+      start: { help: "Start time for the report query window" }
+      end: { help: "End time for the report query window" }
+      page: { default: "1", help: "Page is current page." }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+      cluster: { help: "Filter by cluster name or ID" }
+
+  list-pods:
+    short: "List pod report records"
+    aliases: [ls-pods]
+    example: |
+      dce operations-management report list-pods --cluster <cluster> --namespace <namespace> --page 1 --page-size 20
+      dce operations-management report list-pods --workspace <workspace> --search app -o json
+    params:
+      start: { help: "Start time for the report query window" }
+      end: { help: "End time for the report query window" }
+      page: { default: "1", help: "Page is current page." }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
+      workspace: { help: "Filter by workspace name or ID" }
+      namespace: { help: "Filter by namespace" }
+      cluster: { help: "Filter by cluster name or ID" }
+
+  list-workspaces:
+    short: "List workspace report records"
+    aliases: [ls-workspaces]
+    example: |
+      dce operations-management report list-workspaces --page 1 --page-size 20
+      dce operations-management report list-workspaces --start 2026-05-01 --end 2026-05-28 --search team -o json
+    params:
+      start: { help: "Start time for the report query window" }
+      end: { help: "End time for the report query window" }
+      page: { default: "1", help: "Page is current page." }
+      pageSize: { default: "20", help: "Number of results per page" }
+      search: { help: "Fuzzy search keyword" }
