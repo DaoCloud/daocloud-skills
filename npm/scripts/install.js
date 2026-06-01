@@ -6,7 +6,7 @@ const crypto = require("crypto");
 
 const VERSION = require("../package.json").version;
 const REPO = "DaoCloud/daocloud-skills";
-const NAME = "dc";
+const NAME = "dce";
 const ALLOWED_HOSTS = new Set([
   "github.com",
   "objects.githubusercontent.com",
@@ -129,9 +129,9 @@ if (require.main === module) {
   }
 
   // Under `npx`, postinstall fires but the binary is not yet needed —
-  // run.js triggers install() on demand with DC_RUN=1 set.
+  // run.js triggers install() on demand with DCE_RUN=1 set.
   const isNpxPostinstall =
-    process.env.npm_command === "exec" && !process.env.DC_RUN;
+    process.env.npm_command === "exec" && !process.env.DCE_RUN;
   if (isNpxPostinstall) process.exit(0);
 
   try {

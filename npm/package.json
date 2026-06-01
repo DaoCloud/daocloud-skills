@@ -1,9 +1,9 @@
 {
-  "name": "@daocloud-cli/dc",
+  "name": "@daocloud-cli/dce",
   "version": "0.0.3",
-  "description": "DaoCloud dc CLI",
+  "description": "DaoCloud dce CLI",
   "bin": {
-    "dc": "scripts/run.js"
+    "dce": "scripts/run.js"
   },
   "scripts": {
     "postinstall": "node scripts/install.js"

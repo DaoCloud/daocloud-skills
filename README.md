@@ -106,7 +106,21 @@ Use the dce skill to list DCE clusters.
 
 ## Install the CLI
 
-For regular users, download a prebuilt archive from GitHub Releases:
+The recommended way is via npm:
+
+```bash
+npm install -g @daocloud-cli/dce
+```
+
+Or run on demand without a global install:
+
+```bash
+npx @daocloud-cli/dce --help
+```
+
+The npm package downloads the matching prebuilt binary from GitHub Releases on install and verifies it against `checksums.txt`. Supported platforms: `darwin`/`linux` on `amd64`/`arm64`, Node.js >= 16.
+
+Alternatively, download a prebuilt archive from GitHub Releases directly:
 
 ```bash
 VERSION=v0.1.0-rc.6

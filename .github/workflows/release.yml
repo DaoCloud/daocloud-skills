@@ -135,6 +135,9 @@ jobs:
           name: checksums
           path: npm
 
+      - name: Copy README into npm package
+        run: cp README.md npm/README.md
+
       - name: Set package version
         working-directory: npm
         run: npm version "${{ steps.version.outputs.version }}" --no-git-tag-version --allow-same-version
