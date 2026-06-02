@@ -23,6 +23,8 @@ Currently supported products:
 
 ## Quick Start
 
+Quick Start is for contributors building from source. If you only want to use the CLI, skip to [Install the CLI](#install-the-cli).
+
 ```bash
 # Sync OpenAPI specs and regenerate code
 make bootstrap
@@ -34,9 +36,11 @@ make build
 make dev
 ```
 
-The `make dev` target installs `dce` to `/usr/local/bin` and symlinks `skills/dce` into `~/.agents/skills/dce` for live local development in an AI agent runtime.
+The `make dev` target installs `dce` to `/usr/local/bin` and symlinks `skills/dce` into `~/.agents/skills/dce`. After `make dev`, you can jump straight to [Usage](#usage); you do **not** need to run "Install the Skill" or "Install the CLI" below.
 
 ## Install the Skill
+
+Only needed if you want to install the `dce` skill into an AI agent environment **without** running `make dev`. This installs the skill only (it does **not** install the `dce` CLI binary).
 
 Install the `dce` skill globally:
 
