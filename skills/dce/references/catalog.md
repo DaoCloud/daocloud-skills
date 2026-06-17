@@ -10,6 +10,8 @@ Run `dce search "<intent>" --json` to find candidate commands. Use `--limit` to 
 
 Run `dce commands --json` to inspect the generated command catalog. Use `--include-hidden` only when hidden commands are relevant.
 
+The catalog is static: it reflects every module `dce` was built with, **not** what is installed on the target host. Presence in the catalog does not mean the module is deployed. A module-level `404` (the API route does not exist) is ambiguous — module not installed, or wrong path/version. On such a `404`, actively confirm by running `dce global-management about list-g-product-versions -o json`: if the module is absent from the list it is not installed (don't retry sibling commands; report it as not installed); if it is present, the module exists and the `404` is a wrong path/version or resource-level not-found, so re-check with `dce commands show <path...> --json`. A resource-level `404` (specific ID/name) on a working module is a normal "object not found", not a missing module.
+
 Key fields:
 
 - `path`: command path to pass to `commands show` or execute after the CLI name.
