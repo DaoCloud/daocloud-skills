@@ -136,3 +136,13 @@ sources:
     swagger:
       files:
         - docs/openapi/mcamel/seaweedfs/seaweedfs-v0.1.3.json
+
+
+  leopard:
+    display_name: billing-center
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: 8ffae87adc4776c0354f9ff44fe69b18a8ed5619
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/leopard/v0.14.0.json

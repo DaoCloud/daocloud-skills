@@ -10,6 +10,7 @@ import (
 	insight "github.com/DaoCloud/daocloud-skills/internal/generated/insight"
 	kafka "github.com/DaoCloud/daocloud-skills/internal/generated/kafka"
 	kpanda "github.com/DaoCloud/daocloud-skills/internal/generated/kpanda"
+	leopard "github.com/DaoCloud/daocloud-skills/internal/generated/leopard"
 	minio "github.com/DaoCloud/daocloud-skills/internal/generated/minio"
 	mongodb "github.com/DaoCloud/daocloud-skills/internal/generated/mongodb"
 	mysql "github.com/DaoCloud/daocloud-skills/internal/generated/mysql"
@@ -45,6 +46,9 @@ func MountModules(root *cobra.Command) error {
 		return err
 	}
 	if err := kpanda.Mount(root); err != nil {
+		return err
+	}
+	if err := leopard.Mount(root); err != nil {
 		return err
 	}
 	if err := minio.Mount(root); err != nil {

@@ -1,0 +1,92 @@
+commands:
+  # Only expose the bill aggregation API from leopard.
+  # Everything else is ignored to keep the billing-center surface small.
+  get-export-url:                           { ignore: true }
+  list-current-members:                     { ignore: true }
+  list-sub-accounts:                        { ignore: true }
+
+  get-invite-info:                          { ignore: true }
+  init-invite-code:                         { ignore: true }
+  list-invited-users:                       { ignore: true }
+
+  export-bills:                             { ignore: true }
+  export-monthly-bills:                     { ignore: true }
+  get-account-bill-aggregation:
+    short: "Get bill aggregation"
+    example: |
+      dce billing-center bill get-account-bill-aggregation \
+        --workspace-id <workspace-id> \
+        --username <username> \
+        --start-time <unix-seconds> \
+        --end-time <unix-seconds> \
+        -o json
+  get-monthly-bills:                        { ignore: true }
+  list-bills:                               { ignore: true }
+  list-monthly-bills:                       { ignore: true }
+
+  list-accounts:                            { ignore: true }
+
+  create-new-purchase-order:                { ignore: true }
+  create-quantity-change-order:             { ignore: true }
+  create-renew-order:                       { ignore: true }
+  export-orders:                            { ignore: true }
+  get-order:                                { ignore: true }
+  get-products:                             { ignore: true }
+  is-resource-order-next-bill-balance-sufficient: { ignore: true }
+  list-orders:                              { ignore: true }
+
+  create-discount-rule:                     { ignore: true }
+  create-region:                            { ignore: true }
+  create-region-domain:                     { ignore: true }
+  create-region-type:                       { ignore: true }
+  create-sku-info:                          { ignore: true }
+  create-spec-info:                         { ignore: true }
+  delete-discount-rule:                     { ignore: true }
+  delete-sku-info:                          { ignore: true }
+  delete-spec-info:                         { ignore: true }
+  get-discount-rule:                        { ignore: true }
+  get-sku:                                  { ignore: true }
+  get-sku-info:                             { ignore: true }
+  get-sku-price:                            { ignore: true }
+  list-billing-policies:                    { ignore: true }
+  list-discount-rules:                      { ignore: true }
+  list-product-sk-us:                       { ignore: true }
+  list-product-spec-field-key:              { ignore: true }
+  list-product-spec-field-values:           { ignore: true }
+  list-region-types:                        { ignore: true }
+  list-regions:                             { ignore: true }
+  list-regions-domains:                     { ignore: true }
+  list-sku-infos:                           { ignore: true }
+  list-spec-info:                           { ignore: true }
+  update-discount-rule:                     { ignore: true }
+  update-sku-discount-rule:                 { ignore: true }
+  update-sku-info:                          { ignore: true }
+  update-spec-info:                         { ignore: true }
+
+  export-transactions:                      { ignore: true }
+  list-transactions:                        { ignore: true }
+
+  activate-voucher:                         { ignore: true }
+  batch-create-and-active-vouchers:         { ignore: true }
+  batch-create-vouchers:                    { ignore: true }
+  get-voucher-stat-by-current-user:         { ignore: true }
+  list-active-vouchers-by-current-user:     { ignore: true }
+  list-expired-vouchers-by-current-user:    { ignore: true }
+
+  balance:                                  { ignore: true }
+  corporate-transfer-recharge:              { ignore: true }
+  create-domain-receiving-bank-info:        { ignore: true }
+  create-virtual-wallet:                    { ignore: true }
+  delete-domain-receiving-bank-info:        { ignore: true }
+  delete-virtual-wallet:                    { ignore: true }
+  get-balance-alert:                        { ignore: true }
+  get-receiving-bank-infos:                 { ignore: true }
+  get-refundable-amount:                    { ignore: true }
+  get-user-state:                           { ignore: true }
+  list-domain-receiving-bank-infos:         { ignore: true }
+  list-virtual-wallets:                     { ignore: true }
+  recharge:                                 { ignore: true }
+  refund:                                   { ignore: true }
+  update-balance-alert:                     { ignore: true }
+  update-domain-receiving-bank-info:        { ignore: true }
+  update-virtual-wallet:                    { ignore: true }
