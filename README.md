@@ -4,7 +4,7 @@ A generated CLI and AI skill package for DaoCloud Enterprise (DCE). It wraps the
 
 ## Overview
 
-- **`dce`** — a CLI generated from DCE OpenAPI specs (global-management, container-management). Supports API discovery, search, and execution with built-in auth management.
+- **`dce`** — a CLI generated from DCE OpenAPI specs across supported modules. Supports API discovery, search, and execution with built-in auth management.
 - **`skills/dce`** — an AI agent skill that teaches agents how to use `dce` safely.
 
 Currently supported products:
@@ -14,6 +14,17 @@ Currently supported products:
 | `global-management` | Global Management — users, groups, workspaces, roles, audit |
 | `container-management` | Container Management — clusters, namespaces, workloads, storage |
 | `insight` | Insight — observability, metrics, alerting, and related operations |
+| `amamba` | Application Workbench — applications, pipelines, GitOps, and deployment |
+| `elasticsearch` | Elasticsearch — search cluster lifecycle and instance management |
+| `kafka` | Kafka — event-streaming cluster lifecycle and instance management |
+| `minio` | MinIO — object-storage cluster lifecycle and instance management |
+| `mongodb` | MongoDB — document-database cluster lifecycle and instance management |
+| `mysql` | MySQL — relational-database cluster lifecycle and instance management |
+| `postgresql` | PostgreSQL — relational-database cluster lifecycle and instance management |
+| `rabbitmq` | RabbitMQ — message-broker cluster lifecycle and instance management |
+| `redis` | Redis — in-memory data-store cluster lifecycle and instance management |
+| `rocketmq` | RocketMQ — messaging cluster lifecycle and instance management |
+| `seaweedfs` | SeaweedFS — distributed-storage cluster lifecycle and instance management |
 
 ## Prerequisites
 

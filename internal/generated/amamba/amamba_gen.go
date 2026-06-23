@@ -18,6 +18,13 @@ func Mount(root *cobra.Command) error {
 	return nil
 }
 
+func MountFlat(root *cobra.Command) error {
+	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
+		return err
+	}
+	return runtime.BuildFlat(root, "amamba", Specs)
+}
+
 var Specs = []runtime.CommandSpec{
 	{
 		Group:       "Aggregation",

@@ -29,9 +29,19 @@ Use this skill when a user asks you to operate `dce`, inspect its API commands, 
 - Read `references/catalog.md` for the command discovery protocol and catalog field meanings.
 - Read `references/modules/amamba.md` for the `amamba` module command index.
 - Read `references/modules/container-management.md` for the `container-management` module command index.
+- Read `references/modules/elasticsearch.md` for the `elasticsearch` module command index.
 - Read `references/modules/global-management.md` for the `global-management` module command index.
 - Read `references/modules/insight.md` for the `insight` module command index.
+- Read `references/modules/kafka.md` for the `kafka` module command index.
+- Read `references/modules/minio.md` for the `minio` module command index.
+- Read `references/modules/mongodb.md` for the `mongodb` module command index.
+- Read `references/modules/mysql.md` for the `mysql` module command index.
 - Read `references/modules/operations-management.md` for the `operations-management` module command index.
+- Read `references/modules/postgresql.md` for the `postgresql` module command index.
+- Read `references/modules/rabbitmq.md` for the `rabbitmq` module command index.
+- Read `references/modules/redis.md` for the `redis` module command index.
+- Read `references/modules/rocketmq.md` for the `rocketmq` module command index.
+- Read `references/modules/seaweedfs.md` for the `seaweedfs` module command index.
 
 ## Rules
 

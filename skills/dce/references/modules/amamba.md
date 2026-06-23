@@ -296,7 +296,12 @@
   - `--sort-by` (query, default `SORT_BY_UNSPECIFIED`, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE): SortBy determines the cluster list order reference.
   - `--sort-dir` (query, default `DESC`, one of: DESC|ASC): OrderBy determines the cluster list order.
 - Output: list path `items`; columns `metadata.name`, `metadata.namespace`, `status.phase`; pagination `offset`
-- Example: `dce amamba applicationservice list-applications --workspace-id <ws> dce amamba applicationservice list-applications --workspace-id <ws> --name my-app -o json`
+- Example:
+
+```
+dce amamba applicationservice list-applications --workspace-id <ws>
+dce amamba applicationservice list-applications --workspace-id <ws> --name my-app -o json
+```
 
 ### `dce amamba applicationservice list-component-events`
 
@@ -1254,7 +1259,12 @@
   - `--sync-status` (query, default `SYNC_STATUS_UNSPECIFIED`, one of: SYNC_STATUS_UNSPECIFIED|SYNC_STATUS_UNKNOWN|SYNC_STATUS_SYNCED|SYNC_STATUS_OUT_OF_SYNC): syncStatus
   - `--health-status` (query, default `HEALTH_STATUS_UNSPECIFIED`, one of: HEALTH_STATUS_UNSPECIFIED|HEALTH_STATUS_MISSING|HEALTH_STATUS_DEGRADED|HEALTH_STATUS_HEALTHY|HEALTH_STATUS_UNKNOWN|HEALTH_STATUS_SUSPENDED|HEALTH_STATUS_PROGRESSING): healthStatus
 - Output: list path `items`; columns `createdAt`, `deletedAt`, `operationFinishedAt`, `operationStartedAt`; pagination `offset`
-- Example: `dce amamba applicationservice list-applications --workspace-id <ws> dce amamba applicationservice list-applications --workspace-id <ws> --name my-app -o json`
+- Example:
+
+```
+dce amamba applicationservice list-applications --workspace-id <ws>
+dce amamba applicationservice list-applications --workspace-id <ws> --name my-app -o json
+```
 
 ### `dce amamba gitops list-git-ops-kairship-deploy-target`
 
@@ -2596,7 +2606,12 @@
   - `--last-run-state` (query, default `STATUS_UNSPECIFIED`, one of: STATUS_UNSPECIFIED|QUEUE|RUNNING|SUCCESS|FAILED|CANCELED|ERROR|NOT_BUILT|PAUSED|SKIPPED|UNKNOWN|UNSTABLE): - CANCELED: CANCELED indicates the run is aborted by user.
   - `--disabled` (query): disabled
 - Output: list path `items`; columns `name`, `type`, `createdAt`, `description`, `disabled`, `isRelease`; pagination `offset`
-- Example: `dce amamba pipelines list-pipelines --workspace-id <ws> dce amamba pipelines list-pipelines --workspace-id <ws> --name build- -o json`
+- Example:
+
+```
+dce amamba pipelines list-pipelines --workspace-id <ws>
+dce amamba pipelines list-pipelines --workspace-id <ws> --name build- -o json
+```
 
 ### `dce amamba pipelines list-templates`
 

@@ -4,10 +4,20 @@ package generated
 
 import (
 	amamba "github.com/DaoCloud/daocloud-skills/internal/generated/amamba"
+	elasticsearch "github.com/DaoCloud/daocloud-skills/internal/generated/elasticsearch"
 	ghippo "github.com/DaoCloud/daocloud-skills/internal/generated/ghippo"
 	gmagpie "github.com/DaoCloud/daocloud-skills/internal/generated/gmagpie"
 	insight "github.com/DaoCloud/daocloud-skills/internal/generated/insight"
+	kafka "github.com/DaoCloud/daocloud-skills/internal/generated/kafka"
 	kpanda "github.com/DaoCloud/daocloud-skills/internal/generated/kpanda"
+	minio "github.com/DaoCloud/daocloud-skills/internal/generated/minio"
+	mongodb "github.com/DaoCloud/daocloud-skills/internal/generated/mongodb"
+	mysql "github.com/DaoCloud/daocloud-skills/internal/generated/mysql"
+	postgresql "github.com/DaoCloud/daocloud-skills/internal/generated/postgresql"
+	rabbitmq "github.com/DaoCloud/daocloud-skills/internal/generated/rabbitmq"
+	redis "github.com/DaoCloud/daocloud-skills/internal/generated/redis"
+	rocketmq "github.com/DaoCloud/daocloud-skills/internal/generated/rocketmq"
+	seaweedfs "github.com/DaoCloud/daocloud-skills/internal/generated/seaweedfs"
 	"github.com/spf13/cobra"
 )
 
@@ -19,6 +29,9 @@ func MountModules(root *cobra.Command) error {
 	if err := amamba.Mount(root); err != nil {
 		return err
 	}
+	if err := elasticsearch.Mount(root); err != nil {
+		return err
+	}
 	if err := ghippo.Mount(root); err != nil {
 		return err
 	}
@@ -28,7 +41,34 @@ func MountModules(root *cobra.Command) error {
 	if err := insight.Mount(root); err != nil {
 		return err
 	}
+	if err := kafka.Mount(root); err != nil {
+		return err
+	}
 	if err := kpanda.Mount(root); err != nil {
+		return err
+	}
+	if err := minio.Mount(root); err != nil {
+		return err
+	}
+	if err := mongodb.Mount(root); err != nil {
+		return err
+	}
+	if err := mysql.Mount(root); err != nil {
+		return err
+	}
+	if err := postgresql.Mount(root); err != nil {
+		return err
+	}
+	if err := rabbitmq.Mount(root); err != nil {
+		return err
+	}
+	if err := redis.Mount(root); err != nil {
+		return err
+	}
+	if err := rocketmq.Mount(root); err != nil {
+		return err
+	}
+	if err := seaweedfs.Mount(root); err != nil {
 		return err
 	}
 	return nil

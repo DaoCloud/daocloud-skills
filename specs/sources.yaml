@@ -46,3 +46,93 @@ sources:
     swagger:
       files:
         - docs/openapi/amamba/v0.131.0.json
+
+  elasticsearch:
+    display_name: elasticsearch
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/elasticsearch/elasticsearch-v0.28.0.json
+
+  kafka:
+    display_name: kafka
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/kafka/kafka-v0.30.0.json
+
+  minio:
+    display_name: minio
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/minio/minio-v0.25.0.json
+
+  mongodb:
+    display_name: mongodb
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/mongodb/mongodb-v0.20.0.json
+
+  mysql:
+    display_name: mysql
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/mysql/mysql-v0.30.1.json
+
+  postgresql:
+    display_name: postgresql
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/postgresql/postgresql-v0.22.0.json
+
+  rabbitmq:
+    display_name: rabbitmq
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/rabbitmq/rabbitmq-v0.32.0.json
+
+  redis:
+    display_name: redis
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/redis/redis-v0.31.0.json
+
+  rocketmq:
+    display_name: rocketmq
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/rocketmq/rocketmq-v0.19.0.json
+
+  seaweedfs:
+    display_name: seaweedfs
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/mcamel/seaweedfs/seaweedfs-v0.1.3.json
