@@ -1,0 +1,11 @@
+commands:
+  # Addon Group
+  list-helm-repos: { ignore: true }
+
+  # Cloud Shell Group
+  create-cloud-shell: { ignore: true }
+  delete-cloud-shell: { ignore: true }
+  get-cloud-shell: { ignore: true }
+
+  # Setting Group
+  list-gpu-setting: { ignore: true }

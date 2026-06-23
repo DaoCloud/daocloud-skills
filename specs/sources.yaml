@@ -37,3 +37,13 @@ sources:
     swagger:
       files:
         - docs/openapi/gmagpie/v0.13.0.json
+
+  kant:
+    display_name: kant-management
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    # pinned to main HEAD as of 2025-09-28; bump when upgrading kant version
+    pinned_tag: 3c809f3428cd5c197b6b8ba636230275608b0a78
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/kant/v0.21.0.json

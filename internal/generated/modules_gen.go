@@ -6,6 +6,7 @@ import (
 	ghippo "github.com/DaoCloud/daocloud-skills/internal/generated/ghippo"
 	gmagpie "github.com/DaoCloud/daocloud-skills/internal/generated/gmagpie"
 	insight "github.com/DaoCloud/daocloud-skills/internal/generated/insight"
+	kant "github.com/DaoCloud/daocloud-skills/internal/generated/kant"
 	kpanda "github.com/DaoCloud/daocloud-skills/internal/generated/kpanda"
 	"github.com/spf13/cobra"
 )
@@ -22,6 +23,9 @@ func MountModules(root *cobra.Command) error {
 		return err
 	}
 	if err := insight.Mount(root); err != nil {
+		return err
+	}
+	if err := kant.Mount(root); err != nil {
 		return err
 	}
 	if err := kpanda.Mount(root); err != nil {
