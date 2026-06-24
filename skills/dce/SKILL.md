@@ -34,6 +34,7 @@ Use this skill when a user asks you to operate `dce`, inspect its API commands, 
 - Read `references/modules/global-management.md` for the `global-management` module command index.
 - Read `references/modules/insight.md` for the `insight` module command index.
 - Read `references/modules/kafka.md` for the `kafka` module command index.
+- Read `references/modules/llm-studio.md` for the `llm-studio` module command index.
 - Read `references/modules/minio.md` for the `minio` module command index.
 - Read `references/modules/mongodb.md` for the `mongodb` module command index.
 - Read `references/modules/mysql.md` for the `mysql` module command index.

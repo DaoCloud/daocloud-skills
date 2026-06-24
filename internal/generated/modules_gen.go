@@ -7,6 +7,7 @@ import (
 	elasticsearch "github.com/DaoCloud/daocloud-skills/internal/generated/elasticsearch"
 	ghippo "github.com/DaoCloud/daocloud-skills/internal/generated/ghippo"
 	gmagpie "github.com/DaoCloud/daocloud-skills/internal/generated/gmagpie"
+	hydra "github.com/DaoCloud/daocloud-skills/internal/generated/hydra"
 	insight "github.com/DaoCloud/daocloud-skills/internal/generated/insight"
 	kafka "github.com/DaoCloud/daocloud-skills/internal/generated/kafka"
 	kpanda "github.com/DaoCloud/daocloud-skills/internal/generated/kpanda"
@@ -37,6 +38,9 @@ func MountModules(root *cobra.Command) error {
 		return err
 	}
 	if err := gmagpie.Mount(root); err != nil {
+		return err
+	}
+	if err := hydra.Mount(root); err != nil {
 		return err
 	}
 	if err := insight.Mount(root); err != nil {
