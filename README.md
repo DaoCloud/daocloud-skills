@@ -14,6 +14,7 @@ Currently supported products:
 | `global-management` | Global Management — users, groups, workspaces, roles, audit |
 | `container-management` | Container Management — clusters, namespaces, workloads, storage |
 | `insight` | Insight — observability, metrics, alerting, and related operations |
+| `ai-lab` | AI Lab — notebooks, jobs, datasets, models, inference, queues, and GPU resources |
 | `amamba` | Application Workbench — applications, pipelines, GitOps, and deployment |
 | `elasticsearch` | Elasticsearch — search cluster lifecycle and instance management |
 | `kafka` | Kafka — event-streaming cluster lifecycle and instance management |

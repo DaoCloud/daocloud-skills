@@ -38,6 +38,15 @@ sources:
       files:
         - docs/openapi/gmagpie/v0.13.0.json
 
+  baize:
+    display_name: ai-lab
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: 9fd0dfafa1400e6d98b14b85c9a27cd1c151f9bd
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/baize/v0.111.2.json
+
   amamba:
     display_name: amamba
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
