@@ -164,6 +164,15 @@ sources:
       files:
         - docs/openapi/hydra/v0.16.0.json
 
+  virtnest:
+    display_name: virtual-machines
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: 74a87ca82821c5c9ca1b07d1cf8bf037185d1408
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/virtnest/v0.20.0.json
+
   skoala:
     display_name: microservice-engine
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git

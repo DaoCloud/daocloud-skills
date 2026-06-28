@@ -46,6 +46,7 @@ Use this skill when a user asks you to operate `dce`, inspect its API commands, 
 - Read `references/modules/redis.md` for the `redis` module command index.
 - Read `references/modules/rocketmq.md` for the `rocketmq` module command index.
 - Read `references/modules/seaweedfs.md` for the `seaweedfs` module command index.
+- Read `references/modules/virtual-machines.md` for the `virtual-machines` module command index.
 
 ## Rules
 

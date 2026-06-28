@@ -22,6 +22,7 @@ import (
 	rocketmq "github.com/DaoCloud/daocloud-skills/internal/generated/rocketmq"
 	seaweedfs "github.com/DaoCloud/daocloud-skills/internal/generated/seaweedfs"
 	skoala "github.com/DaoCloud/daocloud-skills/internal/generated/skoala"
+	virtnest "github.com/DaoCloud/daocloud-skills/internal/generated/virtnest"
 	"github.com/spf13/cobra"
 )
 
@@ -85,6 +86,9 @@ func MountModules(root *cobra.Command) error {
 		return err
 	}
 	if err := skoala.Mount(root); err != nil {
+		return err
+	}
+	if err := virtnest.Mount(root); err != nil {
 		return err
 	}
 	return nil
