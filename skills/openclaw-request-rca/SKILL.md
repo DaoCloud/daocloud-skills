@@ -347,11 +347,7 @@ Watch for messages such as:
 Node and cluster pressure:
 
 ```bash
-dce insight alert list-alerts \
-  --cluster-name <cluster-name> \
-  --target <node-name> \
-  --page-size 50 \
-  -o json
+dce insight alert list-alerts \\n  --cluster-name <cluster-name> \\n  --target <node-name> \\n  --target-type NODE \\n  --page-size 50 \\n  -o json
 ```
 
 Look for memory, disk IO, filesystem, network, and kubelet-related alerts. Node pressure can amplify timeouts but should be described as a contributing factor unless directly visible in the request trace.
