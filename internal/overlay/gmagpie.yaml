@@ -10,11 +10,8 @@ commands:
   check-gpu-metrics:        { ignore: true }
   create-gpu-metrics:       { ignore: true }
   delete-gpu-metrics:       { ignore: true }
-  get-gpu-metrics:          { ignore: true }
   update-gpu-metrics:       { ignore: true }
 
-  get-gpu-models:           { ignore: true }
-  get-price:                { ignore: true }
   update-price:             { ignore: true }
 
   export-alarm:             { ignore: true }
