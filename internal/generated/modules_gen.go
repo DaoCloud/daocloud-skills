@@ -4,6 +4,7 @@ package generated
 
 import (
 	amamba "github.com/DaoCloud/daocloud-skills/internal/generated/amamba"
+	baize "github.com/DaoCloud/daocloud-skills/internal/generated/baize"
 	elasticsearch "github.com/DaoCloud/daocloud-skills/internal/generated/elasticsearch"
 	ghippo "github.com/DaoCloud/daocloud-skills/internal/generated/ghippo"
 	gmagpie "github.com/DaoCloud/daocloud-skills/internal/generated/gmagpie"
@@ -30,6 +31,9 @@ import (
 // app.NewApp() so the framework package never imports downstream code.
 func MountModules(root *cobra.Command) error {
 	if err := amamba.Mount(root); err != nil {
+		return err
+	}
+	if err := baize.Mount(root); err != nil {
 		return err
 	}
 	if err := elasticsearch.Mount(root); err != nil {

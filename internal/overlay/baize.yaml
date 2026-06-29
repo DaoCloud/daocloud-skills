@@ -1,0 +1,187 @@
+commands:
+  # Permission discovery endpoints are not useful as direct CLI operations.
+  get-current-user-permission:
+    ignore: true
+  get-current-user-operator-permissions:
+    ignore: true
+  get-current-user-workspace-permissions:
+    ignore: true
+  query-dev-dashboard-multiple-vectors:
+    ignore: true
+  query-multiple-vectors:
+    ignore: true
+  query-time-series-vectors:
+    ignore: true
+
+  list-devices-gp-us:
+    short: "List GPU devices"
+    aliases: [list-devices-gpus, ls-gpus]
+    params:
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  delete-analysis: &workspace-id-param
+    params:
+      workspace: { help: "Workspace ID" }
+  get-cluster-gpu-settings: *workspace-id-param
+  create-dataset: *workspace-id-param
+  dataset-do-action: *workspace-id-param
+  delete-dataset: *workspace-id-param
+  get-dataset: *workspace-id-param
+  get-dataset-sync-process: *workspace-id-param
+  update-dataset: *workspace-id-param
+  create-inference-serving: *workspace-id-param
+  delete-inference-serving: *workspace-id-param
+  get-inference-serving: *workspace-id-param
+  get-inference-serving-hpa: *workspace-id-param
+  update-inference-serving: *workspace-id-param
+  create-job: *workspace-id-param
+  delete-job: *workspace-id-param
+  do-job-action: *workspace-id-param
+  get-job: *workspace-id-param
+  list-schedulers: *workspace-id-param
+  create-labeling-instance: *workspace-id-param
+  delete-labeling-instance: *workspace-id-param
+  get-labeling-instance: *workspace-id-param
+  get-dev-grafana-dashboard: *workspace-id-param
+  get-inference-service-grafana-dashboard: *workspace-id-param
+  get-workload-grafana-dashboard: *workspace-id-param
+  create-model: *workspace-id-param
+  create-model-version: *workspace-id-param
+  delete-model: *workspace-id-param
+  delete-model-version: *workspace-id-param
+  get-model: *workspace-id-param
+  update-model: *workspace-id-param
+  update-model-version: *workspace-id-param
+  create-notebook: *workspace-id-param
+  create-notebook-snapshot-task: *workspace-id-param
+  delete-notebook: *workspace-id-param
+  get-notebook: *workspace-id-param
+  get-notebook-connection-info: *workspace-id-param
+  notebook-do-action: *workspace-id-param
+  reset-notebook-image: *workspace-id-param
+  update-notebook: *workspace-id-param
+  check-queue: *workspace-id-param
+  create-local-queue: *workspace-id-param
+
+  list-notebooks:
+    short: "List notebooks in a workspace"
+    aliases: [ls-notebooks]
+    example: |
+      dce ai-lab notebookservice list-notebooks \
+        --workspace <workspace-id> \
+        --page.page 1 --page.page-size 20
+    params:
+      workspace: { help: "Workspace ID" }
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  list-jobs:
+    short: "List training jobs in a workspace"
+    aliases: [ls-jobs]
+    example: |
+      dce ai-lab jobsmanagement list-jobs \
+        --workspace <workspace-id> \
+        --page.page 1 --page.page-size 20
+    params:
+      workspace: { help: "Workspace ID" }
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  list-datasets:
+    short: "List datasets in a workspace"
+    aliases: [ls-datasets]
+    example: |
+      dce ai-lab datasetmanagement list-datasets \
+        --workspace <workspace-id> \
+        --page.page 1 --page.page-size 20
+    params:
+      workspace: { help: "Workspace ID" }
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  list-inference-servings:
+    short: "List inference services in a workspace"
+    aliases: [ls-inference-services]
+    example: |
+      dce ai-lab inferenceservingmanagement list-inference-servings \
+        --workspace <workspace-id> \
+        --page.page 1 --page.page-size 20
+    params:
+      workspace: { help: "Workspace ID" }
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  list-models:
+    short: "List models in a workspace"
+    aliases: [ls-models]
+    example: |
+      dce ai-lab modelmanagement list-models \
+        --workspace <workspace-id> \
+        --page.page 1 --page.page-size 20
+    params:
+      workspace: { help: "Workspace ID" }
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  list-shared-models:
+    short: "List shared models available to a workspace"
+    aliases: [ls-shared-models]
+    params:
+      workspace: { help: "Workspace ID" }
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  list-queues:
+    short: "List queues"
+    aliases: [ls-queues]
+    params:
+      workspace: { help: "Workspace ID" }
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  list-workspaces:
+    short: "List workspaces"
+    aliases: [ls-workspaces]
+    params:
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  list-clusters:
+    short: "List clusters"
+    aliases: [ls-clusters]
+    params:
+      workspace: { help: "Workspace ID" }
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+
+  get-pod-instance-list: &default-pagination
+    params:
+      workspace: { help: "Workspace ID" }
+      page.page: { default: "1" }
+      page.pageSize: { default: "20" }
+  get-related-instances: *default-pagination
+  list-analysis: *default-pagination
+  list-analysis2: *default-pagination
+  list-artifacts: *default-pagination
+  list-cluster-namespaces: *default-pagination
+  list-cluster-namespaces2: *default-pagination
+  list-clusters2: *default-pagination
+  list-dataset-events: *default-pagination
+  list-datasets2: *default-pagination
+  list-inference-events: *default-pagination
+  list-inference-servings2: *default-pagination
+  list-job-events: *default-pagination
+  list-jobs2: *default-pagination
+  list-labeling-instance: *default-pagination
+  list-notebook-events: *default-pagination
+  list-notebook-snapshot-tasks: *default-pagination
+  list-notebooks2: *default-pagination
+  list-project-repositories: *default-pagination
+  list-projects: *default-pagination
+  list-pv-cs: *default-pagination
+  list-queue-workloads: *default-pagination
+  list-queues2: *default-pagination
+  list-registries: *default-pagination
+  list-resource-affinities: *default-pagination
+  list-storage-classes: *default-pagination

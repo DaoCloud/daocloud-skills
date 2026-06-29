@@ -38,6 +38,15 @@ sources:
       files:
         - docs/openapi/gmagpie/v0.13.0.json
 
+  baize:
+    display_name: ai-lab
+    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
+    pinned_tag: 9fd0dfafa1400e6d98b14b85c9a27cd1c151f9bd
+    backend: swagger
+    swagger:
+      files:
+        - docs/openapi/baize/v0.111.2.json
+
   amamba:
     display_name: amamba
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
@@ -149,11 +158,11 @@ sources:
   hydra:
     display_name: llm-studio
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: 48d6b335d066518b1621bed073839819be6b99ec
+    pinned_tag: 658460973f77ce60f15c45f9afefbb5d70ee9e21
     backend: swagger
     swagger:
       files:
-        - docs/openapi/hydra/v0.15.2.json
+        - docs/openapi/hydra/v0.16.0.json
 
   skoala:
     display_name: microservice-engine
