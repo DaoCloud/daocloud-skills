@@ -20,7 +20,7 @@ FROM docker.m.daocloud.io/library/alpine:3.21
 RUN apk add --no-cache ca-certificates
 
 COPY --from=builder /out/dce /app/dce
-COPY skills /app/skills
+COPY --from=builder /src/skills /app/skills
 
 WORKDIR /app
 ENTRYPOINT ["/app/dce"]
