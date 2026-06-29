@@ -21,7 +21,6 @@ commands:
         --end-time <unix-seconds> \
         -o json
   get-monthly-bills:                        { ignore: true }
-  list-bills:                               { ignore: true }
   list-monthly-bills:                       { ignore: true }
 
   list-accounts:                            { ignore: true }
@@ -31,7 +30,6 @@ commands:
   create-renew-order:                       { ignore: true }
   export-orders:                            { ignore: true }
   get-order:                                { ignore: true }
-  get-products:                             { ignore: true }
   is-resource-order-next-bill-balance-sufficient: { ignore: true }
   list-orders:                              { ignore: true }
 
@@ -47,16 +45,13 @@ commands:
   get-discount-rule:                        { ignore: true }
   get-sku:                                  { ignore: true }
   get-sku-info:                             { ignore: true }
-  get-sku-price:                            { ignore: true }
   list-billing-policies:                    { ignore: true }
   list-discount-rules:                      { ignore: true }
-  list-product-sk-us:                       { ignore: true }
   list-product-spec-field-key:              { ignore: true }
   list-product-spec-field-values:           { ignore: true }
   list-region-types:                        { ignore: true }
   list-regions:                             { ignore: true }
   list-regions-domains:                     { ignore: true }
-  list-sku-infos:                           { ignore: true }
   list-spec-info:                           { ignore: true }
   update-discount-rule:                     { ignore: true }
   update-sku-discount-rule:                 { ignore: true }
@@ -64,8 +59,6 @@ commands:
   update-spec-info:                         { ignore: true }
 
   export-transactions:                      { ignore: true }
-  list-transactions:                        { ignore: true }
-
   activate-voucher:                         { ignore: true }
   batch-create-and-active-vouchers:         { ignore: true }
   batch-create-vouchers:                    { ignore: true }

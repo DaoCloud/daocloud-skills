@@ -115,6 +115,17 @@ dce operations-management fee list-workspaces-fee --page 1 --page-size 20
 dce operations-management fee list-workspaces-fee --start 2026-05-01 --end 2026-05-28 --search team -o json
 ```
 
+## GPU
+
+### `dce operations-management gpu get-gpu-metrics`
+
+- Summary: GPU_GetGPUMetrics
+- HTTP: `GET /apis/gmagpie.io/v1alpha1/gpu/metrics/{id}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--id` (path, required, int32): id
+
 ## PermissionService
 
 ### `dce operations-management permissionservice list-permissions`
@@ -125,6 +136,26 @@ dce operations-management fee list-workspaces-fee --start 2026-05-01 --end 2026-
 - Body: none
 - Flags: none
 - Example: `dce operations-management permissionservice list-permissions -o json`
+
+## Price
+
+### `dce operations-management price get-gpu-models`
+
+- Summary: Price_GetGPUModels
+- HTTP: `GET /apis/gmagpie.io/v1alpha1/gpu_models`
+- Auth: required
+- Body: none
+- Flags: none
+- Output: list path `models`; columns `memory`, `model`
+
+### `dce operations-management price get-price`
+
+- Summary: Price_GetPrice
+- HTTP: `GET /apis/gmagpie.io/v1alpha1/price`
+- Auth: required
+- Body: none
+- Flags: none
+- Output: list path `gpuPrice`; columns `model`, `price`
 
 ## Report
 
