@@ -247,7 +247,7 @@ dce insight tracing get-operation-detail \
   --span-kinds SPAN_KIND_SERVER \
   --page 1 \
   --page-size 50 \
-  --sort 'repLatency,desc' \
+  --sort 'p99,desc' \\
   -o json
 ```
 
