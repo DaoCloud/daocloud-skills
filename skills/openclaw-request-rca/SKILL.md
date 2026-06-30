@@ -102,7 +102,13 @@ kpanda-global-cluster
 
 ### 2. Discover the OpenClaw Namespace
 
-OpenClaw spans are not always in `hydra-system`. Query `otel.scope.name` values per namespace that has trace services.
+Query `otel.scope.name` values per namespace that has trace services.
+
+Important: namespace discovery is only a way to find where OpenClaw spans may live. A namespace can contain many unrelated application traces, so never treat all traces in the selected namespace as OpenClaw data. Every OpenClaw span query and every interpretation of span output must continue to filter by:
+
+```text
+otel.scope.name=openclaw-otel-plugin
+```
 
 ```bash
 END=$(date -u +%s)000
@@ -131,9 +137,21 @@ dce insight tracing get-tag-values \
 
 Select the namespace where `openclaw-otel-plugin` appears. In observed environments this may be a workload namespace such as `jinye-ns`, not a platform namespace.
 
+If multiple namespaces contain `openclaw-otel-plugin`, query each candidate with the strict tag filter and use only the namespace whose filtered spans match the reported incident window, service, operation, or trace ID. Do not select a namespace based on request volume alone, because high-volume non-OpenClaw services can appear in the same namespace.
+
 ### 3. Query OpenClaw Spans
 
 Use a concrete RFC3339 time window. For "recent" incidents, start with the last 24 hours; for user-provided timestamps, preserve the user's timezone in the explanation and convert to RFC3339 for queries.
+
+All queries in this section must include the tag filter below. DCE tracing query results can include non-OpenClaw chain data when the filter is missing, malformed, ignored by a command variant, or when follow-up queries are run only by namespace/service/time. Treat any unfiltered or partially filtered result as mixed trace data, not OpenClaw evidence.
+
+Required OpenClaw filter:
+
+```json
+{"key": "otel.scope.name", "operation": "EQUAL", "value": "openclaw-otel-plugin"}
+```
+
+After each query, validate that every span used as OpenClaw evidence has `otel.scope.name=openclaw-otel-plugin` in its tags/process tags/scope metadata. If the returned rows do not expose this tag, state that the result is not sufficiently proven as OpenClaw-only and rerun with a narrower query such as trace ID + operation name + the required tag filter.
 
 All OpenClaw spans:
 
@@ -203,6 +221,8 @@ Recommended duration thresholds:
 | `> 10s` | Treat as severe latency or timeout risk |
 
 When the user reports a timeout, also query with `durationMin` close to the timeout threshold, for example `10s`, `30s`, or `60s`.
+
+When narrowing by `serviceName`, `operationName`, `traceID`, status, duration, or errors, keep the same `otel.scope.name=openclaw-otel-plugin` tag filter. Never replace this filter with service, namespace, or operation filters; those are additional constraints only.
 
 ### 4. Collect R.E.D Metrics
 
@@ -354,6 +374,7 @@ Look for memory, disk IO, filesystem, network, and kubelet-related alerts. Node 
 
 ## Analysis Rules
 
+- Only spans verified with `otel.scope.name=openclaw-otel-plugin` may be counted as OpenClaw spans. Namespace, service, operation name, trace ID, or timing overlap alone is not enough, because query results may contain non-OpenClaw chain data.
 - Treat `onlyErrorSpans=true` returning zero OpenClaw spans as "no direct OpenClaw error span found", not as "no incident".
 - If `openclaw_request` and `agent_run` have matching durations, attribute the observed latency to the agent execution phase unless deeper child spans contradict it.
 - If `channel_ingress` is near zero or a few milliseconds, do not classify ingress as the OpenClaw bottleneck.
@@ -381,79 +402,87 @@ Use this mapping to move from evidence to conclusion and mitigation.
 
 ## Output Format
 
-When the user asks for a root-cause summary, R.E.D analysis, or remediation advice, output tables first.
+When the user asks for a root-cause summary, R.E.D analysis, remediation advice, or leadership-facing report, answer in structured Markdown with the sections below. Do not output a step-by-step investigation log. Unless the user explicitly asks, do not show skill loading, command retries, raw JSON processing, or other internal process details.
 
-### Root Cause Summary Table
+Rules:
 
-```markdown
-| Finding | Conclusion |
-|---|---|
-| Request symptom | Slow request / direct failure / no OpenClaw traffic / platform-correlated degradation |
-| Primary root cause | ... |
-| Confidence | High / Medium / Low |
-| Evidence | Trace IDs, operations, durations, errors, alerts |
-| User impact | ... |
-```
+- Put the conclusion first.
+- Use Markdown tables for key metrics whenever possible.
+- Keep intermediate investigation detail out of the final answer.
+- Recommendations must be specific and executable.
+- If data is incomplete, explicitly say `Based on the currently available data`.
+- Use local time if the user is using a local timezone context.
 
-### R.E.D Analysis Table
+Required response template:
 
 ```markdown
-| Dimension | Query Object | Result | Assessment |
-|---|---|---:|---|
-| Rate | `<cluster>/<namespace>/<service>` | `reqRate ...` | ... |
-| Errors | `otel.scope.name=openclaw-otel-plugin` | `error span = 0` | ... |
-| Duration | `<operation>` | `max ...` | ... |
+# Conclusion
+
+Based on the currently available data, <1-2 sentences with the current judgment, risk level, and most important issue>. Current risk level: Normal / Watch / Risk / Critical.
+
+## Key Metrics
+
+| Metric | Current Value | Status |
+|---|---:|---|
+| OpenClaw span filter | `otel.scope.name=openclaw-otel-plugin` | Normal / Watch / Risk / Critical |
+| Rate | `<reqRate or request count>` | Normal / Watch / Risk / Critical |
+| Errors | `<error span count or error rate>` | Normal / Watch / Risk / Critical |
+| Duration | `<p95/p99/max or slowest operation>` | Normal / Watch / Risk / Critical |
+| Main slow operation | `<operationName + duration>` | Normal / Watch / Risk / Critical |
+
+## Main Findings
+
+1. <most important finding>
+   <impact>.
+
+2. <second important finding>
+   <impact>.
+
+3. <third important finding, optional>
+   <impact>.
+
+## Cause Analysis
+
+Cause 1: <cause>
+
+Evidence: <verified OpenClaw span evidence, trace ID, operation, duration, error, alert, or log>.  
+Impact: <impact on request failure, latency, or platform risk>.
+
+Cause 2: <cause>
+
+Evidence: <evidence>.  
+Impact: <impact>.
+
+Cause 3: <cause, optional>
+
+Evidence: <evidence>.  
+Impact: <impact>.
+
+## Recommended Actions
+
+Immediate Actions
+
+1. <specific P0 action>
+2. <specific P0 action>
+
+Continuous Monitoring
+
+1. <specific metric/query/alert to watch>
+2. <specific condition that would change the conclusion>
+
+Follow-Up Improvements
+
+1. <instrumentation, alerting, SLO, or reliability improvement>
+2. <durable fix>
+
+## Follow-Up Questions
+
+- Help me inspect the detailed cause for `<trace-id / operation / namespace>`
+- Help me generate an action plan for this OpenClaw incident
+- Help me export a leadership- or delivery-facing report
 ```
 
-In Chinese:
-
-```markdown
-| 维度 | 查询对象 | 结果 | 判断 |
-|---|---|---:|---|
-| Rate | `<cluster>/<namespace>/<service>` | `reqRate ...` | ... |
-| Errors | `otel.scope.name=openclaw-otel-plugin` | `error span = 0` | ... |
-| Duration | `<operation>` | `max ...` | ... |
-```
-
-### OpenClaw Span Detail Table
-
-```markdown
-| Time | Trace ID | Operation | Duration | Status |
-|---|---|---|---:|---|
-```
-
-Use local time if the user is using a local timezone context.
-
-### Error Chain Table
-
-```markdown
-| Stage | Evidence | Impact | Root-Cause Read |
-|---|---|---|---|
-| Ingress | ... | ... | ... |
-| OpenClaw request | ... | ... | ... |
-| Agent execution | ... | ... | ... |
-| Downstream dependency | ... | ... | ... |
-| Platform dependency | ... | ... | ... |
-| Node resources | ... | ... | ... |
-```
-
-### Remediation Table
-
-```markdown
-| Priority | Recommendation | Target Root Cause | Expected Effect |
-|---|---|---|---|
-| P0 | ... | ... | ... |
-| P1 | ... | ... | ... |
-| P2 | ... | ... | ... |
-```
-
-### Final Sentence
-
-End with one concise conclusion. Example:
-
-```text
-结论：当前没有 OpenClaw 直接错误 span，主要是 agent_run 驱动的慢请求；平台网关和存储异常是需要并行修复的外部风险，但不是已被 trace 直接证明的 OpenClaw 请求根因。
-```
+Optional detail tables may be added under the required sections only when they materially improve the answer. Keep them concise.
 
 ## Common Interpretation
 

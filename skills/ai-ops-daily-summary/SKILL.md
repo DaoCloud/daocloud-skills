@@ -1,13 +1,22 @@
 ---
 name: ai-ops-daily-summary
-description: Generate a concise leadership-facing AI operations daily summary from DaoCloud Enterprise DCE data. Use when the user asks for today's AI operations summary, AI usage report, LLM Studio operating metrics, boss/leadership AI daily report, token/API key/model service overview, or wants the DCE CLI data turned into the most important 5 conclusions, especially in table form.
+description: Generate a concise leadership-facing AI operations daily summary and business-value analysis from DaoCloud Enterprise DCE / LLM Studio / Hydra data. Use when the user asks for today's AI operations summary, AI usage report, LLM Studio operating metrics, boss/leadership AI daily report, token/API key/model service overview, business value, operating value, risk identification, or wants available DCE CLI data turned into the most important conclusions, especially in table form.
 ---
 
 # AI Ops Daily Summary
 
 ## Overview
 
-Create a boss-ready daily AI operations summary from DCE / LLM Studio data. Favor the most important 5 conclusions, shown as a compact table with direct metrics and a one-line executive takeaway. Do not depend on bundled scripts; run the DCE CLI commands directly so the workflow stays transparent and easy to adjust.
+Create a boss-ready daily AI operations summary from DCE / LLM Studio / Hydra data. Favor the most important conclusions, shown as compact tables with direct metrics and a one-line executive takeaway. Do not depend on bundled scripts; run the DCE CLI commands directly so the workflow stays transparent and easy to adjust.
+
+## Data Integrity Rules
+
+- Use only data that was actually retrieved in the current run. Never guess, backfill, extrapolate, or invent values.
+- If a metric is not returned by DCE CLI commands, including DCE LLM Studio / Hydra-backed command groups, do not include that metric in tables, conclusions, risk reads, or recommendations.
+- Do not write placeholder values such as `N/A`, `unknown`, `not available`, `-`, or `0` unless the retrieved data explicitly says the value is zero.
+- If a whole data source is unavailable, omit metrics that depend on it. Mention the gap only when it materially limits confidence.
+- Distinguish measured values from calculated values. Only calculate from retrieved inputs, and state the formula briefly when the calculation drives a conclusion.
+- Do not expose raw API keys, tokens, credentials, or secrets. Count and summarize only.
 
 ## Data Collection
 
@@ -81,7 +90,25 @@ dce llm-studio adminmodelmanagement list-models \
   -o json
 ```
 
-If a DCE endpoint returns 404 or fails, keep the partial data and mention any material gap only if it affects confidence.
+If a DCE CLI command returns 404 or fails, keep the partial data and mention any material gap only if it affects confidence. Do not include metrics from failed commands.
+
+## Business Value Data
+
+When the user asks for business value, operating value, or risk identification and business recommendations, collect data only through `dce` CLI commands. Do not call page-specific HTTP endpoints such as `/api/v1alpha1/business-value/...`, even if the user provides a dashboard URL. Use the dashboard only to understand which business concepts matter; use DCE CLI output as the sole data source.
+
+CLI sources that can support business-value analysis:
+
+| Business area | Preferred source | Use only when retrieved |
+|---|---|---|
+| Token throughput and output | `dce insight metric query-metric`, `dce insight metric query-range-metric`, LLM Studio dashboard/token usage commands | Throughput, cumulative tokens, usage trend |
+| Capacity and utilization | `dce insight metric`, `dce insight resource list-nodes`, `dce insight resource get-node`, GPU dashboard/resource commands | Rated capacity if returned, GPU/node utilization, bottleneck read |
+| Tenant/API Key consumption | `dce llm-studio apikeymanagement get-api-key-usage-statistics`, `list-api-key`, WS API Key usage commands | Active tenants, API Key count, token ranking |
+| Workspace quota and budget | `dce llm-studio workspacequotaservice list-workspace-quotas` | Budget usage, quota exhaustion risk |
+| Model supply and serving | `dce llm-studio modelmanagement list-models`, `modelservingmanagement list-model-serving`, `adminmodelmanagement list-models` | Model availability, serving posture |
+| Revenue, cost, gross profit, ROI | Token usage plus prices returned by LLM Studio model APIs, retrieved cost config, workspace quota/billing fields if returned | Financial value; omit if price or cost inputs are missing |
+| Risk suggestions | `dce insight alert`, quota commands, usage commands, API Key commands, security/log commands if available | Only recommendations backed by retrieved data |
+
+Hydra is usually exposed through `dce llm-studio ...` commands. If a separate `hydra` CLI is not installed, do not claim it was used; say the Hydra data was accessed through DCE LLM Studio commands only if those commands succeeded.
 
 ## Summary Workflow
 
@@ -93,30 +120,101 @@ If a DCE endpoint returns 404 or fails, keep the partial data and mention any ma
    - Supply readiness: public/MAAS models enabled and gateway health.
    - Deployment posture: workspace model-serving count.
    - Governance and waste: API Key count, zero-quota keys, never-used keys, stale keys, disabled/expired keys.
-4. Keep exactly 5 conclusions unless the user asks for more.
-5. Present the output as a Markdown table when the user wants a direct/visual view.
+4. For business-value requests, add retrieved operating-value signals in this order:
+   - Capacity utilization and cumulative Token output.
+   - Revenue, cost, gross profit, margin, and ROI only when measured or calculable from retrieved inputs.
+   - Tenant/API Key concentration and quota risk.
+   - Model supply and model-serving readiness.
+   - Retrieved risk suggestions and alerts.
+5. Keep up to 5 conclusions. Fewer is better than adding unsupported conclusions.
+6. Present the output as Markdown tables when the user wants a direct/visual view.
 
 ## Output Format
 
-Use this table shape by default:
+When the user asks for an AI operations daily summary, business-value analysis, risk identification, remediation advice, or leadership-facing report, answer in structured Markdown with the sections below. Do not output a step-by-step investigation log. Unless the user explicitly asks, do not show skill loading, command retries, raw JSON processing, or other internal process details.
 
-| # | Conclusion | Key Data | Read |
-|---:|---|---:|---|
-| 1 | No AI consumption today | Requests `0`; tokens `0` | AI capability produced no business usage today |
+Rules:
 
-When the user asks in Chinese, localize the table:
+- Put the conclusion first.
+- Use Markdown tables for key metrics whenever possible.
+- Keep intermediate investigation detail out of the final answer.
+- Recommendations must be specific and executable.
+- Use only values retrieved through DCE CLI commands in the current run.
+- Omit any metric, finding, cause, or recommendation that is not backed by retrieved DCE CLI data.
+- If data is incomplete, explicitly say `Based on the currently available DCE CLI data`.
+- Match the user's language in the final answer, but keep these skill instructions in English.
+- Do not expose raw API keys or secrets; only count keys and summarize status.
 
-| # | 结论 | 关键数据 | 直观判断 |
-|---:|---|---:|---|
-| 1 | 今日实际使用为 0 | 请求 `0`；Token `0` | AI 能力今日未产生业务消耗 |
+Required response template:
 
-Then add one short executive sentence. Example:
+```markdown
+# Conclusion
 
-```text
-一句话给老板：今天 AI 平台“供给正常、消费为零”，重点不是扩容，而是把已有模型和 API Key 接到真实业务场景里。
+Based on the currently available DCE CLI data, <1-2 sentences with the current judgment, risk level, and most important issue>. Current risk level: Normal / Watch / Risk / Critical.
+
+## Key Metrics
+
+| Metric | Current Value | Status |
+|---|---:|---|
+| Token consumption | `<retrieved request/token count>` | Normal / Watch / Risk / Critical |
+| Active users or tenants | `<retrieved active count>` | Normal / Watch / Risk / Critical |
+| API Keys | `<retrieved key count/status summary>` | Normal / Watch / Risk / Critical |
+| Model supply or serving | `<retrieved model/serving count/status>` | Normal / Watch / Risk / Critical |
+| Capacity, quota, or cost signal | `<retrieved value, if available>` | Normal / Watch / Risk / Critical |
+
+## Main Findings
+
+1. <most important finding backed by retrieved DCE CLI data>
+   <business or operating impact>.
+
+2. <second important finding backed by retrieved DCE CLI data>
+   <business or operating impact>.
+
+3. <third important finding, optional and only if backed by retrieved data>
+   <business or operating impact>.
+
+## Cause Analysis
+
+Cause 1: <cause>
+
+Evidence: <retrieved metric / command result>.  
+Impact: <impact on usage, cost, capacity, governance, or risk>.
+
+Cause 2: <cause, optional and only if backed by retrieved data>
+
+Evidence: <retrieved metric / command result>.  
+Impact: <impact>.
+
+Cause 3: <cause, optional and only if backed by retrieved data>
+
+Evidence: <retrieved metric / command result>.  
+Impact: <impact>.
+
+## Recommended Actions
+
+Immediate Actions
+
+1. <specific action tied to retrieved risk or metric>
+2. <specific action tied to retrieved risk or metric>
+
+Continuous Monitoring
+
+1. <specific retrieved metric to watch>
+2. <specific threshold or condition that would change the conclusion>
+
+Follow-Up Improvements
+
+1. <durable improvement tied to retrieved data>
+2. <instrumentation, quota, alerting, cost, or governance improvement>
+
+## Follow-Up Questions
+
+- Help me inspect the detailed cause for `<workspace / tenant / API Key group / model serving>`
+- Help me generate an action plan for today's AI operations risk
+- Help me export a leadership- or delivery-facing AI operations report
 ```
 
-Adjust the wording based on the data. Do not expose raw API keys or secrets; only count keys and summarize status.
+Optional detail tables may be added under the required sections only when they materially improve the answer and every row is backed by retrieved DCE CLI data. Keep them concise.
 
 ## Interpretation Rules
 
@@ -126,3 +224,8 @@ Adjust the wording based on the data. Do not expose raw API keys or secrets; onl
 - If workspace model-serving count is zero, describe the posture as public-model driven rather than self-deployed/private-serving driven.
 - For API Keys, count total, disabled, expired, zero-quota, never-used (`lastUsedTime` missing), and stale keys. Do not print the key values.
 - Use concrete workspace names and IDs only when they clarify the conclusion; otherwise aggregate for leadership readability.
+- Do not infer business risk from missing data. A missing quota response is not a budget risk; a missing cost response is not zero cost; a missing department endpoint is not zero department usage.
+- If department token usage is unsupported in the current runtime mode, omit department rankings and base the summary on tenant/API Key/workspace data that was retrieved.
+- Capacity risk must be grounded in retrieved throughput, rated capacity, GPU utilization, node metrics, or explicit bottleneck forecast data.
+- Financial conclusions require retrieved revenue/cost/profit data or retrieved token usage plus retrieved price/cost configuration. Otherwise omit financial metrics.
+- Risk recommendations must map to retrieved evidence: quota exhaustion, low utilization, traffic drop, concentration, alert/security event, or explicit risk-suggestion API output.
