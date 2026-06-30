@@ -14,8 +14,11 @@ Currently supported products:
 | `global-management` | Global Management — users, groups, workspaces, roles, audit |
 | `container-management` | Container Management — clusters, namespaces, workloads, storage |
 | `insight` | Insight — observability, metrics, alerting, and related operations |
+| `operations-management` | Operations Management — cost allocation, operational reports, and alarm reports |
 | `ai-lab` | AI Lab — notebooks, jobs, datasets, models, inference, queues, and GPU resources |
+| `llm-studio` | LLM Studio — model catalog, inference serving, API keys, token usage, and workspace AI dashboards |
 | `amamba` | Application Workbench — applications, pipelines, GitOps, and deployment |
+| `billing-center` | Billing Center — products, pricing, orders, bills, and transactions |
 | `elasticsearch` | Elasticsearch — search cluster lifecycle and instance management |
 | `kafka` | Kafka — event-streaming cluster lifecycle and instance management |
 | `minio` | MinIO — object-storage cluster lifecycle and instance management |
