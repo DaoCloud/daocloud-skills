@@ -417,41 +417,85 @@ priority order:
 
 ## Output Format
 
-Present a structured report in this order:
+Present the final answer as structured Markdown. Do not include a step-by-step
+tool execution log, skill loading details, API retry details, JSON parsing
+details, or other internal process unless the user explicitly asks for them.
+If data is incomplete, explicitly say that the judgment is based on currently
+available data in the conclusion.
 
-1. **GPU Cluster Overview**
-   - Per cluster, per GPU mode (GPU / MIG / VGPU):
-   - Table: Cluster | Mode | Total | Allocated | Core Util% | VRAM Total | VRAM Alloc | VRAM Used%
+Use these top-level sections in this order. Treat the template as the report
+spine, not as a limit on evidence: preserve domain-specific tables and details
+inside the matching sections when they are needed to support the conclusion.
 
-2. **Current Load Distribution**
-   - Table: Cluster | Current QPS | GPU Workloads | Total Replicas | HPA Enabled?
+# Conclusion
 
-3. **+30% Traffic Projection**
-   - Per cluster, per mode:
-   - Table: Cluster | Mode | Proj Core Util% | Proj Allocated | Sched Headroom | Compute Headroom | VRAM Headroom | Status
-   - Status: **OK** (all headroom > 30%) / **At Risk** (some headroom 10-30%) / **Critical** (any headroom < 10% or negative)
+Use 1-2 sentences to state the current judgment, risk level
+(`normal` / `watch` / `risk` / `critical`), the first likely bottleneck, and whether the
+primary action is scale, throttle, route, or reconfigure.
+For user-facing answers, localize the section title and risk labels to the
+user's language.
 
-4. **Bottleneck Determination**
-   - First bottleneck cluster: `<name>`
-   - Bottleneck mode: `<GPU|MIG|VGPU>`
-   - Constraint type: `<Compute|Scheduling|VRAM>`
-   - Reason: `<specific metric and value>`
-   - Time to saturation (if trend data available): `<estimate>`
+## Key Metrics
 
-5. **Recommended Actions** (prioritized)
-   - Action 1: `<type>` on `<target>` (mode: `<mode>`) — `<rationale>`
-   - Action 2: `<type>` on `<target>` (mode: `<mode>`) — `<rationale>`
-   - Fallback: `<type>` — `<when to use>`
+Start with a Markdown summary table with 3-6 key indicators. Prefer these
+fields when available: first bottleneck cluster, GPU mode, constraint type,
+projected core utilization, scheduling headroom, VRAM headroom, current QPS,
+projected QPS, and confidence.
 
-6. **Data Quality & Assumptions**
-   - List any assumptions made (e.g., "linear QPS-to-GPU scaling assumed")
-   - Flag any missing data that would improve accuracy
+| Metric | Current Value | Status |
+|--------|---------------|--------|
+| First bottleneck GPU pool | `<cluster/mode>` | `<normal/watch/risk/critical>` |
+
+Preserve the core GPU planning evidence with supporting detail tables under
+this section when data is available:
+
+- GPU capacity overview: `Cluster | Mode | Total | Allocated | Core Util% | VRAM Total | VRAM Alloc | VRAM Used%`
+- Current load distribution: `Cluster | Current QPS | GPU Workloads | Total Replicas | HPA Enabled`
+- Traffic projection: `Cluster | Mode | Projected Core Util% | Projected Allocated | Scheduling Headroom | Compute Headroom | VRAM Headroom | Status`
+- Bottleneck determination: `Cluster | Mode | Constraint | Evidence | Time to Saturation | Confidence`
+
+## Main Findings
+
+Use a numbered list with 2-3 findings. Each finding must explain the impact.
+The findings must preserve the bottleneck decision logic: which cluster/mode is
+first constrained, whether the constraint is compute/scheduling/VRAM, and why
+scale/throttle/route/reconfigure is preferred.
+
+## Cause Analysis
+
+Analyze 2-3 causes around the main findings. For each cause, include:
+
+Cause N: `<cause>`
+
+Evidence: `<specific metric, projection, headroom, or workload fact>`.
+
+Impact: `<capacity, scheduling, SLA, or routing impact>`.
+
+## Recommended Actions
+
+Group concrete actions by:
+
+### Immediate
+
+### Monitor
+
+### Optimize Later
+
+Actions should name the target cluster/GPU mode and the action type
+(`scale` / `throttle` / `route` / `reconfigure`). Include fallback action when
+data or capacity is insufficient.
+
+## Follow-up Questions
+
+Provide 2-3 copyable follow-up questions in the user's language. They should
+guide the user toward bottleneck workload details, scale/throttle/route
+planning, or an exportable stakeholder report.
 
 ## Rules
 
 ### Hard Constraints
 
-1. **Execute Before Analyze — 先执行，后分析**
+1. **Execute Before Analyze**
    - **NEVER** present analysis, tables, or conclusions before executing the
      corresponding `dce` command.
    - **NEVER** hallucinate command output. If a command has not been executed,
@@ -459,22 +503,22 @@ Present a structured report in this order:
    - If a step requires data from a previous command, **wait for the command
      output** before proceeding.
 
-2. **No Fabricated Data — 禁止编造数据**
+2. **No Fabricated Data**
    - Every number, cluster name, node name, GPU count, utilization percentage,
      or QPS value **must** come from actual `dce` command output.
    - If a command returns empty, report "no resources found" or "no data".
    - Do not fill in "typical" or "example" values.
    - Do not assume GPU model, node count, or capacity from cluster name alone.
 
-3. **Summarize Command Output — 命令输出摘要**
-   - After each `dce` command execution, **summarize the result in 2-4 sentences**
-     before moving to the next step.
-   - Extract only the key facts (e.g., "Found 3 clusters with GPU: A, B, C")
-   - Do not dump full JSON or table output into the conversation.
-   - If the output is large, use a subagent or redirect to file, then report
-     the summary.
+3. **Keep Internal Process Out of Final Answer**
+   - Track command results internally and extract only the key facts needed for
+     the final structured report.
+   - Do not dump full JSON, raw tables, API retry details, or command-by-command
+     execution history into the final answer.
+   - If progress updates are necessary during long collection, keep them brief
+     and user-facing; the final answer must still use the Output Format above.
 
-4. **Data Integrity Checkpoint — 数据完整性检查点**
+4. **Data Integrity Checkpoint**
    - Before Step 5 (Bottleneck Analysis), confirm that you have:
      - At least one cluster name with verified GPU presence
      - GPU capacity numbers (total / allocated) from actual metrics or APIs
@@ -495,6 +539,9 @@ Present a structured report in this order:
   user-provided values.
 - **Conservative estimates:** When in doubt, use the more pessimistic capacity
   estimate.
+- **Conclusion first:** Put the conclusion first and avoid troubleshooting
+  transcripts in the final answer.
+- **Concrete actions:** Recommended actions must be specific and executable.
 
 ## User omitted cluster name
 

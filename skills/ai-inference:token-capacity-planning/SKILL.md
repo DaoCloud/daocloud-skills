@@ -23,6 +23,62 @@ resources or modify infrastructure.
 `container-management:gpu-bottleneck-analysis` to verify actual cluster capacity after the
 plan is drafted.
 
+## Interaction Gate
+
+Before any calculation, recommendation, or final structured report, check
+whether the user has provided enough planning inputs.
+
+**MUST ask clarifying questions first** when any of these required inputs are
+missing:
+
+- Total Tokens, or at least a target period and rough token volume
+- Model Type, or a known model family/size to estimate from
+- Deployment Mode (`API` or `on-premise GPU cluster`)
+- Usage Pattern (`real-time` or `batch`)
+- Business Criticality or target SLA tier
+
+When required inputs are missing, the response is a clarification turn, not the
+final plan:
+
+- Do not use the final Output Format.
+- Do not include `Conclusion`, `Key Metrics`, calculations, SLA commitments,
+  cost tables, or capacity tables.
+- Ask 1-3 focused questions only.
+- Prefer compact multiple-choice questions when helpful.
+- Mention optional defaults only after the required inputs are covered.
+
+Only produce the final structured plan after the required inputs are available,
+or when the user explicitly asks for a rough illustrative example based on
+assumptions.
+
+## Current State Integration
+
+For on-premise GPU deployments, token/SLA planning must use current cluster
+reality whenever possible. Do not rely only on theoretical token-to-GPU sizing
+when the user has a DCE environment available.
+
+Before the final plan for an on-premise GPU deployment:
+
+1. Use `container-management:gpu-bottleneck-analysis` to inspect actual GPU
+   pool capacity, allocation, utilization, VRAM pressure, current load, and
+   likely bottlenecks.
+2. If the user has not specified target clusters, discover GPU-enabled clusters
+   through the GPU bottleneck skill and ask the user to confirm scope when
+   multiple candidates exist.
+3. If DCE auth is not established, ask the user to authenticate before claiming
+   actual capacity has been verified.
+4. If live GPU data cannot be obtained, still produce a planning estimate only
+   after required planning inputs are available, and clearly mark GPU capacity
+   validation as missing.
+
+The final recommendation should combine planned token demand, SLA targets,
+peak/burst assumptions, actual GPU pool headroom and bottleneck evidence, and
+practical actions such as scale, throttle, route, reconfigure, quota allocation,
+or phased rollout changes.
+
+When current GPU data changes the recommendation, prefer the live-state finding
+over generic sizing heuristics.
+
 ## When to Use
 
 - "We need 1.8 billion Tokens next year. How do we plan supply, SLA, and cost?"
@@ -35,7 +91,9 @@ plan is drafted.
 
 ### Step 1 — Gather Requirements
 
-Ask the user (one question at a time if details are missing):
+Follow the Interaction Gate before calculating or producing the final
+structured plan. Do not skip directly to calculations when the request is only
+"design an SLA", "plan token capacity", or similarly broad.
 
 | Parameter | Question | Why It Matters |
 |-----------|----------|----------------|
@@ -43,10 +101,38 @@ Ask the user (one question at a time if details are missing):
 | **Input/Output Split** | What is the estimated input:output ratio? (default: 3:1) | Input and output have different costs and latency |
 | **Model Type** | Which model(s) will be used? (e.g., GPT-4, Claude 3.5, Llama 3 70B) | Determines per-token cost, latency, and GPU requirements |
 | **Deployment Mode** | API call (pay-per-token) or on-premise GPU cluster? | Determines cost structure and resource ownership |
+| **GPU Cluster Scope** | For on-premise mode, which cluster(s) or GPU pool(s) should be checked? | Allows the plan to use current capacity instead of only theoretical sizing |
 | **Usage Pattern** | Real-time (interactive) or batch (offline)? | Affects SLA design and peak-to-average ratio |
 | **Growth Curve** | Linear growth, S-curve, or seasonal spikes? | Determines phased supply plan |
 | **Peak Factor** | What is the expected peak-to-average traffic ratio? (default: 3x) | Determines headroom and burst capacity |
 | **Business Criticality** | Is this business-critical (needs 99.9% uptime) or best-effort? | Affects SLA tier and cost |
+
+#### 1.1 Input Completeness Gate
+
+Required before calculation:
+
+- Total Tokens, or at least a target period and rough token volume
+- Model Type, or a known model family/size to estimate from
+- Deployment Mode (`API` or `on-premise GPU cluster`)
+- Usage Pattern (`real-time` or `batch`)
+- Business Criticality or target SLA tier
+- For on-premise GPU mode: target cluster(s), GPU pool(s), or permission to
+  discover GPU-enabled clusters
+
+If any required input is missing, stop at a clarification turn as described in
+the Interaction Gate.
+
+Optional defaults, only if the user does not know:
+
+- Input/Output Split: default to `3:1`
+- Growth Curve: default to `linear`
+- Peak Factor: default to `3x`
+- Buffer Factor: default to `1.3x`
+- Currency: default to USD
+
+If using optional defaults, state them clearly in the final answer. Do not use
+defaults for the required inputs above unless the user explicitly asks for a
+rough illustrative example.
 
 **After gathering, summarize:**
 "Customer needs X Tokens/year, Y% input, model Z, deployed as [API/on-prem],
@@ -128,6 +214,25 @@ Approximate throughput per GPU (A100 80GB, FP16):
 **For on-premise deployments, after calculating GPU demand, use
 `container-management:gpu-bottleneck-analysis` to verify whether the existing GPU clusters
 can meet the calculated demand.**
+
+#### 3.3 Current GPU Reality Check
+
+For on-premise GPU deployments, run the GPU bottleneck workflow before final
+recommendations whenever DCE access is available.
+
+Compare theoretical demand against live cluster evidence:
+
+| Planning Output | Live GPU Evidence |
+|-----------------|-------------------|
+| Required GPUs | Total / allocated GPU capacity by pool and mode |
+| Peak tokens/s | Current QPS and projected load |
+| SLA latency target | Core utilization and scheduling headroom |
+| Output/context size pressure | VRAM allocated/used headroom |
+| HA/buffer factor | Multi-cluster routing and spare capacity |
+
+If live GPU evidence shows the planned demand cannot fit, adjust the supply
+plan and recommendations instead of presenting the original theoretical plan as
+valid.
 
 **After mapping, summarize:**
 "API mode: estimated $X/month. On-prem mode: estimated Y GPUs needed."
@@ -260,46 +365,103 @@ Margin:
 
 ## Output Format
 
-Present a structured capacity plan in this order:
+Present the final answer as structured Markdown. Do not include a step-by-step
+reasoning transcript, skill loading details, API lookup details, pricing-table
+lookup details, spreadsheet-style scratch work, or other internal process unless
+the user explicitly asks for them. If data is incomplete, explicitly say that
+the plan is based on currently available inputs and assumptions in the
+conclusion.
 
-1. **Executive Summary**
-   - Customer: `<name>`
-   - Annual Target: `<X> Tokens` (Input: Y%, Output: Z%)
-   - Model: `<model>`
-   - Deployment: `<API / On-prem>`
-   - Recommended SLA Tier: `<Critical / Standard / Best-effort>`
-   - Estimated Annual TCO: `$X`
-   - Recommended Price: `$Y/M tokens`
+This Output Format applies only to the final plan. It does not apply to
+clarification turns required by the Interaction Gate.
 
-2. **Token Supply Plan**
-   - Table: Phase | Period | Token Target | Capacity (with buffer) | Resource |
-   - Monthly/quarterly breakdown
+Use these top-level sections in this order. Treat the template as the report
+spine, not as a limit on evidence: preserve domain-specific tables and details
+inside the matching sections when they are needed to support the conclusion.
 
-3. **SLA Commitments**
-   - Availability: `<X%>`
-   - TTFT: `<Y ms>` (p99)
-   - TPOT: `<Z ms>`
-   - Burst allowance: `<W%>` over committed
-   - Overage rate: `$V/M tokens`
-   - Penalty structure
+# Conclusion
 
-4. **Cost Boundaries**
-   - Table: Phase | Tokens | Cost | Unit Cost | Cumulative
-   - Cost optimization recommendations
-   - Breakeven analysis (if applicable)
+Use 1-2 sentences to state the current planning judgment, risk level
+(`normal` / `watch` / `risk` / `critical`), the recommended SLA tier, and the
+most important constraint across token supply, SLA, or cost.
+For user-facing answers, localize the section title and risk labels to the
+user's language.
 
-5. **Risk and Mitigation**
-   - Risk 1: `<description>` → Mitigation: `<action>`
-   - Risk 2: `<description>` → Mitigation: `<action>`
+## Key Metrics
 
-6. **Next Steps**
-   - Step 1: `<action>` (Owner: `<team>`, Timeline: `<date>`)
-   - Step 2: `<action>`
+Start with a Markdown summary table with 3-6 key indicators. Prefer these
+fields when available: annual token target, monthly committed tokens, peak-hour
+token demand, recommended SLA tier, required GPU count or API budget, estimated
+annual TCO, unit cost per M tokens, burst allowance, and confidence.
+For on-premise GPU plans, include at least one live GPU capacity or bottleneck
+indicator when current DCE data is available.
+
+| Metric | Current Value | Status |
+|--------|---------------|--------|
+| Annual token target | `<value>` | `<normal/watch/risk/critical>` |
+
+Preserve the core capacity-planning evidence with supporting detail tables
+under this section when data is available:
+
+- Token supply plan: `Phase | Period | Token Target | Capacity with Buffer | Resource`
+- SLA commitments: `Metric | Commitment | Tier | Risk/Notes`
+- Cost boundaries: `Phase | Tokens | Cost | Unit Cost | Cumulative`
+- Quota allocation: `Tenant | Priority | Quota | Burst Allowed | Fallback`
+- On-prem resource mapping: `Model | Peak Tokens/s | Required GPUs | HA Factor | Confidence`
+- Current GPU reality check: `Cluster/GPU Pool | Mode | Required GPUs | Available Headroom | Bottleneck | Recommendation`
+
+## Main Findings
+
+Use a numbered list with 2-3 findings. Each finding must explain the business,
+SLA, capacity, or cost impact.
+The findings must preserve the planning decision logic: token demand shape,
+SLA tier, supply/resource mapping, cost boundary, and the most important
+trade-off.
+For on-premise GPU plans, include how the current GPU state affects the
+recommendation.
+
+## Cause Analysis
+
+Analyze 2-3 causes around the main findings. For each cause, include:
+
+Cause N: `<cause>`
+
+Evidence: `<specific input, assumption, token model result, SLA target, cost calculation, or GPU mapping fact>`.
+
+Impact: `<supply, SLA, cost, pricing, or delivery impact>`.
+For on-premise GPU plans, evidence should include live GPU headroom or
+bottleneck data when available.
+
+## Recommended Actions
+
+Group concrete actions by:
+
+### Immediate
+
+### Monitor
+
+### Optimize Later
+
+Actions should name the planning target, owner or responsible team when known,
+and the concrete decision to make, such as quota allocation, SLA tier selection,
+pricing validation, GPU capacity validation, or phased supply approval.
+
+## Follow-up Questions
+
+Provide 2-3 copyable follow-up questions in the user's language. They should
+guide the user toward SLA refinement, cost validation, GPU capacity verification,
+or an exportable stakeholder report.
 
 ## Rules
 
 - **No fabrication:** All numbers must be calculated from user-provided inputs
   or explicit assumptions. State every assumption clearly.
+- **Ask before calculating:** If required inputs from the Input Completeness
+  Gate are missing, ask clarifying questions instead of producing a final plan.
+  Only proceed with assumptions when the user explicitly asks for a rough
+  illustrative estimate.
+- **No final template during clarification:** When asking for missing required
+  inputs, do not use the final report sections or provide partial calculations.
 - **Conservative estimates:** When data is uncertain, present a range
   (optimistic / expected / pessimistic) rather than a single number.
 - **Model prices:** Always ask user for current model pricing. If unavailable,
@@ -310,4 +472,13 @@ Present a structured capacity plan in this order:
 - **Cross-reference GPU capacity:** For on-premise deployments, always suggest
   verifying calculated GPU demand against actual cluster capacity using
   `container-management:gpu-bottleneck-analysis`.
+- **Use live GPU state when available:** For on-premise deployments, use
+  `container-management:gpu-bottleneck-analysis` before final recommendations
+  whenever DCE auth and target cluster scope are available. If live data is not
+  available, state that actual GPU capacity validation is missing.
 - **Currency:** Use the user's preferred currency. Default to USD if unspecified.
+- **Conclusion first:** Put the conclusion first and avoid planning-process
+  transcripts in the final answer.
+- **Use tables for indicators:** Prefer tables for token, SLA, cost, and
+  capacity indicators.
+- **Concrete actions:** Recommended actions must be specific and executable.
