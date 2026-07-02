@@ -13,7 +13,7 @@ Use this skill when a user asks you to operate `dce`, inspect its API commands, 
 
 1. Search for candidates with `dce search "<intent>" --json`; use `--limit` when needed. Search is only candidate discovery.
 2. Inspect the exact command with `dce commands show <path...> --json` before executing an unfamiliar command.
-3. If the command detail has `auth.required=true`, run `dce auth status --hostname <host>` before execution. If it is not logged in, stop and ask the user to authenticate.
+3. If the command detail has `auth.required=true`, run `dce auth status --hostname <host>` before execution. Use `http.default_hostname` when present unless the user provides `--hostname` or `$DCE_HOST`.
 4. Execute only after flags, body, auth, HTTP path, and output hints are clear from `commands show`.
 
 ## General Commands
@@ -30,6 +30,7 @@ Use this skill when a user asks you to operate `dce`, inspect its API commands, 
 - Read `references/modules/ai-lab.md` for the `ai-lab` module command index.
 - Read `references/modules/billing-center.md` for the `billing-center` module command index.
 - Read `references/modules/container-management.md` for the `container-management` module command index.
+- Read `references/modules/crane.md` for the `crane` module command index.
 - Read `references/modules/elasticsearch.md` for the `elasticsearch` module command index.
 - Read `references/modules/global-management.md` for the `global-management` module command index.
 - Read `references/modules/insight.md` for the `insight` module command index.

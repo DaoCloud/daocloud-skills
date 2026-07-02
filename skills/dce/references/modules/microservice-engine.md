@@ -1089,8 +1089,8 @@
 
 ### `dce microservice-engine gatewayservice create-service`
 
-- Summary: 创建网关服务
-- HTTP: `POST /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services`
+- Summary: 创建网关接入服务
+- HTTP: `POST /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services`
 - Auth: required
 - Body: required
 - Flags:
@@ -1101,8 +1101,8 @@
 
 ### `dce microservice-engine gatewayservice create-service`
 
-- Summary: 创建网关接入服务
-- HTTP: `POST /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services`
+- Summary: 创建网关服务
+- HTTP: `POST /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services`
 - Auth: required
 - Body: required
 - Flags:
@@ -1127,7 +1127,7 @@
 ### `dce microservice-engine gatewayservice get-service`
 
 - Summary: 网关服务详情
-- HTTP: `GET /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}`
+- HTTP: `GET /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}`
 - Auth: required
 - Body: none
 - Flags:
@@ -1141,7 +1141,7 @@
 ### `dce microservice-engine gatewayservice get-service`
 
 - Summary: 网关服务详情
-- HTTP: `GET /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}`
+- HTTP: `GET /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}`
 - Auth: required
 - Body: none
 - Flags:
@@ -1203,8 +1203,8 @@
 
 ### `dce microservice-engine gatewayservice update-service`
 
-- Summary: 更新网关接入服务
-- HTTP: `PUT /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}`
+- Summary: 更新网关服务
+- HTTP: `PUT /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}`
 - Auth: required
 - Body: required
 - Flags:
@@ -1216,8 +1216,8 @@
 
 ### `dce microservice-engine gatewayservice update-service`
 
-- Summary: 更新网关服务
-- HTTP: `PUT /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}`
+- Summary: 更新网关接入服务
+- HTTP: `PUT /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}`
 - Auth: required
 - Body: required
 - Flags:
@@ -1230,7 +1230,7 @@
 ### `dce microservice-engine gatewayservice update-service-policy`
 
 - Summary: 更新网关服务策略
-- HTTP: `PUT /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}/policies`
+- HTTP: `PUT /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}/policies`
 - Auth: required
 - Body: required
 - Flags:
@@ -1243,7 +1243,7 @@
 ### `dce microservice-engine gatewayservice update-service-policy`
 
 - Summary: 更新网关服务策略
-- HTTP: `PUT /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}/policies`
+- HTTP: `PUT /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}/policies`
 - Auth: required
 - Body: required
 - Flags:
@@ -2696,11 +2696,11 @@
 ### `dce microservice-engine nacos list`
 
 - Summary: 托管 Nacos 列表
-- HTTP: `GET /apis/hive.skoala.io/v1alpha1/workspaces/{workspaceId}/nacoses`
+- HTTP: `GET /apis/hive.skoala.io/v1alpha3/nacoses`
 - Auth: required
 - Body: none
 - Flags:
-  - `--workspace-id` (path, required): workspaceId
+  - `--workspace-id` (query): workspaceId
   - `--cluster-name` (query): clusterName
   - `--namespace-name` (query): namespaceName
   - `--nacos-name` (query): nacosName
@@ -2711,11 +2711,11 @@
 ### `dce microservice-engine nacos list`
 
 - Summary: 托管 Nacos 列表
-- HTTP: `GET /apis/hive.skoala.io/v1alpha3/nacoses`
+- HTTP: `GET /apis/hive.skoala.io/v1alpha1/workspaces/{workspaceId}/nacoses`
 - Auth: required
 - Body: none
 - Flags:
-  - `--workspace-id` (query): workspaceId
+  - `--workspace-id` (path, required): workspaceId
   - `--cluster-name` (query): clusterName
   - `--namespace-name` (query): namespaceName
   - `--nacos-name` (query): nacosName
@@ -4034,6 +4034,22 @@ dce microservice-engine nacos list-service-instance \
 ### `dce microservice-engine skoala list-cluster-namespace-service`
 
 - Summary: Service 列表
+- HTTP: `GET /apis/skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/services`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace-id` (path, required): workspaceId
+  - `--cluster-name` (path, required): clusterName
+  - `--namespace-name` (query): namespaceName
+  - `--service-type` (query, default `ALL`, one of: ALL|SESAME|K8S): - ALL: 全部服务
+  - `--service-name` (query): serviceName
+  - `--page` (query, int32): page
+  - `--page-size` (query, int32): pageSize
+- Output: list path `items`; columns `createdAt`, `namespaceName`, `serviceName`, `sesameId`, `sesameNamespaceName`, `sesameServiceName`; pagination `offset`
+
+### `dce microservice-engine skoala list-cluster-namespace-service`
+
+- Summary: Service 列表
 - HTTP: `GET /apis/skoala.io/v1alpha2/workspaces/{workspaceId}/clusters/{clusterName}/services`
 - Auth: required
 - Body: none
@@ -4047,22 +4063,6 @@ dce microservice-engine nacos list-service-instance \
   - `--page` (query, int32): page
   - `--page-size` (query, int32): pageSize
 - Output: list path `items`; columns `createdAt`, `namespaceName`, `serviceName`, `serviceType`, `sesameId`, `sesameNamespaceName`; pagination `offset`
-
-### `dce microservice-engine skoala list-cluster-namespace-service`
-
-- Summary: Service 列表
-- HTTP: `GET /apis/skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/services`
-- Auth: required
-- Body: none
-- Flags:
-  - `--workspace-id` (path, required): workspaceId
-  - `--cluster-name` (path, required): clusterName
-  - `--namespace-name` (query): namespaceName
-  - `--service-type` (query, default `ALL`, one of: ALL|SESAME|K8S): - ALL: 全部服务
-  - `--service-name` (query): serviceName
-  - `--page` (query, int32): page
-  - `--page-size` (query, int32): pageSize
-- Output: list path `items`; columns `createdAt`, `namespaceName`, `serviceName`, `sesameId`, `sesameNamespaceName`, `sesameServiceName`; pagination `offset`
 
 ### `dce microservice-engine skoala list-cluster-storage-classes`
 

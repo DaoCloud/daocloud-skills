@@ -181,3 +181,12 @@ sources:
     swagger:
       files:
         - docs/openapi/skoala/v0.55.0.json
+
+  crane:
+    display_name: crane
+    # Crane swagger is not yet published in daocloud-api-docs.
+    local_path: ..
+    backend: swagger
+    swagger:
+      files:
+        - specs/crane/crane.swagger.json

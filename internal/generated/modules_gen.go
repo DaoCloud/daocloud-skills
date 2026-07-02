@@ -5,6 +5,7 @@ package generated
 import (
 	amamba "github.com/DaoCloud/daocloud-skills/internal/generated/amamba"
 	baize "github.com/DaoCloud/daocloud-skills/internal/generated/baize"
+	crane "github.com/DaoCloud/daocloud-skills/internal/generated/crane"
 	elasticsearch "github.com/DaoCloud/daocloud-skills/internal/generated/elasticsearch"
 	ghippo "github.com/DaoCloud/daocloud-skills/internal/generated/ghippo"
 	gmagpie "github.com/DaoCloud/daocloud-skills/internal/generated/gmagpie"
@@ -35,6 +36,9 @@ func MountModules(root *cobra.Command) error {
 		return err
 	}
 	if err := baize.Mount(root); err != nil {
+		return err
+	}
+	if err := crane.Mount(root); err != nil {
 		return err
 	}
 	if err := elasticsearch.Mount(root); err != nil {

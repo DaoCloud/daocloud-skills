@@ -14,6 +14,7 @@ Key fields:
 
 - `path`: command path to pass to `commands show` or execute after the CLI name.
 - `http`: HTTP method and path template.
+- `http.default_hostname`: optional source-level host selected after explicit `--hostname` and `$DCE_HOST`; when present it is used before the single-host fallback from `hosts.yml`.
 - `flags`: CLI flags, parameter location, type, required state, defaults, enum values, format, and help.
 - `body`: request body requirement and media type.
 - `auth`: whether auth is required and which scopes are declared.
@@ -41,4 +42,4 @@ Use `-o json` for machine-readable command output. Other supported formats are `
 
 ## Auth
 
-If command detail returns `auth.required=true`, run `dce auth status --hostname <host>` before execution. If no matching host is logged in, stop and ask the user to authenticate.
+If command detail returns `auth.required=true`, run `dce auth status --hostname <host>` before execution. Use `http.default_hostname` when present unless the user provides `--hostname` or `$DCE_HOST`; if no matching host is logged in, stop and ask the user to authenticate.
