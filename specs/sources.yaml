@@ -183,7 +183,7 @@ sources:
         - docs/openapi/skoala/v0.55.0.json
 
   crane:
-    display_name: crane
+    display_name: business-cockpit
     # Crane swagger is not yet published in daocloud-api-docs.
     local_path: ..
     backend: swagger

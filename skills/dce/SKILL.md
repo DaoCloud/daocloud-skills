@@ -33,8 +33,8 @@ Use this skill when a user asks you to operate `dce`, inspect its API commands, 
 - Read `references/catalog.md` for the command discovery protocol and catalog field meanings.
 - Read `references/modules/ai-lab.md` for the `ai-lab` module command index.
 - Read `references/modules/billing-center.md` for the `billing-center` module command index.
+- Read `references/modules/business-cockpit.md` for the `business-cockpit` module command index.
 - Read `references/modules/container-management.md` for the `container-management` module command index.
-- Read `references/modules/crane.md` for the `crane` module command index.
 - Read `references/modules/elasticsearch.md` for the `elasticsearch` module command index.
 - Read `references/modules/global-management.md` for the `global-management` module command index.
 - Read `references/modules/insight.md` for the `insight` module command index.

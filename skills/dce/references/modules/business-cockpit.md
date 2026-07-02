@@ -1,4 +1,4 @@
-# Module `crane`
+# Module `business-cockpit`
 
 ## Source
 
@@ -9,7 +9,7 @@
 
 ## BusinessOperationService
 
-### `dce crane businessoperationservice get-application-agent-count`
+### `dce business-cockpit businessoperationservice get-application-agent-count`
 
 - Summary: GetApplicationAgentCount returns the estimated application / agent count KPI.
 - HTTP: `GET /api/v1alpha1/business-operation/application-agent-count`
@@ -23,7 +23,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-application-type-distribution`
+### `dce business-cockpit businessoperationservice get-application-type-distribution`
 
 - Summary: GetApplicationTypeDistribution returns the estimated application type distribution panel.
 - HTTP: `GET /api/v1alpha1/business-operation/application-type-distribution`
@@ -37,7 +37,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: list path `items`; columns `name`, `cost`, `displayValue`, `rank`, `revenue`, `userName`; pagination `cursor`
 
-### `dce crane businessoperationservice get-average-package-consumption-rate`
+### `dce business-cockpit businessoperationservice get-average-package-consumption-rate`
 
 - Summary: GetAveragePackageConsumptionRate returns the average workspace quota consumption rate.
 - HTTP: `GET /api/v1alpha1/business-operation/average-package-consumption-rate`
@@ -51,7 +51,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-department-application-model-gpu-flow`
+### `dce business-cockpit businessoperationservice get-department-application-model-gpu-flow`
 
 - Summary: GetDepartmentApplicationModelGpuFlow returns the department -> application -> model -> GPU flow panel.
 - HTTP: `GET /api/v1alpha1/business-operation/department-application-model-gpu-flow`
@@ -65,7 +65,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-department-budget-usage-rate`
+### `dce business-cockpit businessoperationservice get-department-budget-usage-rate`
 
 - Summary: GetDepartmentBudgetUsageRate returns the department budget usage rate KPI.
 - HTTP: `GET /api/v1alpha1/business-operation/department-budget-usage-rate`
@@ -79,7 +79,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-department-monthly-allocated-cost`
+### `dce business-cockpit businessoperationservice get-department-monthly-allocated-cost`
 
 - Summary: GetDepartmentMonthlyAllocatedCost returns the monthly allocated cost KPI.
 - HTTP: `GET /api/v1alpha1/business-operation/department-monthly-allocated-cost`
@@ -93,7 +93,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-department-unit-business-cost`
+### `dce business-cockpit businessoperationservice get-department-unit-business-cost`
 
 - Summary: GetDepartmentUnitBusinessCost returns the estimated unit business cost KPI.
 - HTTP: `GET /api/v1alpha1/business-operation/department-unit-business-cost`
@@ -107,7 +107,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-department-unit-business-cost-comparison`
+### `dce business-cockpit businessoperationservice get-department-unit-business-cost-comparison`
 
 - Summary: GetDepartmentUnitBusinessCostComparison returns the unit business cost comparison panel.
 - HTTP: `GET /api/v1alpha1/business-operation/department-unit-business-cost-comparison`
@@ -121,7 +121,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: list path `items`; columns `name`, `cost`, `displayValue`, `rank`, `revenue`, `userName`; pagination `cursor`
 
-### `dce crane businessoperationservice get-monthly-arpu`
+### `dce business-cockpit businessoperationservice get-monthly-arpu`
 
 - Summary: GetMonthlyARPU returns the average revenue per active tenant in the given window.
 - HTTP: `GET /api/v1alpha1/business-operation/monthly-arpu`
@@ -135,7 +135,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-monthly-revenue`
+### `dce business-cockpit businessoperationservice get-monthly-revenue`
 
 - Summary: GetMonthlyRevenue returns bill revenue in the given window.
 - HTTP: `GET /api/v1alpha1/business-operation/monthly-revenue`
@@ -149,7 +149,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-monthly-token-consumption`
+### `dce business-cockpit businessoperationservice get-monthly-token-consumption`
 
 - Summary: GetMonthlyTokenConsumption returns token consumption metrics in the given window.
 - HTTP: `GET /api/v1alpha1/business-operation/monthly-token-consumption`
@@ -163,7 +163,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-tenant-growth-trend-top5`
+### `dce business-cockpit businessoperationservice get-tenant-growth-trend-top5`
 
 - Summary: GetTenantGrowthTrendTop5 returns the top-5 tenant growth trend panel.
 - HTTP: `GET /api/v1alpha1/business-operation/tenant-growth-trend-top5`
@@ -177,7 +177,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-tenant-model-gpu-token-flow`
+### `dce business-cockpit businessoperationservice get-tenant-model-gpu-token-flow`
 
 - Summary: GetTenantModelGpuTokenFlow returns the tenant -> model -> GPU -> token flow panel.
 - HTTP: `GET /api/v1alpha1/business-operation/tenant-model-gpu-token-flow`
@@ -191,7 +191,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice get-tenant-value-quadrant`
+### `dce business-cockpit businessoperationservice get-tenant-value-quadrant`
 
 - Summary: GetTenantValueQuadrant returns the tenant token vs revenue quadrant panel.
 - HTTP: `GET /api/v1alpha1/business-operation/tenant-value-quadrant`
@@ -205,7 +205,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: list path `points`; columns `name`, `size`, `x`, `y`; pagination `cursor`
 
-### `dce crane businessoperationservice list-active-departments`
+### `dce business-cockpit businessoperationservice list-active-departments`
 
 - Summary: ListActiveDepartments returns the count of active departments.
 - HTTP: `GET /api/v1alpha1/business-operation/active-departments`
@@ -219,7 +219,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
-### `dce crane businessoperationservice list-active-tenants`
+### `dce business-cockpit businessoperationservice list-active-tenants`
 
 - Summary: ListActiveTenants returns the count of active tenants with token consumption.
 - HTTP: `GET /api/v1alpha1/business-operation/active-tenants`
@@ -231,7 +231,7 @@
   - `--period` (query): Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear.
   - `--model` (query): Optional model keyword filter.
 
-### `dce crane businessoperationservice list-business-models`
+### `dce business-cockpit businessoperationservice list-business-models`
 
 - Summary: ListBusinessModels returns the model options for the business dashboard filter.
 - HTTP: `GET /api/v1alpha1/business-operation/models`
@@ -245,7 +245,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: list path `models`; pagination `cursor`
 
-### `dce crane businessoperationservice list-business-operation-suggestions`
+### `dce business-cockpit businessoperationservice list-business-operation-suggestions`
 
 - Summary: ListBusinessOperationSuggestions returns the aggregated tenant and department suggestions panel.
 - HTTP: `GET /api/v1alpha1/business-operation/suggestions`
@@ -259,7 +259,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: list path `items`; columns `type`, `content`; pagination `cursor`
 
-### `dce crane businessoperationservice list-department-token-consumption-top`
+### `dce business-cockpit businessoperationservice list-department-token-consumption-top`
 
 - Summary: ListDepartmentTokenConsumptionTop returns the top department token consumers.
 - HTTP: `GET /api/v1alpha1/business-operation/department-token-consumption-top`
@@ -273,7 +273,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: list path `items`; columns `department`, `rank`, `totalTokens`; pagination `cursor`
 
-### `dce crane businessoperationservice list-tenant-risk-objects`
+### `dce business-cockpit businessoperationservice list-tenant-risk-objects`
 
 - Summary: ListTenantRiskObjects returns the tenant risk object ranking panel.
 - HTTP: `GET /api/v1alpha1/business-operation/tenant-risk-objects`
@@ -287,7 +287,7 @@
   - `--model` (query): Optional model keyword filter.
 - Output: list path `items`; columns `action`, `detail`, `level`, `riskType`, `tenant`, `userName`; pagination `cursor`
 
-### `dce crane businessoperationservice list-tenant-token-consumption-top`
+### `dce business-cockpit businessoperationservice list-tenant-token-consumption-top`
 
 - Summary: ListTenantTokenConsumptionTop returns the top tenant token consumers.
 - HTTP: `GET /api/v1alpha1/business-operation/tenant-token-consumption-top`
@@ -303,7 +303,7 @@
 
 ## BusinessValueService
 
-### `dce crane businessvalueservice get-api-key-count`
+### `dce business-cockpit businessvalueservice get-api-key-count`
 
 - Summary: GetApiKeyCount returns the count of distinct API keys used in the given time window.
 - HTTP: `GET /api/v1alpha1/business-value/api-key-count`
@@ -313,7 +313,7 @@
   - `--start-time` (query, date-time): Start of the query window (UTC, inclusive).
   - `--end-time` (query, date-time): End of the query window (UTC, exclusive).
 
-### `dce crane businessvalueservice get-app-consumption-distribution`
+### `dce business-cockpit businessvalueservice get-app-consumption-distribution`
 
 - Summary: GetAppConsumptionDistribution returns the consumption distribution across applications.
 - HTTP: `GET /api/v1alpha1/business-value/app-consumption-distribution`
@@ -324,7 +324,7 @@
   - `--cluster` (query): Cluster filter (optional). If empty, all clusters are included football.
 - Output: list path `items`; columns `appName`, `percentage`
 
-### `dce crane businessvalueservice get-capacity-bottleneck-forecast`
+### `dce business-cockpit businessvalueservice get-capacity-bottleneck-forecast`
 
 - Summary: GetCapacityBottleneckForecast returns the predicted number of days until
 - HTTP: `GET /api/v1alpha1/business-value/capacity-bottleneck-forecast`
@@ -332,7 +332,7 @@
 - Body: none
 - Flags: none
 
-### `dce crane businessvalueservice get-cumulative-output`
+### `dce business-cockpit businessvalueservice get-cumulative-output`
 
 - Summary: GetCumulativeOutput returns the cumulative token output and growth rate for a given time range.
 - HTTP: `GET /api/v1alpha1/business-value/cumulative-output`
@@ -342,7 +342,7 @@
   - `--time-range` (query): Time range filter: "today", "this-week", "this-month", "this-quarter".
 - Output: list path `historyPoints`; columns `growthRatePercent`, `time`, `totalTokens`
 
-### `dce crane businessvalueservice get-department-token-usage`
+### `dce business-cockpit businessvalueservice get-department-token-usage`
 
 - Summary: GetDepartmentTokenUsage returns per-department token usage and budget for the given time window.
 - HTTP: `GET /api/v1alpha1/business-value/department-token-usage`
@@ -353,7 +353,7 @@
   - `--end-time` (query, date-time): End of the query window (UTC, exclusive).
 - Output: list path `items`; columns `budgetTokenTotal`, `departmentName`, `tokenTotal`
 
-### `dce crane businessvalueservice get-internal-business-structure-distribution`
+### `dce business-cockpit businessvalueservice get-internal-business-structure-distribution`
 
 - Summary: GetInternalBusinessStructureDistribution returns internal business structure distribution for WS mode.
 - HTTP: `GET /api/v1alpha1/business-value/internal-business-structure-distribution`
@@ -364,7 +364,7 @@
   - `--cluster` (query): Cluster filter (optional). If empty, all clusters are included.
 - Output: list path `items`; columns `name`, `value`
 
-### `dce crane businessvalueservice get-month-end-forecast-metrics`
+### `dce business-cockpit businessvalueservice get-month-end-forecast-metrics`
 
 - Summary: GetMonthEndForecastMetrics returns month-end revenue and gross profit forecast metrics.
 - HTTP: `GET /api/v1alpha1/business-value/month-end-forecast`
@@ -372,7 +372,7 @@
 - Body: none
 - Flags: none
 
-### `dce crane businessvalueservice get-rated-capacity`
+### `dce business-cockpit businessvalueservice get-rated-capacity`
 
 - Summary: GetRatedCapacity returns the rated capacity value (in millions).
 - HTTP: `GET /api/v1alpha1/business-value/rated-capacity`
@@ -380,7 +380,7 @@
 - Body: none
 - Flags: none
 
-### `dce crane businessvalueservice get-revenue-and-profit-metrics`
+### `dce business-cockpit businessvalueservice get-revenue-and-profit-metrics`
 
 - Summary: GetRevenueAndProfitMetrics returns revenue, cost, gross profit metrics and optional history.
 - HTTP: `GET /api/v1alpha1/business-value/revenue-profit`
@@ -390,7 +390,7 @@
   - `--time-range` (query): Time range filter: "today", "this-week", "this-month", "this-quarter".
 - Output: list path `history`; columns `grossMarginPercent`, `grossMarginYoyRatePp`, `grossProfit`, `revenue`, `revenueGrowthRatePercent`, `time`
 
-### `dce crane businessvalueservice get-revenue-margin-trend-forecast`
+### `dce business-cockpit businessvalueservice get-revenue-margin-trend-forecast`
 
 - Summary: GetRevenueMarginTrendForecast returns 37 daily points (30 historical + 7 forecast)
 - HTTP: `GET /api/v1alpha1/business-value/revenue-margin-trend-forecast`
@@ -399,7 +399,7 @@
 - Flags: none
 - Output: list path `points`; columns `cost`, `date`, `grossProfit`, `revenue`
 
-### `dce crane businessvalueservice get-risk-suggestions`
+### `dce business-cockpit businessvalueservice get-risk-suggestions`
 
 - Summary: GetRiskSuggestions returns the current risk identification and business suggestions.
 - HTTP: `GET /api/v1alpha1/business-value/risk-suggestions`
@@ -408,7 +408,7 @@
 - Flags: none
 - Output: list path `suggestions`; columns `type`, `content`
 
-### `dce crane businessvalueservice get-tenant-token-usage`
+### `dce business-cockpit businessvalueservice get-tenant-token-usage`
 
 - Summary: GetTenantTokenUsage returns per-tenant token usage and charge amount for the given time window.
 - HTTP: `GET /api/v1alpha1/business-value/tenant-token-usage`
@@ -419,7 +419,7 @@
   - `--end-time` (query, date-time): End of the query window (UTC, exclusive).
 - Output: list path `items`; columns `price`, `tenantId`, `tenantName`, `tokenTotal`
 
-### `dce crane businessvalueservice get-token-throughput`
+### `dce business-cockpit businessvalueservice get-token-throughput`
 
 - Summary: GetTokenThroughput returns the current per-second Token throughput.
 - HTTP: `GET /api/v1alpha1/business-value/token-throughput`
@@ -427,7 +427,7 @@
 - Body: none
 - Flags: none
 
-### `dce crane businessvalueservice get-value-attribution-module-boosts`
+### `dce business-cockpit businessvalueservice get-value-attribution-module-boosts`
 
 - Summary: GetValueAttributionModuleBoosts returns module boost percentages from config.
 - HTTP: `GET /api/v1alpha1/business-value/value-attribution-module-boosts`
@@ -439,7 +439,7 @@
 
 ## ComputePowerCollaborationService
 
-### `dce crane computepowercollaborationservice get-carbon-account`
+### `dce business-cockpit computepowercollaborationservice get-carbon-account`
 
 - Summary: ComputePowerCollaborationService_GetCarbonAccount
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/carbon-account`
@@ -451,7 +451,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `items`; columns `id`, `precision`, `status`, `trend`, `trendPrecision`, `trendUnit`
 
-### `dce crane computepowercollaborationservice get-carbon-path`
+### `dce business-cockpit computepowercollaborationservice get-carbon-path`
 
 - Summary: ComputePowerCollaborationService_GetCarbonPath
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/carbon-path`
@@ -463,7 +463,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `items`; columns `emissionKg`, `month`, `offsetKg`, `targetKg`
 
-### `dce crane computepowercollaborationservice get-clusters`
+### `dce business-cockpit computepowercollaborationservice get-clusters`
 
 - Summary: ComputePowerCollaborationService_GetClusters
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/clusters`
@@ -472,7 +472,7 @@
 - Flags: none
 - Output: list path `clusters`; columns `name`
 
-### `dce crane computepowercollaborationservice get-dc-regions`
+### `dce business-cockpit computepowercollaborationservice get-dc-regions`
 
 - Summary: ComputePowerCollaborationService_GetDcRegions
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/dc-regions`
@@ -484,7 +484,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `items`; columns `capacityPct`, `cluster`, `clusterPhase`, `gpuCount`, `greenRatioPct`, `isOffline`
 
-### `dce crane computepowercollaborationservice get-green-energy`
+### `dce business-cockpit computepowercollaborationservice get-green-energy`
 
 - Summary: ComputePowerCollaborationService_GetGreenEnergy
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/green-energy`
@@ -496,7 +496,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `items`; columns `id`, `precision`, `status`, `trend`, `trendPrecision`, `trendUnit`
 
-### `dce crane computepowercollaborationservice get-green-load-scheduling`
+### `dce business-cockpit computepowercollaborationservice get-green-load-scheduling`
 
 - Summary: ComputePowerCollaborationService_GetGreenLoadScheduling
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/green-load-scheduling`
@@ -508,7 +508,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `items`; columns `elastic`, `greenRatio`, `hour`, `rigid`
 
-### `dce crane computepowercollaborationservice get-green-scheduling`
+### `dce business-cockpit computepowercollaborationservice get-green-scheduling`
 
 - Summary: ComputePowerCollaborationService_GetGreenScheduling
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/green-scheduling`
@@ -520,7 +520,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `params`; columns `key`, `value`
 
-### `dce crane computepowercollaborationservice get-green-suggestions`
+### `dce business-cockpit computepowercollaborationservice get-green-suggestions`
 
 - Summary: ComputePowerCollaborationService_GetGreenSuggestions
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/green-suggestions`
@@ -532,7 +532,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `items`; columns `code`, `messageKey`, `severity`
 
-### `dce crane computepowercollaborationservice get-green-supply-trend`
+### `dce business-cockpit computepowercollaborationservice get-green-supply-trend`
 
 - Summary: ComputePowerCollaborationService_GetGreenSupplyTrend
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/green-supply-trend`
@@ -544,7 +544,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `series`; columns `id`
 
-### `dce crane computepowercollaborationservice get-kpis`
+### `dce business-cockpit computepowercollaborationservice get-kpis`
 
 - Summary: ComputePowerCollaborationService_GetKpis
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/kpis`
@@ -556,7 +556,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `items`; columns `id`, `precision`, `status`, `trend`, `trendPrecision`, `trendUnit`
 
-### `dce crane computepowercollaborationservice get-power-trend`
+### `dce business-cockpit computepowercollaborationservice get-power-trend`
 
 - Summary: ComputePowerCollaborationService_GetPowerTrend
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/power-trend`
@@ -568,7 +568,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `series`; columns `id`
 
-### `dce crane computepowercollaborationservice get-protection-strategy`
+### `dce business-cockpit computepowercollaborationservice get-protection-strategy`
 
 - Summary: ComputePowerCollaborationService_GetProtectionStrategy
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/protection-strategy`
@@ -580,7 +580,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `greenRules`; columns `band`, `impactCode`, `strategyCode`, `targetCode`
 
-### `dce crane computepowercollaborationservice get-suggestions`
+### `dce business-cockpit computepowercollaborationservice get-suggestions`
 
 - Summary: ComputePowerCollaborationService_GetSuggestions
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/suggestions`
@@ -592,7 +592,7 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `items`; columns `code`, `messageKey`, `severity`
 
-### `dce crane computepowercollaborationservice get-synergy-value`
+### `dce business-cockpit computepowercollaborationservice get-synergy-value`
 
 - Summary: ComputePowerCollaborationService_GetSynergyValue
 - HTTP: `GET /api/v1alpha1/compute-power-collaboration/synergy-value`
@@ -606,7 +606,7 @@
 
 ## FinopsPanelService
 
-### `dce crane finopspanelservice get-allocation-summary`
+### `dce business-cockpit finopspanelservice get-allocation-summary`
 
 - Summary: FinopsPanelService_GetAllocationSummary
 - HTTP: `GET /api/v1alpha1/finops/allocation-summary`
@@ -617,7 +617,7 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `rows`; columns `type`, `allocCost`, `object`, `revenue`, `roi`, `tokenUsage`
 
-### `dce crane finopspanelservice get-asset-machine-count`
+### `dce business-cockpit finopspanelservice get-asset-machine-count`
 
 - Summary: FinopsPanelService_GetAssetMachineCount
 - HTTP: `GET /api/v1alpha1/finops/asset-machine-count`
@@ -627,7 +627,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-asset-return-matrix`
+### `dce business-cockpit finopspanelservice get-asset-return-matrix`
 
 - Summary: FinopsPanelService_GetAssetReturnMatrix
 - HTTP: `GET /api/v1alpha1/finops/asset-return-matrix`
@@ -638,7 +638,7 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `points`; columns `bookValue`, `machine`, `profitValue`, `status`, `utilization`
 
-### `dce crane finopspanelservice get-average-machine-profit`
+### `dce business-cockpit finopspanelservice get-average-machine-profit`
 
 - Summary: FinopsPanelService_GetAverageMachineProfit
 - HTTP: `GET /api/v1alpha1/finops/average-machine-profit`
@@ -648,7 +648,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-average-machine-revenue`
+### `dce business-cockpit finopspanelservice get-average-machine-revenue`
 
 - Summary: FinopsPanelService_GetAverageMachineRevenue
 - HTTP: `GET /api/v1alpha1/finops/average-machine-revenue`
@@ -658,7 +658,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-budget-forecast`
+### `dce business-cockpit finopspanelservice get-budget-forecast`
 
 - Summary: FinopsPanelService_GetBudgetForecast
 - HTTP: `GET /api/v1alpha1/finops/budget-forecast`
@@ -669,7 +669,7 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `categories`
 
-### `dce crane finopspanelservice get-budget-remaining`
+### `dce business-cockpit finopspanelservice get-budget-remaining`
 
 - Summary: FinopsPanelService_GetBudgetRemaining
 - HTTP: `GET /api/v1alpha1/finops/budget-remaining`
@@ -679,7 +679,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-cost-recovery-rate`
+### `dce business-cockpit finopspanelservice get-cost-recovery-rate`
 
 - Summary: FinopsPanelService_GetCostRecoveryRate
 - HTTP: `GET /api/v1alpha1/finops/cost-recovery-rate`
@@ -689,7 +689,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-cost-structure-breakdown`
+### `dce business-cockpit finopspanelservice get-cost-structure-breakdown`
 
 - Summary: FinopsPanelService_GetCostStructureBreakdown
 - HTTP: `GET /api/v1alpha1/finops/cost-structure-breakdown`
@@ -700,7 +700,7 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `items`; columns `name`, `displayValue`, `rank`, `value`
 
-### `dce crane finopspanelservice get-expansion-impact`
+### `dce business-cockpit finopspanelservice get-expansion-impact`
 
 - Summary: FinopsPanelService_GetExpansionImpact
 - HTTP: `GET /api/v1alpha1/finops/expansion-impact`
@@ -711,7 +711,7 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `rows`; columns `addedCost`, `expectedRevenue`, `plan`, `profitImpact`, `recommendation`, `recoveryPeriod`
 
-### `dce crane finopspanelservice get-finops-suggestions`
+### `dce business-cockpit finopspanelservice get-finops-suggestions`
 
 - Summary: FinopsPanelService_GetFinopsSuggestions
 - HTTP: `GET /api/v1alpha1/finops/suggestions`
@@ -722,7 +722,7 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `items`; columns `type`, `content`
 
-### `dce crane finopspanelservice get-machine-asset-ranking`
+### `dce business-cockpit finopspanelservice get-machine-asset-ranking`
 
 - Summary: FinopsPanelService_GetMachineAssetRanking
 - HTTP: `GET /api/v1alpha1/finops/machine-asset-ranking`
@@ -733,7 +733,7 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `rows`; columns `bookValue`, `config`, `depreciation`, `machine`, `monthToken`, `payback`
 
-### `dce crane finopspanelservice get-monthly-cost`
+### `dce business-cockpit finopspanelservice get-monthly-cost`
 
 - Summary: FinopsPanelService_GetMonthlyCost
 - HTTP: `GET /api/v1alpha1/finops/monthly-cost`
@@ -743,7 +743,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-monthly-profit`
+### `dce business-cockpit finopspanelservice get-monthly-profit`
 
 - Summary: FinopsPanelService_GetMonthlyProfit
 - HTTP: `GET /api/v1alpha1/finops/monthly-profit`
@@ -753,7 +753,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-monthly-revenue`
+### `dce business-cockpit finopspanelservice get-monthly-revenue`
 
 - Summary: FinopsPanelService_GetMonthlyRevenue
 - HTTP: `GET /api/v1alpha1/finops/monthly-revenue`
@@ -763,7 +763,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-revenue-cost-trend`
+### `dce business-cockpit finopspanelservice get-revenue-cost-trend`
 
 - Summary: FinopsPanelService_GetRevenueCostTrend
 - HTTP: `GET /api/v1alpha1/finops/revenue-cost-trend`
@@ -774,7 +774,7 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `categories`
 
-### `dce crane finopspanelservice get-unit-token-cost`
+### `dce business-cockpit finopspanelservice get-unit-token-cost`
 
 - Summary: FinopsPanelService_GetUnitTokenCost
 - HTTP: `GET /api/v1alpha1/finops/unit-token-cost`
@@ -784,7 +784,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-unit-token-profit`
+### `dce business-cockpit finopspanelservice get-unit-token-profit`
 
 - Summary: FinopsPanelService_GetUnitTokenProfit
 - HTTP: `GET /api/v1alpha1/finops/unit-token-profit`
@@ -794,7 +794,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-unit-token-revenue`
+### `dce business-cockpit finopspanelservice get-unit-token-revenue`
 
 - Summary: FinopsPanelService_GetUnitTokenRevenue
 - HTTP: `GET /api/v1alpha1/finops/unit-token-revenue`
@@ -804,7 +804,7 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce crane finopspanelservice get-weighted-payback-period`
+### `dce business-cockpit finopspanelservice get-weighted-payback-period`
 
 - Summary: FinopsPanelService_GetWeightedPaybackPeriod
 - HTTP: `GET /api/v1alpha1/finops/weighted-payback-period`
@@ -816,7 +816,7 @@
 
 ## PlatformConfigService
 
-### `dce crane platformconfigservice get-runtime-mode`
+### `dce business-cockpit platformconfigservice get-runtime-mode`
 
 - Summary: GetRuntimeMode returns the current deployment runtime mode (csp or ws).
 - HTTP: `GET /api/v1alpha1/platform-config/runtime-mode`
@@ -826,7 +826,7 @@
 
 ## ProductionOperationsService
 
-### `dce crane productionoperationsservice get-realtime-headlines`
+### `dce business-cockpit productionoperationsservice get-realtime-headlines`
 
 - Summary: ProductionOperationsService_GetRealtimeHeadlines
 - HTTP: `GET /api/v1alpha1/production-ops/realtime/headlines`
@@ -836,7 +836,7 @@
   - `--cluster` (query): cluster
 - Output: list path `groupStates`; columns `key`, `message`, `status`
 
-### `dce crane productionoperationsservice get-realtime-tab`
+### `dce business-cockpit productionoperationsservice get-realtime-tab`
 
 - Summary: ProductionOperationsService_GetRealtimeTab
 - HTTP: `GET /api/v1alpha1/production-ops/realtime`
@@ -848,7 +848,7 @@
   - `--sla-baseline` (query): slaBaseline
 - Output: list path `groupStates`; columns `key`, `message`, `status`
 
-### `dce crane productionoperationsservice get-synergy-tab`
+### `dce business-cockpit productionoperationsservice get-synergy-tab`
 
 - Summary: ProductionOperationsService_GetSynergyTab
 - HTTP: `GET /api/v1alpha1/production-ops/synergy`
@@ -862,7 +862,7 @@
 
 ## ResourceCostService
 
-### `dce crane resourcecostservice get-cost-attribution`
+### `dce business-cockpit resourcecostservice get-cost-attribution`
 
 - Summary: GetCostAttribution returns cost attribution breakdown.
 - HTTP: `GET /api/v1alpha1/resource-cost/attribution`
@@ -873,7 +873,7 @@
   - `--time-range` (query, default `THIS_MONTH`, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS): Time range for token/revenue queries. Default is THIS_MONTH.
 - Output: list path `items`; columns `name`, `cost`, `key`, `percent`
 
-### `dce crane resourcecostservice get-cost-kpis`
+### `dce business-cockpit resourcecostservice get-cost-kpis`
 
 - Summary: GetCostKpis returns GPU KPI summary metrics.
 - HTTP: `GET /api/v1alpha1/resource-cost/kpis`
@@ -883,7 +883,7 @@
   - `--cluster` (query): Optional cluster name filter. Empty means all clusters.
   - `--time-range` (query, default `THIS_MONTH`, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS): Time range for token/revenue queries. Default is THIS_MONTH.
 
-### `dce crane resourcecostservice get-cost-optimization`
+### `dce business-cockpit resourcecostservice get-cost-optimization`
 
 - Summary: GetCostOptimization returns cost optimization measures.
 - HTTP: `GET /api/v1alpha1/resource-cost/optimization`
@@ -892,7 +892,7 @@
 - Flags: none
 - Output: list path `items`; columns `measure`, `value`
 
-### `dce crane resourcecostservice get-cost-suggestions`
+### `dce business-cockpit resourcecostservice get-cost-suggestions`
 
 - Summary: GetCostSuggestions returns dynamic optimization suggestions.
 - HTTP: `GET /api/v1alpha1/resource-cost/suggestions`
@@ -903,7 +903,7 @@
   - `--time-range` (query, default `THIS_MONTH`, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS): Time range for token/revenue queries. Default is THIS_MONTH.
 - Output: list path `items`; columns `type`, `content`
 
-### `dce crane resourcecostservice get-cost-waterfall`
+### `dce business-cockpit resourcecostservice get-cost-waterfall`
 
 - Summary: GetCostWaterfall returns cost optimization waterfall data.
 - HTTP: `GET /api/v1alpha1/resource-cost/waterfall`
@@ -914,7 +914,7 @@
   - `--time-range` (query, default `THIS_MONTH`, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS): Time range for token/revenue queries. Default is THIS_MONTH.
 - Output: list path `items`; columns `key`, `label`, `value`
 
-### `dce crane resourcecostservice get-gpu-efficiency`
+### `dce business-cockpit resourcecostservice get-gpu-efficiency`
 
 - Summary: GetGpuEfficiency returns GPU model efficiency ranking.
 - HTTP: `GET /api/v1alpha1/resource-cost/gpu-efficiency`
@@ -925,7 +925,7 @@
   - `--time-range` (query, default `THIS_MONTH`, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS): Time range for token/revenue queries. Default is THIS_MONTH.
 - Output: list path `rows`; columns `count`, `dailyCost`, `dailyOutput`, `dailyProfit`, `gpuModel`, `memUtilization`
 
-### `dce crane resourcecostservice get-model-cost-rank`
+### `dce business-cockpit resourcecostservice get-model-cost-rank`
 
 - Summary: GetModelCostRank returns model cost ranking.
 - HTTP: `GET /api/v1alpha1/resource-cost/model-cost-rank`
@@ -936,7 +936,7 @@
   - `--time-range` (query, default `THIS_MONTH`, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS): Time range for token/revenue queries. Default is THIS_MONTH.
 - Output: list path `items`; columns `name`, `costPerMToken`, `deployType`, `rank`
 
-### `dce crane resourcecostservice list-cost-clusters`
+### `dce business-cockpit resourcecostservice list-cost-clusters`
 
 - Summary: ListCostClusters returns all cluster names that have GPU nodes.
 - HTTP: `GET /api/v1alpha1/resource-cost/clusters`
@@ -947,7 +947,7 @@
 
 ## SecurityProtectionService
 
-### `dce crane securityprotectionservice get-agent-protection`
+### `dce business-cockpit securityprotectionservice get-agent-protection`
 
 - Summary: SecurityProtectionService_GetAgentProtection
 - HTTP: `GET /api/v1alpha1/security-protection/agent-protection`
@@ -959,7 +959,7 @@
   - `--level` (query): filter by risk level: high/medium/low
 - Output: list path `rows`; columns `dimension`, `intercepted`, `status`, `todayCount`
 
-### `dce crane securityprotectionservice get-clusters`
+### `dce business-cockpit securityprotectionservice get-clusters`
 
 - Summary: SecurityProtectionService_GetClusters
 - HTTP: `GET /api/v1alpha1/security-protection/clusters`
@@ -968,7 +968,7 @@
 - Flags: none
 - Output: list path `clusters`; columns `name`, `label`
 
-### `dce crane securityprotectionservice get-intercept-trend`
+### `dce business-cockpit securityprotectionservice get-intercept-trend`
 
 - Summary: SecurityProtectionService_GetInterceptTrend
 - HTTP: `GET /api/v1alpha1/security-protection/intercept-trend`
@@ -980,7 +980,7 @@
   - `--level` (query): filter by risk level: high/medium/low
 - Output: list path `data`
 
-### `dce crane securityprotectionservice get-kpis`
+### `dce business-cockpit securityprotectionservice get-kpis`
 
 - Summary: SecurityProtectionService_GetKpis
 - HTTP: `GET /api/v1alpha1/security-protection/kpis`
@@ -992,7 +992,7 @@
   - `--level` (query): filter by risk level: high/medium/low
 - Output: list path `items`; columns `id`, `color`, `label`, `value`
 
-### `dce crane securityprotectionservice get-output-protection`
+### `dce business-cockpit securityprotectionservice get-output-protection`
 
 - Summary: SecurityProtectionService_GetOutputProtection
 - HTTP: `GET /api/v1alpha1/security-protection/output-protection`
@@ -1004,7 +1004,7 @@
   - `--level` (query): filter by risk level: high/medium/low
 - Output: list path `rows`; columns `dimension`, `intercepted`, `status`, `todayCount`
 
-### `dce crane securityprotectionservice get-risk-objects`
+### `dce business-cockpit securityprotectionservice get-risk-objects`
 
 - Summary: SecurityProtectionService_GetRiskObjects
 - HTTP: `GET /api/v1alpha1/security-protection/risk-objects`
@@ -1016,7 +1016,7 @@
   - `--level` (query): filter by risk level: high/medium/low
 - Output: list path `items`; columns `name`, `color`, `displayValue`, `rank`, `value`
 
-### `dce crane securityprotectionservice get-risk-types`
+### `dce business-cockpit securityprotectionservice get-risk-types`
 
 - Summary: SecurityProtectionService_GetRiskTypes
 - HTTP: `GET /api/v1alpha1/security-protection/risk-types`
@@ -1028,7 +1028,7 @@
   - `--level` (query): filter by risk level: high/medium/low
 - Output: list path `items`; columns `name`, `color`, `displayValue`, `rank`, `value`
 
-### `dce crane securityprotectionservice get-suggestions`
+### `dce business-cockpit securityprotectionservice get-suggestions`
 
 - Summary: SecurityProtectionService_GetSuggestions
 - HTTP: `GET /api/v1alpha1/security-protection/suggestions`
@@ -1040,7 +1040,7 @@
   - `--level` (query): filter by risk level: high/medium/low
 - Output: list path `items`; columns `id`, `desc`, `icon`, `priority`, `title`
 
-### `dce crane securityprotectionservice get-timeline`
+### `dce business-cockpit securityprotectionservice get-timeline`
 
 - Summary: SecurityProtectionService_GetTimeline
 - HTTP: `GET /api/v1alpha1/security-protection/timeline`

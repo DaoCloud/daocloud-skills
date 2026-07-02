@@ -14,7 +14,7 @@ func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
 		return err
 	}
-	runtime.Build(root, "crane", Specs)
+	runtime.Build(root, "business-cockpit", Specs)
 	return nil
 }
 
@@ -22,7 +22,7 @@ func MountFlat(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
 		return err
 	}
-	return runtime.BuildFlat(root, "crane", Specs)
+	return runtime.BuildFlat(root, "business-cockpit", Specs)
 }
 
 var Specs = []runtime.CommandSpec{
