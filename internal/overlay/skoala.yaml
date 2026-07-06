@@ -1,6 +1,12 @@
 commands:
   # Ignore v1alpha1 GatewayService operations (keep v1alpha2)
+  # Keep both original and V1alpha1-suffixed keys: fresh specsync uses the
+  # upstream duplicate IDs, while local sanitized specs use unique old-version IDs.
   list-service:
+    match:
+      path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services"
+    ignore: true
+  list-service-v1alpha1:
     match:
       path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services"
     ignore: true
@@ -8,7 +14,15 @@ commands:
     match:
       path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services"
     ignore: true
+  create-service-v1alpha1:
+    match:
+      path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services"
+    ignore: true
   get-service:
+    match:
+      path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}"
+    ignore: true
+  get-service-v1alpha1:
     match:
       path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}"
     ignore: true
@@ -16,7 +30,15 @@ commands:
     match:
       path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}"
     ignore: true
+  update-service-v1alpha1:
+    match:
+      path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}"
+    ignore: true
   update-service-policy:
+    match:
+      path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}/policies"
+    ignore: true
+  update-service-policy-v1alpha1:
     match:
       path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services/{sesameId}/policies"
     ignore: true
@@ -26,9 +48,17 @@ commands:
     match:
       path: "/apis/hive.skoala.io/v1alpha1/workspaces/{workspaceId}/nacoses"
     ignore: true
+  list-v1alpha1:
+    match:
+      path: "/apis/hive.skoala.io/v1alpha1/workspaces/{workspaceId}/nacoses"
+    ignore: true
 
   # Ignore v1alpha1 Skoala operations (keep v1alpha2/v1alpha3)
   list-cluster-namespace:
+    match:
+      path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces"
+    ignore: true
+  list-cluster-namespace-v1alpha1:
     match:
       path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces"
     ignore: true
@@ -36,7 +66,15 @@ commands:
     match:
       path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/services"
     ignore: true
+  list-cluster-namespace-service-v1alpha1:
+    match:
+      path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/services"
+    ignore: true
   list-mesh-namespace-services:
+    match:
+      path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/meshes/{meshId}/services"
+    ignore: true
+  list-mesh-namespace-services-v1alpha1:
     match:
       path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/meshes/{meshId}/services"
     ignore: true
@@ -44,7 +82,15 @@ commands:
     match:
       path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/permissions"
     ignore: true
+  list-workspace-role-permissions-v1alpha1:
+    match:
+      path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/permissions"
+    ignore: true
   list-registry-services:
+    match:
+      path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/registry/{registryId}/services/gateway"
+    ignore: true
+  list-registry-services-v1alpha1:
     match:
       path: "/apis/skoala.io/v1alpha1/workspaces/{workspaceId}/registry/{registryId}/services/gateway"
     ignore: true
