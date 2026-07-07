@@ -1,7 +1,7 @@
 commands:
-  # Ignore v1alpha1 GatewayService operations (keep v1alpha2)
-  # Keep both original and V1alpha1-suffixed keys: fresh specsync uses the
-  # upstream duplicate IDs, while local sanitized specs use unique old-version IDs.
+  # Ignore v1alpha1 GatewayService operations that have v1alpha2 replacements.
+  # Keep both original and lowercase -v1alpha1-suffixed keys: fresh specsync
+  # uses the upstream duplicate IDs, while sanitized specs use unique old-version IDs.
   list-service:
     match:
       path: "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespaceName}/gateways/{gatewayName}/services"
