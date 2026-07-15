@@ -22,6 +22,72 @@ Create a boss-ready daily AI operations summary from DCE / LLM Studio / Hydra da
 
 Use the DCE CLI directly. Prefer `dce` on `PATH`. If a local repository checkout is available, `bin/dce` may also be used. Always request JSON with `-o json` when collecting data.
 
+### Current Environment Fast Path
+
+This environment is currently verified as **CSP mode**. For the normal daily summary, use the CSP fast path first. Do not start by listing workspaces, probing WS endpoints, reading command help, or inspecting raw response schemas.
+
+The fast path must finish data collection in **one orchestration/tool round trip**:
+
+1. Build `start-time`, `end-time`, timezone, and local collection time in memory.
+2. Launch all independent command groups below concurrently (for example, with `Promise.all` when the orchestration tool supports it). Do not wait for one API before starting the next.
+3. Apply `jq` inside each command pipeline so only compact, secret-free summaries return to the model. Never return raw API Key objects.
+4. Compose the report directly from those compact results. Do not run schema-discovery or confirmation calls when the expected fields are present.
+
+Run these command groups concurrently:
+
+| Group | Commands | Return only |
+|---|---|---|
+| Usage + price | `get-api-key-usage-statistics2` and `modelmanagement list-models --show-public-model-price` | total input/output/Token, per-model usage, per-model calculated charge, price coverage, peak hour, latest timestamp |
+| API Key governance | `apikeymanagement list-api-key` | total, disabled, expired, zero-quota, unlimited, never-used, stale/latest-use counts; never return `key` |
+| Model serving | `modelservingmanagement list-model-serving` | total and status counts |
+| Model supply | `maasservice list-maas-models` | total, enabled count, gateway-status counts |
+| Active alerts | `insight alert list-alerts --all` | total, severity/status counts, compact CRITICAL/WARNING rule summaries |
+| Clock | local `date` | collection cutoff in the user's timezone |
+
+Usage and model prices are the only dependent pair. Fetch both within the same concurrent group and join them locally with `jq -s`; do not make a second API round after usage returns. Other groups must run in parallel with that pair.
+
+The fast path is successful when the usage call returns `totalUsage`, even if another optional group fails. Keep successful partial data and produce the summary. Enter runtime-mode detection only when a primary CSP endpoint returns `SYSTEM-REQUEST_MODE_ERROR`, a mode-specific `404`, or an incompatible response shape.
+
+Do not confuse one orchestration round trip with one server API. The current DCE runtime exposes separate read APIs; the speedup comes from launching them together and returning compact aggregates once.
+
+### Runtime Mode Detection (Fallback Only)
+
+Use this section only when the current-environment CSP fast path fails because the runtime mode appears to have changed. Do not run it on every daily summary.
+
+1. List visible workspaces for context:
+
+   ```bash
+   dce container-management workspace list-workspaces -o json
+   ```
+
+2. Probe one read-only workspace endpoint with the first visible workspace ID:
+
+   ```bash
+   dce llm-studio wsdashboardmanagement get-ws-dashboard-summary \
+     --workspace <workspace-id> \
+     --start-time '<start-time>' \
+     --end-time '<end-time>' \
+     --timezone '<timezone>' \
+     -o json
+   ```
+
+3. Probe one read-only CSP endpoint:
+
+   ```bash
+   dce llm-studio apikeymanagement list-api-key \
+     --page.page-size -1 \
+     -o json
+   ```
+
+Classify the runtime from actual responses:
+
+- **WS mode:** the workspace dashboard probe succeeds. Use the WS collection path below.
+- **CSP mode:** the CSP probe succeeds while WS endpoints return `SYSTEM-REQUEST_MODE_ERROR` or mode-specific `404`. Use the CSP collection path below and do not retry every WS endpoint.
+- **Mixed mode:** both probes succeed. Collect both paths, deduplicate overlapping metrics, and label the source scope.
+- **Undetermined:** neither probe succeeds. Keep only other successful `Any` or Insight data and state the material coverage gap.
+
+Messages such as `Current API mode: CSP` or `Current API mode: WS` in command help describe the command's required mode; they are not proof of the server's active mode. A successful read-only probe is the deciding evidence.
+
 For "today", build the time window in the user's timezone. Example for Beijing time:
 
 ```text
@@ -30,7 +96,9 @@ end-time:   YYYY-MM-DDT23:59:59+08:00
 timezone:   Asia/Shanghai
 ```
 
-Run these commands:
+### WS Mode Collection
+
+Run these commands only when the WS probe succeeds:
 
 ```bash
 # 1. Visible workspaces
@@ -90,6 +158,76 @@ dce llm-studio adminmodelmanagement list-models \
   -o json
 ```
 
+### CSP Mode Collection
+
+In CSP mode, use global LLM Studio resources instead of workspace-prefixed resources:
+
+```bash
+# 1. Global API Key inventory and token usage
+dce llm-studio apikeymanagement list-api-key \
+  --page.page-size -1 \
+  -o json
+
+dce llm-studio apikeymanagement get-api-key-usage-statistics2 \
+  --start-time '<start-time>' \
+  --end-time '<end-time>' \
+  --period TIME_PERIOD_HOUR \
+  -o json
+
+# 2. Global model inventory, published prices, and serving state
+dce llm-studio modelmanagement list-models \
+  --page.page-size -1 \
+  --show-public-model-price \
+  -o json
+
+dce llm-studio modelservingmanagement list-model-serving \
+  --page.page-size -1 \
+  -o json
+
+# 3. Platform model supply
+dce llm-studio maasservice list-maas-models \
+  --page.page-size -1 \
+  -o json
+
+dce llm-studio adminmodelmanagement list-models \
+  --page.page-size -1 \
+  --show-deploy-template \
+  --selector ALL \
+  -o json
+
+# 4. Current platform alerts
+dce insight alert list-alerts \
+  --all \
+  -o json
+```
+
+In CSP mode:
+
+- Use `totalUsage.input`, `totalUsage.output`, and `totalUsage.total` from the global API Key usage statistics as the consumption totals.
+- Aggregate `dataPoints` by `model` and `timestamp` for model shares, hourly trends, and the latest completed data point.
+- Use global API Key inventory only for governance counts. Do not infer active-user or active-key counts from aggregate token data.
+- Do not call `workspacequotaservice` or other WS-only resources after the runtime has been identified as CSP unless a mixed-mode probe proves they work.
+- Do not describe global CSP metrics as workspace totals or tenant rankings.
+
+### Cost Calculation
+
+Calculate cost only when both model-level token usage and matching model prices are returned in the current run:
+
+```text
+model cost = input_tokens / 1000 * inputPerKTokens
+           + output_tokens / 1000 * outputPerKTokens
+total cost = sum(model cost)
+```
+
+- Join usage model names such as `public/<model-id>` to the corresponding model price.
+- If any used model lacks a price, report only the priced subset and its coverage; do not present it as the total cost.
+- If the API does not return a currency, label the result as `pricing units` (or the user's language equivalent), never as CNY, USD, or another currency.
+- Treat the result as calculated/estimated cost and state the formula briefly.
+
+### Collection Cutoff
+
+For an in-progress day, record the local collection time and the maximum returned usage timestamp. Describe figures as `as of <time>`, not as a completed full-day total. If the requested end time is later than the collection time, do not imply that future hours are covered.
+
 If a DCE CLI command returns 404 or fails, keep the partial data and mention any material gap only if it affects confidence. Do not include metrics from failed commands.
 
 ## Business Value Data
@@ -112,22 +250,29 @@ Hydra is usually exposed through `dce llm-studio ...` commands. If a separate `h
 
 ## Summary Workflow
 
-1. Query visible workspaces first, then run all per-workspace commands for each workspace.
-2. Aggregate across all visible workspaces.
-3. Prioritize conclusions in this order:
+1. Build the requested local-day time window and record the collection time.
+2. Run the current-environment CSP fast path in one concurrent orchestration round and aggregate before returning data to the model.
+3. If the primary CSP usage endpoint succeeds, skip mode probes, workspace discovery, command help, and response-shape inspection. Continue directly to conclusions.
+4. Only if the CSP fast path indicates a mode change, detect WS, CSP, mixed, or undetermined mode with the fallback read-only probes.
+5. On fallback, collect only the command path supported by the detected mode:
+   - WS: query visible workspaces and aggregate successful per-workspace results.
+   - CSP: query global API Key usage, global models, model serving, MAAS supply, and active alerts.
+   - Mixed: collect both and explicitly deduplicate overlapping usage totals.
+6. Report the source scope (`workspace aggregate`, `global CSP`, or `mixed`) and the latest usage timestamp when the day is still in progress.
+7. Prioritize conclusions in this order:
    - Actual consumption: request count, total/input/output tokens, active users.
    - Adoption: active users vs total users, workspace coverage.
    - Supply readiness: public/MAAS models enabled and gateway health.
-   - Deployment posture: workspace model-serving count.
+   - Deployment posture: model-serving count and status in the detected scope.
    - Governance and waste: API Key count, zero-quota keys, never-used keys, stale keys, disabled/expired keys.
-4. For business-value requests, add retrieved operating-value signals in this order:
+8. For business-value requests, add retrieved operating-value signals in this order:
    - Capacity utilization and cumulative Token output.
    - Revenue, cost, gross profit, margin, and ROI only when measured or calculable from retrieved inputs.
    - Tenant/API Key concentration and quota risk.
    - Model supply and model-serving readiness.
    - Retrieved risk suggestions and alerts.
-5. Keep up to 5 conclusions. Fewer is better than adding unsupported conclusions.
-6. Present the output as Markdown tables when the user wants a direct/visual view.
+9. Keep up to 5 conclusions. Fewer is better than adding unsupported conclusions.
+10. Present the output as Markdown tables when the user wants a direct/visual view.
 
 ## Output Format
 
@@ -142,6 +287,8 @@ Rules:
 - Use only values retrieved through DCE CLI commands in the current run.
 - Omit any metric, finding, cause, or recommendation that is not backed by retrieved DCE CLI data.
 - If data is incomplete, explicitly say `Based on the currently available DCE CLI data`.
+- State the detected runtime mode and metric scope when they affect interpretation.
+- For an in-progress day, include the local collection cutoff or latest returned usage timestamp.
 - Match the user's language in the final answer, but keep these skill instructions in English.
 - Do not expose raw API keys or secrets; only count keys and summarize status.
 
@@ -223,9 +370,14 @@ Optional detail tables may be added under the required sections only when they m
 - If public models are enabled and gateway status is healthy, describe supply as ready or available.
 - If workspace model-serving count is zero, describe the posture as public-model driven rather than self-deployed/private-serving driven.
 - For API Keys, count total, disabled, expired, zero-quota, never-used (`lastUsedTime` missing), and stale keys. Do not print the key values.
+- In CSP mode, a global usage total does not prove which API Keys were active. Report aggregate consumption and inventory metadata separately unless per-key usage was retrieved.
+- If global usage is nonzero while every listed API Key reports zero quota, zero used quota, or stale `lastUsedTime`, describe this as a metering/attribution consistency risk that needs reconciliation. Do not claim quota bypass or identify a responsible Key without per-key evidence.
+- Count active alerts by severity and firing status. A retrieved firing `CRITICAL` alert may set the overall risk to Critical even when all model-serving records are RUNNING; distinguish platform reliability risk from model-serving availability.
 - Use concrete workspace names and IDs only when they clarify the conclusion; otherwise aggregate for leadership readability.
 - Do not infer business risk from missing data. A missing quota response is not a budget risk; a missing cost response is not zero cost; a missing department endpoint is not zero department usage.
+- In CSP mode, omit request counts, active-user counts, workspace allocation, and workspace quotas unless a successful command explicitly returned them.
 - If department token usage is unsupported in the current runtime mode, omit department rankings and base the summary on tenant/API Key/workspace data that was retrieved.
 - Capacity risk must be grounded in retrieved throughput, rated capacity, GPU utilization, node metrics, or explicit bottleneck forecast data.
 - Financial conclusions require retrieved revenue/cost/profit data or retrieved token usage plus retrieved price/cost configuration. Otherwise omit financial metrics.
+- A calculated token charge is not infrastructure cost, gross profit, or ROI. Use the returned price units and currency metadata exactly; if currency is absent, say `pricing units`.
 - Risk recommendations must map to retrieved evidence: quota exhaustion, low utilization, traffic drop, concentration, alert/security event, or explicit risk-suggestion API output.

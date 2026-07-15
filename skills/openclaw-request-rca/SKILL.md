@@ -35,6 +35,41 @@ Prefer direct DCE CLI queries and JSON output. Do not infer root cause from a si
 
 Follow this order. Do not jump directly from an alert to a root cause without checking the OpenClaw request span.
 
+### Fast Path: One Terminal Call
+
+For a normal "recent OpenClaw analysis" request, use the bundled collector first. It performs the necessary DCE API calls concurrently and returns compact NDJSON containing cluster inventory, strictly filtered OpenClaw spans, errors, R.E.D metrics, pods, and alerts:
+
+```bash
+bash scripts/collect_rca.sh 24 1s
+```
+
+Resolve `scripts/collect_rca.sh` relative to this `SKILL.md`. The arguments are:
+
+1. lookback hours, default `24`;
+2. slow threshold, default `1s`;
+3. optional cluster name.
+
+Efficiency rules:
+
+- Prefer this single collector invocation over sequential terminal calls.
+- Do not call `get-tag-values` namespace-by-namespace on the normal path. The collector discovers namespaces from Kubernetes inventory and trace services, then applies the required OpenClaw tag directly to span queries.
+- Do not rerun commands merely to reformat JSON; aggregate with `jq` inside the collector call.
+- If no OpenClaw spans are found, use the collector's workload, metrics, Collector, and alert evidence to classify `no traffic` versus `telemetry gap`. Broaden the window only when the user needs the last-known activity time.
+- The collector also fetches error spans, slow spans, and aggregate Jaeger details for up to three priority traces per OpenClaw namespace. Do not make a second terminal call for data already present in its output.
+- Make one follow-up terminal call only when relevant container logs are required, an API failed, evidence was truncated, or the user supplies a new trace ID or incident window. Fetch every required log/detail concurrently in that call.
+
+The collector overlaps independent work:
+
+1. Run namespace inventory and trace-service discovery concurrently with Pod, alert, and metric collection.
+2. Start strictly filtered span discovery as soon as namespace prerequisites finish; do not wait for platform correlation APIs.
+3. Query error and slow spans concurrently for every discovered OpenClaw namespace.
+4. Fetch priority trace details concurrently while platform collection finishes.
+5. Join all results once, then emit compact aggregates instead of full raw alert/span payloads.
+
+When the user supplies a cluster, pass it as the third argument so the collector skips cluster discovery.
+
+Target latency for the first-pass analysis is under 60 seconds in a normally responsive DCE environment.
+
 1. Identify the OpenClaw trace namespace and service by locating `otel.scope.name=openclaw-otel-plugin`.
 2. Query OpenClaw error spans in the incident window.
 3. Query slow OpenClaw spans in the same window.
@@ -102,42 +137,22 @@ kpanda-global-cluster
 
 ### 2. Discover the OpenClaw Namespace
 
-Query `otel.scope.name` values per namespace that has trace services.
+Use `scripts/collect_rca.sh`; it already performs namespace discovery. Do not run separate terminal commands for this section on the normal path.
 
-Important: namespace discovery is only a way to find where OpenClaw spans may live. A namespace can contain many unrelated application traces, so never treat all traces in the selected namespace as OpenClaw data. Every OpenClaw span query and every interpretation of span output must continue to filter by:
+The collector:
+
+1. fetches clusters, Kubernetes namespaces, and trace services concurrently;
+2. merges Kubernetes and tracing namespaces so it can include namespaces with traces but no current Pod;
+3. queries every candidate namespace concurrently with the required span filter;
+4. emits only namespaces whose filtered result contains OpenClaw spans.
+
+Namespace discovery only identifies candidates. A namespace can contain unrelated traces, so every OpenClaw query and interpretation must retain:
 
 ```text
 otel.scope.name=openclaw-otel-plugin
 ```
 
-```bash
-END=$(date -u +%s)000
-
-dce insight tracing get-services \
-  --cluster-name <cluster-name> \
-  --lookback 86400000 \
-  --end-time "$END" \
-  --span-kinds SPAN_KIND_SERVER \
-  --sort 'reqRate,desc' \
-  --page 1 \
-  --page-size 200 \
-  -o json
-```
-
-Then for each candidate namespace:
-
-```bash
-dce insight tracing get-tag-values \
-  --name otel.scope.name \
-  --cluster <cluster-name> \
-  --namespace <namespace> \
-  --limit 1000 \
-  -o json
-```
-
-Select the namespace where `openclaw-otel-plugin` appears. In observed environments this may be a workload namespace such as `jinye-ns`, not a platform namespace.
-
-If multiple namespaces contain `openclaw-otel-plugin`, query each candidate with the strict tag filter and use only the namespace whose filtered spans match the reported incident window, service, operation, or trace ID. Do not select a namespace based on request volume alone, because high-volume non-OpenClaw services can appear in the same namespace.
+If the collector returns multiple OpenClaw namespaces, analyze each independently and select by the reported incident window, service, operation, or trace ID. Never select by namespace request volume alone. Use manual namespace discovery only when the collector reports an API failure.
 
 ### 3. Query OpenClaw Spans
 
