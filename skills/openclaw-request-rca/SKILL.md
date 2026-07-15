@@ -40,10 +40,10 @@ Follow this order. Do not jump directly from an alert to a root cause without ch
 For a normal "recent OpenClaw analysis" request, use the bundled collector first. It performs the necessary DCE API calls concurrently and returns compact NDJSON containing cluster inventory, strictly filtered OpenClaw spans, errors, R.E.D metrics, pods, and alerts:
 
 ```bash
-bash scripts/collect_rca.sh 24 1s
+python3 scripts/collect_rca.py 24 1s
 ```
 
-Resolve `scripts/collect_rca.sh` relative to this `SKILL.md`. The arguments are:
+Resolve `scripts/collect_rca.py` relative to this `SKILL.md`. The arguments are:
 
 1. lookback hours, default `24`;
 2. slow threshold, default `1s`;
@@ -139,7 +139,7 @@ kpanda-global-cluster
 
 ### 2. Discover the OpenClaw Namespace
 
-Use `scripts/collect_rca.sh`; it already performs namespace discovery. Do not run separate terminal commands for this section on the normal path.
+Use `scripts/collect_rca.py`; it already performs namespace discovery. Do not run separate terminal commands for this section on the normal path.
 
 The collector:
 

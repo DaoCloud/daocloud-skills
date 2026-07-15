@@ -29,13 +29,13 @@ This environment is currently verified as **CSP mode**. For the normal daily sum
 The fast path must finish data collection in **one terminal call**. Resolve the collector relative to this `SKILL.md` and run:
 
 ```bash
-bash scripts/collect_summary.sh '<YYYY-MM-DD>' '<timezone>'
+python3 scripts/collect_summary.py '<YYYY-MM-DD>' '<timezone>'
 ```
 
 For today's summary in Beijing time, for example:
 
 ```bash
-bash scripts/collect_summary.sh "$(TZ=Asia/Shanghai date +%Y-%m-%d)" Asia/Shanghai
+python3 scripts/collect_summary.py
 ```
 
 The date and timezone arguments default to today and `Asia/Shanghai`. The collector emits compact, secret-free NDJSON and performs these steps internally:
@@ -267,7 +267,7 @@ Hydra is usually exposed through `dce llm-studio ...` commands. If a separate `h
 ## Summary Workflow
 
 1. Build the requested local-day time window and record the collection time.
-2. Run `scripts/collect_summary.sh` once for the current-environment CSP fast path. Do not issue separate terminal calls for data already present in its NDJSON output.
+2. Run `scripts/collect_summary.py` once for the current-environment CSP fast path. Do not issue separate terminal calls for data already present in its NDJSON output.
 3. If the primary CSP usage endpoint succeeds, skip mode probes, workspace discovery, command help, and response-shape inspection. Continue directly to conclusions.
 4. Only if the CSP fast path indicates a mode change, detect WS, CSP, mixed, or undetermined mode with the fallback read-only probes.
 5. On fallback, collect only the command path supported by the detected mode:
