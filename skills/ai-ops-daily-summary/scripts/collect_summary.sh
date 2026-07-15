@@ -11,7 +11,7 @@ STALE_DAYS="${AI_OPS_STALE_DAYS:-30}"
 command -v dce >/dev/null || { printf 'dce is required\n' >&2; exit 127; }
 command -v jq >/dev/null || { printf 'jq is required\n' >&2; exit 127; }
 
-WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/ai-ops-summary.XXXXXX")"
+WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/ai-ops-summary.XXXXXX")" || { printf 'failed to create temp dir\n' >&2; exit 1; }
 trap 'rm -rf "$WORK_DIR"' EXIT
 
 timezone_offset() {
@@ -180,7 +180,7 @@ fi
 
 if source_ok api_keys; then
   jq -c --argjson now "$NOW_EPOCH" --argjson staleBefore "$STALE_BEFORE_EPOCH" '
-    def epoch: if . == null or . == "" then null else (sub("\\.[0-9]+Z$";"Z") | fromdateiso8601?) end;
+    def epoch: if . == null or . == "" then null else (sub("\\.[0-9]+"; "") | fromdateiso8601?) end;
     [.items[]?] as $items
     | {
         type:"apiKeyGovernance",ok:true,total:($items|length),
