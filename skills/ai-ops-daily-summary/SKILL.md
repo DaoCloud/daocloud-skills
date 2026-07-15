@@ -7,7 +7,7 @@ description: Generate a concise leadership-facing AI operations daily summary an
 
 ## Overview
 
-Create a boss-ready daily AI operations summary from DCE / LLM Studio / Hydra data. Favor the most important conclusions, shown as compact tables with direct metrics and a one-line executive takeaway. Do not depend on bundled scripts; run the DCE CLI commands directly so the workflow stays transparent and easy to adjust.
+Create a boss-ready daily AI operations summary from DCE / LLM Studio / Hydra data. Favor the most important conclusions, shown as compact tables with direct metrics and a one-line executive takeaway. Use the bundled collector for the normal CSP path so all data collection completes in one terminal call. Use direct DCE CLI commands only for fallback investigation or a user-requested custom scope.
 
 ## Data Integrity Rules
 
@@ -26,12 +26,26 @@ Use the DCE CLI directly. Prefer `dce` on `PATH`. If a local repository checkout
 
 This environment is currently verified as **CSP mode**. For the normal daily summary, use the CSP fast path first. Do not start by listing workspaces, probing WS endpoints, reading command help, or inspecting raw response schemas.
 
-The fast path must finish data collection in **one orchestration/tool round trip**:
+The fast path must finish data collection in **one terminal call**. Resolve the collector relative to this `SKILL.md` and run:
 
-1. Build `start-time`, `end-time`, timezone, and local collection time in memory.
-2. Launch all independent command groups below concurrently (for example, with `Promise.all` when the orchestration tool supports it). Do not wait for one API before starting the next.
-3. Apply `jq` inside each command pipeline so only compact, secret-free summaries return to the model. Never return raw API Key objects.
-4. Compose the report directly from those compact results. Do not run schema-discovery or confirmation calls when the expected fields are present.
+```bash
+bash scripts/collect_summary.sh '<YYYY-MM-DD>' '<timezone>'
+```
+
+For today's summary in Beijing time, for example:
+
+```bash
+bash scripts/collect_summary.sh "$(TZ=Asia/Shanghai date +%Y-%m-%d)" Asia/Shanghai
+```
+
+The date and timezone arguments default to today and `Asia/Shanghai`. The collector emits compact, secret-free NDJSON and performs these steps internally:
+
+1. Build `start-time`, `end-time`, timezone, and local collection time.
+2. Launch all independent DCE command groups below concurrently.
+3. Aggregate usage, price coverage, governance, serving, supply, and alert data with `jq`.
+4. Return successful partial data when an optional source fails; mark mode-mismatch signals without returning raw errors.
+
+Compose the report directly from the collector output. Do not split the command into multiple terminal calls, run schema-discovery calls, or rerun commands merely to reformat their JSON when the expected records are present.
 
 Run these command groups concurrently:
 
@@ -44,11 +58,11 @@ Run these command groups concurrently:
 | Active alerts | `insight alert list-alerts --all` | total, severity/status counts, compact CRITICAL/WARNING rule summaries |
 | Clock | local `date` | collection cutoff in the user's timezone |
 
-Usage and model prices are the only dependent pair. Fetch both within the same concurrent group and join them locally with `jq -s`; do not make a second API round after usage returns. Other groups must run in parallel with that pair.
+Usage and model prices are the only dependent pair. The collector fetches them concurrently and joins them locally; it does not make a second API round after usage returns. Other groups run in parallel with that pair.
 
 The fast path is successful when the usage call returns `totalUsage`, even if another optional group fails. Keep successful partial data and produce the summary. Enter runtime-mode detection only when a primary CSP endpoint returns `SYSTEM-REQUEST_MODE_ERROR`, a mode-specific `404`, or an incompatible response shape.
 
-Do not confuse one orchestration round trip with one server API. The current DCE runtime exposes separate read APIs; the speedup comes from launching them together and returning compact aggregates once.
+Do not confuse one terminal call with one server API. The current DCE runtime exposes separate read APIs; the collector launches them together and returns compact aggregates once.
 
 ### Runtime Mode Detection (Fallback Only)
 
@@ -251,7 +265,7 @@ Hydra is usually exposed through `dce llm-studio ...` commands. If a separate `h
 ## Summary Workflow
 
 1. Build the requested local-day time window and record the collection time.
-2. Run the current-environment CSP fast path in one concurrent orchestration round and aggregate before returning data to the model.
+2. Run `scripts/collect_summary.sh` once for the current-environment CSP fast path. Do not issue separate terminal calls for data already present in its NDJSON output.
 3. If the primary CSP usage endpoint succeeds, skip mode probes, workspace discovery, command help, and response-shape inspection. Continue directly to conclusions.
 4. Only if the CSP fast path indicates a mode change, detect WS, CSP, mixed, or undetermined mode with the fallback read-only probes.
 5. On fallback, collect only the command path supported by the detected mode:
