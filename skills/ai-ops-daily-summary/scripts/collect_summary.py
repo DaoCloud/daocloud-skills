@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Collect compact CSP AI operations data using only the Python standard library."""
 
+import argparse
 import json
 import os
 import re
@@ -18,6 +19,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 Json = Dict[str, Any]
 Result = Tuple[int, Optional[Json], str]
 DEADLINE: Optional[float] = None
+PROFILES = ("operations", "usage-cost", "full")
 
 
 def emit(value: Json) -> None:
@@ -205,20 +207,66 @@ def counts(records: List[Json], field: str, output_field: str) -> List[Json]:
     ]
 
 
+def parse_args() -> argparse.Namespace:
+    default_profile = os.environ.get("AI_OPS_PROFILE", "usage-cost").lower()
+    if os.environ.get("AI_OPS_DETAIL", "").lower() in ("1", "true", "yes"):
+        default_profile = "full"
+    parser = argparse.ArgumentParser(
+        description="Collect compact CSP AI operations metrics as secret-free NDJSON."
+    )
+    parser.add_argument("date", nargs="?", help="report date in YYYY-MM-DD format")
+    parser.add_argument("timezone", nargs="?", default="Asia/Shanghai")
+    parser.add_argument(
+        "--profile",
+        choices=PROFILES,
+        default=default_profile,
+        help=(
+            "usage-cost: usage and model pricing only (default); "
+            "operations: usage, API Key governance, alerts; "
+            "full: all operating, cost, serving, and supply metrics"
+        ),
+    )
+    args = parser.parse_args()
+    if args.profile not in PROFILES:
+        parser.error(f"invalid AI_OPS_PROFILE: {args.profile}")
+    return args
+
+
+def build_commands(profile: str, start: datetime, end: datetime) -> Dict[str, List[str]]:
+    commands = {
+        "usage": ["dce", "llm-studio", "apikeymanagement", "get-api-key-usage-statistics2", "--start-time", start.isoformat(), "--end-time", end.isoformat(), "--period", "TIME_PERIOD_HOUR", "-o", "json"],
+    }
+    if profile in ("operations", "full"):
+        commands.update({
+            "api_keys": ["dce", "llm-studio", "apikeymanagement", "list-api-key", "--page.page-size", "-1", "-o", "json"],
+            "alerts": ["dce", "insight", "alert", "list-alerts", "--all", "-o", "json"],
+        })
+    if profile in ("usage-cost", "full"):
+        commands["models"] = ["dce", "llm-studio", "modelmanagement", "list-models", "--page.page-size", "-1", "--show-public-model-price", "-o", "json"]
+    if profile == "full":
+        commands.update({
+            "admin_models": ["dce", "llm-studio", "adminmodelmanagement", "list-models", "--page.page-size", "-1", "--show-deploy-template", "--selector", "ALL", "-o", "json"],
+            "model_serving": ["dce", "llm-studio", "modelservingmanagement", "list-model-serving", "--page.page-size", "-1", "-o", "json"],
+            "maas_models": ["dce", "llm-studio", "maasservice", "list-maas-models", "--page.page-size", "-1", "-o", "json"],
+        })
+    return commands
+
+
 def main() -> int:
     global DEADLINE
-    detail = os.environ.get("AI_OPS_DETAIL", "").lower() in ("1", "true", "yes")
-    default_budget = "12" if detail else "6"
+    args = parse_args()
+    profile = args.profile
+    default_budget = "12" if profile in ("usage-cost", "full") else "6"
     DEADLINE = monotonic_time.monotonic() + float(os.environ.get("AI_OPS_BUDGET", default_budget))
     if not shutil.which("dce"):
         print("dce is required", file=sys.stderr)
         return 127
-    timezone_name = sys.argv[2] if len(sys.argv) > 2 else "Asia/Shanghai"
+    timezone_name = args.timezone
     try:
         report_timezone = ZoneInfo(timezone_name)
-        report_date = date.fromisoformat(sys.argv[1]) if len(sys.argv) > 1 else datetime.now(report_timezone).date()
+        report_date = date.fromisoformat(args.date) if args.date else datetime.now(report_timezone).date()
     except (ZoneInfoNotFoundError, ValueError):
-        print(f"invalid date or timezone: {sys.argv[1:]}", file=sys.stderr)
+        print(f"invalid date or timezone: {[args.date, timezone_name]}", file=sys.stderr)
         return 2
 
     start = datetime.combine(report_date, time.min, report_timezone)
@@ -226,36 +274,28 @@ def main() -> int:
     collected_at = datetime.now(report_timezone).replace(microsecond=0)
     now = datetime.now(timezone.utc)
     stale_days = int(os.environ.get("AI_OPS_STALE_DAYS", "30"))
-    commands = {
-        "usage": ["dce", "llm-studio", "apikeymanagement", "get-api-key-usage-statistics2", "--start-time", start.isoformat(), "--end-time", end.isoformat(), "--period", "TIME_PERIOD_HOUR", "-o", "json"],
-        "api_keys": ["dce", "llm-studio", "apikeymanagement", "list-api-key", "--page.page-size", "-1", "-o", "json"],
-        "alerts": ["dce", "insight", "alert", "list-alerts", "--all", "-o", "json"],
-    }
-    if detail:
-        commands["models"] = ["dce", "llm-studio", "modelmanagement", "list-models", "--page.page-size", "-1", "--show-public-model-price", "-o", "json"]
-        commands["admin_models"] = ["dce", "llm-studio", "adminmodelmanagement", "list-models", "--page.page-size", "-1", "--show-deploy-template", "--selector", "ALL", "-o", "json"]
-        commands["model_serving"] = ["dce", "llm-studio", "modelservingmanagement", "list-model-serving", "--page.page-size", "-1", "-o", "json"]
-        commands["maas_models"] = ["dce", "llm-studio", "maasservice", "list-maas-models", "--page.page-size", "-1", "-o", "json"]
+    commands = build_commands(profile, start, end)
     with ThreadPoolExecutor(max_workers=len(commands)) as executor:
         futures = {name: executor.submit(run, command) for name, command in commands.items()}
         results = {name: future.result() for name, future in futures.items()}
 
-    emit({"type": "meta", "mode": "CSP", "scope": "global CSP", "detail": detail, "date": report_date.isoformat(), "timezone": timezone_name, "start": start.isoformat(), "end": end.isoformat(), "collectedAt": collected_at.isoformat()})
+    emit({"type": "meta", "mode": "CSP", "scope": "global CSP", "profile": profile, "date": report_date.isoformat(), "timezone": timezone_name, "start": start.isoformat(), "end": end.isoformat(), "collectedAt": collected_at.isoformat()})
     usage_data = results["usage"][1]
     models_data = results.get("models", (0, None, ""))[1]
     if usage_data:
         emit(usage_record(usage_data, models_data))
-        if detail and not models_data:
+        if "models" in results and not models_data:
             emit(failure("models", results["models"]))
     else:
         emit(failure("usage", results["usage"]))
-        if detail and not models_data:
+        if "models" in results and not models_data:
             emit(failure("models", results["models"]))
 
-    api_keys = results["api_keys"][1]
-    emit(api_key_record(api_keys, now, stale_days) if api_keys else failure("api_keys", results["api_keys"]))
+    if "api_keys" in results:
+        api_keys = results["api_keys"][1]
+        emit(api_key_record(api_keys, now, stale_days) if api_keys else failure("api_keys", results["api_keys"]))
 
-    if detail:
+    if profile == "full":
         serving = results["model_serving"][1]
         serving_items = items(serving)
         emit({"type": "modelServing", "ok": True, "total": len(serving_items), "byStatus": counts(serving_items, "status", "status")} if serving else failure("model_serving", results["model_serving"]))
@@ -272,7 +312,7 @@ def main() -> int:
             if not admin:
                 emit(failure("admin_models", results["admin_models"]))
 
-    alerts = results["alerts"][1]
+    alerts = results.get("alerts", (0, None, ""))[1]
     if alerts:
         alert_items = items(alerts)
         grouped: Dict[Tuple[Any, ...], List[Json]] = defaultdict(list)
@@ -288,7 +328,7 @@ def main() -> int:
         important.sort(key=lambda row: (0 if row["severity"] == "CRITICAL" else 1, -number(row["latestStartAt"])))
         important = important[:10]
         emit({"type": "alerts", "ok": True, "total": len(alert_items), "bySeverity": counts(alert_items, "severity", "severity"), "byStatus": counts(alert_items, "status", "status"), "important": important})
-    else:
+    elif "alerts" in results:
         emit(failure("alerts", results["alerts"]))
     return 0
 
