@@ -32,7 +32,7 @@ once, parse the labelled `### SECTION` blocks:
 ```bash
 M="<modelId>"; S="<start-date>"; E="<today-date>"   # e.g. M=a-maas-deepseek-v4-pro S=2026-07-08 E=2026-07-15 ; E exclusive → complete days only
 echo "### MODELS"; dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json | grep '"modelId"'   # enumerate + gate, grepped; do NOT run list-models as a separate call
-PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | grep -o 'public/[^"]*')   # capture the request name; do NOT hardcode public/ , do NOT pipe to python -c (blocked)
+PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | cut -d'"' -f4)   # capture the complete request name; do NOT pipe to python -c (blocked)
 echo "### PUBLIC_NAME"; echo "$PUB"
 echo "### USAGE";   dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time "${S}T00:00:00Z" --end-time "${E}T00:00:00Z" --models "$PUB" --period TIME_PERIOD_DAY -o json | grep -A11 '"totalUsage"'
 echo "### SKU";     dce --insecure billing-center product list-sku-infos --page 1 --page-size 200 --product hydra-maas -o json | grep -E '"value"|"price"'

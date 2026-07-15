@@ -265,9 +265,9 @@ run it once; then parse the labelled `### SECTION` blocks from the single output
 
 ```bash
 M="<modelId>"; S="<start-date>"; E="<today-date>"   # e.g. M=a-maas-deepseek-v4-pro S=2026-07-08 E=2026-07-15
-# publicAccessModelName is captured with grep (do NOT pipe to `python -c` — the harness blocks -c scripts)
+# publicAccessModelName is extracted as its complete API-returned value (do NOT pipe to `python -c` — the harness blocks -c scripts)
 echo "### MODELS"; dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json | grep '"modelId"'   # enumerate + self-hosted gate, grepped tiny; replaces any separate list-models call
-PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | grep -o 'public/[^"]*')
+PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | cut -d'"' -f4)
 echo "### PUBLIC_NAME"; echo "$PUB"
 echo "### USAGE";   dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time "${S}T00:00:00Z" --end-time "${E}T00:00:00Z" --models "$PUB" --period TIME_PERIOD_DAY -o json | grep -A11 '"totalUsage"'
 echo "### SKU";     dce --insecure billing-center product list-sku-infos --page 1 --page-size 200 --product hydra-maas -o json | grep -E '"value"|"price"'
@@ -283,9 +283,10 @@ The `grep` filters keep the output small enough to fit the terminal window (raw 
 
 ```bash
 S="<start-date>"; E="<today-date>"
-echo "### MODELS"; dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json | grep '"modelId"'   # enumerate + self-hosted gate, grepped tiny; this replaces any separate list-models call
-for M in a-maas-deepseek-v4-pro a-maas-glm-5.1 a-maas-qwen3-32b a-maas-minimax-2.7; do
-  PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | grep -o 'public/[^"]*')
+MODELS=$(dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" --page.page-size -1 -o json | grep -o '"modelId" *: *"[^"]*"' | cut -d'"' -f4 | grep -E '^a-maas-|^maas-')
+echo "### MODELS"; echo "$MODELS"   # enumerate + self-hosted gate, grepped tiny; this replaces any separate list-models call
+for M in $MODELS; do
+  PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | cut -d'"' -f4)
   echo "### USAGE $M -> $PUB"
   dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time "${S}T00:00:00Z" --end-time "${E}T00:00:00Z" --models "$PUB" --period TIME_PERIOD_DAY -o json | grep -A11 '"totalUsage"'
 done

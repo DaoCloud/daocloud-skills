@@ -60,9 +60,10 @@ labelled `### SECTION` blocks:
 
 ```bash
 S="<start-date>"; E="<today-date>"   # E exclusive → usage window = complete days only
-echo "### MODELS"; dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json | grep '"modelId"'   # enumerate + gate, grepped; do NOT run list-models as a separate call
-for M in a-maas-deepseek-v4-pro a-maas-glm-5.1 a-maas-qwen3-32b a-maas-minimax-2.7; do
-  PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | grep -o 'public/[^"]*')
+MODELS=$(dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" --page.page-size -1 -o json | grep -o '"modelId" *: *"[^"]*"' | cut -d'"' -f4 | grep -E '^a-maas-|^maas-')
+echo "### MODELS"; echo "$MODELS"   # enumerate + gate, grepped; do NOT run list-models as a separate call
+for M in $MODELS; do
+  PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | cut -d'"' -f4)
   echo "### USAGE $M -> $PUB"
   dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time "${S}T00:00:00Z" --end-time "${E}T00:00:00Z" --models "$PUB" --period TIME_PERIOD_DAY -o json | grep -A11 '"totalUsage"'
 done
