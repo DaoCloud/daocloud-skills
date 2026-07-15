@@ -42,10 +42,12 @@ The date and timezone arguments default to today and `Asia/Shanghai`. The collec
 
 1. Build `start-time`, `end-time`, timezone, and local collection time.
 2. Launch all independent DCE command groups below concurrently.
-3. Aggregate usage, price coverage, governance, serving, supply, and alert data with `jq`.
+3. Aggregate usage, price coverage, governance, serving, supply, and alert data with the Python 3 standard library.
 4. Return successful partial data when an optional source fails; mark mode-mismatch signals without returning raw errors.
 
 Compose the report directly from the collector output. Do not split the command into multiple terminal calls, run schema-discovery calls, or rerun commands merely to reformat their JSON when the expected records are present.
+
+The collector requires `python3` and `dce` only. It does not require `jq`, pip, or any third-party Python package.
 
 Run these command groups concurrently:
 

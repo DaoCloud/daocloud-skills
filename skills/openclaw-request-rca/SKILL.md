@@ -53,7 +53,7 @@ Efficiency rules:
 
 - Prefer this single collector invocation over sequential terminal calls.
 - Do not call `get-tag-values` namespace-by-namespace on the normal path. The collector discovers namespaces from Kubernetes inventory and trace services, then applies the required OpenClaw tag directly to span queries.
-- Do not rerun commands merely to reformat JSON; aggregate with `jq` inside the collector call.
+- Do not rerun commands merely to reformat JSON; the collector aggregates with the Python 3 standard library.
 - If no OpenClaw spans are found, use the collector's workload, metrics, Collector, and alert evidence to classify `no traffic` versus `telemetry gap`. Broaden the window only when the user needs the last-known activity time.
 - The collector also fetches error spans, slow spans, and aggregate Jaeger details for up to three priority traces per OpenClaw namespace. Do not make a second terminal call for data already present in its output.
 - Make one follow-up terminal call only when relevant container logs are required, an API failed, evidence was truncated, or the user supplies a new trace ID or incident window. Fetch every required log/detail concurrently in that call.
@@ -65,6 +65,8 @@ The collector overlaps independent work:
 3. Query error and slow spans concurrently for every discovered OpenClaw namespace.
 4. Fetch priority trace details concurrently while platform collection finishes.
 5. Join all results once, then emit compact aggregates instead of full raw alert/span payloads.
+
+The collector requires `python3` and `dce` only. It does not require `jq`, pip, or any third-party Python package.
 
 When the user supplies a cluster, pass it as the third argument so the collector skips cluster discovery.
 
