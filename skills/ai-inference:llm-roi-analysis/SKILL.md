@@ -151,9 +151,11 @@ GPUs and sets the per-token sale price (cost = GPU hourly price × pod-hours).
 **Resold upstream API is pass-through** (cost = upstream token price, no GPU to
 right-size) and is OUT OF SCOPE.
 
-Before any analysis, confirm self-hosting via the API-visible marker: the model
+Confirm self-hosting via the API-visible marker: the model
 appears in `list-models --page.search "modelId=maas-"` and its `modelId`
-**starts with** `maas-` **or** `a-maas-` (this deployment registers the
+**starts with** `maas-` **or** `a-maas-`. **Do this inside the single bundle
+command** (its first `### MODELS` line is a grepped `list-models`); do NOT run
+`list-models` as its own tool call. (This deployment registers the
 self-hosted models under the `a-maas-` variant — treat it as a `maas-` marker).
 (The `models` API does not expose `source` or `resources_requirements`, so the
 `maas-`/`a-maas-` prefix is the operative marker; `source=BUILTIN` + a running
@@ -250,23 +252,48 @@ Business window default `2026-06-01` → today. Before calling tools, resolve:
 - `<model>` = requested self-hosted MaaS model id, or every selected `maas-*`
   model for portfolio analysis.
 
-Step 0 — enumerate models once:
+**Do NOT run `list-models` (or any read) as a separate tool call.** Model
+enumeration + the self-hosted gate are the first `### MODELS` line **inside** the
+single bundle command below (a grepped `list-models` that returns just the
+`modelId`s). The entire analysis is **one** `dce`-bundle tool call, start to
+finish.
 
-`dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json` — keep only `modelId` values that start with `maas-`.
+Then run the whole data bundle for the model in **ONE shell command = one tool
+call** (this is the speed fix — do NOT issue 5–6 separate tool calls; that is
+what makes an analysis take minutes). Copy this block, set the 3 variables, and
+run it once; then parse the labelled `### SECTION` blocks from the single output:
 
-Then, for each selected model, perform **one model-bundle tool call**. The tool
-message must contain all reads below for that model; do not split them into
-separate tool messages:
-
-```text
-model bundle for <model>:
-  1. dce --insecure llm-studio modelservingmanagement list-model-serving -o json
-  2a. dce --insecure llm-studio adminmodelmanagement get-model --model-id <modelId> -o json   # read .publicAccessModelName (e.g. public/a-maas-deepseek-v4-pro)
-  2b. dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time <start>T00:00:00Z --end-time <today>T00:00:00Z --models <publicAccessModelName> --period TIME_PERIOD_DAY -o json   # use publicAccessModelName from 2a; bare modelId → empty/0
-  3. dce --insecure billing-center product list-sku-infos --page 1 --page-size 200 --product hydra-maas -o json
-  4. dce --insecure container-management core get-config-map --cluster kpanda-global-cluster --namespace tokenfactory-system --name tokenfactory-dashboard-resource-cost -o json
-  5. dce --insecure operations-management report list-pods --start <start> --end <today+1> --search <model> -o json
+```bash
+M="<modelId>"; S="<start-date>"; E="<today-date>"   # e.g. M=a-maas-deepseek-v4-pro S=2026-07-08 E=2026-07-15
+# publicAccessModelName is captured with grep (do NOT pipe to `python -c` — the harness blocks -c scripts)
+echo "### MODELS"; dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json | grep '"modelId"'   # enumerate + self-hosted gate, grepped tiny; replaces any separate list-models call
+PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | grep -o 'public/[^"]*')
+echo "### PUBLIC_NAME"; echo "$PUB"
+echo "### USAGE";   dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time "${S}T00:00:00Z" --end-time "${E}T00:00:00Z" --models "$PUB" --period TIME_PERIOD_DAY -o json | grep -A11 '"totalUsage"'
+echo "### SKU";     dce --insecure billing-center product list-sku-infos --page 1 --page-size 200 --product hydra-maas -o json | grep -E '"value"|"price"'
+echo "### GPUCOST"; dce --insecure container-management core get-config-map --cluster kpanda-global-cluster --namespace tokenfactory-system --name tokenfactory-dashboard-resource-cost -o json
+echo "### UTIL";    dce --insecure operations-management report list-pods --start "$S" --end "$E" --search "$M" -o json | grep -E '"pod"|"avgGpuUseRatio"|"maxGpuUseRatio"'
 ```
+
+The `grep` filters keep the output small enough to fit the terminal window (raw JSON is truncated at ~5 KB and you would lose the later sections). `grep -A11 '"totalUsage"'` gives the window totals (revenue inputs); `"value"|"price"` gives each SKU's model-name + token-type + price; the util grep gives per-pod avg/max. If you also need the daily trend, re-run just the USAGE line without the grep for the one model in question.
+
+- `E` = today's date (`--end-time ${E}T00:00:00Z` is exclusive, so the usage window is complete days only per the Window-alignment rule).
+- Replicas come from the fixed mapping table above (4/4/3/2) — `list-model-serving` is optional and omitted here to save a round-trip; add `; echo "### SERVING"; dce --insecure llm-studio modelservingmanagement list-model-serving -o json` only if you must confirm replicas.
+- **Portfolio (multiple models): also ONE shell command = one tool call** — a `for` loop over the models, still a single terminal call (do NOT run each read as its own command, and do NOT use a comma-joined `--models`: with multiple models `totalUsage` becomes the SUM ACROSS ALL of them, corrupting per-model revenue). Each model gets its own clean `totalUsage`; SKU/GPUCOST/UTIL are model-independent → pulled once:
+
+```bash
+S="<start-date>"; E="<today-date>"
+echo "### MODELS"; dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json | grep '"modelId"'   # enumerate + self-hosted gate, grepped tiny; this replaces any separate list-models call
+for M in a-maas-deepseek-v4-pro a-maas-glm-5.1 a-maas-qwen3-32b a-maas-minimax-2.7; do
+  PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | grep -o 'public/[^"]*')
+  echo "### USAGE $M -> $PUB"
+  dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time "${S}T00:00:00Z" --end-time "${E}T00:00:00Z" --models "$PUB" --period TIME_PERIOD_DAY -o json | grep -A11 '"totalUsage"'
+done
+echo "### SKU";     dce --insecure billing-center product list-sku-infos --page 1 --page-size 200 --product hydra-maas -o json | grep -E '"value"|"price"'
+echo "### GPUCOST"; dce --insecure container-management core get-config-map --cluster kpanda-global-cluster --namespace tokenfactory-system --name tokenfactory-dashboard-resource-cost -o json
+echo "### UTIL";    dce --insecure operations-management report list-pods --start "$S" --end "$E" --search a-maas -o json | grep -E '"pod"|"avgGpuUseRatio"|"maxGpuUseRatio"'
+```
+Each model's revenue = its own `### USAGE <M>` block's `totalUsage.input` and `totalUsage.output`. The `grep`s keep the whole output under the terminal's ~5 KB window (raw JSON overflows and truncates everything after the first section) — do NOT echo the full `list-models` here (it is huge and redundant; the loop already names the models). Never fan out to per-API or per-model separate tool calls.
 
 Interpretation:
 

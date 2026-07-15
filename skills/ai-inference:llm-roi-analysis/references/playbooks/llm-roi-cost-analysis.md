@@ -25,17 +25,22 @@ outputs. Every `dce` command in the bundle must include `--insecure`
 immediately after `dce`. Do not split the work into preflight, discovery,
 usage-only, SKU-only, utilization-only, or retry narration steps.
 
-**One tool message shape for single-model analysis:**
+**Collect everything in ONE shell command = one tool call** (speed fix — a
+single-model analysis must not take 5–6 separate tool calls). Set the vars, run
+once, parse the labelled `### SECTION` blocks:
 
-```text
-tool call 1, model bundle for <model>:
-  1. dce --insecure llm-studio modelservingmanagement list-model-serving -o json
-  2a. dce --insecure llm-studio adminmodelmanagement get-model --model-id <modelId> -o json   # read .publicAccessModelName (the request name; do NOT hardcode the public/ prefix)
-  2b. dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time <start>T00:00:00Z --end-time <today>T00:00:00Z --models <publicAccessModelName> --period TIME_PERIOD_DAY -o json   # use publicAccessModelName from 2a; bare modelId → empty/0 (NOT zero demand). Do not drop --models (times out). If usage=0 but serving RUNNING + util>0, re-check the name from get-model; never report "demand collapsed / 空转".
-  3. dce --insecure billing-center product list-sku-infos --page 1 --page-size 200 --product hydra-maas -o json
-  4. dce --insecure container-management core get-config-map --cluster kpanda-global-cluster --namespace tokenfactory-system --name tokenfactory-dashboard-resource-cost -o json
-  5. dce --insecure operations-management report list-pods --start <start> --end <today+1> --search <model> -o json
+```bash
+M="<modelId>"; S="<start-date>"; E="<today-date>"   # e.g. M=a-maas-deepseek-v4-pro S=2026-07-08 E=2026-07-15 ; E exclusive → complete days only
+echo "### MODELS"; dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json | grep '"modelId"'   # enumerate + gate, grepped; do NOT run list-models as a separate call
+PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | grep -o 'public/[^"]*')   # capture the request name; do NOT hardcode public/ , do NOT pipe to python -c (blocked)
+echo "### PUBLIC_NAME"; echo "$PUB"
+echo "### USAGE";   dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time "${S}T00:00:00Z" --end-time "${E}T00:00:00Z" --models "$PUB" --period TIME_PERIOD_DAY -o json | grep -A11 '"totalUsage"'
+echo "### SKU";     dce --insecure billing-center product list-sku-infos --page 1 --page-size 200 --product hydra-maas -o json | grep -E '"value"|"price"'
+echo "### GPUCOST"; dce --insecure container-management core get-config-map --cluster kpanda-global-cluster --namespace tokenfactory-system --name tokenfactory-dashboard-resource-cost -o json
+echo "### UTIL";    dce --insecure operations-management report list-pods --start "$S" --end "$E" --search "$M" -o json | grep -E '"pod"|"avgGpuUseRatio"|"maxGpuUseRatio"'
 ```
+
+Replicas come from the fixed mapping (4/4/3/2); add `; echo "### SERVING"; dce --insecure llm-studio modelservingmanagement list-model-serving -o json` only if you must confirm them. `bare modelId → empty/0` (not zero demand); if usage=0 while serving RUNNING and util>0, re-check `$PUB`.
 
 - Keep the tool transcript compact: one model bundle, then calculation and
   answer. If the self-hosted model set is unknown, run only the model-list read

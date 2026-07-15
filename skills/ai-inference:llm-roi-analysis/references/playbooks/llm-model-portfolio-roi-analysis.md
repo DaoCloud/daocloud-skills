@@ -48,24 +48,36 @@ call that runs the model bundle for that model. Every `dce` command must include
 `--insecure` immediately after `dce`. Do not split one model's work into
 usage-only, SKU-only, utilization-only, or retry narration tool messages.
 
-**Tool message shape for full-system portfolio analysis:**
+**Collect the whole portfolio in ONE shell command = one tool call** (speed fix —
+do NOT fan out to per-model or per-API tool calls). ⛔ **Query usage PER MODEL, one
+`--models` value at a time** — do NOT pass a comma-joined list. With a
+multi-model `--models`, `totalUsage` is the **SUM ACROSS ALL those models**, so
+using it for any single model's revenue is wrong (this is exactly what produces a
+model reported at −186% when it is actually profitable). A shell `for` loop keeps
+it to one command while giving each model its own clean `totalUsage`. SKU / GPU
+price / util are model-independent — pull once. Set the vars, run once, parse the
+labelled `### SECTION` blocks:
 
-```text
-tool call 0:
-  dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json
-  client-side: keep only modelId values that start with maas- or a-maas-
-
-tool call 1, model bundle for <model-1>:
-  1. dce --insecure llm-studio modelservingmanagement list-model-serving -o json
-  2a. dce --insecure llm-studio adminmodelmanagement get-model --model-id <modelId> -o json   # read .publicAccessModelName (the request name; do NOT hardcode the public/ prefix)
-  2b. dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time <start>T00:00:00Z --end-time <today>T00:00:00Z --models <publicAccessModelName> --period TIME_PERIOD_DAY -o json   # use publicAccessModelName from 2a; bare modelId → empty/0 (NOT zero demand). Do not drop --models (times out). If usage=0 but serving RUNNING + util>0, re-check the name from get-model.
-  3. dce --insecure billing-center product list-sku-infos --page 1 --page-size 200 --product hydra-maas -o json
-  4. dce --insecure container-management core get-config-map --cluster kpanda-global-cluster --namespace tokenfactory-system --name tokenfactory-dashboard-resource-cost -o json
-  5. dce --insecure operations-management report list-pods --start <start> --end <today+1> --search <model-1> -o json
-
-tool call 2, model bundle for <model-2>:
-  same five reads with <model-2> substituted
+```bash
+S="<start-date>"; E="<today-date>"   # E exclusive → usage window = complete days only
+echo "### MODELS"; dce --insecure llm-studio adminmodelmanagement list-models --page.search "modelId=maas-" -o json | grep '"modelId"'   # enumerate + gate, grepped; do NOT run list-models as a separate call
+for M in a-maas-deepseek-v4-pro a-maas-glm-5.1 a-maas-qwen3-32b a-maas-minimax-2.7; do
+  PUB=$(dce --insecure llm-studio adminmodelmanagement get-model --model-id "$M" -o json | grep -o '"publicAccessModelName" *: *"[^"]*"' | grep -o 'public/[^"]*')
+  echo "### USAGE $M -> $PUB"
+  dce --insecure llm-studio apikeymanagement get-api-key-usage-statistics2 --start-time "${S}T00:00:00Z" --end-time "${E}T00:00:00Z" --models "$PUB" --period TIME_PERIOD_DAY -o json | grep -A11 '"totalUsage"'
+done
+echo "### SKU";     dce --insecure billing-center product list-sku-infos --page 1 --page-size 200 --product hydra-maas -o json | grep -E '"value"|"price"'
+echo "### GPUCOST"; dce --insecure container-management core get-config-map --cluster kpanda-global-cluster --namespace tokenfactory-system --name tokenfactory-dashboard-resource-cost -o json
+echo "### UTIL";    dce --insecure operations-management report list-pods --start "$S" --end "$E" --search a-maas -o json | grep -E '"pod"|"avgGpuUseRatio"|"maxGpuUseRatio"'
 ```
+The `grep`s keep the single command's output under the terminal's ~5 KB window (raw JSON overflows → everything after the first section is truncated and the agent re-queries). `grep -A11 '"totalUsage"'` per model = that model's window revenue inputs; do NOT echo the full `list-models` (huge + redundant). If you need the daily trend for one model, re-run just its USAGE line without the grep.
+
+Each model's revenue = **its own `### USAGE <M>` block's `totalUsage.input` and
+`totalUsage.output`** (price each and add). `publicAccessModelName` comes from
+`get-model` (do NOT hardcode `public/`; `grep`, not `python -c`). Replicas come
+from the fixed mapping (4/4/3/2); `list-model-serving` is optional. **Sanity per
+model:** nonzero GPU util ⟹ billions of tokens/week — if a model's `totalUsage`
+implies only tens of millions, you read the wrong model's block.
 
 Collect the complete result set first, then calculate and answer. Do not send
 separate tool messages like "pull tokens for every model", "pull SKU for every
@@ -89,7 +101,7 @@ Pinned command outputs used for portfolio rows:
 |---|---|
 | self-hosted model list | model-list read: model IDs starting with `maas-` |
 | replicas | model bundle read 1: serving `replicas`; client-side filter by model/serving name |
-| token volume + daily trend | model bundle read 2: **revenue = `totalUsage.input`/1e6 × input_¥/M + `totalUsage.output`/1e6 × output_¥/M** (`totalUsage.input` and `totalUsage.output` are two separate token counts — price each and ADD, this is NOT a division; with `--end-time <today>T00:00:00Z` `totalUsage` already covers complete days only and sums all days + all `modelType` rows — do NOT hand-sum `dataPoints`). `dataPoints` are for the daily trend only: values are per-day (NOT cumulative), and each day may have multiple `modelType` rows (`REQUEST_MODEL_TYPE_UNSPECIFIED` + `TEXT_GENERATION`) that you must **sum**, never pick one. Sanity: nonzero GPU util ⟹ billions of tokens/week, not tens of millions. |
+| token volume + daily trend | **per model, from that model's OWN `### USAGE <M>` block** (one `--models` value each — never a comma-joined call, whose `totalUsage` is the all-models sum): **revenue = `totalUsage.input`/1e6 × input_¥/M + `totalUsage.output`/1e6 × output_¥/M** (`totalUsage.input` and `totalUsage.output` are two separate token counts — price each and ADD, NOT a division; `--end-time <today>T00:00:00Z` makes `totalUsage` cover complete days only and sum all days + all `modelType` rows — do NOT hand-sum `dataPoints`). `dataPoints` are for the daily trend only: per-day (NOT cumulative), each day may carry multiple `modelType` rows (`REQUEST_MODEL_TYPE_UNSPECIFIED` + `TEXT_GENERATION`) — sum them. Sanity per model: nonzero GPU util ⟹ billions of tokens/week, not tens of millions. |
 | input/output sale price | model bundle read 3: hydra-maas SKU where `specFields.model-name` == model |
 | GPU hourly price | model bundle read 4: `resourceCostSettings.gpus[].price`, keyed by fixed GPU product mapping |
 | utilization | model bundle read 5: `data.avgGpuUseRatio`, `data.maxGpuUseRatio`, `data.minGpuUseRatio` |
