@@ -7,6 +7,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time as monotonic_time
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, time, timedelta, timezone
@@ -16,6 +17,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 Json = Dict[str, Any]
 Result = Tuple[int, Optional[Json], str]
+DEADLINE: Optional[float] = None
 
 
 def emit(value: Json) -> None:
@@ -43,7 +45,22 @@ def parse_time(value: Any) -> Optional[datetime]:
 
 
 def run(command: List[str]) -> Result:
-    completed = subprocess.run(command, text=True, capture_output=True, check=False)
+    remaining = DEADLINE - monotonic_time.monotonic() if DEADLINE is not None else None
+    if remaining is not None and remaining <= 0:
+        return 124, None, "collection time budget exhausted"
+    timeout = float(os.environ.get("AI_OPS_DCE_TIMEOUT", "5"))
+    if remaining is not None:
+        timeout = min(timeout, max(0.1, remaining))
+    try:
+        completed = subprocess.run(
+            command,
+            text=True,
+            capture_output=True,
+            check=False,
+            timeout=timeout,
+        )
+    except subprocess.TimeoutExpired as error:
+        return 124, None, str(error)
     if completed.returncode != 0:
         return completed.returncode, None, completed.stderr + completed.stdout
     try:
@@ -112,18 +129,17 @@ def usage_record(usage: Json, models: Optional[Json]) -> Json:
         if priced and price:
             charge = values["input"] / 1000 * number(price.get("inputPerKTokens"))
             charge += values["output"] / 1000 * number(price.get("outputPerKTokens"))
-        rows.append(
-            {
-                "model": model_name,
-                **{key: tidy_number(value) for key, value in values.items()},
-                "priced": priced,
-                "calculatedCharge": charge,
-            }
-        )
+        row: Json = {
+            "model": model_name,
+            **{key: tidy_number(value) for key, value in values.items()},
+        }
+        if models is not None:
+            row.update({"priced": priced, "calculatedCharge": charge})
+        rows.append(row)
 
     total_tokens = sum(number(row["total"]) for row in rows)
-    priced_tokens = sum(number(row["total"]) for row in rows if row["priced"])
-    charges = [number(row["calculatedCharge"]) for row in rows if row["calculatedCharge"] is not None]
+    priced_tokens = sum(number(row["total"]) for row in rows if row.get("priced"))
+    charges = [number(row["calculatedCharge"]) for row in rows if row.get("calculatedCharge") is not None]
     total_usage = usage.get("totalUsage") or {}
     peak = max(hourly.items(), key=lambda pair: pair[1]) if hourly else None
     record: Json = {
@@ -190,6 +206,10 @@ def counts(records: List[Json], field: str, output_field: str) -> List[Json]:
 
 
 def main() -> int:
+    global DEADLINE
+    detail = os.environ.get("AI_OPS_DETAIL", "").lower() in ("1", "true", "yes")
+    default_budget = "12" if detail else "6"
+    DEADLINE = monotonic_time.monotonic() + float(os.environ.get("AI_OPS_BUDGET", default_budget))
     if not shutil.which("dce"):
         print("dce is required", file=sys.stderr)
         return 127
@@ -208,47 +228,49 @@ def main() -> int:
     stale_days = int(os.environ.get("AI_OPS_STALE_DAYS", "30"))
     commands = {
         "usage": ["dce", "llm-studio", "apikeymanagement", "get-api-key-usage-statistics2", "--start-time", start.isoformat(), "--end-time", end.isoformat(), "--period", "TIME_PERIOD_HOUR", "-o", "json"],
-        "models": ["dce", "llm-studio", "modelmanagement", "list-models", "--page.page-size", "-1", "--show-public-model-price", "-o", "json"],
         "api_keys": ["dce", "llm-studio", "apikeymanagement", "list-api-key", "--page.page-size", "-1", "-o", "json"],
-        "model_serving": ["dce", "llm-studio", "modelservingmanagement", "list-model-serving", "--page.page-size", "-1", "-o", "json"],
-        "maas_models": ["dce", "llm-studio", "maasservice", "list-maas-models", "--page.page-size", "-1", "-o", "json"],
-        "admin_models": ["dce", "llm-studio", "adminmodelmanagement", "list-models", "--page.page-size", "-1", "--show-deploy-template", "--selector", "ALL", "-o", "json"],
         "alerts": ["dce", "insight", "alert", "list-alerts", "--all", "-o", "json"],
     }
+    if detail:
+        commands["models"] = ["dce", "llm-studio", "modelmanagement", "list-models", "--page.page-size", "-1", "--show-public-model-price", "-o", "json"]
+        commands["admin_models"] = ["dce", "llm-studio", "adminmodelmanagement", "list-models", "--page.page-size", "-1", "--show-deploy-template", "--selector", "ALL", "-o", "json"]
+        commands["model_serving"] = ["dce", "llm-studio", "modelservingmanagement", "list-model-serving", "--page.page-size", "-1", "-o", "json"]
+        commands["maas_models"] = ["dce", "llm-studio", "maasservice", "list-maas-models", "--page.page-size", "-1", "-o", "json"]
     with ThreadPoolExecutor(max_workers=len(commands)) as executor:
         futures = {name: executor.submit(run, command) for name, command in commands.items()}
         results = {name: future.result() for name, future in futures.items()}
 
-    emit({"type": "meta", "mode": "CSP", "scope": "global CSP", "date": report_date.isoformat(), "timezone": timezone_name, "start": start.isoformat(), "end": end.isoformat(), "collectedAt": collected_at.isoformat()})
+    emit({"type": "meta", "mode": "CSP", "scope": "global CSP", "detail": detail, "date": report_date.isoformat(), "timezone": timezone_name, "start": start.isoformat(), "end": end.isoformat(), "collectedAt": collected_at.isoformat()})
     usage_data = results["usage"][1]
-    models_data = results["models"][1]
+    models_data = results.get("models", (0, None, ""))[1]
     if usage_data:
         emit(usage_record(usage_data, models_data))
-        if not models_data:
+        if detail and not models_data:
             emit(failure("models", results["models"]))
     else:
         emit(failure("usage", results["usage"]))
-        if not models_data:
+        if detail and not models_data:
             emit(failure("models", results["models"]))
 
     api_keys = results["api_keys"][1]
     emit(api_key_record(api_keys, now, stale_days) if api_keys else failure("api_keys", results["api_keys"]))
 
-    serving = results["model_serving"][1]
-    serving_items = items(serving)
-    emit({"type": "modelServing", "ok": True, "total": len(serving_items), "byStatus": counts(serving_items, "status", "status")} if serving else failure("model_serving", results["model_serving"]))
+    if detail:
+        serving = results["model_serving"][1]
+        serving_items = items(serving)
+        emit({"type": "modelServing", "ok": True, "total": len(serving_items), "byStatus": counts(serving_items, "status", "status")} if serving else failure("model_serving", results["model_serving"]))
 
-    maas = results["maas_models"][1]
-    admin = results["admin_models"][1]
-    if maas:
-        maas_items = items(maas)
-        emit({"type": "modelSupply", "ok": True, "total": len(maas_items), "enabled": sum(row.get("enabled") is True for row in maas_items), "byGatewayStatus": counts(maas_items, "gatewayStatus", "status"), "adminModelCount": len(items(admin)) if admin else None})
-        if not admin:
-            emit(failure("admin_models", results["admin_models"]))
-    else:
-        emit(failure("maas_models", results["maas_models"]))
-        if not admin:
-            emit(failure("admin_models", results["admin_models"]))
+        maas = results["maas_models"][1]
+        admin = results["admin_models"][1]
+        if maas:
+            maas_items = items(maas)
+            emit({"type": "modelSupply", "ok": True, "total": len(maas_items), "enabled": sum(row.get("enabled") is True for row in maas_items), "byGatewayStatus": counts(maas_items, "gatewayStatus", "status"), "adminModelCount": len(items(admin)) if admin else None})
+            if not admin:
+                emit(failure("admin_models", results["admin_models"]))
+        else:
+            emit(failure("maas_models", results["maas_models"]))
+            if not admin:
+                emit(failure("admin_models", results["admin_models"]))
 
     alerts = results["alerts"][1]
     if alerts:
@@ -263,6 +285,8 @@ def main() -> int:
             rows = grouped[key]
             starts = [number(row.get("startAt")) for row in rows if row.get("startAt") is not None]
             important.append({"ruleName": key[0], "severity": key[1], "status": key[2], "clusterName": key[3], "namespace": key[4], "count": len(rows), "latestStartAt": tidy_number(max(starts)) if starts else None})
+        important.sort(key=lambda row: (0 if row["severity"] == "CRITICAL" else 1, -number(row["latestStartAt"])))
+        important = important[:10]
         emit({"type": "alerts", "ok": True, "total": len(alert_items), "bySeverity": counts(alert_items, "severity", "severity"), "byStatus": counts(alert_items, "status", "status"), "important": important})
     else:
         emit(failure("alerts", results["alerts"]))

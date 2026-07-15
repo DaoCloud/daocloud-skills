@@ -52,25 +52,32 @@ Resolve `scripts/collect_rca.py` relative to this `SKILL.md`. The arguments are:
 Efficiency rules:
 
 - Prefer this single collector invocation over sequential terminal calls.
-- Do not call `get-tag-values` namespace-by-namespace on the normal path. The collector discovers namespaces from Kubernetes inventory and trace services, then applies the required OpenClaw tag directly to span queries.
+- Do not call `get-tag-values` or list every Kubernetes namespace on the normal path. The collector queries only the top trace-service namespaces and applies the required OpenClaw tag directly to span queries.
 - Do not rerun commands merely to reformat JSON; the collector aggregates with the Python 3 standard library.
-- If no OpenClaw spans are found, use the collector's workload, metrics, Collector, and alert evidence to classify `no traffic` versus `telemetry gap`. Broaden the window only when the user needs the last-known activity time.
-- The collector also fetches error spans, slow spans, and aggregate Jaeger details for up to three priority traces per OpenClaw namespace. Do not make a second terminal call for data already present in its output.
-- Make one follow-up terminal call only when relevant container logs are required, an API failed, evidence was truncated, or the user supplies a new trace ID or incident window. Fetch every required log/detail concurrently in that call.
+- If no OpenClaw spans are found among the candidate namespaces, answer with low confidence from workload, metric, and alert evidence. Do not automatically broaden the window or scan every namespace.
+- The default path fetches filtered spans plus error and slow-span summaries, but skips Jaeger trace details.
+- Fetch trace details or logs only when the user explicitly asks for a deeper RCA or supplies a trace ID. Do not delay the first answer for enrichment.
 
 The collector overlaps independent work:
 
-1. Run namespace inventory and trace-service discovery concurrently with Pod, alert, and metric collection.
-2. Start strictly filtered span discovery as soon as namespace prerequisites finish; do not wait for platform correlation APIs.
+1. Run trace-service discovery concurrently with Pod, alert, and metric collection.
+2. Query at most the top 12 trace-service namespaces per cluster with the strict OpenClaw span filter.
 3. Query error and slow spans concurrently for every discovered OpenClaw namespace.
-4. Fetch priority trace details concurrently while platform collection finishes.
-5. Join all results once, then emit compact aggregates instead of full raw alert/span payloads.
+4. Join the first-pass results and emit compact aggregates instead of full raw alert/span payloads.
 
 The collector requires `python3` and `dce` only. It does not require `jq`, pip, or any third-party Python package.
 
+The entire first-pass collection has an 8-second budget and each DCE command has a 5-second timeout. Keep successful partial evidence and answer when any source times out. The namespace cap can be changed with `OPENCLAW_RCA_MAX_NAMESPACES`, but do not increase it on the normal path.
+
+For an explicit deep RCA, enable up to three priority Jaeger trace details per matched namespace:
+
+```bash
+OPENCLAW_RCA_DETAIL=1 python3 scripts/collect_rca.py 24 1s '<cluster-name>'
+```
+
 When the user supplies a cluster, pass it as the third argument so the collector skips cluster discovery.
 
-Target latency for the first-pass analysis is under 60 seconds in a normally responsive DCE environment.
+Target latency for the first-pass analysis is under 10 seconds in a normally responsive DCE environment.
 
 1. Identify the OpenClaw trace namespace and service by locating `otel.scope.name=openclaw-otel-plugin`.
 2. Query OpenClaw error spans in the incident window.
@@ -143,9 +150,9 @@ Use `scripts/collect_rca.py`; it already performs namespace discovery. Do not ru
 
 The collector:
 
-1. fetches clusters, Kubernetes namespaces, and trace services concurrently;
-2. merges Kubernetes and tracing namespaces so it can include namespaces with traces but no current Pod;
-3. queries every candidate namespace concurrently with the required span filter;
+1. fetches trace services, Pods, alerts, and metrics concurrently;
+2. selects up to the top 12 namespaces represented by trace services;
+3. queries those candidate namespaces concurrently with the required span filter;
 4. emits only namespaces whose filtered result contains OpenClaw spans.
 
 Namespace discovery only identifies candidates. A namespace can contain unrelated traces, so every OpenClaw query and interpretation must retain:
@@ -154,7 +161,7 @@ Namespace discovery only identifies candidates. A namespace can contain unrelate
 otel.scope.name=openclaw-otel-plugin
 ```
 
-If the collector returns multiple OpenClaw namespaces, analyze each independently and select by the reported incident window, service, operation, or trace ID. Never select by namespace request volume alone. Use manual namespace discovery only when the collector reports an API failure.
+If the collector returns multiple OpenClaw namespaces, analyze each independently and select by the reported incident window, service, operation, or trace ID. If it returns none, report that the fast candidate scan found no OpenClaw spans; perform exhaustive namespace discovery only after the user requests a deeper search.
 
 ### 3. Query OpenClaw Spans
 
@@ -429,6 +436,7 @@ Rules:
 - Recommendations must be specific and executable.
 - If data is incomplete, explicitly say `Based on the currently available data`.
 - Use local time if the user is using a local timezone context.
+- Optimize for the first answer: use at most 3 findings and 2 actions. Do not wait for trace detail, logs, exhaustive namespace scans, or additional correlation unless the user explicitly asks.
 
 Required response template:
 
@@ -449,57 +457,21 @@ Based on the currently available data, <1-2 sentences with the current judgment,
 
 ## Main Findings
 
-1. <most important finding>
-   <impact>.
-
-2. <second important finding>
-   <impact>.
-
-3. <third important finding, optional>
-   <impact>.
+1. <most important finding and impact>
+2. <second finding and impact, if material>
+3. <third finding, only if material>
 
 ## Cause Analysis
 
-Cause 1: <cause>
-
-Evidence: <verified OpenClaw span evidence, trace ID, operation, duration, error, alert, or log>.  
-Impact: <impact on request failure, latency, or platform risk>.
-
-Cause 2: <cause>
-
-Evidence: <evidence>.  
-Impact: <impact>.
-
-Cause 3: <cause, optional>
-
-Evidence: <evidence>.  
-Impact: <impact>.
+<One concise cause statement with confidence. If direct trace evidence is absent, say the cause is unconfirmed and identify the strongest correlated signal.>
 
 ## Recommended Actions
 
-Immediate Actions
-
-1. <specific P0 action>
-2. <specific P0 action>
-
-Continuous Monitoring
-
-1. <specific metric/query/alert to watch>
-2. <specific condition that would change the conclusion>
-
-Follow-Up Improvements
-
-1. <instrumentation, alerting, SLO, or reliability improvement>
-2. <durable fix>
-
-## Follow-Up Questions
-
-- Help me inspect the detailed cause for `<trace-id / operation / namespace>`
-- Help me generate an action plan for this OpenClaw incident
-- Help me export a leadership- or delivery-facing report
+1. <highest-priority mitigation tied to evidence>
+2. <second action, only if necessary>
 ```
 
-Optional detail tables may be added under the required sections only when they materially improve the answer. Keep them concise.
+Stop after this concise answer. Add trace details, logs, exhaustive correlation, or additional tables only in response to a user follow-up.
 
 ## Common Interpretation
 

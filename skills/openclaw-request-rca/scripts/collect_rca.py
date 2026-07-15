@@ -16,6 +16,7 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 Json = Dict[str, Any]
 Result = Tuple[int, Optional[Json], str]
 Pair = Tuple[str, str]
+DEADLINE: Optional[float] = None
 
 
 def emit(value: Json) -> None:
@@ -23,13 +24,23 @@ def emit(value: Json) -> None:
 
 
 def run(command: Sequence[str], payload: Optional[Json] = None) -> Result:
-    completed = subprocess.run(
-        list(command),
-        input=json.dumps(payload, separators=(",", ":")) if payload is not None else None,
-        text=True,
-        capture_output=True,
-        check=False,
-    )
+    remaining = DEADLINE - time.monotonic() if DEADLINE is not None else None
+    if remaining is not None and remaining <= 0:
+        return 124, None, "collection time budget exhausted"
+    timeout = float(os.environ.get("OPENCLAW_RCA_DCE_TIMEOUT", "5"))
+    if remaining is not None:
+        timeout = min(timeout, max(0.1, remaining))
+    try:
+        completed = subprocess.run(
+            list(command),
+            input=json.dumps(payload, separators=(",", ":")) if payload is not None else None,
+            text=True,
+            capture_output=True,
+            check=False,
+            timeout=timeout,
+        )
+    except subprocess.TimeoutExpired as error:
+        return 124, None, str(error)
     if completed.returncode != 0:
         return completed.returncode, None, completed.stderr + completed.stdout
     try:
@@ -133,7 +144,7 @@ def not_ready_pods(pods: List[Json]) -> List[Json]:
                     "restarts": pod.get("restartCount"),
                 }
             )
-    return output
+    return output[:20]
 
 
 def alert_summary(alerts: List[Json]) -> Json:
@@ -156,7 +167,7 @@ def alert_summary(alerts: List[Json]) -> Json:
                 "status": key[3],
                 "count": len(rows),
                 "latestStartAt": str(tidy(max(starts))) if starts else None,
-                "descriptions": descriptions[:3],
+                "descriptions": descriptions[:1],
             }
         )
     return {
@@ -227,6 +238,10 @@ def compact_trace(detail: Json) -> List[Json]:
 
 
 def main() -> int:
+    global DEADLINE
+    detail = os.environ.get("OPENCLAW_RCA_DETAIL", "").lower() in ("1", "true", "yes")
+    default_budget = "15" if detail else "8"
+    DEADLINE = time.monotonic() + float(os.environ.get("OPENCLAW_RCA_BUDGET", default_budget))
     if not shutil.which("dce"):
         print("dce is required", file=sys.stderr)
         return 127
@@ -240,7 +255,8 @@ def main() -> int:
     slow_threshold = sys.argv[2] if len(sys.argv) > 2 else "1s"
     cluster_filter = sys.argv[3] if len(sys.argv) > 3 else ""
     parallelism = int(os.environ.get("OPENCLAW_RCA_PARALLELISM", "12"))
-    page_size = int(os.environ.get("OPENCLAW_RCA_SPAN_PAGE_SIZE", "100"))
+    page_size = int(os.environ.get("OPENCLAW_RCA_SPAN_PAGE_SIZE", "50"))
+    max_namespaces = int(os.environ.get("OPENCLAW_RCA_MAX_NAMESPACES", "12"))
     end_epoch = int(time.time())
     start_epoch = end_epoch - hours * 3600
     start_rfc3339 = datetime.fromtimestamp(start_epoch, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -260,7 +276,6 @@ def main() -> int:
 
     inventory_commands: Dict[Tuple[str, str], List[str]] = {}
     for cluster in clusters:
-        inventory_commands[(cluster, "namespaces")] = ["dce", "container-management", "core", "list-cluster-namespaces", "--cluster", cluster, "--page-size", "500", "-o", "json"]
         inventory_commands[(cluster, "services")] = ["dce", "insight", "tracing", "get-services", "--cluster-name", cluster, "--lookback", str(lookback_millis), "--end-time", str(end_millis), "--sort", "reqRate,desc", "--page", "1", "--page-size", "500", "-o", "json"]
         inventory_commands[(cluster, "pods")] = ["dce", "insight", "resource", "list-pods", "--cluster", cluster, "--page-size", "500", "-o", "json"]
         inventory_commands[(cluster, "alerts")] = ["dce", "insight", "alert", "list-alerts", "--cluster-name", cluster, "--page-size", "100", "--sorts", "startsAt,desc", "-o", "json"]
@@ -272,48 +287,43 @@ def main() -> int:
 
     pairs: List[Pair] = []
     for cluster in clusters:
-        namespaces = {
-            row.get("metadata", {}).get("name")
-            for row in items(data(inventory[(cluster, "namespaces")]))
-        }
-        namespaces.update(
-            row.get("namespace") for row in items(data(inventory[(cluster, "services")]))
-        )
-        pairs.extend((cluster, namespace) for namespace in sorted(value for value in namespaces if value))
+        seen = set()
+        for service in items(data(inventory[(cluster, "services")])):
+            namespace = service.get("namespace")
+            if namespace and namespace not in seen:
+                seen.add(namespace)
+                pairs.append((cluster, namespace))
+                if len(seen) >= max_namespaces:
+                    break
 
-    with ThreadPoolExecutor(max_workers=parallelism) as executor:
-        futures = {
-            pair: executor.submit(
-                query_spans,
-                span_payload(pair[0], pair[1], start_rfc3339, end_rfc3339, page_size),
-            )
-            for pair in pairs
-        }
-        spans = {pair: future.result() for pair, future in futures.items()}
-    openclaw_pairs = [pair for pair in pairs if total(data(spans[pair])) > 0]
-
+    spans: Dict[Pair, Result] = {}
     errors: Dict[Pair, Result] = {}
     slow: Dict[Pair, Result] = {}
     with ThreadPoolExecutor(max_workers=parallelism) as executor:
         future_map = {}
-        for pair in openclaw_pairs:
+        for pair in pairs:
+            all_payload = span_payload(pair[0], pair[1], start_rfc3339, end_rfc3339, page_size)
             error_payload = span_payload(pair[0], pair[1], start_rfc3339, end_rfc3339, page_size, onlyErrorSpans=True, sort="startTime,desc")
             slow_payload = span_payload(pair[0], pair[1], start_rfc3339, end_rfc3339, page_size, durationMin=slow_threshold)
+            future_map[executor.submit(query_spans, all_payload)] = (pair, "all")
             future_map[executor.submit(query_spans, error_payload)] = (pair, "error")
             future_map[executor.submit(query_spans, slow_payload)] = (pair, "slow")
         for future in as_completed(future_map):
             pair, kind = future_map[future]
-            (errors if kind == "error" else slow)[pair] = future.result()
+            target = spans if kind == "all" else errors if kind == "error" else slow
+            target[pair] = future.result()
+    openclaw_pairs = [pair for pair in pairs if total(data(spans[pair])) > 0]
 
     trace_requests: List[Tuple[str, str, str]] = []
-    for pair in openclaw_pairs:
-        seen = set()
-        for result in (errors.get(pair, (1, None, "")), slow.get(pair, (1, None, ""))):
-            for row in items(data(result)):
-                trace_id = row.get("traceId")
-                if trace_id and trace_id not in seen and len(seen) < 3:
-                    seen.add(trace_id)
-                    trace_requests.append((pair[0], pair[1], trace_id))
+    if detail:
+        for pair in openclaw_pairs:
+            seen = set()
+            for result in (errors.get(pair, (1, None, "")), slow.get(pair, (1, None, ""))):
+                for row in items(data(result)):
+                    trace_id = row.get("traceId")
+                    if trace_id and trace_id not in seen and len(seen) < 3:
+                        seen.add(trace_id)
+                        trace_requests.append((pair[0], pair[1], trace_id))
     with ThreadPoolExecutor(max_workers=parallelism) as executor:
         futures = {
             request: executor.submit(run, ["dce", "insight", "tracing", "find-jaeger-trace", "--trace-id", request[2], "--cluster-name", request[0], "--namespace", request[1], "-o", "json"])
@@ -321,7 +331,7 @@ def main() -> int:
         }
         trace_details = {request: future.result() for request, future in futures.items()}
 
-    emit({"type": "meta", "start": start_rfc3339, "end": end_rfc3339, "hours": hours, "slowThreshold": slow_threshold, "spanFilter": "otel.scope.name=openclaw-otel-plugin"})
+    emit({"type": "meta", "detail": detail, "start": start_rfc3339, "end": end_rfc3339, "hours": hours, "slowThreshold": slow_threshold, "spanFilter": "otel.scope.name=openclaw-otel-plugin", "candidateNamespaceCount": len(pairs), "candidateStrategy": "top trace-service namespaces"})
     for cluster in clusters:
         services = data(inventory[(cluster, "services")])
         pod_data = data(inventory[(cluster, "pods")])
@@ -330,7 +340,7 @@ def main() -> int:
         metrics = data(inventory[(cluster, "metrics")]).get("vector", [])
         source_errors = [
             source_error(source, cluster, inventory[(cluster, source)])
-            for source in ("namespaces", "services", "pods", "alerts", "metrics")
+            for source in ("services", "pods", "alerts", "metrics")
             if inventory[(cluster, source)][1] is None
         ]
         record: Json = {

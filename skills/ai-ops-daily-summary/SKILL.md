@@ -38,29 +38,35 @@ For today's summary in Beijing time, for example:
 python3 scripts/collect_summary.py
 ```
 
-The date and timezone arguments default to today and `Asia/Shanghai`. The collector emits compact, secret-free NDJSON and performs these steps internally:
+The date and timezone arguments default to today and `Asia/Shanghai`. The default collector is intentionally optimized for the fastest useful first answer. It emits compact, secret-free NDJSON and performs these steps internally:
 
 1. Build `start-time`, `end-time`, timezone, and local collection time.
-2. Launch all independent DCE command groups below concurrently.
-3. Aggregate usage, price coverage, governance, serving, supply, and alert data with the Python 3 standard library.
+2. Launch usage, API Key governance, and alert queries concurrently.
+3. Aggregate only the metrics needed for a concise operating judgment with the Python 3 standard library.
 4. Return successful partial data when an optional source fails; mark mode-mismatch signals without returning raw errors.
 
 Compose the report directly from the collector output. Do not split the command into multiple terminal calls, run schema-discovery calls, or rerun commands merely to reformat their JSON when the expected records are present.
 
 The collector requires `python3` and `dce` only. It does not require `jq`, pip, or any third-party Python package.
 
+The entire default collection has a 6-second budget and each DCE command has a 5-second timeout. If a source times out, answer immediately from successful sources; do not retry it in the normal path. Change `AI_OPS_BUDGET` or `AI_OPS_DCE_TIMEOUT` only when the user explicitly accepts a slower response.
+
+Pricing and the full admin-model inventory are omitted from the default path. Fetch them only when the user explicitly asks for cost, pricing coverage, or deeper model inventory:
+
+```bash
+AI_OPS_DETAIL=1 python3 scripts/collect_summary.py '<YYYY-MM-DD>' '<timezone>'
+```
+
 Run these command groups concurrently:
 
 | Group | Commands | Return only |
 |---|---|---|
-| Usage + price | `get-api-key-usage-statistics2` and `modelmanagement list-models --show-public-model-price` | total input/output/Token, per-model usage, per-model calculated charge, price coverage, peak hour, latest timestamp |
+| Usage | `get-api-key-usage-statistics2` | total input/output/Token, per-model usage, peak hour, latest timestamp |
 | API Key governance | `apikeymanagement list-api-key` | total, disabled, expired, zero-quota, unlimited, never-used, stale/latest-use counts; never return `key` |
-| Model serving | `modelservingmanagement list-model-serving` | total and status counts |
-| Model supply | `maasservice list-maas-models` | total, enabled count, gateway-status counts |
 | Active alerts | `insight alert list-alerts --all` | total, severity/status counts, compact CRITICAL/WARNING rule summaries |
-| Clock | local `date` | collection cutoff in the user's timezone |
+| Optional detail | model prices, model serving, MAAS supply, and admin inventory | calculated charge, price coverage, serving health, supply health |
 
-Usage and model prices are the only dependent pair. The collector fetches them concurrently and joins them locally; it does not make a second API round after usage returns. Other groups run in parallel with that pair.
+All default groups run concurrently. In detail mode, model prices and admin inventory run concurrently with the same default groups; no second API round is required.
 
 The fast path is successful when the usage call returns `totalUsage`, even if another optional group fails. Keep successful partial data and produce the summary. Enter runtime-mode detection only when a primary CSP endpoint returns `SYSTEM-REQUEST_MODE_ERROR`, a mode-specific `404`, or an incompatible response shape.
 
@@ -267,7 +273,7 @@ Hydra is usually exposed through `dce llm-studio ...` commands. If a separate `h
 ## Summary Workflow
 
 1. Build the requested local-day time window and record the collection time.
-2. Run `scripts/collect_summary.py` once for the current-environment CSP fast path. Do not issue separate terminal calls for data already present in its NDJSON output.
+2. Run `scripts/collect_summary.py` once for the current-environment CSP fast path. Prefer the default fast mode and do not issue separate terminal calls for data already present in its NDJSON output.
 3. If the primary CSP usage endpoint succeeds, skip mode probes, workspace discovery, command help, and response-shape inspection. Continue directly to conclusions.
 4. Only if the CSP fast path indicates a mode change, detect WS, CSP, mixed, or undetermined mode with the fallback read-only probes.
 5. On fallback, collect only the command path supported by the detected mode:
@@ -281,7 +287,7 @@ Hydra is usually exposed through `dce llm-studio ...` commands. If a separate `h
    - Supply readiness: public/MAAS models enabled and gateway health.
    - Deployment posture: model-serving count and status in the detected scope.
    - Governance and waste: API Key count, zero-quota keys, never-used keys, stale keys, disabled/expired keys.
-8. For business-value requests, add retrieved operating-value signals in this order:
+8. Only when the user explicitly asks for cost or deeper business value, rerun once with `AI_OPS_DETAIL=1` and add retrieved operating-value signals in this order:
    - Capacity utilization and cumulative Token output.
    - Revenue, cost, gross profit, margin, and ROI only when measured or calculable from retrieved inputs.
    - Tenant/API Key concentration and quota risk.
@@ -307,6 +313,7 @@ Rules:
 - For an in-progress day, include the local collection cutoff or latest returned usage timestamp.
 - Match the user's language in the final answer, but keep these skill instructions in English.
 - Do not expose raw API keys or secrets; only count keys and summarize status.
+- Optimize for response speed: use at most 3 findings and 2 actions. Omit cause analysis, optional tables, and follow-up-question boilerplate unless the user explicitly requests them.
 
 Required response template:
 
@@ -327,57 +334,17 @@ Based on the currently available DCE CLI data, <1-2 sentences with the current j
 
 ## Main Findings
 
-1. <most important finding backed by retrieved DCE CLI data>
-   <business or operating impact>.
-
-2. <second important finding backed by retrieved DCE CLI data>
-   <business or operating impact>.
-
-3. <third important finding, optional and only if backed by retrieved data>
-   <business or operating impact>.
-
-## Cause Analysis
-
-Cause 1: <cause>
-
-Evidence: <retrieved metric / command result>.  
-Impact: <impact on usage, cost, capacity, governance, or risk>.
-
-Cause 2: <cause, optional and only if backed by retrieved data>
-
-Evidence: <retrieved metric / command result>.  
-Impact: <impact>.
-
-Cause 3: <cause, optional and only if backed by retrieved data>
-
-Evidence: <retrieved metric / command result>.  
-Impact: <impact>.
+1. <most important finding and impact>
+2. <second finding and impact, if material>
+3. <third finding, only if material>
 
 ## Recommended Actions
 
-Immediate Actions
-
-1. <specific action tied to retrieved risk or metric>
-2. <specific action tied to retrieved risk or metric>
-
-Continuous Monitoring
-
-1. <specific retrieved metric to watch>
-2. <specific threshold or condition that would change the conclusion>
-
-Follow-Up Improvements
-
-1. <durable improvement tied to retrieved data>
-2. <instrumentation, quota, alerting, cost, or governance improvement>
-
-## Follow-Up Questions
-
-- Help me inspect the detailed cause for `<workspace / tenant / API Key group / model serving>`
-- Help me generate an action plan for today's AI operations risk
-- Help me export a leadership- or delivery-facing AI operations report
+1. <highest-value action tied to retrieved evidence>
+2. <second action, only if necessary>
 ```
 
-Optional detail tables may be added under the required sections only when they materially improve the answer and every row is backed by retrieved DCE CLI data. Keep them concise.
+Stop after this concise answer. Add cause analysis or detail tables only when the user asks a follow-up question.
 
 ## Interpretation Rules
 
