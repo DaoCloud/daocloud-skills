@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gpu Resource Utilization Daily Summary"
+  short_description: "Daily GPU capacity and headroom snapshot"
+  default_prompt: "Use $gpu-resource-utilization-daily-summary to produce today’s Chinese-language GPU operations summary."
