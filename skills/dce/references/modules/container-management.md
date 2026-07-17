@@ -4527,4 +4527,3 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 - Flags:
   - `--cluster` (path, required): Name of the cluster where the workload is located
 - Output: list path `data`; columns `errorMessage`, `status`
-

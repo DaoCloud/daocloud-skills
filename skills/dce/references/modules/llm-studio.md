@@ -2494,4 +2494,3 @@
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
   - `--cluster` (query): cluster
 - Output: list path `items`; columns `alias`, `workspaceId`
-

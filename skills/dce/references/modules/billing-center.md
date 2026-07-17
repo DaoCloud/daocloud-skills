@@ -128,4 +128,3 @@ dce billing-center bill get-account-bill-aggregation \
   - `--transaction-channel` (query): transactionChannel
   - `--username` (query): username
 - Output: list path `items`; columns `amount`, `balance`, `billingId`, `paymentType`, `serialNumber`, `transactionChannel`; pagination `offset`
-
