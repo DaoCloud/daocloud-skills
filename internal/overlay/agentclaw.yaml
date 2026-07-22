@@ -1,0 +1,178 @@
+# AgentClaw API presentation and safety overrides.
+# Keep this file source-controlled; skills/dce is generated output.
+defaults:
+  pagination:
+    match_commands: ["list-*", "query-*"]
+    params:
+      page: "1"
+      pageSize: "20"
+
+commands:
+  list-workspace-agent-instances:
+    short: "List AgentClaw instances in a workspace"
+    aliases: [ls-instances]
+    example: |
+      dce agentclaw agentservice list-workspace-agent-instances --workspace-id <workspace-id> -o json
+      dce agentclaw agentservice list-workspace-agent-instances --workspace-id <workspace-id> --fuzzy-name openclaw
+    params:
+      page: { default: "1" }
+      pageSize: { default: "20", help: "Number of instances per page" }
+
+  get-workspace-agent-instance:
+    short: "Get one AgentClaw instance"
+    aliases: [get-instance]
+    prerequisites:
+      - "Resolve workspace ID, cluster, namespace, and instance ID before calling this command."
+
+  get-agent-instance-behavior-analysis:
+    short: "Get AgentClaw behavior analysis for an instance"
+    aliases: [behavior-analysis]
+    prerequisites:
+      - "Use Unix timestamps for --range-query.start and --range-query.end."
+
+  get-agent-instance-performance-usage:
+    short: "Get AgentClaw performance and usage metrics"
+    aliases: [performance-usage]
+    prerequisites:
+      - "Use Unix timestamps for --range-query.start and --range-query.end."
+
+  get-agent-instance-token-trend:
+    short: "Get token usage trend for an AgentClaw instance"
+    aliases: [token-trend]
+
+  get-agent-instance-token-usage:
+    short: "Get token usage for an AgentClaw instance"
+    aliases: [token-usage]
+
+  query-open-claw-sessions:
+    short: "Query OpenClaw sessions for an AgentClaw instance"
+    aliases: [sessions]
+
+  query-open-claw-root-spans:
+    short: "Query OpenClaw root spans for an AgentClaw instance"
+    aliases: [root-spans]
+
+  create-workspace-agent-instance:
+    short: "Create an AgentClaw instance"
+    notes:
+      - "Mutating operation: review the generated request body and target workspace before execution."
+    prerequisites:
+      - "Confirm the target workspace ID and deployment cluster/namespace in the request body."
+
+  update-workspace-agent-instance:
+    short: "Update an AgentClaw instance"
+    notes:
+      - "Mutating operation: instance ID cannot be changed."
+
+  delete-workspace-agent-instance:
+    short: "Delete an AgentClaw instance"
+    notes:
+      - "Destructive operation: require explicit user confirmation immediately before execution."
+
+  start-workspace-agent-instance:
+    short: "Start an AgentClaw instance"
+    notes:
+      - "Mutating operation: require explicit user confirmation before execution."
+
+  stop-workspace-agent-instance:
+    short: "Stop an AgentClaw instance"
+    notes:
+      - "Mutating operation: require explicit user confirmation before execution."
+
+  restart-workspace-agent-instance:
+    short: "Restart an AgentClaw instance"
+    notes:
+      - "Mutating operation: require explicit user confirmation before execution."
+
+  publish-skill:
+    short: "Publish a zipped AgentClaw skill"
+    long: |
+      Upload a skill zip to the global or workspace namespace. This operation changes the skill registry and must be explicitly confirmed.
+
+      The generated command exposes --file, but Lathe v0.4.5 currently serializes Swagger formData as application/x-www-form-urlencoded. Verify multipart support before using this command against production; use the HTTP API directly until the runtime supports multipart uploads.
+    prerequisites:
+      - "Validate the zip contents and target namespace before publishing."
+      - "Require explicit confirmation of workspace, slug, version, and visibility."
+    known_errors:
+      - status: 400
+        cause: "Invalid zip, visibility, missing file, or Skill Hub validation failure"
+      - status: 413
+        cause: "Request body exceeds the 128MB gateway limit"
+      - status: 424
+        cause: "Skill Hub integration is disabled"
+      - status: 502
+        cause: "Skill Hub upstream call failed"
+
+  publish-global-skill:
+    short: "Publish a zipped global AgentClaw skill"
+    long: |
+      Upload a skill zip to the global namespace. This operation changes the shared skill registry and must be explicitly confirmed.
+
+      The generated command exposes --file, but Lathe v0.4.5 currently serializes Swagger formData as application/x-www-form-urlencoded. Verify multipart support before using this command against production; use the HTTP API directly until the runtime supports multipart uploads.
+    prerequisites:
+      - "Validate the zip contents, global visibility, slug, and version before publishing."
+      - "Require explicit confirmation before changing the shared skill registry."
+    known_errors:
+      - status: 400
+        cause: "Invalid zip, visibility, missing file, or Skill Hub validation failure"
+      - status: 413
+        cause: "Request body exceeds the 128MB gateway limit"
+      - status: 424
+        cause: "Skill Hub integration is disabled"
+      - status: 502
+        cause: "Skill Hub upstream call failed"
+
+  delete-global-skill:
+    short: "Permanently delete a global skill"
+    notes:
+      - "Destructive operation: require explicit user confirmation immediately before execution."
+
+  delete-workspace-skill:
+    short: "Permanently delete a workspace skill"
+    notes:
+      - "Destructive operation: require explicit user confirmation immediately before execution."
+
+  set-global-skill-listing:
+    short: "Set a global skill online or offline"
+    notes:
+      - "Mutating operation: require explicit confirmation and state whether listed=true or listed=false."
+
+  set-workspace-skill-listing:
+    short: "Set a workspace skill online or offline"
+    notes:
+      - "Mutating operation: require explicit confirmation and state whether listed=true or listed=false."
+
+  approve-workspace-skill-review:
+    short: "Approve a workspace skill review"
+    notes:
+      - "Governance operation: require explicit confirmation and verify reviewer permissions."
+
+  reject-workspace-skill-review:
+    short: "Reject a workspace skill review"
+    notes:
+      - "Governance operation: require explicit confirmation and include the rejection comment in the preview."
+
+  create-network-policy-template:
+    short: "Create a network policy template"
+    notes:
+      - "Admin-only mutating operation: require explicit confirmation before execution."
+
+  update-network-policy-template:
+    short: "Update a network policy template"
+    notes:
+      - "Admin-only mutating operation: require explicit confirmation before execution."
+
+  delete-network-policy-template:
+    short: "Delete a network policy template"
+    notes:
+      - "Destructive admin operation: require explicit confirmation; force deletion may break bound agents."
+
+  enable-network-policy-template:
+    short: "Enable a network policy template"
+    notes:
+      - "Mutating operation: enabling a template can affect bound agents; require explicit confirmation."
+
+  disable-network-policy-template:
+    short: "Disable a network policy template"
+    notes:
+      - "Mutating operation: disabling a template changes effective network policy; require explicit confirmation."

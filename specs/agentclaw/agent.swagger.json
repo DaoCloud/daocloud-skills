@@ -1,0 +1,1919 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "v1alpha1/agent/agent.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AgentService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspaceId}/agent-instances": {
+      "get": {
+        "operationId": "AgentService_ListWorkspaceAgentInstances",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentListWorkspaceAgentInstancesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "description": "Workspace ID，必填",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "fuzzyName",
+            "description": "按名称过滤（模糊匹配）",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "分页页码，从 1 开始",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "description": "每页数量",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      },
+      "post": {
+        "operationId": "AgentService_CreateWorkspaceAgentInstance",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentCreateWorkspaceAgentInstanceResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "description": "Workspace ID，必填",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AgentServiceCreateWorkspaceAgentInstanceBody"
+            }
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspaceId}/agent-instances/channels/feishu-onboard": {
+      "post": {
+        "operationId": "AgentService_WatchFeishuOnboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/agentFeishuOnboardEvent"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of agentFeishuOnboardEvent"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AgentServiceWatchFeishuOnboardBody"
+            }
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspaceId}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}": {
+      "get": {
+        "operationId": "AgentService_GetWorkspaceAgentInstance",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentGetWorkspaceAgentInstanceResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "description": "Workspace ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "description": "集群名称",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "description": "命名空间",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "description": "实例 ID（{userinput}-{random5}，也是底层 deploy 名）；老资源沿用其 deploy name 直接作为 instance_id。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      },
+      "delete": {
+        "operationId": "AgentService_DeleteWorkspaceAgentInstance",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "description": "Workspace ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "description": "集群名称",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "description": "命名空间",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "description": "实例 ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      },
+      "put": {
+        "operationId": "AgentService_UpdateWorkspaceAgentInstance",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentUpdateWorkspaceAgentInstanceResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "description": "Workspace ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "description": "集群名称",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "description": "命名空间",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "description": "实例 ID（不可修改）",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AgentServiceUpdateWorkspaceAgentInstanceBody"
+            }
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspaceId}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}/restart": {
+      "post": {
+        "operationId": "AgentService_RestartWorkspaceAgentInstance",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "description": "Workspace ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "description": "集群名称",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "description": "命名空间",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "description": "实例 ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AgentServiceRestartWorkspaceAgentInstanceBody"
+            }
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspaceId}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}/start": {
+      "post": {
+        "operationId": "AgentService_StartWorkspaceAgentInstance",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "description": "Workspace ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "description": "集群名称",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "description": "命名空间",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "description": "实例 ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AgentServiceStartWorkspaceAgentInstanceBody"
+            }
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspaceId}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}/stop": {
+      "post": {
+        "operationId": "AgentService_StopWorkspaceAgentInstance",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "description": "Workspace ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "description": "集群名称",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "description": "命名空间",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "description": "实例 ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AgentServiceStopWorkspaceAgentInstanceBody"
+            }
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/agent-images": {
+      "get": {
+        "operationId": "AgentService_ListWorkspaceAgentImage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentListWorkspaceAgentImageResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "description": "Workspace ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}/behavior-analysis": {
+      "get": {
+        "operationId": "AgentService_GetAgentInstanceBehaviorAnalysis",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentGetAgentInstanceBehaviorAnalysisResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rangeQuery.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.end",
+            "description": "end unix timestamp .e.g. 1697597347\ndefault now",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.step",
+            "description": "step time step in seconds; if unset, server calculates it from start and end.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}/performance-usage": {
+      "get": {
+        "operationId": "AgentService_GetAgentInstancePerformanceUsage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentGetAgentInstancePerformanceUsageResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rangeQuery.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.end",
+            "description": "end unix timestamp .e.g. 1697597347\ndefault now",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.step",
+            "description": "step time step in seconds; if unset, server calculates it from start and end.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}/sessions": {
+      "get": {
+        "operationId": "AgentService_QueryOpenClawSessions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentGetAgentInstanceSessionsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rangeQuery.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.end",
+            "description": "end unix timestamp .e.g. 1697597347\ndefault now",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.step",
+            "description": "step time step in seconds; if unset, server calculates it from start and end.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}/spans": {
+      "post": {
+        "operationId": "AgentService_QueryOpenClawRootSpans",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentGetOpenClawSpansResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AgentServiceQueryOpenClawRootSpansBody"
+            }
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}/token-trend": {
+      "get": {
+        "operationId": "AgentService_GetAgentInstanceTokenTrend",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentGetAgentInstanceTokenTrendResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rangeQuery.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.end",
+            "description": "end unix timestamp .e.g. 1697597347\ndefault now",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.step",
+            "description": "step time step in seconds; if unset, server calculates it from start and end.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/agent-instances/{instanceId}/token-usage": {
+      "get": {
+        "operationId": "AgentService_GetAgentInstanceTokenUsage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/agentGetAgentInstanceTokenUsageResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "rangeQuery.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.end",
+            "description": "end unix timestamp .e.g. 1697597347\ndefault now",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.step",
+            "description": "step time step in seconds; if unset, server calculates it from start and end.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "tags": [
+          "AgentService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AgentServiceCreateWorkspaceAgentInstanceBody": {
+      "type": "object",
+      "properties": {
+        "cluster": {
+          "type": "string",
+          "title": "集群名称，必填"
+        },
+        "namespace": {
+          "type": "string",
+          "title": "命名空间，必填"
+        },
+        "spec": {
+          "$ref": "#/definitions/agentAgentInstanceSpec",
+          "title": "实例规格"
+        }
+      },
+      "title": "CreateWorkspaceAgentInstanceRequest 创建用户 Agent 实例的请求"
+    },
+    "AgentServiceQueryOpenClawRootSpansBody": {
+      "type": "object",
+      "properties": {
+        "onlyErrorSpans": {
+          "type": "boolean",
+          "title": "only query error spans"
+        },
+        "sessionKey": {
+          "type": "string"
+        },
+        "rangeQuery": {
+          "$ref": "#/definitions/overviewRangeQuery"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "title": "页码"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "每页大小，默认 10"
+        }
+      }
+    },
+    "AgentServiceRestartWorkspaceAgentInstanceBody": {
+      "type": "object",
+      "title": "RestartWorkspaceAgentInstanceRequest 重启 Agent 实例的请求"
+    },
+    "AgentServiceStartWorkspaceAgentInstanceBody": {
+      "type": "object",
+      "title": "StartWorkspaceAgentInstanceRequest 启动 Agent 实例的请求"
+    },
+    "AgentServiceStopWorkspaceAgentInstanceBody": {
+      "type": "object",
+      "title": "StopWorkspaceAgentInstanceRequest 停止 Agent 实例的请求"
+    },
+    "AgentServiceUpdateWorkspaceAgentInstanceBody": {
+      "type": "object",
+      "properties": {
+        "spec": {
+          "$ref": "#/definitions/agentAgentInstanceSpec",
+          "title": "实例规格（name, cluster, namespace 不可修改）"
+        }
+      },
+      "title": "UpdateWorkspaceAgentInstanceRequest 更新用户 Agent 实例的请求"
+    },
+    "AgentServiceWatchFeishuOnboardBody": {
+      "type": "object"
+    },
+    "agentAgentImage": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "string",
+          "title": "镜像 URL"
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/agentAgentImagePort"
+          },
+          "title": "镜像对外暴露的端口"
+        },
+        "resources": {
+          "$ref": "#/definitions/typesResourceConfig",
+          "title": "推荐资源配置"
+        }
+      }
+    },
+    "agentAgentImagePort": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/agentAgentImagePortName"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "agentAgentImagePortName": {
+      "type": "string",
+      "enum": [
+        "AGENT_IMAGE_PORT_NAME_UNSPECIFIED",
+        "AGENT_IMAGE_PORT_NAME_OPENCLAW",
+        "AGENT_IMAGE_PORT_NAME_NOVNC",
+        "AGENT_IMAGE_PORT_NAME_FILEBROWSER"
+      ],
+      "default": "AGENT_IMAGE_PORT_NAME_UNSPECIFIED"
+    },
+    "agentAgentInstanceSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "实例名称，必填。需满足 RFC 1035 label 规则：首字符为小写字母，\n仅含小写字母、数字、'-'，结尾为小写字母或数字；长度 1-40\n（RFC 1035 上限 63，此处收紧到 40，为派生的 ReplicaSet/Pod 后缀\n及 Secret/Service/PVC 前缀预留空间）。"
+        },
+        "image": {
+          "type": "string",
+          "title": "容器镜像，不传则使用默认镜像"
+        },
+        "networkConfig": {
+          "$ref": "#/definitions/v1alpha1AgentNetworkConfig",
+          "title": "网络配置"
+        },
+        "modelConfig": {
+          "$ref": "#/definitions/typesModelConfig",
+          "title": "模型配置（primary，主模型，含 fallback_models）"
+        },
+        "resources": {
+          "$ref": "#/definitions/typesResourceConfig",
+          "title": "资源配置"
+        },
+        "networkpolicyTemplates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "绑定的网络策略 instance scope 模版名称列表。"
+        },
+        "channel": {
+          "$ref": "#/definitions/typesAgentChannel",
+          "title": "Agent 实例接入渠道；可为空，或通过 channel.type 显式设为 NONE/FEISHU/TEAMS。"
+        }
+      },
+      "title": "AgentInstanceSpec Agent 实例规格（Create/Update 复用）"
+    },
+    "agentCreateWorkspaceAgentInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/typesAgentInstance"
+        }
+      },
+      "title": "CreateWorkspaceAgentInstanceResponse 创建用户 Agent 实例的响应"
+    },
+    "agentFeishuOnboardEvent": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/agentFeishuOnboardStatus"
+        },
+        "message": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        },
+        "clientSecret": {
+          "type": "string"
+        }
+      }
+    },
+    "agentFeishuOnboardStatus": {
+      "type": "string",
+      "enum": [
+        "FEISHU_ONBOARD_STATUS_UNSPECIFIED",
+        "FEISHU_ONBOARD_STATUS_PENDING",
+        "FEISHU_ONBOARD_STATUS_COMPLETED",
+        "FEISHU_ONBOARD_STATUS_EXPIRED",
+        "FEISHU_ONBOARD_STATUS_FAILED"
+      ],
+      "default": "FEISHU_ONBOARD_STATUS_UNSPECIFIED"
+    },
+    "agentGetAgentInstanceBehaviorAnalysisResponse": {
+      "type": "object",
+      "properties": {
+        "skillCallDistribution": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewDistributionItem"
+          },
+          "title": "Skills 调用分布 (饼图)"
+        },
+        "modelUsageDistribution": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewDistributionItem"
+          },
+          "title": "模型使用分布 (饼图)"
+        }
+      },
+      "title": "==================== Behavior Analysis ===================="
+    },
+    "agentGetAgentInstancePerformanceUsageResponse": {
+      "type": "object",
+      "properties": {
+        "totalCalls": {
+          "type": "number",
+          "format": "double"
+        },
+        "totalCallsChanges": {
+          "type": "number",
+          "format": "double",
+          "title": "总调用次数环比百分比"
+        },
+        "successRate": {
+          "type": "number",
+          "format": "double"
+        },
+        "successRateChanges": {
+          "type": "number",
+          "format": "double",
+          "title": "成功率环比百分比"
+        },
+        "avgResponseTime": {
+          "type": "number",
+          "format": "double"
+        },
+        "avgResponseTimeChanges": {
+          "type": "number",
+          "format": "double",
+          "title": "平均响应时间变化值（秒）"
+        }
+      },
+      "title": "==================== Performance Usage ===================="
+    },
+    "agentGetAgentInstanceSessionsResponse": {
+      "type": "object",
+      "properties": {
+        "sessions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "agentGetAgentInstanceTokenTrendResponse": {
+      "type": "object",
+      "properties": {
+        "tokenUsageTrend": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewTrendPoint"
+          },
+          "title": "Token 消耗趋势数据点"
+        }
+      },
+      "title": "==================== Token Trend ===================="
+    },
+    "agentGetAgentInstanceTokenUsageResponse": {
+      "type": "object",
+      "properties": {
+        "tokenUsageToday": {
+          "$ref": "#/definitions/overviewTokenUsage",
+          "title": "今日消耗"
+        },
+        "tokenUsageMonth": {
+          "$ref": "#/definitions/overviewTokenUsage",
+          "title": "本月消耗"
+        },
+        "tokenUsageTotal": {
+          "$ref": "#/definitions/overviewTokenUsage",
+          "title": "总消耗"
+        }
+      },
+      "title": "==================== Token Usage ===================="
+    },
+    "agentGetOpenClawSpansResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/agentOpenClawSpan"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/typesPagination"
+        }
+      }
+    },
+    "agentGetWorkspaceAgentInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/typesAgentInstance"
+        }
+      },
+      "title": "GetWorkspaceAgentInstanceResponse 获取用户 Agent 实例详情的响应"
+    },
+    "agentListWorkspaceAgentImageResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/agentAgentImage"
+          }
+        }
+      }
+    },
+    "agentListWorkspaceAgentInstancesResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/typesAgentInstance"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/typesPagination"
+        }
+      },
+      "title": "ListWorkspaceAgentInstancesResponse 列出用户 Agent 实例的响应"
+    },
+    "agentOpenClawAgent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "agentOpenClawModel": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "agentOpenClawPreviews": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "type": "string",
+          "title": "truncated to 200 chars"
+        },
+        "output": {
+          "type": "string",
+          "title": "truncated to 200 chars"
+        },
+        "reasoning": {
+          "type": "string",
+          "title": "truncated to 200 chars"
+        }
+      }
+    },
+    "agentOpenClawSession": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "chatType": {
+          "type": "string"
+        },
+        "cwd": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "agentOpenClawSpan": {
+      "type": "object",
+      "properties": {
+        "traceId": {
+          "type": "string"
+        },
+        "spanId": {
+          "type": "string"
+        },
+        "operationName": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string",
+          "title": "ISO8601 format, e.g. 2026-05-17T09:11:49.217Z"
+        },
+        "durationMs": {
+          "type": "number",
+          "format": "double",
+          "title": "duration in milliseconds, 3 decimal places"
+        },
+        "agent": {
+          "$ref": "#/definitions/agentOpenClawAgent"
+        },
+        "session": {
+          "$ref": "#/definitions/agentOpenClawSession"
+        },
+        "entryPoint": {
+          "type": "string"
+        },
+        "model": {
+          "$ref": "#/definitions/agentOpenClawModel"
+        },
+        "tokens": {
+          "$ref": "#/definitions/agentOpenClawTokens",
+          "title": "nil if no token info in span tags"
+        },
+        "toolCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "costUsd": {
+          "type": "number",
+          "format": "double"
+        },
+        "status": {
+          "$ref": "#/definitions/agentOpenClawSpanStatus"
+        },
+        "previews": {
+          "$ref": "#/definitions/agentOpenClawPreviews"
+        },
+        "lane": {
+          "type": "string",
+          "title": "\"session:\" + session_key"
+        },
+        "jaegerUri": {
+          "type": "string",
+          "title": "jaeger UI trace detail URL"
+        }
+      }
+    },
+    "agentOpenClawSpanStatus": {
+      "type": "string",
+      "enum": [
+        "OPENCLAW_SPAN_STATUS_UNSPECIFIED",
+        "OPENCLAW_SPAN_STATUS_OK",
+        "OPENCLAW_SPAN_STATUS_ERROR"
+      ],
+      "default": "OPENCLAW_SPAN_STATUS_UNSPECIFIED",
+      "title": "OpenClawSpanStatus 表示 OpenTelemetry span 状态（来自 otel.status_code tag）"
+    },
+    "agentOpenClawTokens": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "type": "string",
+          "format": "int64"
+        },
+        "output": {
+          "type": "string",
+          "format": "int64"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "agentUpdateWorkspaceAgentInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/typesAgentInstance"
+        }
+      },
+      "title": "UpdateWorkspaceAgentInstanceResponse 更新用户 Agent 实例的响应"
+    },
+    "overviewDistributionItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "分类名称 (e.g. \"GPT-4.5\", \"GPT-4\")"
+        },
+        "value": {
+          "type": "number",
+          "format": "double",
+          "title": "数值"
+        },
+        "percentage": {
+          "type": "number",
+          "format": "double",
+          "title": "占比百分比 (0~1 百分率)"
+        }
+      }
+    },
+    "overviewRangeQuery": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "int64"
+        },
+        "end": {
+          "type": "string",
+          "format": "int64",
+          "title": "end unix timestamp .e.g. 1697597347\ndefault now"
+        },
+        "step": {
+          "type": "number",
+          "format": "double",
+          "description": "step time step in seconds; if unset, server calculates it from start and end."
+        }
+      }
+    },
+    "overviewTokenUsage": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number",
+          "format": "double"
+        },
+        "input": {
+          "type": "number",
+          "format": "double"
+        },
+        "output": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "overviewTrendPoint": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "title": "Unix timestamp string (e.g. \"1697597347\")"
+        },
+        "value": {
+          "type": "number",
+          "format": "double",
+          "title": "数值"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        }
+      },
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "typesAgentChannel": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/typesAgentChannelType"
+        },
+        "feishu": {
+          "$ref": "#/definitions/typesFeishuConfig"
+        },
+        "msteams": {
+          "$ref": "#/definitions/typesMSTeamsConfig"
+        }
+      },
+      "title": "AgentChannel 表示 Agent 实例接入渠道配置。"
+    },
+    "typesAgentChannelType": {
+      "type": "string",
+      "enum": [
+        "UNSPECIFIED",
+        "NONE",
+        "FEISHU",
+        "TEAMS"
+      ],
+      "default": "UNSPECIFIED",
+      "description": "- UNSPECIFIED: 未指定，通常表示客户端未传或历史数据未知。\n - NONE: 明确不配置任何渠道。\n - FEISHU: 飞书渠道。\n - TEAMS: Microsoft Teams 渠道。",
+      "title": "AgentChannelType 表示 Agent 实例接入渠道状态。"
+    },
+    "typesAgentInstance": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "用户填写的实例名（用户视角），在同一用户的实例中唯一，跨用户允许重名。"
+        },
+        "workspaceId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "所属 workspace"
+        },
+        "cluster": {
+          "type": "string",
+          "title": "所在集群"
+        },
+        "namespace": {
+          "type": "string",
+          "title": "所在命名空间"
+        },
+        "image": {
+          "type": "string",
+          "title": "容器镜像"
+        },
+        "status": {
+          "$ref": "#/definitions/typesInstanceStatus",
+          "title": "状态"
+        },
+        "creationTimestamp": {
+          "type": "string",
+          "format": "int64",
+          "title": "创建时间"
+        },
+        "networkConfig": {
+          "$ref": "#/definitions/v1alpha1TypesNetworkConfig",
+          "title": "网络配置（包含实际运行时网络信息）"
+        },
+        "modelConfig": {
+          "$ref": "#/definitions/typesModelConfig",
+          "title": "模型配置（含 fallback_models）"
+        },
+        "resources": {
+          "$ref": "#/definitions/typesResourceConfig",
+          "title": "资源配置"
+        },
+        "gatewayToken": {
+          "type": "string",
+          "title": "Gateway Token，用于前端跳转时代理鉴权"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "isOwner": {
+          "type": "boolean",
+          "title": "当前用户是否是该 Agent 实例的 owner（通过对比 authInfo.UserName 与 metadata.Labels[constants.LabelUserName]）"
+        },
+        "networkpolicyTemplates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "绑定的网络策略 instance scope 模版名称列表。"
+        },
+        "channel": {
+          "$ref": "#/definitions/typesAgentChannel",
+          "title": "Agent 实例接入渠道；通过 channel.type 表明未指定、无渠道、飞书或 MS Teams。"
+        },
+        "instanceId": {
+          "type": "string",
+          "title": "实例 ID（{userinput}-{random5}），同时也是底层 deploy/secret/pvc/svc 的资源名，\nURL path 与 Update/Delete/Stop/Start/Restart 等 API 都以此为唯一键。"
+        }
+      },
+      "title": "AgentInstance 表示 Agent 实例信息"
+    },
+    "typesCallbackInfo": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "mode": {
+          "$ref": "#/definitions/typesCallbackMode"
+        },
+        "url": {
+          "type": "string"
+        },
+        "callbackId": {
+          "type": "string"
+        }
+      }
+    },
+    "typesCallbackMode": {
+      "type": "string",
+      "enum": [
+        "CALLBACK_MODE_UNSPECIFIED",
+        "CALLBACK_MODE_GATEWAY_API",
+        "CALLBACK_MODE_NODE_PORT"
+      ],
+      "default": "CALLBACK_MODE_UNSPECIFIED"
+    },
+    "typesFallbackModel": {
+      "type": "object",
+      "properties": {
+        "modelId": {
+          "type": "string"
+        },
+        "modelName": {
+          "type": "string"
+        }
+      },
+      "title": "FallbackModel 备用模型配置。apiKey 与主模型一致，仅需指定模型本身。"
+    },
+    "typesFeishuConfig": {
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "string"
+        },
+        "appSecret": {
+          "type": "string"
+        }
+      },
+      "title": "FeishuConfig 表示飞书集成配置"
+    },
+    "typesInstanceStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "STARTING",
+        "RUNNING",
+        "STOPPED"
+      ],
+      "default": "STATUS_UNSPECIFIED",
+      "description": "- STATUS_UNSPECIFIED: 未指定/未知状态\n - STARTING: 启动中（容器正在创建或启动）\n - RUNNING: 运行中（容器正常运行）\n - STOPPED: 已停止（容器已停止运行）",
+      "title": "InstanceStatus 表示实例状态"
+    },
+    "typesMSTeamsConfig": {
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "string"
+        },
+        "appPassword": {
+          "type": "string"
+        },
+        "tenantId": {
+          "type": "string"
+        },
+        "callbackConfig": {
+          "$ref": "#/definitions/typesCallbackInfo",
+          "title": "Bot callback 配置，响应时返回给前端用于配置 Teams。"
+        }
+      },
+      "title": "MSTeamsConfig 表示 Microsoft Teams (msteams-cn) 集成配置"
+    },
+    "typesModelConfig": {
+      "type": "object",
+      "properties": {
+        "modelId": {
+          "type": "string"
+        },
+        "apiKeyId": {
+          "type": "string"
+        },
+        "modelName": {
+          "type": "string"
+        },
+        "fallbackModels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/typesFallbackModel"
+          },
+          "title": "备用模型配置（fallback，按顺序兜底）。可选；为空则只用主模型。\n所有 fallback 模型与主模型共享同一 provider（相同 baseUrl + apiKey），故不再单独携带 api_key_id。"
+        }
+      },
+      "title": "ModelConfig 模型配置"
+    },
+    "typesPagination": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pages": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Pagination 表示分页信息"
+    },
+    "typesResourceConfig": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "$ref": "#/definitions/typesResourceSpec",
+          "title": "资源请求（保证能够获得的资源）"
+        },
+        "limits": {
+          "$ref": "#/definitions/typesResourceSpec",
+          "title": "资源限制（最多能使用的资源）"
+        }
+      },
+      "title": "ResourceConfig 资源配置（包含 requests 和 limits）"
+    },
+    "typesResourceSpec": {
+      "type": "object",
+      "properties": {
+        "cpu": {
+          "type": "string",
+          "title": "CPU，如 \"500m\", \"0.5\", \"2\""
+        },
+        "memory": {
+          "type": "string",
+          "title": "内存，如 \"512Mi\", \"1Gi\", \"2Gi\""
+        }
+      },
+      "title": "ResourceSpec 资源规格"
+    },
+    "typesServiceType": {
+      "type": "string",
+      "enum": [
+        "SERVICE_TYPE_UNSPECIFIED",
+        "NODE_PORT",
+        "GATEWAY_API"
+      ],
+      "default": "SERVICE_TYPE_UNSPECIFIED",
+      "description": "- SERVICE_TYPE_UNSPECIFIED: 未指定\n - NODE_PORT: NodePort 类型",
+      "title": "ServiceType 服务类型枚举"
+    },
+    "v1alpha1AgentNetworkConfig": {
+      "type": "object",
+      "properties": {
+        "openclaw": {
+          "$ref": "#/definitions/v1alpha1AgentServiceConfig",
+          "title": "openclaw 服务配置"
+        },
+        "novnc": {
+          "$ref": "#/definitions/v1alpha1AgentServiceConfig",
+          "title": "novnc 服务配置"
+        },
+        "fileBrowser": {
+          "$ref": "#/definitions/v1alpha1AgentServiceConfig",
+          "title": "fileBrowser 服务配置"
+        }
+      },
+      "title": "NetworkConfig 网络配置"
+    },
+    "v1alpha1AgentNodePortConfig": {
+      "type": "object",
+      "properties": {
+        "nodePort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "NodePort 端口 (0 表示自动分配)"
+        }
+      },
+      "title": "NodePort 配置"
+    },
+    "v1alpha1AgentServiceConfig": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/typesServiceType",
+          "title": "服务类型"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32",
+          "title": "容器端口 (默认: openclaw=8080, novnc=5901)"
+        },
+        "nodeportConfig": {
+          "$ref": "#/definitions/v1alpha1AgentNodePortConfig",
+          "title": "NodePort 配置 (当 type = NODE_PORT 时使用)"
+        }
+      },
+      "title": "ServiceConfig 服务配置"
+    },
+    "v1alpha1TypesNetworkConfig": {
+      "type": "object",
+      "properties": {
+        "openclaw": {
+          "$ref": "#/definitions/v1alpha1TypesServiceConfig",
+          "title": "openclaw 服务配置"
+        },
+        "novnc": {
+          "$ref": "#/definitions/v1alpha1TypesServiceConfig",
+          "title": "novnc 服务配置"
+        },
+        "fileBrowser": {
+          "$ref": "#/definitions/v1alpha1TypesServiceConfig",
+          "title": "fileBrowser 服务配置"
+        }
+      },
+      "title": "NetworkConfig 网络配置"
+    },
+    "v1alpha1TypesNodePortConfig": {
+      "type": "object",
+      "properties": {
+        "nodePort": {
+          "type": "integer",
+          "format": "int32",
+          "title": "NodePort 端口\n- 请求时：0 表示自动分配，非0表示指定端口\n- 响应时：返回实际分配的 NodePort 端口"
+        }
+      },
+      "title": "NodePort 配置"
+    },
+    "v1alpha1TypesServiceConfig": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/typesServiceType",
+          "title": "服务类型"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32",
+          "title": "容器端口（用户配置的目标端口）"
+        },
+        "nodeportConfig": {
+          "$ref": "#/definitions/v1alpha1TypesNodePortConfig",
+          "title": "NodePort 配置 (当 type = NODE_PORT 时使用，请求时传入期望端口，0 表示自动分配；响应时返回实际分配的端口)"
+        },
+        "url": {
+          "type": "string",
+          "title": "访问地址（运行时根据 Service 类型动态生成）"
+        }
+      },
+      "title": "ServiceConfig 服务配置"
+    }
+  }
+}

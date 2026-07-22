@@ -1,0 +1,245 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Skill Publish",
+    "version": "v1alpha1"
+  },
+  "tags": [
+    {
+      "name": "SkillService"
+    }
+  ],
+  "consumes": [
+    "multipart/form-data"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/skills/publish": {
+      "post": {
+        "operationId": "SkillService_PublishSkill",
+        "tags": [
+          "SkillService"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "slug",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "summary",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "visibility",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SKILL_VISIBILITY_PUBLIC",
+              "SKILL_VISIBILITY_PRIVATE",
+              "SKILL_VISIBILITY_NAMESPACE_ONLY"
+            ],
+            "default": "SKILL_VISIBILITY_PUBLIC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/skillPublishResult"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          },
+          "413": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          },
+          "424": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          },
+          "502": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          }
+        }
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/global/publish": {
+      "post": {
+        "operationId": "SkillService_PublishGlobalSkill",
+        "tags": [
+          "SkillService"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "slug",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "summary",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "visibility",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SKILL_VISIBILITY_PUBLIC",
+              "SKILL_VISIBILITY_PRIVATE",
+              "SKILL_VISIBILITY_NAMESPACE_ONLY"
+            ],
+            "default": "SKILL_VISIBILITY_PUBLIC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/skillPublishResult"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          },
+          "401": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          },
+          "413": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          },
+          "424": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          },
+          "502": {
+            "schema": {
+              "$ref": "#/definitions/skillUploadError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "skillPublishResult": {
+      "type": "object",
+      "properties": {
+        "skillId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "fileCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalSize": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "skillUploadError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
