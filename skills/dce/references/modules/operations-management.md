@@ -323,4 +323,3 @@ dce operations-management report list-pods --workspace <workspace> --search app 
 dce operations-management report list-workspaces --page 1 --page-size 20
 dce operations-management report list-workspaces --start 2026-05-01 --end 2026-05-28 --search team -o json
 ```
-

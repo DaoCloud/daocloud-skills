@@ -27,7 +27,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// MountModules mounts every module declared in sources.yaml under root.
+// Mount mounts every generated command and capability declared by codegen.
+func Mount(root *cobra.Command) error {
+	return MountModules(root)
+}
+
+// MountModules mounts every module and generated capability under root.
 // The import list above is the single source of truth for which modules
 // are compiled into this binary. main.go wires this call after
 // app.NewApp() so the framework package never imports downstream code.

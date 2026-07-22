@@ -4712,4 +4712,3 @@ dce microservice-engine skoala-v1alpha3 list-gateways \
 - Flags:
   - `--workspace-id` (path, required): workspaceID
   - `--name` (path, required): name
-

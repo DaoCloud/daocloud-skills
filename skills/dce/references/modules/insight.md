@@ -3432,4 +3432,3 @@ dce insight user list-users
 # Fuzzy search by name + paged JSON output
 dce insight user list-users --search alice --page 1 --page-size 50 -o json
 ```
-

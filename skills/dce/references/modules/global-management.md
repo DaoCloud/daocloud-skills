@@ -2441,4 +2441,3 @@ dce global-management workspace update-folder --folder-id <id> \
 - Auth: required
 - Body: required
 - Flags: none
-

@@ -3718,4 +3718,3 @@ dce amamba pipelines list-pipelines --workspace-id <ws> --name build- -o json
   - `--workspace-id` (path, required): The workspace bind to the following cluster and namespace.
   - `--workload-name` (path, required): workload name
 - Example: `dce amamba workloads update-workload-replicas --workspace-id <ws> --workload-name <name> --replicas 3`
-
