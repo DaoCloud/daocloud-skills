@@ -100,6 +100,23 @@ var Specs = []runtime.CommandSpec{
 	},
 	{
 		Group:       "AIGuardrailsService",
+		Use:         "query-ai-audit-log-statistics",
+		Short:       "当前 API 模式：Any",
+		OperationID: "AIGuardrailsService_QueryAIAuditLogStatistics",
+		Method:      "GET",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/ai-guardrails-logs/statistics",
+		Params: []runtime.ParamSpec{
+			{Name: "startTime", Flag: "start-time", In: "query", GoType: "string", Help: "Required start time of the statistics range. (query, date-time)", Required: false, Format: "date-time"},
+			{Name: "endTime", Flag: "end-time", In: "query", GoType: "string", Help: "Optional end time; defaults to the current time when omitted. (query, date-time)", Required: false, Format: "date-time"},
+			{Name: "pluginId", Flag: "plugin-id", In: "query", GoType: "string", Help: "Filter by security policy. (query, one of: GUARDRAILS_PLUGIN_UNSPECIFIED|GUARDRAILS_PLUGIN_CONTAINS|GUARDRAILS_PLUGIN_REGEX|GUARDRAILS_PLUGIN_JSON_SCHEMA|GUARDRAILS_PLUGIN_JWT|GUARDRAILS_PLUGIN_MODEL_WHITELIST)", Required: false, Default: "GUARDRAILS_PLUGIN_UNSPECIFIED", Enum: []string{"GUARDRAILS_PLUGIN_UNSPECIFIED", "GUARDRAILS_PLUGIN_CONTAINS", "GUARDRAILS_PLUGIN_REGEX", "GUARDRAILS_PLUGIN_JSON_SCHEMA", "GUARDRAILS_PLUGIN_JWT", "GUARDRAILS_PLUGIN_MODEL_WHITELIST"}},
+			{Name: "level", Flag: "level", In: "query", GoType: "string", Help: "Filter by risk level. (query, one of: GUARDRAILS_LEVEL_UNSPECIFIED|GUARDRAILS_LEVEL_HIGH|GUARDRAILS_LEVEL_MEDIUM|GUARDRAILS_LEVEL_LOW)", Required: false, Default: "GUARDRAILS_LEVEL_UNSPECIFIED", Enum: []string{"GUARDRAILS_LEVEL_UNSPECIFIED", "GUARDRAILS_LEVEL_HIGH", "GUARDRAILS_LEVEL_MEDIUM", "GUARDRAILS_LEVEL_LOW"}},
+			{Name: "routeName", Flag: "route-name", In: "query", GoType: "string", Help: "Filter by route name. (query)", Required: false},
+		},
+		Output: runtime.OutputHints{ListPath: "routeStatistics", DefaultColumns: []string{"averageProcessingDurationMs", "blockedCount", "logCount", "riskRequestCount", "routeName"},
+		},
+	},
+	{
+		Group:       "AIGuardrailsService",
 		Use:         "update-ai-guardrails-config",
 		Short:       "当前 API 模式：Any",
 		OperationID: "AIGuardrailsService_UpdateAIGuardrailsConfig",
@@ -153,6 +170,17 @@ var Specs = []runtime.CommandSpec{
 	},
 	{
 		Group:       "APIKeyManagement",
+		Use:         "get-api-key-secret",
+		Short:       "当前 API 模式：CSP",
+		OperationID: "APIKeyManagement_GetAPIKeySecret",
+		Method:      "GET",
+		PathTpl:     "/apis/hydra.io/v1alpha1/apikeys/{id}/secret",
+		Params: []runtime.ParamSpec{
+			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
+		},
+	},
+	{
+		Group:       "APIKeyManagement",
 		Use:         "get-api-key-usage-statistics",
 		Short:       "protoc-gen-grpc-gateway-ts plugin is not support additional_bindings multiple methods (see: https://github.com/grpc-ecosystem/protoc-gen-grpc-gateway-ts/issues/32), but grpc-gateway support it.",
 		OperationID: "APIKeyManagement_GetAPIKeyUsageStatistics",
@@ -189,6 +217,23 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "APIKeyManagement_ListAPIKey",
 		Method:      "GET",
 		PathTpl:     "/apis/hydra.io/v1alpha1/apikeys",
+		Params: []runtime.ParamSpec{
+			{Name: "page.total", Flag: "page.total", In: "query", GoType: "int64", Help: "总共有多少条目，请求时可以不用传递 (query, int64)", Required: false, Format: "int64"},
+			{Name: "page.page", Flag: "page.page", In: "query", GoType: "int64", Help: "当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.pageSize", Flag: "page.page-size", In: "query", GoType: "int64", Help: "每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值 (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
+			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
+		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "id", "createBy", "disabled", "expireTime"},
+		},
+	},
+	{
+		Group:       "APIKeyManagement",
+		Use:         "list-api-key-masked",
+		Short:       "当前 API 模式：CSP",
+		OperationID: "APIKeyManagement_ListAPIKeyMasked",
+		Method:      "GET",
+		PathTpl:     "/apis/hydra.io/v1alpha1/masked-apikeys",
 		Params: []runtime.ParamSpec{
 			{Name: "page.total", Flag: "page.total", In: "query", GoType: "int64", Help: "总共有多少条目，请求时可以不用传递 (query, int64)", Required: false, Format: "int64"},
 			{Name: "page.page", Flag: "page.page", In: "query", GoType: "int64", Help: "当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage (query, int32)", Required: false, Format: "int32"},
@@ -528,7 +573,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
@@ -541,9 +586,9 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/admin.hydra.io/v1alpha1/models:batch_create",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"models": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hidden": &runtime.SchemaSpec{Type: "boolean"}, "modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "providerId": &runtime.SchemaSpec{Type: "string"}, "providerName": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "publicAccessModelName": &runtime.SchemaSpec{Type: "string"}, "publicEndpointBaseUrl": &runtime.SchemaSpec{Type: "string"}, "publicEndpointEnabled": &runtime.SchemaSpec{Type: "boolean"}, "publicModelConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"duration": &runtime.SchemaSpec{Type: "string"}, "limit": &runtime.SchemaSpec{Type: "string"}, "limitedBy": &runtime.SchemaSpec{Type: "string"}}}}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"models": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contextLength": &runtime.SchemaSpec{Type: "string"}, "hidden": &runtime.SchemaSpec{Type: "boolean"}, "modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "operationTags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "parameterSize": &runtime.SchemaSpec{Type: "number"}, "providerId": &runtime.SchemaSpec{Type: "string"}, "providerName": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "publicAccessModelName": &runtime.SchemaSpec{Type: "string"}, "publicEndpointBaseUrl": &runtime.SchemaSpec{Type: "string"}, "publicEndpointEnabled": &runtime.SchemaSpec{Type: "boolean"}, "publicModelConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"duration": &runtime.SchemaSpec{Type: "string"}, "limit": &runtime.SchemaSpec{Type: "string"}, "limitedBy": &runtime.SchemaSpec{Type: "string"}}}}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "hidden", "modelAvatar", "modelId", "providerId"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "contextLength", "hidden", "modelAvatar", "modelId"},
 		},
 	},
 	{
@@ -555,7 +600,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/admin.hydra.io/v1alpha1/models",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hidden": &runtime.SchemaSpec{Type: "boolean"}, "modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "providerId": &runtime.SchemaSpec{Type: "string"}, "providerName": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "publicAccessModelName": &runtime.SchemaSpec{Type: "string"}, "publicEndpointBaseUrl": &runtime.SchemaSpec{Type: "string"}, "publicEndpointEnabled": &runtime.SchemaSpec{Type: "boolean"}, "publicModelConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"duration": &runtime.SchemaSpec{Type: "string"}, "limit": &runtime.SchemaSpec{Type: "string"}, "limitedBy": &runtime.SchemaSpec{Type: "string"}}}}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contextLength": &runtime.SchemaSpec{Type: "string"}, "hidden": &runtime.SchemaSpec{Type: "boolean"}, "modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "operationTags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "parameterSize": &runtime.SchemaSpec{Type: "number"}, "providerId": &runtime.SchemaSpec{Type: "string"}, "providerName": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "publicAccessModelName": &runtime.SchemaSpec{Type: "string"}, "publicEndpointBaseUrl": &runtime.SchemaSpec{Type: "string"}, "publicEndpointEnabled": &runtime.SchemaSpec{Type: "boolean"}, "publicModelConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"duration": &runtime.SchemaSpec{Type: "string"}, "limit": &runtime.SchemaSpec{Type: "string"}, "limitedBy": &runtime.SchemaSpec{Type: "string"}}}}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
@@ -612,7 +657,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "showDeployTemplate", Flag: "show-deploy-template", In: "query", GoType: "bool", Help: "是否展示公共模型价格 (query)", Required: false},
 			{Name: "selector", Flag: "selector", In: "query", GoType: "string", Help: "是否只展示已配置过部署模板的模型 (query, one of: ALL|HAS_DEPLOY_TEMPLATE|NO_DEPLOY_TEMPLATE)", Required: false, Default: "ALL", Enum: []string{"ALL", "HAS_DEPLOY_TEMPLATE", "NO_DEPLOY_TEMPLATE"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "hidden", "modelAvatar", "modelId", "providerId"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "contextLength", "hidden", "modelAvatar", "modelId"},
 		},
 	},
 	{
@@ -647,6 +692,18 @@ var Specs = []runtime.CommandSpec{
 	},
 	{
 		Group:       "AdminModelManagement",
+		Use:         "sort-models",
+		Short:       "当前 API 模式：Any",
+		OperationID: "AdminModelManagement_SortModels",
+		Method:      "POST",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/models:sort",
+		RequestBody: &runtime.RequestBody{
+			Required: true,
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelIds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
+		},
+	},
+	{
+		Group:       "AdminModelManagement",
 		Use:         "unpublish-model",
 		Short:       "从模型广场下线",
 		OperationID: "AdminModelManagement_UnpublishModel",
@@ -673,7 +730,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
@@ -689,7 +746,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hidden": &runtime.SchemaSpec{Type: "boolean"}, "modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "providerId": &runtime.SchemaSpec{Type: "string"}, "publicAccessModelName": &runtime.SchemaSpec{Type: "string"}, "publicEndpointBaseUrl": &runtime.SchemaSpec{Type: "string"}, "publicEndpointEnabled": &runtime.SchemaSpec{Type: "boolean"}, "publicModelConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"duration": &runtime.SchemaSpec{Type: "string"}, "limit": &runtime.SchemaSpec{Type: "string"}, "limitedBy": &runtime.SchemaSpec{Type: "string"}}}}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contextLength": &runtime.SchemaSpec{Type: "string"}, "hidden": &runtime.SchemaSpec{Type: "boolean"}, "modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "operationTags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "parameterSize": &runtime.SchemaSpec{Type: "number"}, "providerId": &runtime.SchemaSpec{Type: "string"}, "publicAccessModelName": &runtime.SchemaSpec{Type: "string"}, "publicEndpointBaseUrl": &runtime.SchemaSpec{Type: "string"}, "publicEndpointEnabled": &runtime.SchemaSpec{Type: "boolean"}, "publicModelConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"duration": &runtime.SchemaSpec{Type: "string"}, "limit": &runtime.SchemaSpec{Type: "string"}, "limitedBy": &runtime.SchemaSpec{Type: "string"}}}}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
@@ -705,7 +762,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}, "workspace": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "workspace": &runtime.SchemaSpec{Type: "integer"}}},
 		},
 	},
 	{
@@ -750,6 +807,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.pageSize", Flag: "page.page-size", In: "query", GoType: "int64", Help: "每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值 (query, int32)", Required: false, Format: "int32"},
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
+			{Name: "distributed", Flag: "distributed", In: "query", GoType: "bool", Help: "过滤条件：true=只返回分布式模板, false=只返回单机模板, 不传=返回全部 (query)", Required: false},
 		},
 		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelId", "templateId", "updateTimestamp", "workspace"},
 		},
@@ -767,7 +825,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}, "workspace": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "workspace": &runtime.SchemaSpec{Type: "integer"}}},
 		},
 	},
 	{
@@ -857,6 +915,20 @@ var Specs = []runtime.CommandSpec{
 	},
 	{
 		Group:       "AdminProviderManagement",
+		Use:         "batch-create-providers",
+		Short:       "Batch create providers",
+		OperationID: "AdminProviderManagement_BatchCreateProviders",
+		Method:      "POST",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/providers:batch_create",
+		RequestBody: &runtime.RequestBody{
+			Required: true,
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"duplicatePolicy": &runtime.SchemaSpec{Type: "string"}, "providers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"providerAvatar": &runtime.SchemaSpec{Type: "string"}, "providerDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "providerId": &runtime.SchemaSpec{Type: "string"}, "providerName": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}}}}}},
+		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createTime", "providerAvatar", "providerId"},
+		},
+	},
+	{
+		Group:       "AdminProviderManagement",
 		Use:         "create-provider",
 		Short:       "当前 API 模式：Any",
 		OperationID: "AdminProviderManagement_CreateProvider",
@@ -903,7 +975,21 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"providerAvatar", "providerId"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createTime", "providerAvatar", "providerId"},
+		},
+	},
+	{
+		Group:       "AdminProviderManagement",
+		Use:         "parse-provider-specs",
+		Short:       "Parse providers (preview, check existence)",
+		OperationID: "AdminProviderManagement_ParseProviderSpecs",
+		Method:      "POST",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/providers:parse",
+		RequestBody: &runtime.RequestBody{
+			Required: true,
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"providers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"providerAvatar": &runtime.SchemaSpec{Type: "string"}, "providerDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "providerId": &runtime.SchemaSpec{Type: "string"}, "providerName": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}}}}}},
+		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"error"},
 		},
 	},
 	{
@@ -943,6 +1029,140 @@ var Specs = []runtime.CommandSpec{
 		RequestBody: &runtime.RequestBody{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"jobId": &runtime.SchemaSpec{Type: "string"}, "metric": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"accuracy": &runtime.SchemaSpec{Type: "number"}, "currentSteps": &runtime.SchemaSpec{Type: "integer"}, "elapsedTime": &runtime.SchemaSpec{Type: "string"}, "epoch": &runtime.SchemaSpec{Type: "number"}, "evalLoss": &runtime.SchemaSpec{Type: "number"}, "loss": &runtime.SchemaSpec{Type: "number"}, "lr": &runtime.SchemaSpec{Type: "number"}, "percentage": &runtime.SchemaSpec{Type: "number"}, "predictLoss": &runtime.SchemaSpec{Type: "number"}, "remainingTime": &runtime.SchemaSpec{Type: "string"}, "reward": &runtime.SchemaSpec{Type: "number"}, "totalSteps": &runtime.SchemaSpec{Type: "integer"}}}}},
+		},
+	},
+	{
+		Group:       "AutoRouteManagement",
+		Use:         "check-user-pvc-model",
+		Short:       "CheckUserPVCModel verifies a user PVC contains the expected model files",
+		OperationID: "AutoRouteManagement_CheckUserPVCModel",
+		Method:      "POST",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}/check-pvc-model",
+		Params: []runtime.ParamSpec{
+			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
+		},
+		RequestBody: &runtime.RequestBody{
+			Required: true,
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelName": &runtime.SchemaSpec{Type: "string"}, "pvcName": &runtime.SchemaSpec{Type: "string"}}},
+		},
+	},
+	{
+		Group:       "AutoRouteManagement",
+		Use:         "create-auto-route",
+		Short:       "当前 API 模式：Any",
+		OperationID: "AutoRouteManagement_CreateAutoRoute",
+		Method:      "POST",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/auto-routes",
+		RequestBody: &runtime.RequestBody{
+			Required: true,
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "strategy": &runtime.SchemaSpec{Type: "string"}, "vsr": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"classify": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "model": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelName": &runtime.SchemaSpec{Type: "string"}, "pvcName": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"categories": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}}}}, "complexity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "model": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelName": &runtime.SchemaSpec{Type: "string"}, "pvcName": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "easyCandidates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "hardCandidates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "name": &runtime.SchemaSpec{Type: "string"}, "threshold": &runtime.SchemaSpec{Type: "number"}}}}}}, "context": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "maxTokens": &runtime.SchemaSpec{Type: "integer"}, "minTokens": &runtime.SchemaSpec{Type: "integer"}, "name": &runtime.SchemaSpec{Type: "string"}}}}}}, "decisions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "priority": &runtime.SchemaSpec{Type: "integer"}, "signalRefs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"complexityLevel": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "target": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customModelName": &runtime.SchemaSpec{Type: "string"}, "maasModelId": &runtime.SchemaSpec{Type: "string"}}}}}}, "embeddings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "model": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelName": &runtime.SchemaSpec{Type: "string"}, "pvcName": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"aggregationMethod": &runtime.SchemaSpec{Type: "string"}, "candidates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "threshold": &runtime.SchemaSpec{Type: "number"}}}}}}, "fallback": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customModelName": &runtime.SchemaSpec{Type: "string"}, "maasModelId": &runtime.SchemaSpec{Type: "string"}}}}}, "wasm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fallback": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customModelName": &runtime.SchemaSpec{Type: "string"}, "maasModelId": &runtime.SchemaSpec{Type: "string"}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "expression": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "target": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customModelName": &runtime.SchemaSpec{Type: "string"}, "maasModelId": &runtime.SchemaSpec{Type: "string"}}}}}}}}}}}},
+		},
+	},
+	{
+		Group:       "AutoRouteManagement",
+		Use:         "delete-auto-route",
+		Short:       "DeleteAutoRoute removes the AutoRoute from a cluster: deletes the",
+		OperationID: "AutoRouteManagement_DeleteAutoRoute",
+		Method:      "DELETE",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}",
+		Params: []runtime.ParamSpec{
+			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
+			{Name: "strategy", Flag: "strategy", In: "query", GoType: "string", Help: "strategy (query, one of: STRATEGY_UNSPECIFIED|STRATEGY_VSR|STRATEGY_WASM)", Required: false, Default: "STRATEGY_UNSPECIFIED", Enum: []string{"STRATEGY_UNSPECIFIED", "STRATEGY_VSR", "STRATEGY_WASM"}},
+		},
+	},
+	{
+		Group:       "AutoRouteManagement",
+		Use:         "get-auto-route",
+		Short:       "当前 API 模式：Any",
+		OperationID: "AutoRouteManagement_GetAutoRoute",
+		Method:      "GET",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}",
+		Params: []runtime.ParamSpec{
+			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
+			{Name: "strategy", Flag: "strategy", In: "query", GoType: "string", Help: "strategy (query, one of: STRATEGY_UNSPECIFIED|STRATEGY_VSR|STRATEGY_WASM)", Required: false, Default: "STRATEGY_UNSPECIFIED", Enum: []string{"STRATEGY_UNSPECIFIED", "STRATEGY_VSR", "STRATEGY_WASM"}},
+		},
+	},
+	{
+		Group:       "AutoRouteManagement",
+		Use:         "list-auto-routes",
+		Short:       "当前 API 模式：Any",
+		OperationID: "AutoRouteManagement_ListAutoRoutes",
+		Method:      "GET",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/auto-routes",
+		Params: []runtime.ParamSpec{
+			{Name: "page.total", Flag: "page.total", In: "query", GoType: "int64", Help: "总共有多少条目，请求时可以不用传递 (query, int64)", Required: false, Format: "int64"},
+			{Name: "page.page", Flag: "page.page", In: "query", GoType: "int64", Help: "当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.pageSize", Flag: "page.page-size", In: "query", GoType: "int64", Help: "每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值 (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
+			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
+			{Name: "strategy", Flag: "strategy", In: "query", GoType: "string", Help: "Optional filter by strategy. UNSPECIFIED means list all strategies. (query, one of: STRATEGY_UNSPECIFIED|STRATEGY_VSR|STRATEGY_WASM)", Required: false, Default: "STRATEGY_UNSPECIFIED", Enum: []string{"STRATEGY_UNSPECIFIED", "STRATEGY_VSR", "STRATEGY_WASM"}},
+		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"status.phase", "cluster", "createdAt", "updatedAt"},
+		},
+	},
+	{
+		Group:       "AutoRouteManagement",
+		Use:         "list-model-servings",
+		Short:       "Lists WS self-deployed model servings in a cluster (cluster-scoped, no",
+		OperationID: "AutoRouteManagement_ListModelServings",
+		Method:      "GET",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}/model-servings",
+		Params: []runtime.ParamSpec{
+			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
+			{Name: "page.total", Flag: "page.total", In: "query", GoType: "int64", Help: "总共有多少条目，请求时可以不用传递 (query, int64)", Required: false, Format: "int64"},
+			{Name: "page.page", Flag: "page.page", In: "query", GoType: "int64", Help: "当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.pageSize", Flag: "page.page-size", In: "query", GoType: "int64", Help: "每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值 (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
+			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
+		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "accessModelName"},
+		},
+	},
+	{
+		Group:       "AutoRouteManagement",
+		Use:         "list-router-models",
+		Short:       "Returns the router model catalog (embedding + classify) for the frontend",
+		OperationID: "AutoRouteManagement_ListRouterModels",
+		Method:      "GET",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/auto-route-models",
+		Params: []runtime.ParamSpec{
+			{Name: "page.total", Flag: "page.total", In: "query", GoType: "int64", Help: "总共有多少条目，请求时可以不用传递 (query, int64)", Required: false, Format: "int64"},
+			{Name: "page.page", Flag: "page.page", In: "query", GoType: "int64", Help: "当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.pageSize", Flag: "page.page-size", In: "query", GoType: "int64", Help: "每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值 (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
+			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
+		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"category", "modelPath", "modelType", "repoId"},
+		},
+	},
+	{
+		Group:       "AutoRouteManagement",
+		Use:         "update-auto-route",
+		Short:       "当前 API 模式：Any",
+		OperationID: "AutoRouteManagement_UpdateAutoRoute",
+		Method:      "PUT",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}",
+		Params: []runtime.ParamSpec{
+			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
+		},
+		RequestBody: &runtime.RequestBody{
+			Required: true,
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "strategy": &runtime.SchemaSpec{Type: "string"}, "vsr": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"classify": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "model": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelName": &runtime.SchemaSpec{Type: "string"}, "pvcName": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"categories": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}}}}, "complexity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "model": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelName": &runtime.SchemaSpec{Type: "string"}, "pvcName": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "easyCandidates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "hardCandidates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "name": &runtime.SchemaSpec{Type: "string"}, "threshold": &runtime.SchemaSpec{Type: "number"}}}}}}, "context": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "maxTokens": &runtime.SchemaSpec{Type: "integer"}, "minTokens": &runtime.SchemaSpec{Type: "integer"}, "name": &runtime.SchemaSpec{Type: "string"}}}}}}, "decisions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "priority": &runtime.SchemaSpec{Type: "integer"}, "signalRefs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"complexityLevel": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "target": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customModelName": &runtime.SchemaSpec{Type: "string"}, "maasModelId": &runtime.SchemaSpec{Type: "string"}}}}}}, "embeddings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "model": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelName": &runtime.SchemaSpec{Type: "string"}, "pvcName": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"aggregationMethod": &runtime.SchemaSpec{Type: "string"}, "candidates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "threshold": &runtime.SchemaSpec{Type: "number"}}}}}}, "fallback": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customModelName": &runtime.SchemaSpec{Type: "string"}, "maasModelId": &runtime.SchemaSpec{Type: "string"}}}}}, "wasm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fallback": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customModelName": &runtime.SchemaSpec{Type: "string"}, "maasModelId": &runtime.SchemaSpec{Type: "string"}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "expression": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "target": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customModelName": &runtime.SchemaSpec{Type: "string"}, "maasModelId": &runtime.SchemaSpec{Type: "string"}}}}}}}}}}}},
+		},
+	},
+	{
+		Group:       "AutoRouteManagement",
+		Use:         "update-auto-route-status",
+		Short:       "当前 API 模式：Any",
+		OperationID: "AutoRouteManagement_UpdateAutoRouteStatus",
+		Method:      "PUT",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}/status",
+		Params: []runtime.ParamSpec{
+			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
+		},
+		RequestBody: &runtime.RequestBody{
+			Required: true,
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "strategy": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -994,6 +1214,24 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "CoreService_AdminListConstants",
 		Method:      "GET",
 		PathTpl:     "/apis/admin.hydra.io/v1alpha1/constants",
+	},
+	{
+		Group:       "CoreService",
+		Use:         "admin-list-persistent-volume-claims",
+		Short:       "AdminListPersistentVolumeClaims lists PVCs in a cluster.",
+		OperationID: "CoreService_AdminListPersistentVolumeClaims",
+		Method:      "GET",
+		PathTpl:     "/apis/admin.hydra.io/v1alpha1/clusters/{cluster}/persistentvolumeclaims",
+		Params: []runtime.ParamSpec{
+			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
+			{Name: "page.total", Flag: "page.total", In: "query", GoType: "int64", Help: "总共有多少条目，请求时可以不用传递 (query, int64)", Required: false, Format: "int64"},
+			{Name: "page.page", Flag: "page.page", In: "query", GoType: "int64", Help: "当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.pageSize", Flag: "page.page-size", In: "query", GoType: "int64", Help: "每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值 (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
+			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
+		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "capacity", "createdAt", "storageClassName"},
+		},
 	},
 	{
 		Group:       "CoreService",
@@ -1052,20 +1290,20 @@ var Specs = []runtime.CommandSpec{
 	{
 		Group:       "CostMockConfigManagement",
 		Use:         "create-cost-mock-config",
-		Short:       "当前 API 模式：WS",
+		Short:       "当前 API 模式：Any",
 		OperationID: "CostMockConfigManagement_CreateCostMockConfig",
 		Method:      "POST",
 		PathTpl:     "/apis/admin.hydra.io/v1alpha1/cost-mock-config",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"excludedGpuCostKeys": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "gpus": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "integer"}, "memory": &runtime.SchemaSpec{Type: "string"}, "nodeName": &runtime.SchemaSpec{Type: "string"}, "price": &runtime.SchemaSpec{Type: "number"}, "product": &runtime.SchemaSpec{Type: "string"}}}}, "upstreamTokenPrices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cachedPrice": &runtime.SchemaSpec{Type: "number"}, "inPrice": &runtime.SchemaSpec{Type: "number"}, "inputAudioPrice": &runtime.SchemaSpec{Type: "number"}, "inputImagePrice": &runtime.SchemaSpec{Type: "number"}, "maasModelName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "outPrice": &runtime.SchemaSpec{Type: "number"}, "outputAudioPrice": &runtime.SchemaSpec{Type: "number"}, "outputImagePrice": &runtime.SchemaSpec{Type: "number"}}}}, "upstreamTotalTokenPrices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cachedTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "expirationTime": &runtime.SchemaSpec{Type: "string"}, "inputAudioHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "inputImageHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "inputTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "maasModelName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "outputAudioHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "outputImageHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "outputTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"excludedGpuCostKeys": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "gpus": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "integer"}, "depreciationStartTime": &runtime.SchemaSpec{Type: "string"}, "depreciationStatus": &runtime.SchemaSpec{Type: "string"}, "hourlyDepreciation": &runtime.SchemaSpec{Type: "number"}, "memory": &runtime.SchemaSpec{Type: "string"}, "nodeName": &runtime.SchemaSpec{Type: "string"}, "price": &runtime.SchemaSpec{Type: "number"}, "product": &runtime.SchemaSpec{Type: "string"}, "purchasePrice": &runtime.SchemaSpec{Type: "number"}, "residualValue": &runtime.SchemaSpec{Type: "number"}, "usefulLifeMonths": &runtime.SchemaSpec{Type: "integer"}}}}, "upstreamTokenPrices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cachedPrice": &runtime.SchemaSpec{Type: "number"}, "inPrice": &runtime.SchemaSpec{Type: "number"}, "inputAudioPrice": &runtime.SchemaSpec{Type: "number"}, "inputImagePrice": &runtime.SchemaSpec{Type: "number"}, "maasModelName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "outPrice": &runtime.SchemaSpec{Type: "number"}, "outputAudioPrice": &runtime.SchemaSpec{Type: "number"}, "outputImagePrice": &runtime.SchemaSpec{Type: "number"}}}}, "upstreamTotalTokenPrices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cachedTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "expirationTime": &runtime.SchemaSpec{Type: "string"}, "inputAudioHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "inputImageHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "inputTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "maasModelName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "outputAudioHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "outputImageHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "outputTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}}}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "excludedGpuCostKeys"},
 	},
 	{
 		Group:       "CostMockConfigManagement",
 		Use:         "delete-cost-mock-config",
-		Short:       "当前 API 模式：WS",
+		Short:       "当前 API 模式：Any",
 		OperationID: "CostMockConfigManagement_DeleteCostMockConfig",
 		Method:      "DELETE",
 		PathTpl:     "/apis/admin.hydra.io/v1alpha1/cost-mock-config",
@@ -1074,7 +1312,7 @@ var Specs = []runtime.CommandSpec{
 	{
 		Group:       "CostMockConfigManagement",
 		Use:         "get-cost-mock-config",
-		Short:       "当前 API 模式：WS",
+		Short:       "当前 API 模式：Any",
 		OperationID: "CostMockConfigManagement_GetCostMockConfig",
 		Method:      "GET",
 		PathTpl:     "/apis/admin.hydra.io/v1alpha1/cost-mock-config",
@@ -1083,13 +1321,13 @@ var Specs = []runtime.CommandSpec{
 	{
 		Group:       "CostMockConfigManagement",
 		Use:         "update-cost-mock-config",
-		Short:       "当前 API 模式：WS",
+		Short:       "当前 API 模式：Any",
 		OperationID: "CostMockConfigManagement_UpdateCostMockConfig",
 		Method:      "PUT",
 		PathTpl:     "/apis/admin.hydra.io/v1alpha1/cost-mock-config",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"excludedGpuCostKeys": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "gpus": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "integer"}, "memory": &runtime.SchemaSpec{Type: "string"}, "nodeName": &runtime.SchemaSpec{Type: "string"}, "price": &runtime.SchemaSpec{Type: "number"}, "product": &runtime.SchemaSpec{Type: "string"}}}}, "upstreamTokenPrices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cachedPrice": &runtime.SchemaSpec{Type: "number"}, "inPrice": &runtime.SchemaSpec{Type: "number"}, "inputAudioPrice": &runtime.SchemaSpec{Type: "number"}, "inputImagePrice": &runtime.SchemaSpec{Type: "number"}, "maasModelName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "outPrice": &runtime.SchemaSpec{Type: "number"}, "outputAudioPrice": &runtime.SchemaSpec{Type: "number"}, "outputImagePrice": &runtime.SchemaSpec{Type: "number"}}}}, "upstreamTotalTokenPrices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cachedTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "expirationTime": &runtime.SchemaSpec{Type: "string"}, "inputAudioHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "inputImageHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "inputTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "maasModelName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "outputAudioHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "outputImageHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "outputTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"excludedGpuCostKeys": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "gpus": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "integer"}, "depreciationStartTime": &runtime.SchemaSpec{Type: "string"}, "depreciationStatus": &runtime.SchemaSpec{Type: "string"}, "hourlyDepreciation": &runtime.SchemaSpec{Type: "number"}, "memory": &runtime.SchemaSpec{Type: "string"}, "nodeName": &runtime.SchemaSpec{Type: "string"}, "price": &runtime.SchemaSpec{Type: "number"}, "product": &runtime.SchemaSpec{Type: "string"}, "purchasePrice": &runtime.SchemaSpec{Type: "number"}, "residualValue": &runtime.SchemaSpec{Type: "number"}, "usefulLifeMonths": &runtime.SchemaSpec{Type: "integer"}}}}, "upstreamTokenPrices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cachedPrice": &runtime.SchemaSpec{Type: "number"}, "inPrice": &runtime.SchemaSpec{Type: "number"}, "inputAudioPrice": &runtime.SchemaSpec{Type: "number"}, "inputImagePrice": &runtime.SchemaSpec{Type: "number"}, "maasModelName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "outPrice": &runtime.SchemaSpec{Type: "number"}, "outputAudioPrice": &runtime.SchemaSpec{Type: "number"}, "outputImagePrice": &runtime.SchemaSpec{Type: "number"}}}}, "upstreamTotalTokenPrices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cachedTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "expirationTime": &runtime.SchemaSpec{Type: "string"}, "inputAudioHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "inputImageHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "inputTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "maasModelName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "outputAudioHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "outputImageHourlyPrice": &runtime.SchemaSpec{Type: "number"}, "outputTokenHourlyPrice": &runtime.SchemaSpec{Type: "number"}}}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "excludedGpuCostKeys"},
 	},
@@ -1219,10 +1457,9 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/admin.hydra.io/v1alpha1/maas-models",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "loadBalanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"strategy": &runtime.SchemaSpec{Type: "string"}, "weightedConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "ratelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "baseOn": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "integer"}, "limit": &runtime.SchemaSpec{Type: "integer"}, "workspace": &runtime.SchemaSpec{Type: "integer"}}}}}}, "tokenWeight": &runtime.SchemaSpec{Type: "string"}, "upstreamModels": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "endpoint": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"capabilityRoutes": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"capabilities": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "upstreams": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "baseUrl": &runtime.SchemaSpec{Type: "string"}, "capabilityPaths": &runtime.SchemaSpec{Type: "object"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}}}}, "cluster": &runtime.SchemaSpec{Type: "string"}, "loadBalanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"strategy": &runtime.SchemaSpec{Type: "string"}, "weightedConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "ratelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "baseOn": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "integer"}, "limit": &runtime.SchemaSpec{Type: "integer"}, "workspace": &runtime.SchemaSpec{Type: "integer"}}}}}}, "tokenWeight": &runtime.SchemaSpec{Type: "string"}, "upstreamModels": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "endpoint": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}, "workspaceVisibility": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"scope": &runtime.SchemaSpec{Type: "string"}, "workspaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "capabilityRoutes"},
 	},
 	{
 		Group:       "MAASService",
@@ -1234,8 +1471,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "modelId", Flag: "model-id", In: "path", GoType: "string", Help: "模型ID (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "capabilityRoutes"},
 	},
 	{
 		Group:       "MAASService",
@@ -1266,10 +1502,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"strategy": &runtime.SchemaSpec{Type: "string"}, "weightedConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}, "ratelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "baseOn": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "integer"}, "limit": &runtime.SchemaSpec{Type: "integer"}, "workspace": &runtime.SchemaSpec{Type: "integer"}}}}}}, "tokenWeight": &runtime.SchemaSpec{Type: "string"}, "upstreamModels": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "endpoint": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"capabilityRoutes": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"capabilities": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "upstreams": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "baseUrl": &runtime.SchemaSpec{Type: "string"}, "capabilityPaths": &runtime.SchemaSpec{Type: "object"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}}}}, "loadBalanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"strategy": &runtime.SchemaSpec{Type: "string"}, "weightedConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}, "ratelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "baseOn": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "integer"}, "limit": &runtime.SchemaSpec{Type: "integer"}, "workspace": &runtime.SchemaSpec{Type: "integer"}}}}}}, "tokenWeight": &runtime.SchemaSpec{Type: "string"}, "upstreamModels": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "endpoint": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}, "workspaceVisibility": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"scope": &runtime.SchemaSpec{Type: "string"}, "workspaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "capabilityRoutes"},
 	},
 	{
 		Group:       "MAASService",
@@ -1285,8 +1520,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "capabilityRoutes"},
 	},
 	{
 		Group:       "Management",
@@ -1313,8 +1547,16 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Management_ListInferenceRuntimes",
 		Method:      "GET",
 		PathTpl:     "/apis/hydra.io/v1alpha1/inference-runtimes",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"distributedSupported", "runtimeCommand"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"distributedSupported", "leaderCommand", "runtimeCommand", "workerCommand"},
 		},
+	},
+	{
+		Group:       "ModelConfigManagement",
+		Use:         "get-model-support-feature-config",
+		Short:       "当前 API 模式：Any",
+		OperationID: "ModelConfigManagement_GetModelSupportFeatureConfig",
+		Method:      "GET",
+		PathTpl:     "/apis/hydra.io/v1alpha1/model-support-features/config",
 	},
 	{
 		Group:       "ModelManagement",
@@ -1343,7 +1585,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "showPublicModelPrice", Flag: "show-public-model-price", In: "query", GoType: "bool", Help: "是否展示公共模型价格 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "finetune", "modelAvatar", "modelDeploymentsExists", "modelId"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "contextLength", "finetune", "modelAvatar", "modelDeploymentsExists"},
 		},
 	},
 	{
@@ -1357,7 +1599,6 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableMetrics": &runtime.SchemaSpec{Type: "boolean"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "paymentMethods": &runtime.SchemaSpec{Type: "string"}, "region": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "skuId": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
 	{
 		Group:       "ModelServingManagement",
@@ -1373,7 +1614,6 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object"},
 		},
-		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
 	{
 		Group:       "ModelServingManagement",
@@ -1389,7 +1629,6 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
 	{
 		Group:       "ModelServingManagement",
@@ -1401,7 +1640,6 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
 	{
 		Group:       "ModelServingManagement",
@@ -1417,7 +1655,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "creationTimestamp", "id", "modelName", "accessModelName"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "accessModelName"},
 		},
 	},
 	{
@@ -1434,7 +1672,6 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"replicas": &runtime.SchemaSpec{Type: "integer"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
 	{
 		Group:       "ProviderManagement",
@@ -1461,7 +1698,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"providerAvatar", "providerId"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createTime", "providerAvatar", "providerId"},
 		},
 	},
 	{
@@ -1662,6 +1899,18 @@ var Specs = []runtime.CommandSpec{
 	},
 	{
 		Group:       "WSAPIKeyManagement",
+		Use:         "get-wsapi-key-secret",
+		Short:       "当前 API 模式：WS",
+		OperationID: "WSAPIKeyManagement_GetWSAPIKeySecret",
+		Method:      "GET",
+		PathTpl:     "/apis/hydra.io/v1alpha1/workspaces/{workspace}/apikeys/{id}/secret",
+		Params: []runtime.ParamSpec{
+			{Name: "workspace", Flag: "workspace", In: "path", GoType: "string", Help: "workspace (path, required, int32)", Required: true, Format: "int32"},
+			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
+		},
+	},
+	{
+		Group:       "WSAPIKeyManagement",
 		Use:         "list-my-wsapi-keys",
 		Short:       "当前 API 模式：WS",
 		OperationID: "WSAPIKeyManagement_ListMyWSAPIKeys",
@@ -1685,6 +1934,24 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "WSAPIKeyManagement_ListWSAPIKey",
 		Method:      "GET",
 		PathTpl:     "/apis/hydra.io/v1alpha1/workspaces/{workspace}/apikeys",
+		Params: []runtime.ParamSpec{
+			{Name: "workspace", Flag: "workspace", In: "path", GoType: "string", Help: "workspace (path, required, int32)", Required: true, Format: "int32"},
+			{Name: "page.total", Flag: "page.total", In: "query", GoType: "int64", Help: "总共有多少条目，请求时可以不用传递 (query, int64)", Required: false, Format: "int64"},
+			{Name: "page.page", Flag: "page.page", In: "query", GoType: "int64", Help: "当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.pageSize", Flag: "page.page-size", In: "query", GoType: "int64", Help: "每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值 (query, int32)", Required: false, Format: "int32"},
+			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
+			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
+		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "id", "createBy", "disabled", "expireTime"},
+		},
+	},
+	{
+		Group:       "WSAPIKeyManagement",
+		Use:         "list-wsapi-key-masked",
+		Short:       "当前 API 模式：WS",
+		OperationID: "WSAPIKeyManagement_ListWSAPIKeyMasked",
+		Method:      "GET",
+		PathTpl:     "/apis/hydra.io/v1alpha1/workspaces/{workspace}/masked-apikeys",
 		Params: []runtime.ParamSpec{
 			{Name: "workspace", Flag: "workspace", In: "path", GoType: "string", Help: "workspace (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "page.total", Flag: "page.total", In: "query", GoType: "int64", Help: "总共有多少条目，请求时可以不用传递 (query, int64)", Required: false, Format: "int64"},
@@ -1765,7 +2032,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "sortOrder", Flag: "sort-order", In: "query", GoType: "string", Help: "sortOrder (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "cachedTokens", "inputTokens", "instanceId", "instanceName", "lastUsedTime"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "apiKeyId", "cachedTokens", "inputTokens", "instanceName", "lastUsedTime"},
 		},
 	},
 	{
@@ -2631,7 +2898,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
@@ -2689,7 +2956,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "finetune", "modelAvatar", "modelDeploymentsExists", "modelId"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "contextLength", "finetune", "modelAvatar", "modelDeploymentsExists"},
 		},
 	},
 	{
@@ -2707,7 +2974,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "finetune", "modelAvatar", "modelDeploymentsExists", "modelId"},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "contextLength", "finetune", "modelAvatar", "modelDeploymentsExists"},
 		},
 	},
 	{
@@ -2723,7 +2990,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "modelSupportFeature"},
 	},
@@ -2739,7 +3006,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "configMapMounts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"configMapName": &runtime.SchemaSpec{Type: "string"}, "mountPath": &runtime.SchemaSpec{Type: "string"}, "subPath": &runtime.SchemaSpec{Type: "string"}}}}, "enableMetrics": &runtime.SchemaSpec{Type: "boolean"}, "healthCheck": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"checkType": &runtime.SchemaSpec{Type: "string"}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "path": &runtime.SchemaSpec{Type: "string"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"checkType": &runtime.SchemaSpec{Type: "string"}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "path": &runtime.SchemaSpec{Type: "string"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "startupProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"checkType": &runtime.SchemaSpec{Type: "string"}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "path": &runtime.SchemaSpec{Type: "string"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "nodeSize": &runtime.SchemaSpec{Type: "integer"}, "preflight": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "nodeCheckBusbwThresholdGbps": &runtime.SchemaSpec{Type: "string"}, "nodeCheckIbHcas": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resourceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtimeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "imagePullSecretName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "runtimeImage": &runtime.SchemaSpec{Type: "string"}, "runtimeType": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}, "schedulingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"placementPolicy": &runtime.SchemaSpec{Type: "string"}, "priorityClass": &runtime.SchemaSpec{Type: "string"}, "queueName": &runtime.SchemaSpec{Type: "string"}}}, "tokenWeight": &runtime.SchemaSpec{Type: "string"}, "weightVolumeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "modelTag": &runtime.SchemaSpec{Type: "string"}, "mountPath": &runtime.SchemaSpec{Type: "string"}, "storageRef": &runtime.SchemaSpec{Type: "string"}, "storageSource": &runtime.SchemaSpec{Type: "string"}, "subPath": &runtime.SchemaSpec{Type: "string"}}}, "weightVolumeId": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "configMapMounts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"configMapName": &runtime.SchemaSpec{Type: "string"}, "mountPath": &runtime.SchemaSpec{Type: "string"}, "subPath": &runtime.SchemaSpec{Type: "string"}}}}, "enableMetrics": &runtime.SchemaSpec{Type: "boolean"}, "healthCheck": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"checkType": &runtime.SchemaSpec{Type: "string"}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "path": &runtime.SchemaSpec{Type: "string"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"checkType": &runtime.SchemaSpec{Type: "string"}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "path": &runtime.SchemaSpec{Type: "string"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "startupProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"checkType": &runtime.SchemaSpec{Type: "string"}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "path": &runtime.SchemaSpec{Type: "string"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "nodeSize": &runtime.SchemaSpec{Type: "integer"}, "preflight": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "nodeCheckBusbwThresholdGbps": &runtime.SchemaSpec{Type: "string"}, "nodeCheckIbHcas": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resourceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtimeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "imagePullSecretName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "runtimeImage": &runtime.SchemaSpec{Type: "string"}, "runtimeType": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "schedulingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"placementPolicy": &runtime.SchemaSpec{Type: "string"}, "priorityClass": &runtime.SchemaSpec{Type: "string"}, "queueName": &runtime.SchemaSpec{Type: "string"}}}, "tokenWeight": &runtime.SchemaSpec{Type: "string"}, "weightVolumeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "modelTag": &runtime.SchemaSpec{Type: "string"}, "mountPath": &runtime.SchemaSpec{Type: "string"}, "storageRef": &runtime.SchemaSpec{Type: "string"}, "storageSource": &runtime.SchemaSpec{Type: "string"}, "subPath": &runtime.SchemaSpec{Type: "string"}}}, "weightVolumeId": &runtime.SchemaSpec{Type: "string"}}},
 		},
 		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"},
 		},
@@ -2774,7 +3041,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "nodeSize": &runtime.SchemaSpec{Type: "integer"}, "resourceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtimeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "imagePullSecretName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "runtimeImage": &runtime.SchemaSpec{Type: "string"}, "runtimeType": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}, "schedulingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"placementPolicy": &runtime.SchemaSpec{Type: "string"}, "priorityClass": &runtime.SchemaSpec{Type: "string"}, "queueName": &runtime.SchemaSpec{Type: "string"}}}, "weightVolumeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "modelTag": &runtime.SchemaSpec{Type: "string"}, "mountPath": &runtime.SchemaSpec{Type: "string"}, "storageRef": &runtime.SchemaSpec{Type: "string"}, "storageSource": &runtime.SchemaSpec{Type: "string"}, "subPath": &runtime.SchemaSpec{Type: "string"}}}, "weightVolumeId": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "nodeSize": &runtime.SchemaSpec{Type: "integer"}, "resourceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtimeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "imagePullSecretName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "runtimeImage": &runtime.SchemaSpec{Type: "string"}, "runtimeType": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "schedulingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"placementPolicy": &runtime.SchemaSpec{Type: "string"}, "priorityClass": &runtime.SchemaSpec{Type: "string"}, "queueName": &runtime.SchemaSpec{Type: "string"}}}, "weightVolumeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "modelTag": &runtime.SchemaSpec{Type: "string"}, "mountPath": &runtime.SchemaSpec{Type: "string"}, "storageRef": &runtime.SchemaSpec{Type: "string"}, "storageSource": &runtime.SchemaSpec{Type: "string"}, "subPath": &runtime.SchemaSpec{Type: "string"}}}, "weightVolumeId": &runtime.SchemaSpec{Type: "string"}}},
 		},
 		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "message", "ready"},
 		},
@@ -2809,6 +3076,16 @@ var Specs = []runtime.CommandSpec{
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
 		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"},
+		},
+	},
+	{
+		Group:       "WSModelServingManagement",
+		Use:         "list-builtin-env-vars",
+		Short:       "当前 API 模式：WS",
+		OperationID: "WSModelServingManagement_ListBuiltinEnvVars",
+		Method:      "GET",
+		PathTpl:     "/apis/hydra.io/v1alpha1/model-serving/builtin-env-vars",
+		Output: runtime.OutputHints{ListPath: "leader", DefaultColumns: []string{"name", "example"},
 		},
 	},
 	{
@@ -2862,7 +3139,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}},
 		},
 	},
 	{
@@ -2907,6 +3184,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.pageSize", Flag: "page.page-size", In: "query", GoType: "int64", Help: "每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值 (query, int32)", Required: false, Format: "int32"},
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
+			{Name: "distributed", Flag: "distributed", In: "query", GoType: "bool", Help: "过滤条件：true=只返回分布式模板, false=只返回单机模板, 不传=返回全部 (query)", Required: false},
 		},
 		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelId", "templateId", "updateTimestamp", "workspace"},
 		},
@@ -2925,7 +3203,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "distributed": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}, "workerCommand": &runtime.SchemaSpec{Type: "string"}, "workerEnv": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}},
 		},
 	},
 	{

@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `c05fd6920a216f94b31c8cb42db93e57cebef1f6`
-- Files: `docs/openapi/hydra/v0.16.1.json`
-- Resolved SHA: `c05fd6920a216f94b31c8cb42db93e57cebef1f6`
+- Pinned tag: `41e4355721ef88482a8b806e7ea846ac4dcee8f8`
+- Files: `docs/openapi/hydra/v0.17.0.json`
+- Resolved SHA: `41e4355721ef88482a8b806e7ea846ac4dcee8f8`
 
 ## AIGuardrailsService
 
@@ -72,6 +72,20 @@
   - `--route-name` (query): routeName
 - Output: list path `items`; columns `clusterName`, `denyMessage`, `duration`, `functionArgs`, `functionName`, `level`
 
+### `dce llm-studio aiguardrailsservice query-ai-audit-log-statistics`
+
+- Summary: 当前 API 模式：Any
+- HTTP: `GET /apis/admin.hydra.io/v1alpha1/ai-guardrails-logs/statistics`
+- Auth: required
+- Body: none
+- Flags:
+  - `--start-time` (query, date-time): Required start time of the statistics range.
+  - `--end-time` (query, date-time): Optional end time; defaults to the current time when omitted.
+  - `--plugin-id` (query, default `GUARDRAILS_PLUGIN_UNSPECIFIED`, one of: GUARDRAILS_PLUGIN_UNSPECIFIED|GUARDRAILS_PLUGIN_CONTAINS|GUARDRAILS_PLUGIN_REGEX|GUARDRAILS_PLUGIN_JSON_SCHEMA|GUARDRAILS_PLUGIN_JWT|GUARDRAILS_PLUGIN_MODEL_WHITELIST): Filter by security policy.
+  - `--level` (query, default `GUARDRAILS_LEVEL_UNSPECIFIED`, one of: GUARDRAILS_LEVEL_UNSPECIFIED|GUARDRAILS_LEVEL_HIGH|GUARDRAILS_LEVEL_MEDIUM|GUARDRAILS_LEVEL_LOW): Filter by risk level.
+  - `--route-name` (query): Filter by route name.
+- Output: list path `routeStatistics`; columns `averageProcessingDurationMs`, `blockedCount`, `logCount`, `riskRequestCount`, `routeName`
+
 ### `dce llm-studio aiguardrailsservice update-ai-guardrails-config`
 
 - Summary: 当前 API 模式：Any
@@ -109,6 +123,15 @@
   - `--id` (path, required): id
 - Output: list path `allowModels`
 
+### `dce llm-studio apikeymanagement get-api-key-secret`
+
+- Summary: 当前 API 模式：CSP
+- HTTP: `GET /apis/hydra.io/v1alpha1/apikeys/{id}/secret`
+- Auth: required
+- Body: none
+- Flags:
+  - `--id` (path, required): id
+
 ### `dce llm-studio apikeymanagement get-api-key-usage-statistics`
 
 - Summary: protoc-gen-grpc-gateway-ts plugin is not support additional_bindings multiple methods (see: https://github.com/grpc-ecosystem/protoc-gen-grpc-gateway-ts/issues/32), but grpc-gateway support it.
@@ -136,6 +159,20 @@
 
 - Summary: 当前 API 模式：CSP
 - HTTP: `GET /apis/hydra.io/v1alpha1/apikeys`
+- Auth: required
+- Body: none
+- Flags:
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+- Output: list path `items`; columns `name`, `creationTimestamp`, `id`, `createBy`, `disabled`, `expireTime`
+
+### `dce llm-studio apikeymanagement list-api-key-masked`
+
+- Summary: 当前 API 模式：CSP
+- HTTP: `GET /apis/hydra.io/v1alpha1/masked-apikeys`
 - Auth: required
 - Body: none
 - Flags:
@@ -404,7 +441,7 @@
 - Auth: required
 - Body: required
 - Flags: none
-- Output: list path `items`; columns `creationTimestamp`, `modelName`, `hidden`, `modelAvatar`, `modelId`, `providerId`
+- Output: list path `items`; columns `creationTimestamp`, `modelName`, `contextLength`, `hidden`, `modelAvatar`, `modelId`
 
 ### `dce llm-studio adminmodelmanagement create-model`
 
@@ -459,7 +496,7 @@
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
   - `--show-deploy-template` (query): 是否展示公共模型价格
   - `--selector` (query, default `ALL`, one of: ALL|HAS_DEPLOY_TEMPLATE|NO_DEPLOY_TEMPLATE): 是否只展示已配置过部署模板的模型
-- Output: list path `items`; columns `creationTimestamp`, `modelName`, `hidden`, `modelAvatar`, `modelId`, `providerId`
+- Output: list path `items`; columns `creationTimestamp`, `modelName`, `contextLength`, `hidden`, `modelAvatar`, `modelId`
 
 ### `dce llm-studio adminmodelmanagement parse-model-specs`
 
@@ -479,6 +516,14 @@
 - Flags:
   - `--model-id` (path, required): modelId
 - Output: list path `modelSupportFeature`
+
+### `dce llm-studio adminmodelmanagement sort-models`
+
+- Summary: 当前 API 模式：Any
+- HTTP: `POST /apis/admin.hydra.io/v1alpha1/models:sort`
+- Auth: required
+- Body: required
+- Flags: none
 
 ### `dce llm-studio adminmodelmanagement unpublish-model`
 
@@ -558,6 +603,7 @@
   - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+  - `--distributed` (query): 过滤条件：true=只返回分布式模板, false=只返回单机模板, 不传=返回全部
 - Output: list path `items`; columns `creationTimestamp`, `modelId`, `templateId`, `updateTimestamp`, `workspace`
 
 ### `dce llm-studio adminmodeltemplatemanagement update-model-template`
@@ -638,6 +684,15 @@
 
 ## AdminProviderManagement
 
+### `dce llm-studio adminprovidermanagement batch-create-providers`
+
+- Summary: Batch create providers
+- HTTP: `POST /apis/admin.hydra.io/v1alpha1/providers:batch_create`
+- Auth: required
+- Body: required
+- Flags: none
+- Output: list path `items`; columns `createTime`, `providerAvatar`, `providerId`
+
 ### `dce llm-studio adminprovidermanagement create-provider`
 
 - Summary: 当前 API 模式：Any
@@ -676,7 +731,16 @@
   - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `providerAvatar`, `providerId`
+- Output: list path `items`; columns `createTime`, `providerAvatar`, `providerId`
+
+### `dce llm-studio adminprovidermanagement parse-provider-specs`
+
+- Summary: Parse providers (preview, check existence)
+- HTTP: `POST /apis/admin.hydra.io/v1alpha1/providers:parse`
+- Auth: required
+- Body: required
+- Flags: none
+- Output: list path `items`; columns `error`
 
 ### `dce llm-studio adminprovidermanagement update-provider`
 
@@ -704,6 +768,107 @@
 - Auth: required
 - Body: required
 - Flags: none
+
+## AutoRouteManagement
+
+### `dce llm-studio autoroutemanagement check-user-pvc-model`
+
+- Summary: CheckUserPVCModel verifies a user PVC contains the expected model files
+- HTTP: `POST /apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}/check-pvc-model`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): cluster
+
+### `dce llm-studio autoroutemanagement create-auto-route`
+
+- Summary: 当前 API 模式：Any
+- HTTP: `POST /apis/admin.hydra.io/v1alpha1/auto-routes`
+- Auth: required
+- Body: required
+- Flags: none
+
+### `dce llm-studio autoroutemanagement delete-auto-route`
+
+- Summary: DeleteAutoRoute removes the AutoRoute from a cluster: deletes the
+- HTTP: `DELETE /apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--strategy` (query, default `STRATEGY_UNSPECIFIED`, one of: STRATEGY_UNSPECIFIED|STRATEGY_VSR|STRATEGY_WASM): strategy
+
+### `dce llm-studio autoroutemanagement get-auto-route`
+
+- Summary: 当前 API 模式：Any
+- HTTP: `GET /apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--strategy` (query, default `STRATEGY_UNSPECIFIED`, one of: STRATEGY_UNSPECIFIED|STRATEGY_VSR|STRATEGY_WASM): strategy
+
+### `dce llm-studio autoroutemanagement list-auto-routes`
+
+- Summary: 当前 API 模式：Any
+- HTTP: `GET /apis/admin.hydra.io/v1alpha1/auto-routes`
+- Auth: required
+- Body: none
+- Flags:
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+  - `--strategy` (query, default `STRATEGY_UNSPECIFIED`, one of: STRATEGY_UNSPECIFIED|STRATEGY_VSR|STRATEGY_WASM): Optional filter by strategy. UNSPECIFIED means list all strategies.
+- Output: list path `items`; columns `status.phase`, `cluster`, `createdAt`, `updatedAt`
+
+### `dce llm-studio autoroutemanagement list-model-servings`
+
+- Summary: Lists WS self-deployed model servings in a cluster (cluster-scoped, no
+- HTTP: `GET /apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}/model-servings`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+- Output: list path `items`; columns `name`, `accessModelName`
+
+### `dce llm-studio autoroutemanagement list-router-models`
+
+- Summary: Returns the router model catalog (embedding + classify) for the frontend
+- HTTP: `GET /apis/admin.hydra.io/v1alpha1/auto-route-models`
+- Auth: required
+- Body: none
+- Flags:
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+- Output: list path `items`; columns `category`, `modelPath`, `modelType`, `repoId`
+
+### `dce llm-studio autoroutemanagement update-auto-route`
+
+- Summary: 当前 API 模式：Any
+- HTTP: `PUT /apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): cluster
+
+### `dce llm-studio autoroutemanagement update-auto-route-status`
+
+- Summary: 当前 API 模式：Any
+- HTTP: `PUT /apis/admin.hydra.io/v1alpha1/auto-routes/{cluster}/status`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): cluster
 
 ## Cluster
 
@@ -753,6 +918,21 @@
 - Auth: required
 - Body: none
 - Flags: none
+
+### `dce llm-studio coreservice admin-list-persistent-volume-claims`
+
+- Summary: AdminListPersistentVolumeClaims lists PVCs in a cluster.
+- HTTP: `GET /apis/admin.hydra.io/v1alpha1/clusters/{cluster}/persistentvolumeclaims`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+- Output: list path `items`; columns `name`, `namespace`, `phase`, `capacity`, `createdAt`, `storageClassName`
 
 ### `dce llm-studio coreservice get-analysis-uri`
 
@@ -804,7 +984,7 @@
 
 ### `dce llm-studio costmockconfigmanagement create-cost-mock-config`
 
-- Summary: 当前 API 模式：WS
+- Summary: 当前 API 模式：Any
 - HTTP: `POST /apis/admin.hydra.io/v1alpha1/cost-mock-config`
 - Auth: required
 - Body: required
@@ -813,7 +993,7 @@
 
 ### `dce llm-studio costmockconfigmanagement delete-cost-mock-config`
 
-- Summary: 当前 API 模式：WS
+- Summary: 当前 API 模式：Any
 - HTTP: `DELETE /apis/admin.hydra.io/v1alpha1/cost-mock-config`
 - Auth: required
 - Body: none
@@ -822,7 +1002,7 @@
 
 ### `dce llm-studio costmockconfigmanagement get-cost-mock-config`
 
-- Summary: 当前 API 模式：WS
+- Summary: 当前 API 模式：Any
 - HTTP: `GET /apis/admin.hydra.io/v1alpha1/cost-mock-config`
 - Auth: required
 - Body: none
@@ -831,7 +1011,7 @@
 
 ### `dce llm-studio costmockconfigmanagement update-cost-mock-config`
 
-- Summary: 当前 API 模式：WS
+- Summary: 当前 API 模式：Any
 - HTTP: `PUT /apis/admin.hydra.io/v1alpha1/cost-mock-config`
 - Auth: required
 - Body: required
@@ -949,7 +1129,7 @@
 - Auth: required
 - Body: required
 - Flags: none
-- Output: list path `upstreamModels`; columns `apiKey`, `endpoint`, `modelId`, `status`
+- Output: list path `capabilityRoutes`
 
 ### `dce llm-studio maasservice get-maas-model`
 
@@ -959,7 +1139,7 @@
 - Body: none
 - Flags:
   - `--model-id` (path, required): 模型ID
-- Output: list path `upstreamModels`; columns `apiKey`, `endpoint`, `modelId`, `status`
+- Output: list path `capabilityRoutes`
 
 ### `dce llm-studio maasservice list-maas-models`
 
@@ -983,7 +1163,7 @@
 - Body: required
 - Flags:
   - `--model-id` (path, required): 模型ID
-- Output: list path `upstreamModels`; columns `apiKey`, `endpoint`, `modelId`, `status`
+- Output: list path `capabilityRoutes`
 
 ### `dce llm-studio maasservice update-maas-model-status`
 
@@ -993,7 +1173,7 @@
 - Body: required
 - Flags:
   - `--model-id` (path, required): 模型ID
-- Output: list path `upstreamModels`; columns `apiKey`, `endpoint`, `modelId`, `status`
+- Output: list path `capabilityRoutes`
 
 ## Management
 
@@ -1021,7 +1201,17 @@
 - Auth: required
 - Body: none
 - Flags: none
-- Output: list path `items`; columns `distributedSupported`, `runtimeCommand`
+- Output: list path `items`; columns `distributedSupported`, `leaderCommand`, `runtimeCommand`, `workerCommand`
+
+## ModelConfigManagement
+
+### `dce llm-studio modelconfigmanagement get-model-support-feature-config`
+
+- Summary: 当前 API 模式：Any
+- HTTP: `GET /apis/hydra.io/v1alpha1/model-support-features/config`
+- Auth: required
+- Body: none
+- Flags: none
 
 ## ModelManagement
 
@@ -1048,7 +1238,7 @@
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
   - `--show-public-model-price` (query): 是否展示公共模型价格
-- Output: list path `items`; columns `creationTimestamp`, `modelName`, `finetune`, `modelAvatar`, `modelDeploymentsExists`, `modelId`
+- Output: list path `items`; columns `creationTimestamp`, `modelName`, `contextLength`, `finetune`, `modelAvatar`, `modelDeploymentsExists`
 
 ## ModelServingManagement
 
@@ -1059,7 +1249,6 @@
 - Auth: required
 - Body: required
 - Flags: none
-- Output: list path `modelSupportFeature`
 
 ### `dce llm-studio modelservingmanagement delete-model-serving`
 
@@ -1069,7 +1258,6 @@
 - Body: required
 - Flags:
   - `--id` (path, required): id
-- Output: list path `modelSupportFeature`
 
 ### `dce llm-studio modelservingmanagement do-model-serving-action`
 
@@ -1079,7 +1267,6 @@
 - Body: required
 - Flags:
   - `--id` (path, required): id
-- Output: list path `modelSupportFeature`
 
 ### `dce llm-studio modelservingmanagement get-model-serving`
 
@@ -1089,7 +1276,6 @@
 - Body: none
 - Flags:
   - `--id` (path, required): id
-- Output: list path `modelSupportFeature`
 
 ### `dce llm-studio modelservingmanagement list-model-serving`
 
@@ -1103,7 +1289,7 @@
   - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `name`, `namespace`, `creationTimestamp`, `id`, `modelName`, `accessModelName`
+- Output: list path `items`; columns `name`, `accessModelName`
 
 ### `dce llm-studio modelservingmanagement update-model-serving-replicas`
 
@@ -1113,7 +1299,6 @@
 - Body: required
 - Flags:
   - `--id` (path, required): id
-- Output: list path `modelSupportFeature`
 
 ## ProviderManagement
 
@@ -1138,7 +1323,7 @@
   - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `providerAvatar`, `providerId`
+- Output: list path `items`; columns `createTime`, `providerAvatar`, `providerId`
 
 ## QueueManagement
 
@@ -1300,6 +1485,16 @@
   - `--period` (query, default `TIME_PERIOD_UNSPECIFIED`, one of: TIME_PERIOD_UNSPECIFIED|TIME_PERIOD_HOUR|TIME_PERIOD_DAY|TIME_PERIOD_WEEK|TIME_PERIOD_MONTH): period
 - Output: list path `dataPoints`; columns `model`, `modelType`, `timestamp`
 
+### `dce llm-studio wsapikeymanagement get-wsapi-key-secret`
+
+- Summary: 当前 API 模式：WS
+- HTTP: `GET /apis/hydra.io/v1alpha1/workspaces/{workspace}/apikeys/{id}/secret`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
+  - `--id` (path, required): id
+
 ### `dce llm-studio wsapikeymanagement list-my-wsapi-keys`
 
 - Summary: 当前 API 模式：WS
@@ -1319,6 +1514,21 @@
 
 - Summary: 当前 API 模式：WS
 - HTTP: `GET /apis/hydra.io/v1alpha1/workspaces/{workspace}/apikeys`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+- Output: list path `items`; columns `name`, `creationTimestamp`, `id`, `createBy`, `disabled`, `expireTime`
+
+### `dce llm-studio wsapikeymanagement list-wsapi-key-masked`
+
+- Summary: 当前 API 模式：WS
+- HTTP: `GET /apis/hydra.io/v1alpha1/workspaces/{workspace}/masked-apikeys`
 - Auth: required
 - Body: none
 - Flags:
@@ -1385,7 +1595,7 @@
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
   - `--sort-by` (query): sortBy
   - `--sort-order` (query): sortOrder
-- Output: list path `items`; columns `modelName`, `cachedTokens`, `inputTokens`, `instanceId`, `instanceName`, `lastUsedTime`
+- Output: list path `items`; columns `modelName`, `apiKeyId`, `cachedTokens`, `inputTokens`, `instanceName`, `lastUsedTime`
 
 ### `dce llm-studio wsdashboardmanagement list-ws-user-token-usage`
 
@@ -2112,7 +2322,7 @@
   - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `creationTimestamp`, `modelName`, `finetune`, `modelAvatar`, `modelDeploymentsExists`, `modelId`
+- Output: list path `items`; columns `creationTimestamp`, `modelName`, `contextLength`, `finetune`, `modelAvatar`, `modelDeploymentsExists`
 
 ### `dce llm-studio wsmodelmanagement list-ws-models`
 
@@ -2127,7 +2337,7 @@
   - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `creationTimestamp`, `modelName`, `finetune`, `modelAvatar`, `modelDeploymentsExists`, `modelId`
+- Output: list path `items`; columns `creationTimestamp`, `modelName`, `contextLength`, `finetune`, `modelAvatar`, `modelDeploymentsExists`
 
 ### `dce llm-studio wsmodelmanagement update-private-model`
 
@@ -2194,6 +2404,15 @@
   - `--workspace` (path, required, int32): workspace
   - `--id` (path, required): id
 - Output: list path `configMapMounts`; columns `configMapName`, `mountPath`, `subPath`
+
+### `dce llm-studio wsmodelservingmanagement list-builtin-env-vars`
+
+- Summary: 当前 API 模式：WS
+- HTTP: `GET /apis/hydra.io/v1alpha1/model-serving/builtin-env-vars`
+- Auth: required
+- Body: none
+- Flags: none
+- Output: list path `leader`; columns `name`, `example`
 
 ### `dce llm-studio wsmodelservingmanagement list-ws-model-serving`
 
@@ -2272,6 +2491,7 @@
   - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+  - `--distributed` (query): 过滤条件：true=只返回分布式模板, false=只返回单机模板, 不传=返回全部
 - Output: list path `items`; columns `creationTimestamp`, `modelId`, `templateId`, `updateTimestamp`, `workspace`
 
 ### `dce llm-studio wsmodeltemplatemanagement update-ws-model-template`
