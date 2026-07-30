@@ -21,13 +21,14 @@ sources:
 
   insight:
     display_name: insight
-    repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    # pinned to main HEAD as of 2026-05-11; bump when upgrading kpanda version
-    pinned_tag: 4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3
+    # Vendored from insight@v0.43.0-rc9 (gitlab.daocloud.cn/ndx/engineering/insight/insight,
+    # api/assets/swagger/v1alpha1/insight.swagger.json) because the internal GitLab is not
+    # reachable from CI and daocloud-api-docs still ships v0.41.0.
+    local_path: ..
     backend: swagger
     swagger:
       files:
-        - docs/openapi/insight/v0.41.0.json
+        - specs/insight/insight.swagger.json
 
   gmagpie:
     display_name: operations-management
@@ -190,3 +191,23 @@ sources:
     swagger:
       files:
         - specs/crane/crane.swagger.json
+
+  agentclaw:
+    display_name: agentclaw
+    # Vendored from agentclaw@v0.5.0 (gitlab.daocloud.cn/ndx/engineering/clawos/agentclaw,
+    # api/openapiv2/**). Not published in daocloud-api-docs. protoc-gen-openapiv2 emits one
+    # file per proto package; the definition-only files (page/types/permission/skill_types)
+    # are omitted since every file inlines the definitions it needs.
+    local_path: ..
+    backend: swagger
+    swagger:
+      files:
+        - specs/agentclaw/agent.swagger.json
+        - specs/agentclaw/skill.swagger.json
+        - specs/agentclaw/skill_publish.swagger.json
+        - specs/agentclaw/workspace.swagger.json
+        - specs/agentclaw/user.swagger.json
+        - specs/agentclaw/model.swagger.json
+        - specs/agentclaw/networkpolicy.swagger.json
+        - specs/agentclaw/overview.swagger.json
+        - specs/agentclaw/feature_gate.swagger.json

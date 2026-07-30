@@ -1,0 +1,209 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "v1alpha1/user/user.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "UserService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/apis/agentclaw.io/v1alpha1/current-user": {
+      "get": {
+        "operationId": "UserService_GetCurrentUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetCurrentUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/current-user/platform-permissions": {
+      "get": {
+        "operationId": "UserService_GetCurrentUserPlatformPermissions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetCurrentUserPlatformPermissionsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspaceId}/current-user/permissions": {
+      "get": {
+        "summary": "GetCurrentUserPermissions",
+        "description": "如果该用户有平台级权限 PLATFORM_AGENT_WS_MANAGE，\n这个 API 会返回 AGENT_WS_MANAGE 权限点\n该枚举值仅为前端使用方便而存在，不代表 Ghippo 真有这样一个 workspace 权限点。",
+        "operationId": "UserService_GetCurrentUserPermissions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetCurrentUserWorkspacePermissionsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        }
+      },
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "typesPlatformPermission": {
+      "type": "string",
+      "enum": [
+        "PLATFORM_PERMISSION_UNSPECIFIED",
+        "PLATFORM_AGENT_GET",
+        "PLATFORM_AGENT_CREATE",
+        "PLATFORM_AGENT_UPDATE",
+        "PLATFORM_AGENT_DELETE",
+        "PLATFORM_AGENT_WS_LIST",
+        "PLATFORM_AGENT_WS_MANAGE",
+        "PLATFORM_SKILL_MARKET_GET",
+        "PLATFORM_OVERVIEW_GET",
+        "ADMIN_OVERVIEW_GET",
+        "ADMIN_SKILL_GET",
+        "ADMIN_SKILL_CREATE",
+        "ADMIN_SKILL_UPDATE",
+        "ADMIN_SKILL_DELETE",
+        "ADMIN_SKILL_REVIEW",
+        "PLATFORM_NETWORKPOLICY_GET",
+        "NETWORKPOLICY_CREATE",
+        "NETWORKPOLICY_UPDATE",
+        "NETWORKPOLICY_DELETE"
+      ],
+      "default": "PLATFORM_PERMISSION_UNSPECIFIED",
+      "description": "- PLATFORM_PERMISSION_UNSPECIFIED: 未指定\n - PLATFORM_AGENT_GET: \"agentclaw.agent.get\"\n - PLATFORM_AGENT_CREATE: \"agentclaw.agent.create\"\n - PLATFORM_AGENT_UPDATE: \"agentclaw.agent.update\"\n - PLATFORM_AGENT_DELETE: \"agentclaw.agent.delete\"\n - PLATFORM_AGENT_WS_LIST: \"agentclaw.agent.ws-agent-list\"\n - PLATFORM_AGENT_WS_MANAGE: \"agentclaw.agent.ws-agent-manage\"\n - PLATFORM_SKILL_MARKET_GET: \"agentclaw.skill-market.get\"\n - PLATFORM_OVERVIEW_GET: \"agentclaw.overview.get\"\n - ADMIN_OVERVIEW_GET: \"agentclaw.admin-overview.get\"\n - ADMIN_SKILL_GET: \"agentclaw.admin-skill.get\"\n - ADMIN_SKILL_CREATE: \"agentclaw.admin-skill.create\"\n - ADMIN_SKILL_UPDATE: \"agentclaw.admin-skill.update\"\n - ADMIN_SKILL_DELETE: \"agentclaw.admin-skill.delete\"\n - ADMIN_SKILL_REVIEW: \"agentclaw.admin-skill.review\"\n\n平台管理员审核全部 namespace 的 Skill；依赖 admin-skill.get。\n与 workspace 的 skill.review 区分：后者只覆盖本 workspace 映射的 namespace。\n - PLATFORM_NETWORKPOLICY_GET: \"agentclaw.networkpolicy.get\"\n与 ws 角色共有权限点\n - NETWORKPOLICY_CREATE: \"agentclaw.networkpolicy.create\"\n - NETWORKPOLICY_UPDATE: \"agentclaw.networkpolicy.update\"\n - NETWORKPOLICY_DELETE: \"agentclaw.networkpolicy.delete\"",
+      "title": "PlatformPermission platform 作用域下的权限点。\n命令规则跟随 charts/agentclaw/templates/ghippo/permissions.yaml 的定义：agentclaw.admin-skill.get\n枚举中使用：资源名称_动作，比如 ADMIN_SKILL_GET\n如果平台角色和 ws 角色都有的权限点，平台角色权限点前加：PLATFORM_，比如：PLATFORM_AGENT_GET"
+    },
+    "typesWorkspacePermission": {
+      "type": "string",
+      "enum": [
+        "WORKSPACE_PERMISSION_UNSPECIFIED",
+        "AGENT_GET",
+        "AGENT_CREATE",
+        "AGENT_UPDATE",
+        "AGENT_DELETE",
+        "AGENT_WS_LIST",
+        "AGENT_WS_MANAGE",
+        "SKILL_MARKET_GET",
+        "OVERVIEW_GET",
+        "NETWORKPOLICY_GET",
+        "SKILL_GET",
+        "SKILL_CREATE",
+        "SKILL_UPDATE",
+        "SKILL_DELETE",
+        "SKILL_REVIEW"
+      ],
+      "default": "WORKSPACE_PERMISSION_UNSPECIFIED",
+      "description": "- WORKSPACE_PERMISSION_UNSPECIFIED: 未指定\n - AGENT_GET: \"agentclaw.agent.get\"\n - AGENT_CREATE: \"agentclaw.agent.create\"\n - AGENT_UPDATE: \"agentclaw.agent.update\"\n - AGENT_DELETE: \"agentclaw.agent.delete\"\n - AGENT_WS_LIST: \"agentclaw.agent.ws-agent-list\"\n - AGENT_WS_MANAGE: \"agentclaw.agent.ws-agent-manage\"\n\n注意：该权限点在后端实际上是 *平台级* 权限（PLATFORM_AGENT_WS_MANAGE），\n并不属于 workspace 作用域。\n该枚举值仅为前端使用方便而存在，不代表 Ghippo 真有这样一个 workspace 权限点。\n - SKILL_MARKET_GET: \"agentclaw.skill-market.get\"\n - OVERVIEW_GET: \"agentclaw.overview.get\"\n - NETWORKPOLICY_GET: \"agentclaw.networkpolicy.get\"\n - SKILL_GET: \"agentclaw.skill.get\"\n - SKILL_CREATE: \"agentclaw.skill.create\"\n - SKILL_UPDATE: \"agentclaw.skill.update\"\n - SKILL_DELETE: \"agentclaw.skill.delete\"\n - SKILL_REVIEW: \"agentclaw.skill.review\"",
+      "title": "WorkspacePermission workspace 作用域下的权限点。\n命令规则跟随 charts/agentclaw/templates/ghippo/permissions.yaml 的定义：agentclaw.agent.get\n枚举中使用：资源名称_动作，比如 AGENT_GET"
+    },
+    "userGetCurrentUserPlatformPermissionsResponse": {
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/typesPlatformPermission"
+          }
+        }
+      }
+    },
+    "userGetCurrentUserResponse": {
+      "type": "object",
+      "properties": {
+        "isAdmin": {
+          "type": "boolean"
+        }
+      }
+    },
+    "userGetCurrentUserWorkspacePermissionsResponse": {
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/typesWorkspacePermission"
+          }
+        }
+      }
+    }
+  }
+}

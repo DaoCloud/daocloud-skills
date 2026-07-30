@@ -1,0 +1,128 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Skill Publish",
+    "description": "手写（PublishSkill 不在 proto，protoc 不生成）。置于 api/openapiv2/ 根目录，make genproto 只写 v1alpha1/ 子目录，不会覆盖本文件。",
+    "version": "v1alpha1"
+  },
+  "tags": [
+    { "name": "SkillService" }
+  ],
+  "consumes": ["multipart/form-data"],
+  "produces": ["application/json"],
+  "paths": {
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/skills/publish": {
+      "post": {
+        "summary": "PublishSkill",
+        "description": "上传 zip 发布 skill。workspace=global 表示平台发布；workspace=<workspaceID> 表示租户发布，后端映射到 ws-<workspaceID>。slug/summary/version 会覆盖包内 SKILL.md frontmatter 的 name/description/version。",
+        "operationId": "SkillService_PublishSkill",
+        "tags": ["SkillService"],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "发布目标：global 或纯数字 workspace ID。"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer JWT。"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": "Skill 包 zip，上限 100MB。"
+          },
+          {
+            "name": "slug",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": "覆盖包内 name，留空用包内原值。"
+          },
+          {
+            "name": "summary",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": "覆盖包内 description，支持 UTF-8。"
+          },
+          {
+            "name": "version",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "description": "覆盖包内 version。"
+          },
+          {
+            "name": "visibility",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SKILL_VISIBILITY_PUBLIC",
+              "SKILL_VISIBILITY_PRIVATE",
+              "SKILL_VISIBILITY_NAMESPACE_ONLY"
+            ],
+            "default": "SKILL_VISIBILITY_PUBLIC",
+            "description": "完整枚举名，空时默认 PUBLIC。"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "发布成功",
+            "schema": { "$ref": "#/definitions/skillPublishResult" }
+          },
+          "400": {
+            "description": "非法 zip / 非法 visibility / 缺 file / Skill Hub 业务校验失败",
+            "schema": { "$ref": "#/definitions/skillUploadError" }
+          },
+          "401": {
+            "description": "缺失或非法 Authorization",
+            "schema": { "$ref": "#/definitions/skillUploadError" }
+          },
+          "413": {
+            "description": "请求体超过 128MB",
+            "schema": { "$ref": "#/definitions/skillUploadError" }
+          },
+          "424": {
+            "description": "Skill Hub 集成未启用",
+            "schema": { "$ref": "#/definitions/skillUploadError" }
+          },
+          "502": {
+            "description": "调用 Skill Hub 上游失败",
+            "schema": { "$ref": "#/definitions/skillUploadError" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "skillPublishResult": {
+      "type": "object",
+      "properties": {
+        "skillId": { "type": "integer", "format": "int64" },
+        "namespace": { "type": "string" },
+        "slug": { "type": "string" },
+        "version": { "type": "string" },
+        "status": { "type": "string" },
+        "fileCount": { "type": "integer", "format": "int32" },
+        "totalSize": { "type": "integer", "format": "int64" }
+      }
+    },
+    "skillUploadError": {
+      "type": "object",
+      "properties": {
+        "error": { "type": "string" }
+      }
+    }
+  }
+}

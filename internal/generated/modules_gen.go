@@ -3,6 +3,7 @@
 package generated
 
 import (
+	agentclaw "github.com/DaoCloud/daocloud-skills/internal/generated/agentclaw"
 	amamba "github.com/DaoCloud/daocloud-skills/internal/generated/amamba"
 	baize "github.com/DaoCloud/daocloud-skills/internal/generated/baize"
 	crane "github.com/DaoCloud/daocloud-skills/internal/generated/crane"
@@ -37,6 +38,9 @@ func Mount(root *cobra.Command) error {
 // are compiled into this binary. main.go wires this call after
 // app.NewApp() so the framework package never imports downstream code.
 func MountModules(root *cobra.Command) error {
+	if err := agentclaw.Mount(root); err != nil {
+		return err
+	}
 	if err := amamba.Mount(root); err != nil {
 		return err
 	}

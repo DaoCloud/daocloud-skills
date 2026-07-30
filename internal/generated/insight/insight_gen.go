@@ -217,7 +217,7 @@ var Specs = []runtime.CommandSpec{
 		Method:      "DELETE",
 		PathTpl:     "/apis/insight.io/v1alpha1/alert/providers/{name}",
 		Params: []runtime.ParamSpec{
-			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
+			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "ProviderType type = 2 [ (validate.rules).enum.defined_only = true ]; (path, required)", Required: true},
 		},
 	},
 	{
@@ -312,6 +312,18 @@ var Specs = []runtime.CommandSpec{
 	},
 	{
 		Group:       "Alert",
+		Use:         "get-group-yaml",
+		Short:       "Alert_GetGroupYAML",
+		OperationID: "Alert_GetGroupYAML",
+		Method:      "GET",
+		PathTpl:     "/apis/insight.io/v1alpha1/alert/groups/{id}/yaml",
+		Params: []runtime.ParamSpec{
+			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
+			{Name: "ruleIds", Flag: "rule-ids", In: "query", GoType: "[]string", Help: "ruleIds (query)", Required: false},
+		},
+	},
+	{
+		Group:       "Alert",
 		Use:         "get-inhibition",
 		Short:       "Get an inhibition by ID",
 		Example:     "dce insight alert get-inhibition --id <iid>\ndce insight alert get-inhibition --id <iid> -o json\n",
@@ -332,7 +344,7 @@ var Specs = []runtime.CommandSpec{
 		Method:      "GET",
 		PathTpl:     "/apis/insight.io/v1alpha1/alert/providers/{name}",
 		Params: []runtime.ParamSpec{
-			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
+			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "ProviderType type = 2 [ (validate.rules).enum.defined_only = true ]; (path, required)", Required: true},
 		},
 	},
 	{
@@ -424,6 +436,33 @@ var Specs = []runtime.CommandSpec{
 			{Name: "status", Flag: "status", In: "query", GoType: "[]string", Help: "filter by alert's status (query)", Required: false},
 		},
 		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "id", "builtin", "clusterName", "description", "groupId"}, Pagination: &runtime.PaginationHint{
+			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
+		},
+		},
+	},
+	{
+		Group:       "Alert",
+		Use:         "list-firing-rules",
+		Short:       "Alert_ListFiringRules",
+		OperationID: "Alert_ListFiringRules",
+		Method:      "GET",
+		PathTpl:     "/apis/insight.io/v1alpha1/alert/alerts/firing-rules",
+		Params: []runtime.ParamSpec{
+			{Name: "expandAlerts", Flag: "expand-alerts", In: "query", GoType: "bool", Help: "When true, each FiringRule includes its alerts list (full per-alert rows). (query)", Required: false},
+			{Name: "groupName", Flag: "group-name", In: "query", GoType: "string", Help: "filter alerts by group name fuzzily (query)", Required: false},
+			{Name: "groupId", Flag: "group-id", In: "query", GoType: "string", Help: "filter alerts by group id (query)", Required: false},
+			{Name: "ruleName", Flag: "rule-name", In: "query", GoType: "string", Help: "filter alerts by rule name fuzzily (query)", Required: false},
+			{Name: "ruleId", Flag: "rule-id", In: "query", GoType: "string", Help: "filter alerts by rule id (query)", Required: false},
+			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "filter alerts by cluster name (query)", Required: false},
+			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "filter alerts by namespace (query)", Required: false},
+			{Name: "severity", Flag: "severity", In: "query", GoType: "string", Help: "filter alerts by severity (query, one of: SEVERITY_UNSPECIFIED|CRITICAL|WARNING|INFO)", Required: false, Default: "SEVERITY_UNSPECIFIED", Enum: []string{"SEVERITY_UNSPECIFIED", "CRITICAL", "WARNING", "INFO"}},
+			{Name: "targetType", Flag: "target-type", In: "query", GoType: "string", Help: "filter alerts by target_type (query, one of: TARGET_TYPE_UNSPECIFIED|GLOBAL|CLUSTER|NAMESPACE|NODE|DEPLOYMENT|STATEFULSET|DAEMONSET|POD)", Required: false, Default: "TARGET_TYPE_UNSPECIFIED", Enum: []string{"TARGET_TYPE_UNSPECIFIED", "GLOBAL", "CLUSTER", "NAMESPACE", "NODE", "DEPLOYMENT", "STATEFULSET", "DAEMONSET", "POD"}},
+			{Name: "target", Flag: "target", In: "query", GoType: "string", Help: "filter alerts by target (query)", Required: false},
+			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Format: "int32"},
+			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Format: "int32"},
+			{Name: "sorts", Flag: "sorts", In: "query", GoType: "[]string", Help: "sorts determines the data list order, support multiple sort option. (query)", Required: false},
+		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"alertCount", "builtin", "groupId", "groupName", "latestStartAt", "ruleId"}, Pagination: &runtime.PaginationHint{
 			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
 		},
 		},
@@ -673,7 +712,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/insight.io/v1alpha1/alert/templates/preview",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dingtalk": &runtime.SchemaSpec{Type: "string"}, "email": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "subject": &runtime.SchemaSpec{Type: "string"}}}, "lark": &runtime.SchemaSpec{Type: "string"}, "message": &runtime.SchemaSpec{Type: "string"}, "webhook": &runtime.SchemaSpec{Type: "string"}, "wecom": &runtime.SchemaSpec{Type: "string"}}}, "data": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"alerts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "endsAt": &runtime.SchemaSpec{Type: "string"}, "fingerprint": &runtime.SchemaSpec{Type: "string"}, "generatorURL": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "startsAt": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}, "commonAnnotations": &runtime.SchemaSpec{Type: "object"}, "commonLabels": &runtime.SchemaSpec{Type: "object"}, "externalURL": &runtime.SchemaSpec{Type: "string"}, "groupKey": &runtime.SchemaSpec{Type: "string"}, "groupLabels": &runtime.SchemaSpec{Type: "object"}, "receiver": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}, "truncatedAlerts": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dingtalk": &runtime.SchemaSpec{Type: "string"}, "email": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "subject": &runtime.SchemaSpec{Type: "string"}}}, "lark": &runtime.SchemaSpec{Type: "string"}, "message": &runtime.SchemaSpec{Type: "string"}, "webhook": &runtime.SchemaSpec{Type: "string"}, "wecom": &runtime.SchemaSpec{Type: "string"}}}, "data": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"alerts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "endsAt": &runtime.SchemaSpec{Type: "string"}, "fingerprint": &runtime.SchemaSpec{Type: "string"}, "generatorURL": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "startsAt": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}, "commonAnnotations": &runtime.SchemaSpec{Type: "object"}, "commonLabels": &runtime.SchemaSpec{Type: "object"}, "externalURL": &runtime.SchemaSpec{Type: "string"}, "groupKey": &runtime.SchemaSpec{Type: "string"}, "groupLabels": &runtime.SchemaSpec{Type: "object"}, "notificationReason": &runtime.SchemaSpec{Type: "string"}, "receiver": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}, "truncatedAlerts": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -1003,6 +1042,15 @@ var Specs = []runtime.CommandSpec{
 	},
 	{
 		Group:       "Insight",
+		Use:         "get-preference-config",
+		Short:       "Insight_GetPreferenceConfig",
+		OperationID: "Insight_GetPreferenceConfig",
+		Method:      "GET",
+		PathTpl:     "/apis/insight.io/v1alpha1/config/preference",
+		Output:      runtime.OutputHints{ListPath: "errorRateThresholds"},
+	},
+	{
+		Group:       "Insight",
 		Use:         "get-userinfo",
 		Short:       "Get current user's Insight permissions and accessible resource types",
 		Example:     "dce insight insight get-userinfo\ndce insight insight get-userinfo -o json\n",
@@ -1044,7 +1092,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/insight.io/v1alpha1/log/export",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fields": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "maxLines": &runtime.SchemaSpec{Type: "integer"}, "queryLog": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "namespaceFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "traceIdSearch": &runtime.SchemaSpec{Type: "string"}, "workloadFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "workloadSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "sorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "fileFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "nodeFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}}, "queryLogContext": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"after": &runtime.SchemaSpec{Type: "integer"}, "before": &runtime.SchemaSpec{Type: "integer"}, "endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}}}, "nanotimestamp": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "container": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "pod": &runtime.SchemaSpec{Type: "string"}}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "file": &runtime.SchemaSpec{Type: "string"}, "node": &runtime.SchemaSpec{Type: "string"}}}}}, "sorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "type": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fields": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "maxLines": &runtime.SchemaSpec{Type: "integer"}, "queryLog": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "namespaceFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "traceIdSearch": &runtime.SchemaSpec{Type: "string"}, "workloadFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "workloadSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "sorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "fileFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "nodeFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}}, "queryLogContext": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"after": &runtime.SchemaSpec{Type: "integer"}, "before": &runtime.SchemaSpec{Type: "integer"}, "endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}}}, "nanotimestamp": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "container": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "pod": &runtime.SchemaSpec{Type: "string"}}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "file": &runtime.SchemaSpec{Type: "string"}, "node": &runtime.SchemaSpec{Type: "string"}}}}}, "sorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "timeZone": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2039,6 +2087,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "serviceName", Flag: "service-name", In: "query", GoType: "string", Help: "serviceName (query)", Required: false},
 			{Name: "operationName", Flag: "operation-name", In: "query", GoType: "string", Help: "operationName (query)", Required: false},
+			{Name: "tags", Flag: "tags", In: "query", GoType: "string", Help: "e.g. tags[host.name]=localhost&tags[url]=http://test/test (query)", Required: false},
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "e.g. 2022-06-24T08:00:47.850Z (query)", Required: false},
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "e.g. 2022-06-24T08:00:47.850Z (query)", Required: false},
 			{Name: "durationMin", Flag: "duration-min", In: "query", GoType: "string", Help: "Span min duration. such as \"300ms\", \"-1.5h\" or \"2h45m\". Valid time units are \"ns\", \"us\" (or \"µs\"), \"ms\", \"s\", \"m\", \"h\". (query)", Required: false},
@@ -2188,6 +2237,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Required. not default (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "Required. not default (query)", Required: false},
 			{Name: "serviceNames", Flag: "service-names", In: "query", GoType: "[]string", Help: "Optional. not default (query)", Required: false},
+			{Name: "tags", Flag: "tags", In: "query", GoType: "string", Help: "Support extension search (query)", Required: false},
 			{Name: "limit", Flag: "limit", In: "query", GoType: "int64", Help: "Optional. Default = 1000. (query, int32)", Required: false, Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Optional not default (query)", Required: false},
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "e.g. 2022-06-24T08:00:47.850Z (query)", Required: false},
@@ -2210,6 +2260,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Required. not default (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "Required. not default (query)", Required: false},
 			{Name: "serviceNames", Flag: "service-names", In: "query", GoType: "[]string", Help: "Optional. not default (query)", Required: false},
+			{Name: "tags", Flag: "tags", In: "query", GoType: "string", Help: "Support extension search (query)", Required: false},
 			{Name: "limit", Flag: "limit", In: "query", GoType: "int64", Help: "Optional. Default = 1000. (query, int32)", Required: false, Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Optional. not default (query)", Required: false},
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "e.g. 2022-06-24T08:00:47.850Z (query)", Required: false},
@@ -2285,7 +2336,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/insight.io/v1alpha1/jaeger/v2/spans/histogram",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "durationMax": &runtime.SchemaSpec{Type: "string"}, "durationMin": &runtime.SchemaSpec{Type: "string"}, "end": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "onlyErrorSpans": &runtime.SchemaSpec{Type: "boolean"}, "operationName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "sort": &runtime.SchemaSpec{Type: "string"}, "spanId": &runtime.SchemaSpec{Type: "string"}, "spanKinds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "tags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "traceId": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "durationMax": &runtime.SchemaSpec{Type: "string"}, "durationMin": &runtime.SchemaSpec{Type: "string"}, "end": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "onlyErrorSpans": &runtime.SchemaSpec{Type: "boolean"}, "onlyRootSpans": &runtime.SchemaSpec{Type: "boolean"}, "operationName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "sort": &runtime.SchemaSpec{Type: "string"}, "spanId": &runtime.SchemaSpec{Type: "string"}, "spanKinds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "tags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "traceId": &runtime.SchemaSpec{Type: "string"}}},
 		},
 		Output: runtime.OutputHints{ListPath: "countItems", DefaultColumns: []string{"error", "normal", "timestamp", "total"},
 		},
@@ -2300,9 +2351,21 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/insight.io/v1alpha1/jaeger/v2/spans",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "durationMax": &runtime.SchemaSpec{Type: "string"}, "durationMin": &runtime.SchemaSpec{Type: "string"}, "end": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "onlyErrorSpans": &runtime.SchemaSpec{Type: "boolean"}, "operationName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "sort": &runtime.SchemaSpec{Type: "string"}, "spanId": &runtime.SchemaSpec{Type: "string"}, "spanKinds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "tags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "traceId": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "durationMax": &runtime.SchemaSpec{Type: "string"}, "durationMin": &runtime.SchemaSpec{Type: "string"}, "end": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "onlyErrorSpans": &runtime.SchemaSpec{Type: "boolean"}, "onlyRootSpans": &runtime.SchemaSpec{Type: "boolean"}, "operationName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "sort": &runtime.SchemaSpec{Type: "string"}, "spanId": &runtime.SchemaSpec{Type: "string"}, "spanKinds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "tags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "traceId": &runtime.SchemaSpec{Type: "string"}}},
 		},
 		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "serviceName", "spanId"},
+		},
+	},
+	{
+		Group:       "Tracing",
+		Use:         "search-spans",
+		Short:       "Tracing_SearchSpans",
+		OperationID: "Tracing_SearchSpans",
+		Method:      "POST",
+		PathTpl:     "/apis/insight.io/v1alpha1/spans/search",
+		RequestBody: &runtime.RequestBody{
+			Required: true,
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "durationMax": &runtime.SchemaSpec{Type: "string"}, "durationMin": &runtime.SchemaSpec{Type: "string"}, "end": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "onlyErrorSpans": &runtime.SchemaSpec{Type: "boolean"}, "onlyRootSpans": &runtime.SchemaSpec{Type: "boolean"}, "operationName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "sort": &runtime.SchemaSpec{Type: "string"}, "spanId": &runtime.SchemaSpec{Type: "string"}, "spanKinds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "tags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "traceId": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{

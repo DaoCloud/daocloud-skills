@@ -1,0 +1,612 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "v1alpha1/overview/overview.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "OverviewService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/overview/running-state": {
+      "get": {
+        "summary": "运行状况",
+        "operationId": "OverviewService_GetOverviewRunningState",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/overviewGetRunningStateResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "rangeQuery.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.end",
+            "description": "end unix timestamp .e.g. 1697597347\ndefault now",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.step",
+            "description": "step time step in seconds; if unset, server calculates it from start and end.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "tags": [
+          "OverviewService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/overview/summary": {
+      "get": {
+        "summary": "overview 概览",
+        "operationId": "OverviewService_GetOverviewSummary",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/overviewGetSummaryResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "OverviewService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/overview/token-distribution": {
+      "get": {
+        "summary": "Token Distribution",
+        "operationId": "OverviewService_GetTokenDistribution",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/overviewGetTokenDistributionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "rangeQuery.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.end",
+            "description": "end unix timestamp .e.g. 1697597347\ndefault now",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.step",
+            "description": "step time step in seconds; if unset, server calculates it from start and end.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "tags": [
+          "OverviewService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/overview/top-user-instances": {
+      "get": {
+        "summary": "top user/instances",
+        "operationId": "OverviewService_ListTopUsersOrInstances",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/overviewGetTopStateResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "rankType",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "USER",
+              "INSTANCE"
+            ],
+            "default": "USER"
+          },
+          {
+            "name": "rangeQuery.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.end",
+            "description": "end unix timestamp .e.g. 1697597347\ndefault now",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "rangeQuery.step",
+            "description": "step time step in seconds; if unset, server calculates it from start and end.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "page",
+            "description": "分页页码，从 1 开始",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "description": "每页数量",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "OverviewService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "GetRunningStateResponseTokenUsageTrend": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewTrendPoint"
+          }
+        },
+        "output": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewTrendPoint"
+          }
+        },
+        "total": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewTrendPoint"
+          }
+        }
+      }
+    },
+    "GetTopStateRequestRankType": {
+      "type": "string",
+      "enum": [
+        "USER",
+        "INSTANCE"
+      ],
+      "default": "USER"
+    },
+    "overviewDistributionItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "分类名称 (e.g. \"GPT-4.5\", \"GPT-4\")"
+        },
+        "value": {
+          "type": "number",
+          "format": "double",
+          "title": "数值"
+        },
+        "percentage": {
+          "type": "number",
+          "format": "double",
+          "title": "占比百分比 (0~1 百分率)"
+        }
+      }
+    },
+    "overviewGetRunningStateResponse": {
+      "type": "object",
+      "properties": {
+        "tokenUsageCurrent": {
+          "$ref": "#/definitions/overviewTokenUsage",
+          "title": "当前 Token 使用量"
+        },
+        "totalTokenUsageChanges": {
+          "$ref": "#/definitions/overviewTokenUsage",
+          "title": "total Token 使用量 环比变化百分比 (可为负数，如 -15.23 表示下降 15.23%)"
+        },
+        "callTotal": {
+          "type": "number",
+          "format": "double",
+          "title": "总的调用次数"
+        },
+        "callTrendChanges": {
+          "type": "number",
+          "format": "double",
+          "title": "调用量环比变化百分比 (可为负数，如 -10.5 表示下降 10.5%)"
+        },
+        "callErrorsRate": {
+          "type": "number",
+          "format": "double",
+          "title": "调用错误率(0~1 百分率)"
+        },
+        "callErrorsRateTarget": {
+          "type": "number",
+          "format": "double",
+          "title": "写死 0.01"
+        },
+        "tokenUsageTrend": {
+          "$ref": "#/definitions/GetRunningStateResponseTokenUsageTrend",
+          "title": "Token 使用趋势数据点"
+        },
+        "callTrend": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewTrendPoint"
+          },
+          "title": "调用量趋势数据点"
+        }
+      }
+    },
+    "overviewGetSummaryResponse": {
+      "type": "object",
+      "properties": {
+        "activeUsers": {
+          "type": "integer",
+          "format": "int32",
+          "title": "活跃用户数"
+        },
+        "totalUsers": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户总数"
+        },
+        "activeUserChanges": {
+          "type": "number",
+          "format": "double",
+          "title": "活跃用户近七天数量差值 (本周数量 - 上周数量，可为负数)"
+        },
+        "tokenQuota": {
+          "type": "number",
+          "format": "double",
+          "title": "Token 总量 (配额)"
+        },
+        "usedTokens": {
+          "type": "number",
+          "format": "double",
+          "title": "Token 已使用量"
+        },
+        "tokenUsageRate": {
+          "type": "number",
+          "format": "double",
+          "title": "Token 使用百分比 (0-100)"
+        },
+        "tokenQuotaPeriod": {
+          "$ref": "#/definitions/overviewTokenQuotaPeriod",
+          "title": "配额周期"
+        },
+        "totalInstances": {
+          "type": "integer",
+          "format": "int32",
+          "title": "总实例数"
+        },
+        "runningInstances": {
+          "type": "integer",
+          "format": "int32",
+          "title": "用户实例数"
+        },
+        "abnormalInstances": {
+          "type": "integer",
+          "format": "int32",
+          "title": "异常实例数"
+        },
+        "apiKeyCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "API Keys 数量"
+        },
+        "apiKeyChanges": {
+          "type": "number",
+          "format": "double",
+          "title": "近七天数量差值 (本周数量 - 上周数量，可为负数)"
+        },
+        "tokenUsageToday": {
+          "type": "number",
+          "format": "double",
+          "title": "token 今日消耗量"
+        }
+      }
+    },
+    "overviewGetTokenDistributionResponse": {
+      "type": "object",
+      "properties": {
+        "tokenDistribution": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewDistributionItem"
+          },
+          "title": "Token 使用分布 (饼图数据)"
+        }
+      }
+    },
+    "overviewGetTopStateResponse": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "$ref": "#/definitions/overviewUserTopList"
+        },
+        "instances": {
+          "$ref": "#/definitions/overviewInstanceTopList"
+        },
+        "pagination": {
+          "$ref": "#/definitions/typesPagination"
+        }
+      }
+    },
+    "overviewInstanceTopList": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewTopInstanceItem"
+          }
+        }
+      }
+    },
+    "overviewRangeQuery": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "int64"
+        },
+        "end": {
+          "type": "string",
+          "format": "int64",
+          "title": "end unix timestamp .e.g. 1697597347\ndefault now"
+        },
+        "step": {
+          "type": "number",
+          "format": "double",
+          "description": "step time step in seconds; if unset, server calculates it from start and end."
+        }
+      }
+    },
+    "overviewTokenQuotaPeriod": {
+      "type": "string",
+      "enum": [
+        "TOKEN_QUOTA_PERIOD_UNSPECIFIED",
+        "TOKEN_QUOTA_PERIOD_DAY",
+        "TOKEN_QUOTA_PERIOD_WEEK",
+        "TOKEN_QUOTA_PERIOD_MONTH"
+      ],
+      "default": "TOKEN_QUOTA_PERIOD_UNSPECIFIED"
+    },
+    "overviewTokenUsage": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number",
+          "format": "double"
+        },
+        "input": {
+          "type": "number",
+          "format": "double"
+        },
+        "output": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "overviewTopInstanceItem": {
+      "type": "object",
+      "properties": {
+        "instanceName": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "tokenUsage": {
+          "type": "number",
+          "format": "double",
+          "title": "Token 使用量"
+        }
+      }
+    },
+    "overviewTopUserItem": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "tokenUsage": {
+          "type": "number",
+          "format": "double",
+          "title": "Token 使用量"
+        },
+        "instances": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "overviewTrendPoint": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "title": "Unix timestamp string (e.g. \"1697597347\")"
+        },
+        "value": {
+          "type": "number",
+          "format": "double",
+          "title": "数值"
+        }
+      }
+    },
+    "overviewUserTopList": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/overviewTopUserItem"
+          }
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        }
+      },
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "typesPagination": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pages": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Pagination 表示分页信息"
+    }
+  }
+}

@@ -1,0 +1,1595 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "v1alpha1/skill/skill.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SkillService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/apis/agentclaw.io/v1alpha1/skill-reviews/managed": {
+      "get": {
+        "summary": "ListSkillReviews 管理面：列出全部 namespace 的审核队列（平台 admin 用）。",
+        "operationId": "SkillService_ListSkillReviews",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillListSkillReviewsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "status",
+            "description": "审核状态过滤；空串默认 PENDING。",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skill-reviews/{namespace}/{reviewId}": {
+      "get": {
+        "summary": "GetSkillReview 查看单条审核详情（按 namespace 限定）。",
+        "operationId": "SkillService_GetSkillReview",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillGetSkillReviewResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skill-reviews/{namespace}/{reviewId}/approve": {
+      "post": {
+        "summary": "ApproveSkillReview 批准审核任务。",
+        "operationId": "SkillService_ApproveSkillReview",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillSkillReview"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SkillServiceApproveSkillReviewBody"
+            }
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skill-reviews/{namespace}/{reviewId}/reject": {
+      "post": {
+        "summary": "RejectSkillReview 拒绝审核任务。",
+        "operationId": "SkillService_RejectSkillReview",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillSkillReview"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SkillServiceRejectSkillReviewBody"
+            }
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/managed": {
+      "get": {
+        "summary": "ListManagedSkills 列出具有管理权限的skill",
+        "operationId": "SkillService_ListAdminManagedSkills",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillListAdminManagedSkillsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "description": "命名空间过滤，对应 Skill Hub 的 ?namespace= 查询参数。",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fuzzyName",
+            "description": "按名称模糊搜索（对应 Skill Hub 的 q 参数）",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "NEWEST"
+            ],
+            "default": "NEWEST"
+          },
+          {
+            "name": "page",
+            "description": "页码",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "description": "每页大小，默认 10",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/registry": {
+      "get": {
+        "summary": "GetSkillRegistry 返回前端拼装 `npx clawhub install ... --registry \u003curl\u003e` 所需的注册中心地址。",
+        "operationId": "SkillService_GetSkillRegistry",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillGetSkillRegistryResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/{namespace}/{slugId}/versions/{versionId}/security-audit": {
+      "get": {
+        "summary": "GetSkillSecurityAudit 获取该版本的最新安全审计结果。",
+        "operationId": "SkillService_GetSkillSecurityAudit",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillGetSkillSecurityAuditResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slugId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "versionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/{namespace}/{slug}": {
+      "get": {
+        "summary": "GetSkill 获取单个 skill 详情。",
+        "operationId": "SkillService_GetSkill",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillGetSkillResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      },
+      "delete": {
+        "summary": "DeleteSkill 永久删除一个 skill。",
+        "operationId": "SkillService_DeleteSkill",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/{namespace}/{slug}/listing": {
+      "post": {
+        "summary": "SetSkillListing 设置 skill 的上下架状态。\nlisted=true 上架（对应 Skill Hub 的 unarchive），listed=false 下架（对应 Skill Hub 的 archive）。",
+        "operationId": "SkillService_SetSkillListing",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillSetSkillListingResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SkillServiceSetSkillListingBody"
+            }
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/{namespace}/{slug}/versions": {
+      "get": {
+        "summary": "ListSkillVersions 列出该 skill 对调用方可见的版本。",
+        "operationId": "SkillService_ListSkillVersions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillListSkillVersionsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/{namespace}/{slug}/versions/{version}/file": {
+      "get": {
+        "summary": "GetSkillFile 文本文件预览。仅支持文本（markdown / yaml / 源码 / 配置 等）；\n内容直传 string，零膨胀。二进制 / 非 UTF-8 文件返回 FailedPrecondition，\n调用方应走 DownloadSkillFile。",
+        "operationId": "SkillService_GetSkillFile",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillGetSkillFileResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "包内文件相对路径，例如 \"README.md\"",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/{namespace}/{slug}/versions/{version}/file/download": {
+      "get": {
+        "summary": "DownloadSkillFile 下载版本内单个文件：返回原始字节，并通过\nContent-Disposition: attachment 让浏览器自动弹出下载（点下载图标即下载）。\n路径与预览口 /file 区分，互不影响。",
+        "operationId": "SkillService_DownloadSkillFile",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiHttpBody"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "包内文件相对路径，例如 \"assets/logo.png\"",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/{namespace}/{slug}/versions/{version}/files": {
+      "get": {
+        "summary": "ListSkillFiles 列出某个版本的打包文件。",
+        "operationId": "SkillService_ListSkillFiles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillListSkillFilesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "path",
+            "description": "目录路径，例如 \"src\"；空串表示根目录。仅返回该目录直接子层，不递归。",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/skills/{namespace}/{slug}/versions/{version}/overview": {
+      "get": {
+        "summary": "GetSkillOverview 返回 SKILL.md 的内容（已去除 frontmatter），用于 skill 详情页\"概览\"展示。",
+        "operationId": "SkillService_GetSkillOverview",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillGetSkillOverviewResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/skill-reviews": {
+      "get": {
+        "summary": "ListWorkspaceSkillReviews 列出某 workspace namespace 的审核队列（workspace reviewer 用）。",
+        "operationId": "SkillService_ListWorkspaceSkillReviews",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillListSkillReviewsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "status",
+            "description": "审核状态过滤；空串默认 PENDING。",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/skills": {
+      "get": {
+        "summary": "ListSkills 列出 skill，支持按命名空间、名称模糊搜索与分页。",
+        "operationId": "SkillService_ListSkills",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillListSkillsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "namespace",
+            "description": "命名空间过滤，对应 Skill Hub 的 ?namespace= 查询参数。",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fuzzyName",
+            "description": "按名称模糊搜索（对应 Skill Hub 的 q 参数）",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "NEWEST"
+            ],
+            "default": "NEWEST"
+          },
+          {
+            "name": "page",
+            "description": "页码",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "description": "每页大小，默认 10",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    },
+    "/apis/agentclaw.io/v1alpha1/workspaces/{workspace}/skills/managed": {
+      "get": {
+        "summary": "ListWorkspaceManagedSkills 列出当前用户在该 workspace 内可管理的 Skill。",
+        "operationId": "SkillService_ListWorkspaceManagedSkills",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skillListWorkspaceManagedSkillsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "fuzzyName",
+            "description": "按名称模糊搜索",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "NEWEST"
+            ],
+            "default": "NEWEST"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "SkillService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "SkillServiceApproveSkillReviewBody": {
+      "type": "object",
+      "properties": {
+        "comment": {
+          "type": "string",
+          "title": "可选审核意见。"
+        }
+      }
+    },
+    "SkillServiceRejectSkillReviewBody": {
+      "type": "object",
+      "properties": {
+        "comment": {
+          "type": "string",
+          "title": "拒绝原因。"
+        }
+      }
+    },
+    "SkillServiceSetSkillListingBody": {
+      "type": "object",
+      "properties": {
+        "listed": {
+          "type": "boolean",
+          "title": "目标上架状态：true=上架，false=下架"
+        }
+      },
+      "title": "SetSkillListingRequest 上下架请求。\nlisted=true 上架（BFF 调 Skill Hub 的 POST /unarchive）。\nlisted=false 下架（BFF 调 Skill Hub 的 POST /archive）。"
+    },
+    "apiHttpBody": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "description": "The HTTP Content-Type header value specifying the content type of the body."
+        },
+        "data": {
+          "type": "string",
+          "format": "byte",
+          "description": "The HTTP request/response body as raw binary."
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          },
+          "description": "Application specific response metadata. Must be set in the first response\nfor streaming APIs."
+        }
+      },
+      "description": "Message that represents an arbitrary HTTP body. It should only be used for\npayload formats that can't be represented as JSON, such as raw binary or\nan HTML page.\n\n\nThis message can be used both in streaming and non-streaming API methods in\nthe request as well as the response.\n\nIt can be used as a top-level request field, which is convenient if one\nwants to extract parameters from either the URL or HTTP template into the\nrequest fields and also want access to the raw HTTP body.\n\nExample:\n\n    message GetResourceRequest {\n      // A unique request id.\n      string request_id = 1;\n\n      // The raw HTTP body is bound to this field.\n      google.api.HttpBody http_body = 2;\n\n    }\n\n    service ResourceService {\n      rpc GetResource(GetResourceRequest)\n        returns (google.api.HttpBody);\n      rpc UpdateResource(google.api.HttpBody)\n        returns (google.protobuf.Empty);\n\n    }\n\nExample with streaming methods:\n\n    service CaldavService {\n      rpc GetCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n      rpc UpdateCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n\n    }\n\nUse of this type only changes how the request and response bodies are\nhandled, all other features will continue to work unchanged."
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com. As of May 2023, there are no widely used type server\nimplementations and no plans to implement one.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        }
+      },
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\n Example 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\n Example 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n====\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "skillGetSkillFileResponse": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "title": "文件 MIME（BFF 按扩展名推断，文本类带 charset=utf-8）。"
+        },
+        "text": {
+          "type": "string",
+          "title": "文件的 UTF-8 文本内容。"
+        },
+        "size": {
+          "type": "string",
+          "format": "int64",
+          "title": "原始字节数（前端可用于\"过大不预览\"判断）。"
+        }
+      },
+      "title": "GetSkillFileResponse 文本文件预览的结构化返回。"
+    },
+    "skillGetSkillOverviewResponse": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "title": "SKILL.md 的 markdown 内容（已去除 YAML/TOML frontmatter）。"
+        }
+      },
+      "title": "GetSkillOverviewResponse 返回 SKILL.md 去除 frontmatter 后的 markdown 文本。"
+    },
+    "skillGetSkillRegistryResponse": {
+      "type": "object",
+      "properties": {
+        "registryUrl": {
+          "type": "string",
+          "title": "Skill Hub 的对外注册中心 URL，例如 \"http://10.6.202.33:31272\""
+        }
+      }
+    },
+    "skillGetSkillResponse": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/skillSkillDetail"
+        }
+      }
+    },
+    "skillGetSkillReviewResponse": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/skillSkillReview"
+        }
+      }
+    },
+    "skillGetSkillSecurityAuditResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/skillSkillSecurityAudit"
+          }
+        }
+      }
+    },
+    "skillListAdminManagedSkillsResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/skillSkillSummary"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/typesPagination"
+        }
+      }
+    },
+    "skillListSkillFilesResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/skillSkillFile"
+          }
+        }
+      }
+    },
+    "skillListSkillReviewsResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/skillSkillReview"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/typesPagination"
+        }
+      }
+    },
+    "skillListSkillVersionsResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/skillSkillVersionItem"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/typesPagination"
+        }
+      }
+    },
+    "skillListSkillsResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/skillSkillSummary"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/typesPagination"
+        }
+      }
+    },
+    "skillListWorkspaceManagedSkillsResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/skillSkillSummary"
+          }
+        },
+        "pagination": {
+          "$ref": "#/definitions/typesPagination"
+        }
+      }
+    },
+    "skillSetSkillListingResponse": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "$ref": "#/definitions/skillSkillLifecycleVersion",
+          "title": "受影响的版本（如果有）"
+        },
+        "action": {
+          "type": "string",
+          "title": "操作类型，例如 \"ARCHIVE\" / \"UNARCHIVE\"，透传 Skill Hub 返回"
+        },
+        "status": {
+          "$ref": "#/definitions/skillSkillStatus",
+          "title": "操作后 skill 的全局状态"
+        },
+        "listed": {
+          "type": "boolean",
+          "title": "操作后 skill 是否处于上架状态（便于前端直接根据该字段刷新 UI）"
+        }
+      }
+    },
+    "skillSkillDetail": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "ownerId": {
+          "type": "string",
+          "title": "Skill Hub 的 owner 用户 id"
+        },
+        "ownerDisplayName": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "visibility": {
+          "$ref": "#/definitions/skillSkillVisibility"
+        },
+        "status": {
+          "$ref": "#/definitions/skillSkillStatus"
+        },
+        "downloadCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "starCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ratingAvg": {
+          "type": "string"
+        },
+        "ratingCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hidden": {
+          "type": "boolean",
+          "title": "是否被管理员隐藏"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "headlineVersion": {
+          "$ref": "#/definitions/skillSkillLifecycleVersion"
+        },
+        "publishedVersion": {
+          "$ref": "#/definitions/skillSkillLifecycleVersion"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64",
+          "title": "最近更新时间（unix 秒）。BFF 用 ListVersions 中 status=PUBLISHED 的最大\npublishedAt 近似（detail 本身不返回此字段）；无已发布版本时为 0。"
+        }
+      },
+      "title": "SkillDetail Skill 详情页字段。"
+    },
+    "skillSkillFile": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "filePath": {
+          "type": "string",
+          "title": "包内完整相对路径，例如 \"src/index.py\" / \"src\"（目录）"
+        },
+        "fileSize": {
+          "type": "string",
+          "format": "int64"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "isDir": {
+          "type": "boolean",
+          "title": "是否为目录"
+        },
+        "name": {
+          "type": "string",
+          "title": "展示名（path 的最后一段）"
+        }
+      },
+      "title": "SkillFile 某版本里的一个文件 / 目录条目（一层 entry）。\nis_dir=true 时：file_path 是目录完整路径，name 是目录名，其他字段为零值；\nis_dir=false 时：file_path 是包内完整路径，可用于 GetSkillFile / DownloadSkillFile。"
+    },
+    "skillSkillLifecycleVersion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/skillSkillVersionStatus"
+        }
+      },
+      "title": "SkillLifecycleVersion 简化版本指针，被 SkillSummary / SkillDetail / 管理响应复用。"
+    },
+    "skillSkillListSortType": {
+      "type": "string",
+      "enum": [
+        "NEWEST"
+      ],
+      "default": "NEWEST"
+    },
+    "skillSkillReview": {
+      "type": "object",
+      "properties": {
+        "reviewId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "title": "PENDING / APPROVED / REJECTED"
+        },
+        "submittedBy": {
+          "type": "string"
+        },
+        "submittedByName": {
+          "type": "string"
+        },
+        "reviewedBy": {
+          "type": "string"
+        },
+        "reviewedByName": {
+          "type": "string"
+        },
+        "reviewComment": {
+          "type": "string"
+        },
+        "submittedAt": {
+          "type": "string",
+          "format": "int64",
+          "title": "unix 秒"
+        },
+        "reviewedAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "title": "SkillReview 一条审核任务，对应 Skill Hub 的 ReviewTask。"
+    },
+    "skillSkillSecurityAudit": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "scanId": {
+          "type": "string"
+        },
+        "scannerType": {
+          "type": "string"
+        },
+        "verdict": {
+          "$ref": "#/definitions/skillSkillSecurityVerdict",
+          "title": "扫描结论；SCANNING / SCAN_FAILED 由 BFF 合成"
+        },
+        "isSafe": {
+          "type": "boolean"
+        },
+        "maxSeverity": {
+          "$ref": "#/definitions/skillSkillSecuritySeverity",
+          "title": "本次扫描所有 findings 中的最高严重级别"
+        },
+        "findingsCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/skillSkillSecurityFinding"
+          }
+        },
+        "scanDurationSeconds": {
+          "type": "number",
+          "format": "double"
+        },
+        "scannedAt": {
+          "type": "string",
+          "format": "int64"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "title": "SkillSecurityAudit 一次安全扫描的结果。"
+    },
+    "skillSkillSecurityFinding": {
+      "type": "object",
+      "properties": {
+        "ruleId": {
+          "type": "string",
+          "title": "规则 ID，例如 \"MANIFEST_MISSING_LICENSE\""
+        },
+        "severity": {
+          "$ref": "#/definitions/skillSkillSecuritySeverity",
+          "title": "严重级别"
+        },
+        "category": {
+          "type": "string",
+          "title": "类别，例如 \"policy_violation\"、\"vulnerability\""
+        },
+        "title": {
+          "type": "string",
+          "title": "标题"
+        },
+        "message": {
+          "type": "string",
+          "title": "详细说明（Skill Hub 字段名就是 message）"
+        },
+        "filePath": {
+          "type": "string",
+          "title": "关联文件路径，例如 \"SKILL.md\""
+        },
+        "lineNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "行号；0 表示无特定行（文件级 finding）"
+        },
+        "codeSnippet": {
+          "type": "string",
+          "title": "触发该 finding 的代码片段，无则为空"
+        },
+        "remediation": {
+          "type": "string",
+          "title": "修复建议"
+        },
+        "analyzer": {
+          "type": "string",
+          "title": "分析器类型，例如 \"static\" / \"dynamic\""
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "扫描器自由格式的附加元数据（Skill Hub 那边是 Map\u003cString, Object\u003e，\n这里统一字符串化，需要嵌套时由生产方序列化后塞 value）"
+        }
+      },
+      "title": "SkillSecurityFinding 单条审计发现。\n字段与 Skill Hub `com.iflytek.skillhub.domain.security.SecurityFinding` 一一对应。"
+    },
+    "skillSkillSecuritySeverity": {
+      "type": "string",
+      "enum": [
+        "SKILL_SECURITY_SEVERITY_UNSPECIFIED",
+        "SKILL_SECURITY_SEVERITY_INFO",
+        "SKILL_SECURITY_SEVERITY_LOW",
+        "SKILL_SECURITY_SEVERITY_MEDIUM",
+        "SKILL_SECURITY_SEVERITY_HIGH",
+        "SKILL_SECURITY_SEVERITY_CRITICAL"
+      ],
+      "default": "SKILL_SECURITY_SEVERITY_UNSPECIFIED",
+      "title": "SkillSecuritySeverity 安全扫描严重级别。\n同时用于 SkillSecurityAudit.max_severity 与 SkillSecurityFinding.severity。\n数值从轻到重排列；前端 SeverityBadge 按等级染色。"
+    },
+    "skillSkillSecurityVerdict": {
+      "type": "string",
+      "enum": [
+        "SKILL_SECURITY_VERDICT_UNSPECIFIED",
+        "SKILL_SECURITY_VERDICT_SAFE",
+        "SKILL_SECURITY_VERDICT_SUSPICIOUS",
+        "SKILL_SECURITY_VERDICT_DANGEROUS",
+        "SKILL_SECURITY_VERDICT_BLOCKED",
+        "SKILL_SECURITY_VERDICT_SCAN_FAILED",
+        "SKILL_SECURITY_VERDICT_SCANNING"
+      ],
+      "default": "SKILL_SECURITY_VERDICT_UNSPECIFIED",
+      "title": "SkillSecurityVerdict 安全扫描结论。\n来自 Skill Hub 后端的 SecurityVerdict 枚举\n前端 VerdictBadge 仅依赖本字段决定颜色与文案。"
+    },
+    "skillSkillStatus": {
+      "type": "string",
+      "enum": [
+        "SKILL_STATUS_UNSPECIFIED",
+        "SKILL_STATUS_ACTIVE",
+        "SKILL_STATUS_ARCHIVED",
+        "SKILL_STATUS_HIDDEN",
+        "SKILL_STATUS_PENDING_REVIEW"
+      ],
+      "default": "SKILL_STATUS_UNSPECIFIED",
+      "description": "- SKILL_STATUS_PENDING_REVIEW: Skill has a version waiting for review and is not active yet.",
+      "title": "SkillStatus Skill 全局状态（来自 Skill Hub 的 Skill.status 枚举）。"
+    },
+    "skillSkillSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "slug": {
+          "type": "string",
+          "title": "全局唯一 slug"
+        },
+        "displayName": {
+          "type": "string",
+          "title": "展示用名称"
+        },
+        "summary": {
+          "type": "string",
+          "title": "简介"
+        },
+        "status": {
+          "$ref": "#/definitions/skillSkillStatus"
+        },
+        "downloadCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "starCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ratingAvg": {
+          "type": "string"
+        },
+        "ratingCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "versionCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "creator": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "int64",
+          "title": "最近更新时间（unix 秒）"
+        },
+        "headlineVersion": {
+          "$ref": "#/definitions/skillSkillLifecycleVersion",
+          "title": "headline 版本（用于\"最新可见版本\"展示）"
+        },
+        "publishedVersion": {
+          "$ref": "#/definitions/skillSkillLifecycleVersion",
+          "title": "当前发布版本"
+        },
+        "pendingReview": {
+          "type": "boolean",
+          "title": "是否有处于审核中（PENDING_REVIEW）的版本，前端据此展示\"审核中\"状态。"
+        }
+      },
+      "title": "SkillSummary 列表/搜索结果中的精简视图。"
+    },
+    "skillSkillVersionItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "version": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/skillSkillVersionStatus"
+        },
+        "changelog": {
+          "type": "string"
+        },
+        "fileCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalSize": {
+          "type": "string",
+          "format": "int64"
+        },
+        "publishedAt": {
+          "type": "string",
+          "format": "int64",
+          "title": "发布时间（unix 秒，0 表示未发布）"
+        },
+        "downloadAvailable": {
+          "type": "boolean"
+        }
+      },
+      "title": "SkillVersionItem 版本列表条目。"
+    },
+    "skillSkillVersionStatus": {
+      "type": "string",
+      "enum": [
+        "SKILL_VERSION_STATUS_UNSPECIFIED",
+        "SKILL_VERSION_STATUS_DRAFT",
+        "SKILL_VERSION_STATUS_REVIEW",
+        "SKILL_VERSION_STATUS_PUBLISHED",
+        "SKILL_VERSION_STATUS_YANKED"
+      ],
+      "default": "SKILL_VERSION_STATUS_UNSPECIFIED",
+      "description": "- SKILL_VERSION_STATUS_DRAFT: 草稿：owner 上传后未提交审核（管理/作者可见）\n - SKILL_VERSION_STATUS_REVIEW: 审核中：已提交未发布\n - SKILL_VERSION_STATUS_PUBLISHED: 已发布：可被普通用户下载安装\n - SKILL_VERSION_STATUS_YANKED: 已撤回：曾发布但被作者撤销（包管理生态的 \"yank\" 语义）。",
+      "title": "SkillVersionStatus Skill 版本生命周期状态。\n前端用这个状态决定两件事：\n  - 市场视角：是否对 YANKED 版本加\"已撤回\"提示\n  - 管理视角：admin 列表里启用/禁用对应版本的操作按钮\n已删除（DELETED）的版本 Skill Hub list/get 不会返回，因此本枚举不暴露这个值。"
+    },
+    "skillSkillVisibility": {
+      "type": "string",
+      "enum": [
+        "SKILL_VISIBILITY_UNSPECIFIED",
+        "SKILL_VISIBILITY_PUBLIC",
+        "SKILL_VISIBILITY_PRIVATE",
+        "SKILL_VISIBILITY_NAMESPACE_ONLY"
+      ],
+      "default": "SKILL_VISIBILITY_UNSPECIFIED",
+      "title": "SkillVisibility 表示 skill 的可见范围。\n当前 AgentClaw 仅消费 global namespace 的 PUBLIC skill。"
+    },
+    "typesPagination": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pages": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Pagination 表示分页信息"
+    }
+  }
+}

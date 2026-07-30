@@ -3,10 +3,9 @@
 ## Source
 
 - Backend: `swagger`
-- Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3`
-- Files: `docs/openapi/insight/v0.41.0.json`
-- Resolved SHA: `4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3`
+- Repository: `unknown`
+- Pinned tag: ``unknown``
+- Files: `specs/insight/insight.swagger.json`
 
 ## Alert
 
@@ -315,7 +314,7 @@ echo '{
 - Auth: required
 - Body: none
 - Flags:
-  - `--name` (path, required): name
+  - `--name` (path, required): ProviderType type = 2 [ (validate.rules).enum.defined_only = true ];
 - Example: `dce insight alert delete-provider --name aliyun-sms`
 
 ### `dce insight alert delete-receiver`
@@ -401,6 +400,16 @@ dce insight alert get-group --id <gid> -o json
   - `--name` (path, required): required; name is rule name
 - Example: `dce insight alert get-group-rule --id <gid> --name HighCPU`
 
+### `dce insight alert get-group-yaml`
+
+- Summary: Alert_GetGroupYAML
+- HTTP: `GET /apis/insight.io/v1alpha1/alert/groups/{id}/yaml`
+- Auth: required
+- Body: none
+- Flags:
+  - `--id` (path, required): id
+  - `--rule-ids` (query): ruleIds
+
 ### `dce insight alert get-inhibition`
 
 - Summary: Get an inhibition by ID
@@ -424,7 +433,7 @@ dce insight alert get-inhibition --id <iid> -o json
 - Auth: required
 - Body: none
 - Flags:
-  - `--name` (path, required): name
+  - `--name` (path, required): ProviderType type = 2 [ (validate.rules).enum.defined_only = true ];
 - Example:
 
 ```
@@ -543,6 +552,28 @@ dce insight alert list-alerts --resolved=true --page 1 --page-size 50 -o json
 # Filter by group / rule
 dce insight alert list-alerts --group-id <gid> --rule-name "HighCPU"
 ```
+
+### `dce insight alert list-firing-rules`
+
+- Summary: Alert_ListFiringRules
+- HTTP: `GET /apis/insight.io/v1alpha1/alert/alerts/firing-rules`
+- Auth: required
+- Body: none
+- Flags:
+  - `--expand-alerts` (query): When true, each FiringRule includes its alerts list (full per-alert rows).
+  - `--group-name` (query): filter alerts by group name fuzzily
+  - `--group-id` (query): filter alerts by group id
+  - `--rule-name` (query): filter alerts by rule name fuzzily
+  - `--rule-id` (query): filter alerts by rule id
+  - `--cluster-name` (query): filter alerts by cluster name
+  - `--namespace` (query): filter alerts by namespace
+  - `--severity` (query, default `SEVERITY_UNSPECIFIED`, one of: SEVERITY_UNSPECIFIED|CRITICAL|WARNING|INFO): filter alerts by severity
+  - `--target-type` (query, default `TARGET_TYPE_UNSPECIFIED`, one of: TARGET_TYPE_UNSPECIFIED|GLOBAL|CLUSTER|NAMESPACE|NODE|DEPLOYMENT|STATEFULSET|DAEMONSET|POD): filter alerts by target_type
+  - `--target` (query): filter alerts by target
+  - `--page` (query, int32): Page is current page.
+  - `--page-size` (query, int32): Size is the data number shown per page.
+  - `--sorts` (query): sorts determines the data list order, support multiple sort option.
+- Output: list path `items`; columns `alertCount`, `builtin`, `groupId`, `groupName`, `latestStartAt`, `ruleId`; pagination `offset`
 
 ### `dce insight alert list-group-rules`
 
@@ -1319,6 +1350,15 @@ echo '{
   }
 }' | dce insight insight get-helm-install-config --file -
 ```
+
+### `dce insight insight get-preference-config`
+
+- Summary: Insight_GetPreferenceConfig
+- HTTP: `GET /apis/insight.io/v1alpha1/config/preference`
+- Auth: required
+- Body: none
+- Flags: none
+- Output: list path `errorRateThresholds`
 
 ### `dce insight insight get-userinfo`
 
@@ -2951,6 +2991,7 @@ dce insight tracing find-jaeger-trace --trace-id <traceId> \
 - Flags:
   - `--service-name` (query): serviceName
   - `--operation-name` (query): operationName
+  - `--tags` (query): e.g. tags[host.name]=localhost&tags[url]=http://test/test
   - `--start` (query): e.g. 2022-06-24T08:00:47.850Z
   - `--end` (query): e.g. 2022-06-24T08:00:47.850Z
   - `--duration-min` (query): Span min duration. such as "300ms", "-1.5h" or "2h45m". Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
@@ -3158,6 +3199,7 @@ echo '{
   - `--cluster` (query): Required. not default
   - `--namespace` (query): Required. not default
   - `--service-names` (query): Optional. not default
+  - `--tags` (query): Support extension search
   - `--limit` (query, int32): Optional. Default = 1000.
   - `--search` (query): Optional not default
   - `--start` (query): e.g. 2022-06-24T08:00:47.850Z
@@ -3184,6 +3226,7 @@ dce insight tracing get-tag-values --name http.status_code \
   - `--cluster` (query): Required. not default
   - `--namespace` (query): Required. not default
   - `--service-names` (query): Optional. not default
+  - `--tags` (query): Support extension search
   - `--limit` (query, int32): Optional. Default = 1000.
   - `--search` (query): Optional. not default
   - `--start` (query): e.g. 2022-06-24T08:00:47.850Z
@@ -3347,6 +3390,14 @@ echo '{
 #   spanKinds                    可选，默认 [SPAN_KIND_SERVER, SPAN_KIND_CLIENT]
 # 输出：.items[] 含 duration / method / operationName / protocol / serviceName / spanId
 ```
+
+### `dce insight tracing search-spans`
+
+- Summary: Tracing_SearchSpans
+- HTTP: `POST /apis/insight.io/v1alpha1/spans/search`
+- Auth: required
+- Body: required
+- Flags: none
 
 ### `dce insight tracing statement-histogram`
 
