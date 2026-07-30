@@ -10,6 +10,32 @@ auth:
       username_field: username
       fallback_field: email
 
+# Workflow commands are deterministic, API-only sequences. They are generated
+# together with the regular module commands by `make bootstrap`.
+workflow:
+  version: 1
+  commands:
+    - use: model-serving-summary
+      short: "查询模型及其关联的模型服务"
+      long: "读取模型详情，再读取该模型关联的模型服务。"
+      inputs:
+        - name: model_id
+          flag: model-id
+          type: string
+          required: true
+          help: "模型 ID"
+      steps:
+        - id: model
+          uses: hydra.AdminModelManagement_GetModel
+          params:
+            modelId: ${input.model_id}
+        - id: servings
+          uses: hydra.AdminModelManagement_ListModelServingsByModel
+          params:
+            modelId: ${steps.model.modelId}
+      output:
+        from: ${steps.servings}
+
 # Hand-authored Skill content appended onto the generated skill files
 # (e.g. the Module availability guidance in internal/skill-include/SKILL.md).
 skill:
