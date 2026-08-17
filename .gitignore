@@ -1,5 +1,8 @@
+.DS_Store
 .cache/
 .idea/
+__pycache__/
+*.py[cod]
 bin/
 go.work
 go.work.sum
