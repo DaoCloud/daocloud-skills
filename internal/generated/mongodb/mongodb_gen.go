@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 9
+const generatedSchemaVersion = 11
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -91,10 +91,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "eventType", Flag: "event-type", In: "query", GoType: "string", Help: "- EVENT_TYPE_UNSPECIFIED: This is only a meaningless placeholder, to avoid zero not return. (query, one of: EVENT_TYPE_UNSPECIFIED|Normal|Warning)", Required: false, Default: "EVENT_TYPE_UNSPECIFIED", Enum: []string{"EVENT_TYPE_UNSPECIFIED", "Normal", "Warning"}},
 			{Name: "kindName", Flag: "kind-name", In: "query", GoType: "string", Help: "kindName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "kind", "type", "metadata.creationTimestamp", "apiVersion"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "kind", "type", "metadata.creationTimestamp", "apiVersion"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Cluster",
@@ -103,8 +100,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Cluster_GetAllVisibleWorkspaceClusterList",
 		Method:      "GET",
 		PathTpl:     "/apis/mcamel.io/mongodb/v1alpha2/clusters",
-		Output: runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"metadata.name"},
-		},
+		Output:      runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"metadata.name"}},
 	},
 	{
 		Group:       "Cluster",
@@ -116,8 +112,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "workspaceId", "workspaceName"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "workspaceId", "workspaceName"}},
 	},
 	{
 		Group:       "Cluster",
@@ -192,8 +187,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "@inject_tag: v:\"required#请输入Cluster\" (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"key"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"key"}},
 	},
 	{
 		Group:       "Cluster",
@@ -205,8 +199,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}},
 	},
 	{
 		Group:       "Cluster",
@@ -231,8 +224,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 			{Name: "nodeName", Flag: "node-name", In: "query", GoType: "string", Help: "nodeName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"effect", "key", "nodeName", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"effect", "key", "nodeName", "value"}},
 	},
 	{
 		Group:       "Cluster",
@@ -248,10 +240,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "searchKey", Flag: "search-key", In: "query", GoType: "string", Help: "searchKey (query)", Required: false},
 			{Name: "filterNamespace", Flag: "filter-namespace", In: "query", GoType: "string", Help: "filterNamespace (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"key"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"key"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Cluster",
@@ -269,10 +258,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "type", Flag: "type", In: "query", GoType: "[]string", Help: "Type is used for query, showing events of specified type. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "lastTimestamp", "message", "reason"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "lastTimestamp", "message", "reason"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Cluster",
@@ -306,8 +292,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "mcamel_type is holdplace for mcamel type. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "autoAssign", "avoidBuggyIPs"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "autoAssign", "avoidBuggyIPs"}},
 	},
 	{
 		Group:       "Cluster",
@@ -347,10 +332,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "searchKey", Flag: "search-key", In: "query", GoType: "string", Help: "searchKey (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"alias", "visible", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"alias", "visible", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Cluster",
@@ -400,10 +382,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "searchKey", Flag: "search-key", In: "query", GoType: "string", Help: "searchKey (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "id", "clusterName", "description", "groupId", "groupName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "id", "clusterName", "description", "groupId", "groupName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "MongodbV2",
@@ -518,10 +497,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "filterNamespace", Flag: "filter-namespace", In: "query", GoType: "string", Help: "filterNamespace (query)", Required: false},
 			{Name: "filterNamespaces", Flag: "filter-namespaces", In: "query", GoType: "[]string", Help: "filterNamespaces (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "kind", "spec.version", "metadata.creationTimestamp", "apiVersion"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "kind", "spec.version", "metadata.creationTimestamp", "apiVersion"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "MongodbV2",
@@ -538,10 +514,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "searchKey", Flag: "search-key", In: "query", GoType: "string", Help: "searchKey (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"kind", "apiVersion"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"kind", "apiVersion"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "MongodbV2",
@@ -575,10 +548,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "searchKey", Flag: "search-key", In: "query", GoType: "string", Help: "searchKey (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "MongodbV2",
@@ -598,10 +568,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "searchKey", Flag: "search-key", In: "query", GoType: "string", Help: "searchKey (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"paramName", "paramType", "value"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"paramName", "paramType", "value"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "MongodbV2",
@@ -637,10 +604,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "filterNamespace", Flag: "filter-namespace", In: "query", GoType: "string", Help: "filterNamespace (query)", Required: false},
 			{Name: "filterNamespaces", Flag: "filter-namespaces", In: "query", GoType: "[]string", Help: "filterNamespaces (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "kind", "spec.version", "metadata.creationTimestamp", "apiVersion"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "kind", "spec.version", "metadata.creationTimestamp", "apiVersion"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "MongodbV2",
@@ -649,8 +613,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "MongodbV2_GetMongodbOperatorVersionList",
 		Method:      "GET",
 		PathTpl:     "/apis/mcamel.io/mongodb/v1alpha2/mongodb-operator/versions",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "version"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "version"}},
 	},
 	{
 		Group:       "MongodbV2",
@@ -682,10 +645,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "searchKey", Flag: "search-key", In: "query", GoType: "string", Help: "searchKey (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cpuLimit", "cpuUsage", "createTimestamp", "ip", "memoryLimit", "memoryUsage"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cpuLimit", "cpuUsage", "createTimestamp", "ip", "memoryLimit", "memoryUsage"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "MongodbV2",
@@ -700,8 +660,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "@inject_tag: v:\"required#choose Namespace\" (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "@inject_tag: v:\"required#input name!\" (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "users", DefaultColumns: []string{"password", "username"},
-		},
+		Output: runtime.OutputHints{ListPath: "users", DefaultColumns: []string{"password", "username"}},
 	},
 	{
 		Group:       "MongodbV2",
@@ -823,8 +782,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "@inject_tag: v:\"min:1#choose workspace_id!\" (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "@inject_tag: v:\"required#input name!\" (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "consumers", DefaultColumns: []string{"name", "namespace", "type", "cluster"},
-		},
+		Output: runtime.OutputHints{ListPath: "consumers", DefaultColumns: []string{"name", "namespace", "type", "cluster"}},
 	},
 	{
 		Group:       "StorageConfig",
@@ -841,10 +799,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "searchKey", Flag: "search-key", In: "query", GoType: "string", Help: "searchKey (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "StorageConfig",
@@ -919,10 +874,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "createTimestamp", Flag: "create-timestamp", In: "query", GoType: "string", Help: "createTimestamp (query, int64)", Required: false, Format: "int64"},
 			{Name: "templateInstanceType", Flag: "template-instance-type", In: "query", GoType: "string", Help: "templateInstanceType (query, one of: TemplateInstanceTypeUnspecified|MysqlMasterReplica|RedisStandalone|RedisFailover|RedisCluster|KafkaConfig|MysqlMgrConfig|MongodbConfig|PostgresqlConfig|RabbitmqConfig)", Required: false, Default: "TemplateInstanceTypeUnspecified", Enum: []string{"TemplateInstanceTypeUnspecified", "MysqlMasterReplica", "RedisStandalone", "RedisFailover", "RedisCluster", "KafkaConfig", "MysqlMgrConfig", "MongodbConfig", "PostgresqlConfig", "RabbitmqConfig"}},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Template",
@@ -941,10 +893,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "version", Flag: "version", In: "query", GoType: "string", Help: "version (query)", Required: false},
 			{Name: "templateInstanceType", Flag: "template-instance-type", In: "query", GoType: "string", Help: "templateInstanceType (query, one of: TemplateInstanceTypeUnspecified|MysqlMasterReplica|RedisStandalone|RedisFailover|RedisCluster|KafkaConfig|MysqlMgrConfig|MongodbConfig|PostgresqlConfig|RabbitmqConfig)", Required: false, Default: "TemplateInstanceTypeUnspecified", Enum: []string{"TemplateInstanceTypeUnspecified", "MysqlMasterReplica", "RedisStandalone", "RedisFailover", "RedisCluster", "KafkaConfig", "MysqlMgrConfig", "MongodbConfig", "PostgresqlConfig", "RabbitmqConfig"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createTimestamp", "page", "pageSize", "searchKey"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createTimestamp", "page", "pageSize", "searchKey"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Template",
@@ -1011,8 +960,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"conf": &runtime.SchemaSpec{Type: "string"}, "templateInstanceType": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "current", "default", "isNeedRestart", "updateTimestamp", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "current", "default", "isNeedRestart", "updateTimestamp", "value"}},
 	},
 	{
 		Group:       "Version",

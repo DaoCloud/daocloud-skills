@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 9
+const generatedSchemaVersion = 11
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -39,10 +39,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -58,10 +55,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "cost", "displayValue", "rank", "revenue", "userName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "cost", "displayValue", "rank", "revenue", "userName"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -77,10 +71,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -96,10 +87,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -115,10 +103,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -134,10 +119,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -153,10 +135,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -172,10 +151,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "cost", "displayValue", "rank", "revenue", "userName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "cost", "displayValue", "rank", "revenue", "userName"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -191,10 +167,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -210,10 +183,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -229,10 +199,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -248,10 +215,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -267,10 +231,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -286,10 +247,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"name", "size", "x", "y"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"name", "size", "x", "y"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -305,10 +263,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -338,10 +293,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "models", Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "models", Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -357,10 +309,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "content"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "content"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -376,10 +325,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"department", "rank", "totalTokens", "userName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"department", "rank", "totalTokens", "userName"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -395,10 +341,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"action", "detail", "level", "riskType", "tenant", "userName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"action", "detail", "level", "riskType", "tenant", "userName"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessOperationService",
@@ -414,10 +357,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear. (query)", Required: false},
 			{Name: "model", Flag: "model", In: "query", GoType: "string", Help: "Optional model keyword filter. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"rank", "tenantId", "totalTokens", "userName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"rank", "tenantId", "totalTokens", "userName"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "BusinessValueService",
@@ -442,8 +382,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Time range filter: \"today\", \"this-week\", \"this-month\", \"this-quarter\". Default is \"today\". (query)", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Cluster filter (optional). If empty, all clusters are included football. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"appName", "percentage"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"appName", "percentage"}},
 	},
 	{
 		Group:       "BusinessValueService",
@@ -477,8 +416,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "endTime", Flag: "end-time", In: "query", GoType: "string", Help: "Exclusive range end. (query, date-time)", Required: false, Format: "date-time"},
 			{Name: "span", Flag: "span", In: "query", GoType: "string", Help: "Bucket span used to aggregate history points. (query, one of: CUMULATIVE_TOKEN_HISTORY_SPAN_UNSPECIFIED|CUMULATIVE_TOKEN_HISTORY_SPAN_HOUR|CUMULATIVE_TOKEN_HISTORY_SPAN_DAY)", Required: false, Default: "CUMULATIVE_TOKEN_HISTORY_SPAN_UNSPECIFIED", Enum: []string{"CUMULATIVE_TOKEN_HISTORY_SPAN_UNSPECIFIED", "CUMULATIVE_TOKEN_HISTORY_SPAN_HOUR", "CUMULATIVE_TOKEN_HISTORY_SPAN_DAY"}},
 		},
-		Output: runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"time", "totalTokens"},
-		},
+		Output: runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"time", "totalTokens"}},
 	},
 	{
 		Group:       "BusinessValueService",
@@ -491,8 +429,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "startTime", Flag: "start-time", In: "query", GoType: "string", Help: "Start of the query window (UTC, inclusive). (query, date-time)", Required: false, Format: "date-time"},
 			{Name: "endTime", Flag: "end-time", In: "query", GoType: "string", Help: "End of the query window (UTC, exclusive). (query, date-time)", Required: false, Format: "date-time"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"budgetTokenTotal", "departmentName", "tokenTotal"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"budgetTokenTotal", "departmentName", "tokenTotal"}},
 	},
 	{
 		Group:       "BusinessValueService",
@@ -505,8 +442,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Time range filter: \"today\", \"this-week\", \"this-month\", \"this-quarter\". Default is \"today\". (query)", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Cluster filter (optional). If empty, all clusters are included. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "value"}},
 	},
 	{
 		Group:       "BusinessValueService",
@@ -543,8 +479,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "BusinessValueService_GetRevenueMarginTrendForecast",
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/business-value/revenue-margin-trend-forecast",
-		Output: runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"cost", "date", "grossProfit", "revenue"},
-		},
+		Output:      runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"cost", "date", "grossProfit", "revenue"}},
 	},
 	{
 		Group:       "BusinessValueService",
@@ -553,8 +488,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "BusinessValueService_GetRiskSuggestions",
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/business-value/risk-suggestions",
-		Output: runtime.OutputHints{ListPath: "suggestions", DefaultColumns: []string{"type", "content"},
-		},
+		Output:      runtime.OutputHints{ListPath: "suggestions", DefaultColumns: []string{"type", "content"}},
 	},
 	{
 		Group:       "BusinessValueService",
@@ -567,8 +501,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "startTime", Flag: "start-time", In: "query", GoType: "string", Help: "Start of the query window (UTC, inclusive). (query, date-time)", Required: false, Format: "date-time"},
 			{Name: "endTime", Flag: "end-time", In: "query", GoType: "string", Help: "End of the query window (UTC, exclusive). (query, date-time)", Required: false, Format: "date-time"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"price", "tenantId", "tenantName", "tokenTotal"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"price", "tenantId", "tenantName", "tokenTotal"}},
 	},
 	{
 		Group:       "BusinessValueService",
@@ -588,8 +521,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Time range filter: \"today\", \"this-week\", \"this-month\", \"this-quarter\". (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "moduleItems", DefaultColumns: []string{"costSavings", "moduleName", "sharePercent"},
-		},
+		Output: runtime.OutputHints{ListPath: "moduleItems", DefaultColumns: []string{"costSavings", "moduleName", "sharePercent"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -603,8 +535,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "precision", "status", "trend", "trendPrecision", "trendUnit"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "precision", "status", "trend", "trendPrecision", "trendUnit"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -618,8 +549,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"emissionKg", "month", "offsetKg", "targetKg"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"emissionKg", "month", "offsetKg", "targetKg"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -628,8 +558,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "ComputePowerCollaborationService_GetClusters",
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/compute-power-collaboration/clusters",
-		Output: runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"name"},
-		},
+		Output:      runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"name"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -643,8 +572,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"capacityPct", "cluster", "clusterPhase", "gpuCount", "greenRatioPct", "isOffline"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"capacityPct", "cluster", "clusterPhase", "gpuCount", "greenRatioPct", "isOffline"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -658,8 +586,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "precision", "status", "trend", "trendPrecision", "trendUnit"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "precision", "status", "trend", "trendPrecision", "trendUnit"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -673,8 +600,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"elastic", "greenRatio", "hour", "rigid"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"elastic", "greenRatio", "hour", "rigid"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -688,8 +614,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "params", DefaultColumns: []string{"key", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "params", DefaultColumns: []string{"key", "value"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -703,8 +628,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"code", "messageKey", "severity"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"code", "messageKey", "severity"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -718,8 +642,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "series", DefaultColumns: []string{"id"},
-		},
+		Output: runtime.OutputHints{ListPath: "series", DefaultColumns: []string{"id"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -733,8 +656,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "precision", "status", "trend", "trendPrecision", "trendUnit"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "precision", "status", "trend", "trendPrecision", "trendUnit"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -748,8 +670,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "series", DefaultColumns: []string{"id"},
-		},
+		Output: runtime.OutputHints{ListPath: "series", DefaultColumns: []string{"id"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -763,8 +684,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "greenRules", DefaultColumns: []string{"band", "impactCode", "strategyCode", "targetCode"},
-		},
+		Output: runtime.OutputHints{ListPath: "greenRules", DefaultColumns: []string{"band", "impactCode", "strategyCode", "targetCode"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -778,8 +698,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"code", "messageKey", "severity"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"code", "messageKey", "severity"}},
 	},
 	{
 		Group:       "ComputePowerCollaborationService",
@@ -793,8 +712,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "query.range", Flag: "query.range", In: "query", GoType: "string", Help: "Optional time range token: 24h, 7d or 1m. Defaults to 24h. (query)", Required: false},
 			{Name: "query.timezone", Flag: "query.timezone", In: "query", GoType: "string", Help: "Optional IANA timezone (e.g. \"Asia/Shanghai\") for rendering x-axis (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "precision", "status", "trend", "trendPrecision", "trendUnit"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "precision", "status", "trend", "trendPrecision", "trendUnit"}},
 	},
 	{
 		Group:       "FinopsPanelService",
@@ -807,8 +725,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "financialPeriod", Flag: "financial-period", In: "query", GoType: "string", Help: "financialPeriod (query, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR)", Required: false, Default: "FINANCIAL_PERIOD_THIS_MONTH", Enum: []string{"FINANCIAL_PERIOD_THIS_MONTH", "FINANCIAL_PERIOD_LAST_MONTH", "FINANCIAL_PERIOD_THIS_QUARTER", "FINANCIAL_PERIOD_THIS_YEAR"}},
 			{Name: "accountingScope", Flag: "accounting-scope", In: "query", GoType: "string", Help: "accountingScope (query, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION)", Required: false, Default: "ACCOUNTING_SCOPE_MERGED", Enum: []string{"ACCOUNTING_SCOPE_MERGED", "ACCOUNTING_SCOPE_EXTERNAL_REVENUE", "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"}},
 		},
-		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"type", "allocCost", "object", "revenue", "roi", "tokenUsage"},
-		},
+		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"type", "allocCost", "object", "revenue", "roi", "tokenUsage"}},
 	},
 	{
 		Group:       "FinopsPanelService",
@@ -833,8 +750,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "financialPeriod", Flag: "financial-period", In: "query", GoType: "string", Help: "financialPeriod (query, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR)", Required: false, Default: "FINANCIAL_PERIOD_THIS_MONTH", Enum: []string{"FINANCIAL_PERIOD_THIS_MONTH", "FINANCIAL_PERIOD_LAST_MONTH", "FINANCIAL_PERIOD_THIS_QUARTER", "FINANCIAL_PERIOD_THIS_YEAR"}},
 			{Name: "accountingScope", Flag: "accounting-scope", In: "query", GoType: "string", Help: "accountingScope (query, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION)", Required: false, Default: "ACCOUNTING_SCOPE_MERGED", Enum: []string{"ACCOUNTING_SCOPE_MERGED", "ACCOUNTING_SCOPE_EXTERNAL_REVENUE", "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"}},
 		},
-		Output: runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"bookValue", "machine", "profitValue", "status", "utilization"},
-		},
+		Output: runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"bookValue", "machine", "profitValue", "status", "utilization"}},
 	},
 	{
 		Group:       "FinopsPanelService",
@@ -908,8 +824,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "financialPeriod", Flag: "financial-period", In: "query", GoType: "string", Help: "financialPeriod (query, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR)", Required: false, Default: "FINANCIAL_PERIOD_THIS_MONTH", Enum: []string{"FINANCIAL_PERIOD_THIS_MONTH", "FINANCIAL_PERIOD_LAST_MONTH", "FINANCIAL_PERIOD_THIS_QUARTER", "FINANCIAL_PERIOD_THIS_YEAR"}},
 			{Name: "accountingScope", Flag: "accounting-scope", In: "query", GoType: "string", Help: "accountingScope (query, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION)", Required: false, Default: "ACCOUNTING_SCOPE_MERGED", Enum: []string{"ACCOUNTING_SCOPE_MERGED", "ACCOUNTING_SCOPE_EXTERNAL_REVENUE", "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "displayValue", "rank", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "displayValue", "rank", "value"}},
 	},
 	{
 		Group:       "FinopsPanelService",
@@ -922,8 +837,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "financialPeriod", Flag: "financial-period", In: "query", GoType: "string", Help: "financialPeriod (query, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR)", Required: false, Default: "FINANCIAL_PERIOD_THIS_MONTH", Enum: []string{"FINANCIAL_PERIOD_THIS_MONTH", "FINANCIAL_PERIOD_LAST_MONTH", "FINANCIAL_PERIOD_THIS_QUARTER", "FINANCIAL_PERIOD_THIS_YEAR"}},
 			{Name: "accountingScope", Flag: "accounting-scope", In: "query", GoType: "string", Help: "accountingScope (query, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION)", Required: false, Default: "ACCOUNTING_SCOPE_MERGED", Enum: []string{"ACCOUNTING_SCOPE_MERGED", "ACCOUNTING_SCOPE_EXTERNAL_REVENUE", "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"}},
 		},
-		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"addedCost", "expectedRevenue", "plan", "profitImpact", "recommendation", "recoveryPeriod"},
-		},
+		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"addedCost", "expectedRevenue", "plan", "profitImpact", "recommendation", "recoveryPeriod"}},
 	},
 	{
 		Group:       "FinopsPanelService",
@@ -936,8 +850,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "financialPeriod", Flag: "financial-period", In: "query", GoType: "string", Help: "financialPeriod (query, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR)", Required: false, Default: "FINANCIAL_PERIOD_THIS_MONTH", Enum: []string{"FINANCIAL_PERIOD_THIS_MONTH", "FINANCIAL_PERIOD_LAST_MONTH", "FINANCIAL_PERIOD_THIS_QUARTER", "FINANCIAL_PERIOD_THIS_YEAR"}},
 			{Name: "accountingScope", Flag: "accounting-scope", In: "query", GoType: "string", Help: "accountingScope (query, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION)", Required: false, Default: "ACCOUNTING_SCOPE_MERGED", Enum: []string{"ACCOUNTING_SCOPE_MERGED", "ACCOUNTING_SCOPE_EXTERNAL_REVENUE", "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "content"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "content"}},
 	},
 	{
 		Group:       "FinopsPanelService",
@@ -950,8 +863,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "financialPeriod", Flag: "financial-period", In: "query", GoType: "string", Help: "financialPeriod (query, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR)", Required: false, Default: "FINANCIAL_PERIOD_THIS_MONTH", Enum: []string{"FINANCIAL_PERIOD_THIS_MONTH", "FINANCIAL_PERIOD_LAST_MONTH", "FINANCIAL_PERIOD_THIS_QUARTER", "FINANCIAL_PERIOD_THIS_YEAR"}},
 			{Name: "accountingScope", Flag: "accounting-scope", In: "query", GoType: "string", Help: "accountingScope (query, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION)", Required: false, Default: "ACCOUNTING_SCOPE_MERGED", Enum: []string{"ACCOUNTING_SCOPE_MERGED", "ACCOUNTING_SCOPE_EXTERNAL_REVENUE", "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"}},
 		},
-		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"bookValue", "config", "depreciation", "machine", "monthToken", "payback"},
-		},
+		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"bookValue", "config", "depreciation", "machine", "monthToken", "payback"}},
 	},
 	{
 		Group:       "FinopsPanelService",
@@ -1068,8 +980,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "groupStates", DefaultColumns: []string{"key", "message", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "groupStates", DefaultColumns: []string{"key", "message", "status"}},
 	},
 	{
 		Group:       "ProductionOperationsService",
@@ -1083,8 +994,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 			{Name: "slaBaseline", Flag: "sla-baseline", In: "query", GoType: "string", Help: "slaBaseline (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "groupStates", DefaultColumns: []string{"key", "message", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "groupStates", DefaultColumns: []string{"key", "message", "status"}},
 	},
 	{
 		Group:       "ProductionOperationsService",
@@ -1098,10 +1008,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 			{Name: "limit", Flag: "limit", In: "query", GoType: "int64", Help: "limit (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "costAvailable", "costBarPercent", "costDisplayValue", "costPerMillionTokens", "rank"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "costAvailable", "costBarPercent", "costDisplayValue", "costPerMillionTokens", "rank"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "ProductionOperationsService",
@@ -1115,8 +1022,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 			{Name: "slaBaseline", Flag: "sla-baseline", In: "query", GoType: "string", Help: "slaBaseline (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "gpuPoolRank", DefaultColumns: []string{"cardCount", "dailyOutputPerCard", "memoryUtilization", "note", "poolName", "powerDraw"},
-		},
+		Output: runtime.OutputHints{ListPath: "gpuPoolRank", DefaultColumns: []string{"cardCount", "dailyOutputPerCard", "memoryUtilization", "note", "poolName", "powerDraw"}},
 	},
 	{
 		Group:       "ResourceCostService",
@@ -1129,8 +1035,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Optional cluster name filter. Empty means all clusters. (query)", Required: false},
 			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Time range for token/revenue queries. Default is THIS_MONTH. (query, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS)", Required: false, Default: "THIS_MONTH", Enum: []string{"THIS_MONTH", "THIS_WEEK", "LAST_MONTH", "LAST_7_DAYS", "LAST_30_DAYS"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "cost", "key", "percent"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "cost", "key", "percent"}},
 	},
 	{
 		Group:       "ResourceCostService",
@@ -1151,8 +1056,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "ResourceCostService_GetCostOptimization",
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/resource-cost/optimization",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"measure", "value"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"measure", "value"}},
 	},
 	{
 		Group:       "ResourceCostService",
@@ -1165,8 +1069,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Optional cluster name filter. Empty means all clusters. (query)", Required: false},
 			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Time range for token/revenue queries. Default is THIS_MONTH. (query, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS)", Required: false, Default: "THIS_MONTH", Enum: []string{"THIS_MONTH", "THIS_WEEK", "LAST_MONTH", "LAST_7_DAYS", "LAST_30_DAYS"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "content"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "content"}},
 	},
 	{
 		Group:       "ResourceCostService",
@@ -1179,8 +1082,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Optional cluster name filter. Empty means all clusters. (query)", Required: false},
 			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Time range for token/revenue queries. Default is THIS_MONTH. (query, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS)", Required: false, Default: "THIS_MONTH", Enum: []string{"THIS_MONTH", "THIS_WEEK", "LAST_MONTH", "LAST_7_DAYS", "LAST_30_DAYS"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"key", "label", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"key", "label", "value"}},
 	},
 	{
 		Group:       "ResourceCostService",
@@ -1193,8 +1095,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Optional cluster name filter. Empty means all clusters. (query)", Required: false},
 			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Time range for token/revenue queries. Default is THIS_MONTH. (query, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS)", Required: false, Default: "THIS_MONTH", Enum: []string{"THIS_MONTH", "THIS_WEEK", "LAST_MONTH", "LAST_7_DAYS", "LAST_30_DAYS"}},
 		},
-		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"count", "dailyCost", "dailyOutput", "dailyProfit", "gpuModel", "memUtilization"},
-		},
+		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"count", "dailyCost", "dailyOutput", "dailyProfit", "gpuModel", "memUtilization"}},
 	},
 	{
 		Group:       "ResourceCostService",
@@ -1207,8 +1108,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Optional cluster name filter. Empty means all clusters. (query)", Required: false},
 			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Time range for token/revenue queries. Default is THIS_MONTH. (query, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS)", Required: false, Default: "THIS_MONTH", Enum: []string{"THIS_MONTH", "THIS_WEEK", "LAST_MONTH", "LAST_7_DAYS", "LAST_30_DAYS"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "costPerMToken", "deployType", "rank"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "costPerMToken", "deployType", "rank"}},
 	},
 	{
 		Group:       "ResourceCostService",
@@ -1231,8 +1131,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "filter by cluster name (query)", Required: false},
 			{Name: "level", Flag: "level", In: "query", GoType: "string", Help: "filter by risk level: high/medium/low (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"dimension", "intercepted", "status", "todayCount"},
-		},
+		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"dimension", "intercepted", "status", "todayCount"}},
 	},
 	{
 		Group:       "SecurityProtectionService",
@@ -1241,8 +1140,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "SecurityProtectionService_GetClusters",
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/security-protection/clusters",
-		Output: runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"name", "label"},
-		},
+		Output:      runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"name", "label"}},
 	},
 	{
 		Group:       "SecurityProtectionService",
@@ -1270,8 +1168,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "filter by cluster name (query)", Required: false},
 			{Name: "level", Flag: "level", In: "query", GoType: "string", Help: "filter by risk level: high/medium/low (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "color", "label", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "color", "label", "value"}},
 	},
 	{
 		Group:       "SecurityProtectionService",
@@ -1285,8 +1182,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "filter by cluster name (query)", Required: false},
 			{Name: "level", Flag: "level", In: "query", GoType: "string", Help: "filter by risk level: high/medium/low (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"dimension", "intercepted", "status", "todayCount"},
-		},
+		Output: runtime.OutputHints{ListPath: "rows", DefaultColumns: []string{"dimension", "intercepted", "status", "todayCount"}},
 	},
 	{
 		Group:       "SecurityProtectionService",
@@ -1300,8 +1196,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "filter by cluster name (query)", Required: false},
 			{Name: "level", Flag: "level", In: "query", GoType: "string", Help: "filter by risk level: high/medium/low (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "color", "displayValue", "rank", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "color", "displayValue", "rank", "value"}},
 	},
 	{
 		Group:       "SecurityProtectionService",
@@ -1315,8 +1210,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "filter by cluster name (query)", Required: false},
 			{Name: "level", Flag: "level", In: "query", GoType: "string", Help: "filter by risk level: high/medium/low (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "color", "displayValue", "rank", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "color", "displayValue", "rank", "value"}},
 	},
 	{
 		Group:       "SecurityProtectionService",
@@ -1330,8 +1224,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "filter by cluster name (query)", Required: false},
 			{Name: "level", Flag: "level", In: "query", GoType: "string", Help: "filter by risk level: high/medium/low (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "desc", "icon", "priority", "title"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "desc", "icon", "priority", "title"}},
 	},
 	{
 		Group:       "SecurityProtectionService",
@@ -1347,10 +1240,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page number (default 1) (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "items per page (default 10, max 100) (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"level", "status", "text", "time"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"level", "status", "text", "time"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "SinglePageService",
@@ -1359,8 +1249,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "SinglePageService_GetGainComparisonRates",
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/singlepage/gain-comparison-rates",
-		Output: runtime.OutputHints{ListPath: "rates", DefaultColumns: []string{"gainRate", "metricId"},
-		},
+		Output:      runtime.OutputHints{ListPath: "rates", DefaultColumns: []string{"gainRate", "metricId"}},
 	},
 	{
 		Group:       "SinglePageService",
@@ -1369,8 +1258,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "SinglePageService_GetGlobalTraffic",
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/singlepage/global-traffic",
-		Output: runtime.OutputHints{ListPath: "nodes", DefaultColumns: []string{"name", "color", "latitude", "longitude", "percentage", "primary"},
-		},
+		Output:      runtime.OutputHints{ListPath: "nodes", DefaultColumns: []string{"name", "color", "latitude", "longitude", "percentage", "primary"}},
 	},
 	{
 		Group:       "SinglePageService",

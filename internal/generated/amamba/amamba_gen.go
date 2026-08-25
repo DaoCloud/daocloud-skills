@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 9
+const generatedSchemaVersion = 11
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -42,7 +42,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"payload": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"overridepolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "popagrationpolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "resources": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "gvr": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"group": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}}, "instance": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "overridepolicies"},
+		Output:   runtime.OutputHints{ListPath: "overridepolicies"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "ApplicationService",
@@ -278,8 +279,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "namespace (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "edges", DefaultColumns: []string{"source", "target"},
-		},
+		Output:   runtime.OutputHints{ListPath: "edges", DefaultColumns: []string{"source", "target"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -356,10 +356,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Log number shown per page. (query, int32)", Required: false, Format: "int32"},
 			{Name: "logSearch", Flag: "log-search", In: "query", GoType: "string", Help: "for fuzzy query (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"log", "timeStamp"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"log", "timeStamp"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -399,10 +396,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"data", "state"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"data", "state"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -425,10 +419,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "status.phase"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "status.phase"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -452,10 +443,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "firstTimestamp", "lastTimestamp", "message", "reason"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "firstTimestamp", "lastTimestamp", "message", "reason"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -479,10 +467,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "firstTimestamp", "lastTimestamp", "message", "reason"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "firstTimestamp", "lastTimestamp", "message", "reason"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -506,10 +491,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"data"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"data"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -530,10 +512,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "description", "revisionNumber"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "description", "revisionNumber"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -552,8 +531,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Name of the cluster where the Pod is located (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "Name of the namespace where the Pod is located (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -767,6 +745,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.namespace", Flag: "payload.namespace", In: "query", GoType: "string", Help: "Namespace represents which namespace the deployment belongs to. (query)", Required: false},
 			{Name: "payload.name", Flag: "payload.name", In: "query", GoType: "string", Help: "Name represents the name of deployment (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Apps",
@@ -784,6 +763,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.namespace", Flag: "payload.namespace", In: "query", GoType: "string", Help: "Namespace is the metadata.namespace of the referenced Deployment. (query)", Required: false},
 			{Name: "payload.name", Flag: "payload.name", In: "query", GoType: "string", Help: "name represents for the resource name (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Apps",
@@ -805,8 +785,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.sortBy", Flag: "payload.sort-by", In: "query", GoType: "string", Help: "SortBy determines the data list order reference. (query, one of: SORT_BY_UNSPECIFIED|field_name|state|workspace|cluster|namespace|created_at)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "field_name", "state", "workspace", "cluster", "namespace", "created_at"}},
 			{Name: "payload.sortDir", Flag: "payload.sort-dir", In: "query", GoType: "string", Help: "SortDir determines the data list order. (query, one of: desc|asc)", Required: false, Default: "desc", Enum: []string{"desc", "asc"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp", "revision"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp", "revision"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Cluster",
@@ -820,8 +800,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "instance", Flag: "instance", In: "path", GoType: "string", Help: "instance is the instance name of the application. is required and should same with `payload.instance` (path, required)", Required: true},
 			{Name: "payload.instance", Flag: "payload.instance", In: "query", GoType: "string", Help: "karmada instance (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "clusterLabels", DefaultColumns: []string{"cluster"},
-		},
+		Output:   runtime.OutputHints{ListPath: "clusterLabels", DefaultColumns: []string{"cluster"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Cluster",
@@ -851,8 +831,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.clusterSelector", Flag: "payload.cluster-selector", In: "query", GoType: "string", Help: "A cluster selector requirement is a selector that contains values, a key, and an operator (query)", Required: false},
 			{Name: "payload.allCluster", Flag: "payload.all-cluster", In: "query", GoType: "bool", Help: "list all kpanda clusters (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "status.phase", "spec.provider", "spec.region", "metadata.creationTimestamp"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "status.phase", "spec.provider", "spec.region", "metadata.creationTimestamp"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Core",
@@ -962,6 +942,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.namespace", Flag: "payload.namespace", In: "query", GoType: "string", Help: "Namespace is the metadata.namespace of the referenced secret. (query)", Required: false},
 			{Name: "payload.name", Flag: "payload.name", In: "query", GoType: "string", Help: "Secret name. (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Core",
@@ -990,10 +971,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Optional, if page_size is -1 then return all the clusters (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "aliasName", "createdAt", "kubeSystemId", "status"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "aliasName", "createdAt", "kubeSystemId", "status"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1012,10 +990,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "name", Flag: "name", In: "query", GoType: "string", Help: "fuzzy search for namespace. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "cluster", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "cluster", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1029,8 +1004,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "gpuSummary", DefaultColumns: []string{"node"},
-		},
+		Output:   runtime.OutputHints{ListPath: "gpuSummary", DefaultColumns: []string{"node"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1079,8 +1053,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.labelSelector", Flag: "payload.label-selector", In: "query", GoType: "string", Help: "LabelSelector is the format after labels.FormatLabels used to filter (query)", Required: false},
 			{Name: "payload.fieldSelector", Flag: "payload.field-selector", In: "query", GoType: "string", Help: "FieldSelector is the format after labels.FormatLabels used to filter (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp", "immutable"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp", "immutable"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Core",
@@ -1095,8 +1069,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Optional, if cluster is not empty, then only return the deploy targets of the cluster (query)", Required: false},
 			{Name: "allowEmpty", Flag: "allow-empty", In: "query", GoType: "bool", Help: "Optional, default false, if true, then also return clusters with no namespace bound to the workspace (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"aliasName", "cluster", "status"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"aliasName", "cluster", "status"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1115,8 +1088,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "searchDeviceUuid", Flag: "search-device-uuid", In: "query", GoType: "string", Help: "SearchDeviceUUID filters devices by device UUID. (query)", Required: false},
 			{Name: "searchGpuId", Flag: "search-gpu-id", In: "query", GoType: "string", Help: "SearchGPUID filters devices by GPU ID. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "cluster", "coreUtilization", "deviceUuid", "frameBufferMemoryUtilization", "nodeName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "cluster", "coreUtilization", "deviceUuid", "frameBufferMemoryUtilization", "nodeName"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1150,10 +1122,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "name", Flag: "name", In: "query", GoType: "string", Help: "name (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "createAt", "instance"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "createAt", "instance"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1168,8 +1137,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "instance", Flag: "instance", In: "path", GoType: "string", Help: "instance is the instance name of the application. is required and should same with `payload.instance` (path, required)", Required: true},
 			{Name: "payload.instance", Flag: "payload.instance", In: "query", GoType: "string", Help: "Instance the namespace summary list belong to. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "instance"},
-		},
+		Output:   runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "instance"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Core",
@@ -1217,8 +1186,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.labelSelector", Flag: "payload.label-selector", In: "query", GoType: "string", Help: "LabelSelector is the format after labels.FormatLabels used to filter (query)", Required: false},
 			{Name: "payload.fieldSelector", Flag: "payload.field-selector", In: "query", GoType: "string", Help: "FieldSelector is the format after labels.FormatLabels used to filter (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "type", "metadata.creationTimestamp", "immutable"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "type", "metadata.creationTimestamp", "immutable"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Core",
@@ -1232,10 +1201,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page requested. (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "PageSize per page requested. (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"alias", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"alias", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1337,10 +1303,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "query", GoType: "string", Help: "The filter of the credential, fuzzy search. (query)", Required: false},
 			{Name: "includeGlobal", Flag: "include-global", In: "query", GoType: "bool", Help: "The filter of the credential, include global credentials, such as gitlab, sonarqube, etc. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1391,10 +1354,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page requested. (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "PageSize per page requested. (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1461,8 +1421,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "toolchainId", Flag: "toolchain-id", In: "path", GoType: "string", Help: "toolchainId (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "projectId", Flag: "project-id", In: "path", GoType: "string", Help: "projectId (path, required, int32)", Required: true, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "branches", DefaultColumns: []string{"name", "default", "diffUrl", "mergeUrl", "protected", "webUrl"},
-		},
+		Output:   runtime.OutputHints{ListPath: "branches", DefaultColumns: []string{"name", "default", "diffUrl", "mergeUrl", "protected", "webUrl"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1481,10 +1440,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "name", Flag: "name", In: "query", GoType: "string", Help: "name (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "default", "diffUrl", "mergeUrl", "protected", "webUrl"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "default", "diffUrl", "mergeUrl", "protected", "webUrl"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1503,10 +1459,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "name", Flag: "name", In: "query", GoType: "string", Help: "name (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "message", "protected", "webUrl"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "message", "protected", "webUrl"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1672,8 +1625,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "repo", Flag: "repo", In: "query", GoType: "string", Help: "the url of helm chart repo,like: https://release-ci.daocloud.io/chartrepo/demo (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1693,8 +1645,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "version", Flag: "version", In: "query", GoType: "string", Help: "version (query)", Required: false},
 			{Name: "kind", Flag: "kind", In: "query", GoType: "string", Help: "kind (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "kind", "group", "hook", "liveState"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "kind", "group", "hook", "liveState"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1712,10 +1663,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "PageSize per page requested. (query, int32)", Required: false, Format: "int32"},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "namespace (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "firstTimestamp", "lastTimestamp", "message", "reason"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "firstTimestamp", "lastTimestamp", "message", "reason"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1737,10 +1685,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "syncStatus", Flag: "sync-status", In: "query", GoType: "string", Help: "syncStatus (query, one of: SYNC_STATUS_UNSPECIFIED|SYNC_STATUS_UNKNOWN|SYNC_STATUS_SYNCED|SYNC_STATUS_OUT_OF_SYNC)", Required: false, Default: "SYNC_STATUS_UNSPECIFIED", Enum: []string{"SYNC_STATUS_UNSPECIFIED", "SYNC_STATUS_UNKNOWN", "SYNC_STATUS_SYNCED", "SYNC_STATUS_OUT_OF_SYNC"}},
 			{Name: "healthStatus", Flag: "health-status", In: "query", GoType: "string", Help: "healthStatus (query, one of: HEALTH_STATUS_UNSPECIFIED|HEALTH_STATUS_MISSING|HEALTH_STATUS_DEGRADED|HEALTH_STATUS_HEALTHY|HEALTH_STATUS_UNKNOWN|HEALTH_STATUS_SUSPENDED|HEALTH_STATUS_PROGRESSING)", Required: false, Default: "HEALTH_STATUS_UNSPECIFIED", Enum: []string{"HEALTH_STATUS_UNSPECIFIED", "HEALTH_STATUS_MISSING", "HEALTH_STATUS_DEGRADED", "HEALTH_STATUS_HEALTHY", "HEALTH_STATUS_UNKNOWN", "HEALTH_STATUS_SUSPENDED", "HEALTH_STATUS_PROGRESSING"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "deletedAt", "operationFinishedAt", "operationStartedAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "deletedAt", "operationFinishedAt", "operationStartedAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1753,8 +1698,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"instance"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"instance"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1787,10 +1731,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "fuzzyName", Flag: "fuzzy-name", In: "query", GoType: "string", Help: "fuzzyName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "repo", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "repo", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1907,10 +1848,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the data list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the data list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -1961,8 +1899,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 			{Name: "version", Flag: "version", In: "path", GoType: "string", Help: "version (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "resources", DefaultColumns: []string{"name", "kind", "image"},
-		},
+		Output:   runtime.OutputHints{ListPath: "resources", DefaultColumns: []string{"name", "kind", "image"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2046,10 +1983,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "spec.version", "metadata.creationTimestamp"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "spec.version", "metadata.creationTimestamp"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2069,10 +2003,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "removed"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "removed"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2093,10 +2024,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "spec.version", "metadata.creationTimestamp"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "spec.version", "metadata.creationTimestamp"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2111,8 +2039,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "status.phase", "metadata.creationTimestamp"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "status.phase", "metadata.creationTimestamp"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2166,10 +2093,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size per page. (query, int32)", Required: false, Format: "int32"},
 			{Name: "fuzzyName", Flag: "fuzzy-name", In: "query", GoType: "string", Help: "fuzzyName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"digest", "imageSize", "pushTime"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"digest", "imageSize", "pushTime"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2186,10 +2110,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size per page. (query, int32)", Required: false, Format: "int32"},
 			{Name: "fuzzyName", Flag: "fuzzy-name", In: "query", GoType: "string", Help: "fuzzyName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "alias", "host"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "alias", "host"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2208,10 +2129,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size per page. (query, int32)", Required: false, Format: "int32"},
 			{Name: "showArtifacts", Flag: "show-artifacts", In: "query", GoType: "bool", Help: "ShowArtifacts is to list artifacts of per image, default false. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "public", "pullCount", "tagCount", "updateTime"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "public", "pullCount", "tagCount", "updateTime"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2226,8 +2144,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "toolchainId", Flag: "toolchain-id", In: "path", GoType: "string", Help: "toolchainId (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "path", Flag: "path", In: "query", GoType: "string", Help: "path (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "folder"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "folder"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2253,10 +2170,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the data list order reference. (query, one of: JIRA_ISSUE_SORT_BY_UNSPECIFIED|JIRA_ISSUE_SORT_BY_TYPE|JIRA_ISSUE_SORT_BY_STATUS|JIRA_ISSUE_SORT_BY_PRIORITY|JIRA_ISSUE_SORT_BY_CREATOR|JIRA_ISSUE_SORT_BY_ASSIGNEE|JIRA_ISSUE_SORT_BY_UPDATED)", Required: false, Default: "JIRA_ISSUE_SORT_BY_UNSPECIFIED", Enum: []string{"JIRA_ISSUE_SORT_BY_UNSPECIFIED", "JIRA_ISSUE_SORT_BY_TYPE", "JIRA_ISSUE_SORT_BY_STATUS", "JIRA_ISSUE_SORT_BY_PRIORITY", "JIRA_ISSUE_SORT_BY_CREATOR", "JIRA_ISSUE_SORT_BY_ASSIGNEE", "JIRA_ISSUE_SORT_BY_UPDATED"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the data list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "assignee", "creator", "expand", "key", "reporter"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "assignee", "creator", "expand", "key", "reporter"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2272,8 +2186,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "jiraId", Flag: "jira-id", In: "path", GoType: "string", Help: "jiraId (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "projectId", Flag: "project-id", In: "path", GoType: "string", Help: "projectId (path, required, int32)", Required: true, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "assignees", DefaultColumns: []string{"key", "value"},
-		},
+		Output:   runtime.OutputHints{ListPath: "assignees", DefaultColumns: []string{"key", "value"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2286,8 +2199,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"projectId", "projectName", "resourceStatus", "toolchainId", "toolchainName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"projectId", "projectName", "resourceStatus", "toolchainId", "toolchainName"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2300,8 +2212,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "query", GoType: "string", Help: "workspaceId (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"label"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"label"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2312,9 +2223,8 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Management_ListPodTemplates",
 		Method:      "GET",
 		PathTpl:     "/apis/pipeline.amamba.io/v1alpha1/management/agents",
-		Output: runtime.OutputHints{ListPath: "agents", DefaultColumns: []string{"name", "namespace", "label"},
-		},
-		Security: &runtime.SecurityHint{},
+		Output:      runtime.OutputHints{ListPath: "agents", DefaultColumns: []string{"name", "namespace", "label"}},
+		Security:    &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Management",
@@ -2336,8 +2246,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cluster"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cluster"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2511,10 +2420,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "revisionHash"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "revisionHash"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2528,10 +2434,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page requested. (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "PageSize per page requested. (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "properties", "uiSchema"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "properties", "uiSchema"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2550,10 +2453,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2568,10 +2468,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page requested. (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "PageSize per page requested. (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "properties", "uiSchema"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "properties", "uiSchema"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2795,8 +2692,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.version", Flag: "payload.version", In: "query", GoType: "string", Help: "resource version,used when the kind type is GroupVersionResource. (query)", Required: false},
 			{Name: "payload.resource", Flag: "payload.resource", In: "query", GoType: "string", Help: "resource name,used when the kind type is GroupVersionResource. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "lastTimestamp", "message", "reason"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "lastTimestamp", "message", "reason"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2828,8 +2724,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.sortDir", Flag: "payload.sort-dir", In: "query", GoType: "string", Help: "- DESC: Desc stands for descending order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "payload.sortBy", Flag: "payload.sort-by", In: "query", GoType: "string", Help: "- SORT_BY_UNSPECIFIED: Unspecified is default, no sorting. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "kind", "creationTimestamp", "apiVersion", "data"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "kind", "creationTimestamp", "apiVersion", "data"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2888,8 +2783,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object"},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "value"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "value"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2903,8 +2797,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "spec": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2938,8 +2831,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"buildConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disableConcurrence": &runtime.SchemaSpec{Type: "boolean"}, "discarderProperty": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"daysToRetainValue": &runtime.SchemaSpec{Type: "integer"}, "numToRetainValue": &runtime.SchemaSpec{Type: "integer"}}}}}, "description": &runtime.SchemaSpec{Type: "string"}, "force": &runtime.SchemaSpec{Type: "boolean"}, "genericWebhookTrigger": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiUrl": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "scmConfiguration": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"projectId": &runtime.SchemaSpec{Type: "integer"}, "toolchainId": &runtime.SchemaSpec{Type: "integer"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "triggerFilter": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"branchFilter": &runtime.SchemaSpec{Type: "string"}, "prTriggerEnabled": &runtime.SchemaSpec{Type: "boolean"}, "tagFilter": &runtime.SchemaSpec{Type: "string"}}}}}, "group": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"id": &runtime.SchemaSpec{Type: "integer"}, "name": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "string"}}}, "isRelease": &runtime.SchemaSpec{Type: "boolean"}, "manualWebhookTrigger": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"webhookTrigger": &runtime.SchemaSpec{Type: "boolean"}, "webhookUrl": &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string"}, "parameters": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"defaultValue": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "displayConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"shown": &runtime.SchemaSpec{Type: "boolean"}}}, "gitParameterDefinition": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"branch": &runtime.SchemaSpec{Type: "string"}, "branchFilter": &runtime.SchemaSpec{Type: "string"}, "displaySize": &runtime.SchemaSpec{Type: "integer"}, "fastFilter": &runtime.SchemaSpec{Type: "boolean"}, "repository": &runtime.SchemaSpec{Type: "string"}, "requiredParameter": &runtime.SchemaSpec{Type: "boolean"}, "selectedValue": &runtime.SchemaSpec{Type: "string"}, "sortBy": &runtime.SchemaSpec{Type: "string"}, "tagFilter": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string"}, "redact": &runtime.SchemaSpec{Type: "boolean"}, "type": &runtime.SchemaSpec{Type: "string"}}}}, "pipelineMultiBranch": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gitSource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cloneOptions": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"shallowClone": &runtime.SchemaSpec{Type: "integer"}, "timeout": &runtime.SchemaSpec{Type: "integer"}}}, "credentialId": &runtime.SchemaSpec{Type: "string"}, "discoverBranches": &runtime.SchemaSpec{Type: "boolean"}, "gitRepository": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"credentialId": &runtime.SchemaSpec{Type: "string"}, "resourceId": &runtime.SchemaSpec{Type: "integer"}, "toolchainId": &runtime.SchemaSpec{Type: "integer"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "regexFilter": &runtime.SchemaSpec{Type: "string"}}}, "interval": &runtime.SchemaSpec{Type: "string"}, "orphanedItemStrategy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"daysToKeepOldItems": &runtime.SchemaSpec{Type: "integer"}, "maxOfOldItemsToKeep": &runtime.SchemaSpec{Type: "integer"}}}, "scriptPath": &runtime.SchemaSpec{Type: "string"}}}, "pipelineScm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"branch": &runtime.SchemaSpec{Type: "string"}, "credentialId": &runtime.SchemaSpec{Type: "string"}, "gitRepository": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"credentialId": &runtime.SchemaSpec{Type: "string"}, "resourceId": &runtime.SchemaSpec{Type: "integer"}, "toolchainId": &runtime.SchemaSpec{Type: "integer"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "jenkinsFilePath": &runtime.SchemaSpec{Type: "string"}, "scmType": &runtime.SchemaSpec{Type: "string"}}}, "template": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "parameters": &runtime.SchemaSpec{Type: "string"}}}, "triggers": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"scm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cron": &runtime.SchemaSpec{Type: "string"}}}, "time": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cron": &runtime.SchemaSpec{Type: "string"}}}}}, "type": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -2993,8 +2885,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "spec": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3113,8 +3004,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "The scope where the pipeline created. (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "The name of the pipeline. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "branches", DefaultColumns: []string{"branchName", "commit", "disabled", "lastMessage", "state", "updatedAt"},
-		},
+		Output:   runtime.OutputHints{ListPath: "branches", DefaultColumns: []string{"branchName", "commit", "disabled", "lastMessage", "state", "updatedAt"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3129,8 +3019,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "The scope where the pipeline created. (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "The name of the pipeline. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3158,8 +3047,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 			{Name: "parameterName", Flag: "parameter-name", In: "path", GoType: "string", Help: "parameterName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "value"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "value"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3173,8 +3061,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 			{Name: "raw", Flag: "raw", In: "query", GoType: "bool", Help: "raw specifies whether return the original spec instead of parsed json only (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3205,10 +3092,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "duration"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "duration"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3237,8 +3121,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "The scope where the pipeline created. (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "The name of the pipeline. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3254,8 +3137,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 			{Name: "runId", Flag: "run-id", In: "path", GoType: "string", Help: "runId (path, required, int64)", Required: true, Format: "int64"},
 		},
-		Output: runtime.OutputHints{ListPath: "artifacts", DefaultColumns: []string{"name", "id", "class", "downloadable", "path", "size"},
-		},
+		Output:   runtime.OutputHints{ListPath: "artifacts", DefaultColumns: []string{"name", "id", "class", "downloadable", "path", "size"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3284,8 +3166,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "The name of the pipeline. (path, required)", Required: true},
 			{Name: "runId", Flag: "run-id", In: "path", GoType: "string", Help: "The id of the build. (path, required, int64)", Required: true, Format: "int64"},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "value"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "value"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3317,8 +3198,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "The name of the pipeline. (path, required)", Required: true},
 			{Name: "runId", Flag: "run-id", In: "path", GoType: "string", Help: "The id of pipeline run (path, required, int64)", Required: true, Format: "int64"},
 		},
-		Output: runtime.OutputHints{ListPath: "nodes", DefaultColumns: []string{"type", "id", "displayName", "durationInMillis", "firstParent", "restartable"},
-		},
+		Output:   runtime.OutputHints{ListPath: "nodes", DefaultColumns: []string{"type", "id", "displayName", "durationInMillis", "firstParent", "restartable"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3334,8 +3214,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 			{Name: "runId", Flag: "run-id", In: "path", GoType: "string", Help: "runId (path, required, int64)", Required: true, Format: "int64"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "defaultValue", "description", "value"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "defaultValue", "description", "value"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3369,8 +3248,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "runId", Flag: "run-id", In: "path", GoType: "string", Help: "The id of pipeline run (path, required, int64)", Required: true, Format: "int64"},
 			{Name: "nodeId", Flag: "node-id", In: "path", GoType: "string", Help: "The node of pipeline run (path, required, int64)", Required: true, Format: "int64"},
 		},
-		Output: runtime.OutputHints{ListPath: "steps", DefaultColumns: []string{"type", "id", "displayDescription", "displayName", "durationInMillis", "result"},
-		},
+		Output:   runtime.OutputHints{ListPath: "steps", DefaultColumns: []string{"type", "id", "displayDescription", "displayName", "durationInMillis", "result"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3413,8 +3291,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 			{Name: "raw", Flag: "raw", In: "query", GoType: "bool", Help: "raw specifies whether return the original spec instead of parsed json only (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3461,8 +3338,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3500,10 +3376,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "fuzzyName", Flag: "fuzzy-name", In: "query", GoType: "string", Help: "template name (query)", Required: false},
 			{Name: "enabled", Flag: "enabled", In: "query", GoType: "bool", Help: "enabled (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "description", "enabled", "global"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "description", "enabled", "global"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3517,8 +3390,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "fuzzyName", Flag: "fuzzy-name", In: "query", GoType: "string", Help: "fuzzyName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "workspaceId"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "workspaceId"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3545,10 +3417,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "startTimeFrom", Flag: "start-time-from", In: "query", GoType: "string", Help: "filter by start time range (query, date-time)", Required: false, Format: "date-time"},
 			{Name: "startTimeTo", Flag: "start-time-to", In: "query", GoType: "string", Help: "startTimeTo (query, date-time)", Required: false, Format: "date-time"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "createdAt", "description", "duration", "runId", "startAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "createdAt", "description", "duration", "runId", "startAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3563,8 +3432,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "The scope where the pipeline will be created. (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "The name of the pipeline. (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "allowVolumeExpansion", "claimName", "workspaceId"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "allowVolumeExpansion", "claimName", "workspaceId"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3589,10 +3457,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "lastRunState", Flag: "last-run-state", In: "query", GoType: "string", Help: "- CANCELED: CANCELED indicates the run is aborted by user. (query, one of: STATUS_UNSPECIFIED|QUEUE|RUNNING|SUCCESS|FAILED|CANCELED|ERROR|NOT_BUILT|PAUSED|SKIPPED|UNKNOWN|UNSTABLE)", Required: false, Default: "STATUS_UNSPECIFIED", Enum: []string{"STATUS_UNSPECIFIED", "QUEUE", "RUNNING", "SUCCESS", "FAILED", "CANCELED", "ERROR", "NOT_BUILT", "PAUSED", "SKIPPED", "UNKNOWN", "UNSTABLE"}},
 			{Name: "disabled", Flag: "disabled", In: "query", GoType: "bool", Help: "disabled (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "description", "disabled", "isRelease"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "description", "disabled", "isRelease"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3614,10 +3479,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "fuzzyName", Flag: "fuzzy-name", In: "query", GoType: "string", Help: "template name (query)", Required: false},
 			{Name: "global", Flag: "global", In: "query", GoType: "bool", Help: "global (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "description", "enabled", "global"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "description", "enabled", "global"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3636,8 +3498,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"operations": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"operation": &runtime.SchemaSpec{Type: "string"}, "parameter": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"defaultValue": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "displayConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"shown": &runtime.SchemaSpec{Type: "boolean"}}}, "gitParameterDefinition": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"branch": &runtime.SchemaSpec{Type: "string"}, "branchFilter": &runtime.SchemaSpec{Type: "string"}, "displaySize": &runtime.SchemaSpec{Type: "integer"}, "fastFilter": &runtime.SchemaSpec{Type: "boolean"}, "repository": &runtime.SchemaSpec{Type: "string"}, "requiredParameter": &runtime.SchemaSpec{Type: "boolean"}, "selectedValue": &runtime.SchemaSpec{Type: "string"}, "sortBy": &runtime.SchemaSpec{Type: "string"}, "tagFilter": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string"}, "redact": &runtime.SchemaSpec{Type: "boolean"}, "type": &runtime.SchemaSpec{Type: "string"}}}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3657,8 +3518,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object"},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "value"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "value"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3676,8 +3536,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"destPipelineName": &runtime.SchemaSpec{Type: "string"}, "sourcePipelineName": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3803,8 +3662,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "spec": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3840,8 +3698,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"buildConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disableConcurrence": &runtime.SchemaSpec{Type: "boolean"}, "discarderProperty": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"daysToRetainValue": &runtime.SchemaSpec{Type: "integer"}, "numToRetainValue": &runtime.SchemaSpec{Type: "integer"}}}}}, "description": &runtime.SchemaSpec{Type: "string"}, "genericWebhookTrigger": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiUrl": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "scmConfiguration": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"projectId": &runtime.SchemaSpec{Type: "integer"}, "toolchainId": &runtime.SchemaSpec{Type: "integer"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "triggerFilter": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"branchFilter": &runtime.SchemaSpec{Type: "string"}, "prTriggerEnabled": &runtime.SchemaSpec{Type: "boolean"}, "tagFilter": &runtime.SchemaSpec{Type: "string"}}}}}, "group": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"id": &runtime.SchemaSpec{Type: "integer"}, "name": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "string"}}}, "isRelease": &runtime.SchemaSpec{Type: "boolean"}, "manualWebhookTrigger": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"webhookTrigger": &runtime.SchemaSpec{Type: "boolean"}, "webhookUrl": &runtime.SchemaSpec{Type: "string"}}}, "parameters": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"defaultValue": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "displayConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"shown": &runtime.SchemaSpec{Type: "boolean"}}}, "gitParameterDefinition": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"branch": &runtime.SchemaSpec{Type: "string"}, "branchFilter": &runtime.SchemaSpec{Type: "string"}, "displaySize": &runtime.SchemaSpec{Type: "integer"}, "fastFilter": &runtime.SchemaSpec{Type: "boolean"}, "repository": &runtime.SchemaSpec{Type: "string"}, "requiredParameter": &runtime.SchemaSpec{Type: "boolean"}, "selectedValue": &runtime.SchemaSpec{Type: "string"}, "sortBy": &runtime.SchemaSpec{Type: "string"}, "tagFilter": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string"}, "redact": &runtime.SchemaSpec{Type: "boolean"}, "type": &runtime.SchemaSpec{Type: "string"}}}}, "pipelineMultiBranch": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gitSource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cloneOptions": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"shallowClone": &runtime.SchemaSpec{Type: "integer"}, "timeout": &runtime.SchemaSpec{Type: "integer"}}}, "credentialId": &runtime.SchemaSpec{Type: "string"}, "discoverBranches": &runtime.SchemaSpec{Type: "boolean"}, "gitRepository": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"credentialId": &runtime.SchemaSpec{Type: "string"}, "resourceId": &runtime.SchemaSpec{Type: "integer"}, "toolchainId": &runtime.SchemaSpec{Type: "integer"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "regexFilter": &runtime.SchemaSpec{Type: "string"}}}, "interval": &runtime.SchemaSpec{Type: "string"}, "orphanedItemStrategy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"daysToKeepOldItems": &runtime.SchemaSpec{Type: "integer"}, "maxOfOldItemsToKeep": &runtime.SchemaSpec{Type: "integer"}}}, "scriptPath": &runtime.SchemaSpec{Type: "string"}}}, "pipelineScm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"branch": &runtime.SchemaSpec{Type: "string"}, "credentialId": &runtime.SchemaSpec{Type: "string"}, "gitRepository": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"credentialId": &runtime.SchemaSpec{Type: "string"}, "resourceId": &runtime.SchemaSpec{Type: "integer"}, "toolchainId": &runtime.SchemaSpec{Type: "integer"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "jenkinsFilePath": &runtime.SchemaSpec{Type: "string"}, "scmType": &runtime.SchemaSpec{Type: "string"}}}, "triggers": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"scm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cron": &runtime.SchemaSpec{Type: "string"}}}, "time": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cron": &runtime.SchemaSpec{Type: "string"}}}}}, "type": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3859,8 +3716,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"jenkinsfile": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3879,8 +3735,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"newName": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "redact"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -3917,8 +3772,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "spec": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "parameters", DefaultColumns: []string{"name", "type", "defaultValue", "description", "displayName"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4028,10 +3882,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "- DESC: Desc stands for descending order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "status", Flag: "status", In: "query", GoType: "string", Help: "status (query, one of: PluginStatus_UNSPECIFIED|PluginStatus_Enable|PluginStatus_Disable)", Required: false, Default: "PluginStatus_UNSPECIFIED", Enum: []string{"PluginStatus_UNSPECIFIED", "PluginStatus_Enable", "PluginStatus_Disable"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "kind", "apiVersion", "raw"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "kind", "apiVersion", "raw"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4055,10 +3906,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "- DESC: Desc stands for descending order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "status", Flag: "status", In: "query", GoType: "string", Help: "status (query, one of: PluginStatus_UNSPECIFIED|PluginStatus_Enable|PluginStatus_Disable)", Required: false, Default: "PluginStatus_UNSPECIFIED", Enum: []string{"PluginStatus_UNSPECIFIED", "PluginStatus_Enable", "PluginStatus_Disable"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "kind", "apiVersion", "raw"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "kind", "apiVersion", "raw"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4095,6 +3943,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.namespace", Flag: "payload.namespace", In: "query", GoType: "string", Help: "Namespace is the metadata.namespace of the referenced OverridePolicy. (query)", Required: false},
 			{Name: "payload.name", Flag: "payload.name", In: "query", GoType: "string", Help: "name represents for the resource name (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Policy",
@@ -4113,6 +3962,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.namespace", Flag: "payload.namespace", In: "query", GoType: "string", Help: "Namespace is the metadata.namespace of the referenced PropagationPolicy. (query)", Required: false},
 			{Name: "payload.name", Flag: "payload.name", In: "query", GoType: "string", Help: "name represents for the resource name (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Policy",
@@ -4137,8 +3987,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.sortDir", Flag: "payload.sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the data list order. (query, one of: desc|asc)", Required: false, Default: "desc", Enum: []string{"desc", "asc"}},
 			{Name: "payload.apiVersion", Flag: "payload.api-version", In: "query", GoType: "string", Help: "payload.apiVersion (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Policy",
@@ -4163,8 +4013,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "payload.sortDir", Flag: "payload.sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the data list order. (query, one of: desc|asc)", Required: false, Default: "desc", Enum: []string{"desc", "asc"}},
 			{Name: "payload.apiVersion", Flag: "payload.api-version", In: "query", GoType: "string", Help: "payload.apiVersion (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Release",
@@ -4188,10 +4038,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the release stats list order reference. (query, one of: RELEASE_SORT_BY_UNSPECIFIED|RELEASE_FIELD_NAME|RELEASE_CREATED_AT|RELEASE_STARTED_AT)", Required: false, Default: "RELEASE_SORT_BY_UNSPECIFIED", Enum: []string{"RELEASE_SORT_BY_UNSPECIFIED", "RELEASE_FIELD_NAME", "RELEASE_CREATED_AT", "RELEASE_STARTED_AT"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the release stats order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "abortedBy", "application", "cluster", "image", "pipelineId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "abortedBy", "application", "cluster", "image", "pipelineId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4277,8 +4124,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "namespace (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "analysisRuns", DefaultColumns: []string{"name", "error", "failed", "inconclusive", "revision", "status"},
-		},
+		Output:   runtime.OutputHints{ListPath: "analysisRuns", DefaultColumns: []string{"name", "error", "failed", "inconclusive", "revision", "status"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4330,10 +4176,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "fuzzyName", Flag: "fuzzy-name", In: "query", GoType: "string", Help: "fuzzyName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4350,8 +4193,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "namespace (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "image"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "image"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4374,10 +4216,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "fuzzyName", Flag: "fuzzy-name", In: "query", GoType: "string", Help: "fuzzyName (query)", Required: false},
 			{Name: "rolloutPhase", Flag: "rollout-phase", In: "query", GoType: "string", Help: "rolloutPhase (query, one of: ROLLOUT_PHASE_UNSPECIFIED|ROLLOUT_PHASE_HEALTHY|ROLLOUT_PHASE_DEGRADED|ROLLOUT_PHASE_PROCESSING|ROLLOUT_PHASE_PAUSED|ROLLOUT_PHASE_SCALEDDOWN)", Required: false, Default: "ROLLOUT_PHASE_UNSPECIFIED", Enum: []string{"ROLLOUT_PHASE_UNSPECIFIED", "ROLLOUT_PHASE_HEALTHY", "ROLLOUT_PHASE_DEGRADED", "ROLLOUT_PHASE_PROCESSING", "ROLLOUT_PHASE_PAUSED", "ROLLOUT_PHASE_SCALEDDOWN"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "createdAt", "replicas", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "createdAt", "replicas", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4399,10 +4238,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "labelSelector", Flag: "label-selector", In: "query", GoType: "string", Help: "labelSelector (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4505,8 +4341,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"address", "createdAt", "nameInJenkins", "resourceStatus", "toolchainId", "toolchainName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"address", "createdAt", "nameInJenkins", "resourceStatus", "toolchainId", "toolchainName"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4553,8 +4388,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4570,8 +4404,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "namespace (query)", Required: false},
 			{Name: "scope", Flag: "scope", In: "query", GoType: "string", Help: "scope (query, one of: SCOPE_CLUSTER|SCOPE_NAMESPACE)", Required: false, Default: "SCOPE_CLUSTER", Enum: []string{"SCOPE_CLUSTER", "SCOPE_NAMESPACE"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "kind", "isDefaultClass"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "kind", "isDefaultClass"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4585,8 +4418,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4602,10 +4434,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page requested. (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "PageSize per page requested. (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "certificationEnabled", "cluster", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "certificationEnabled", "cluster", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4623,10 +4452,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page requested. (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "PageSize per page requested. (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4641,8 +4467,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 			{Name: "phase", Flag: "phase", In: "query", GoType: "string", Help: "phase (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "phase", "cluster"},
-		},
+		Output:   runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"name", "phase", "cluster"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4665,10 +4490,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the resources list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the resources list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"data"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"data"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4682,8 +4504,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "metadata.creationTimestamp"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4779,10 +4600,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the data list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "types", Flag: "types", In: "query", GoType: "[]string", Help: "types that need to be queried,if empty all types, (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id", "address", "config", "connectStatus"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id", "address", "config", "connectStatus"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4802,10 +4620,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the data list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the data list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id", "resourceStatus", "toolchainId", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id", "resourceStatus", "toolchainId", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4957,10 +4772,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the data list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 			{Name: "types", Flag: "types", In: "query", GoType: "[]string", Help: "types that need to be queried,if empty all types, (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id", "address", "config", "connectStatus"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id", "address", "config", "connectStatus"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4976,10 +4788,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page requested. (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "PageSize per page requested. (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"address", "createdAt", "nameInJenkins", "resourceStatus", "toolchainId", "toolchainName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"address", "createdAt", "nameInJenkins", "resourceStatus", "toolchainId", "toolchainName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -5000,10 +4809,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the data list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the data list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id", "resourceStatus", "toolchainId", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id", "resourceStatus", "toolchainId", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -5147,10 +4953,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "SortBy determines the cluster list order reference. (query, one of: SORT_BY_UNSPECIFIED|FIELD_NAME|CREATED_AT|CLUSTER|NAMESPACE)", Required: false, Default: "SORT_BY_UNSPECIFIED", Enum: []string{"SORT_BY_UNSPECIFIED", "FIELD_NAME", "CREATED_AT", "CLUSTER", "NAMESPACE"}},
 			{Name: "sortDir", Flag: "sort-dir", In: "query", GoType: "string", Help: "OrderBy determines the cluster list order. (query, one of: DESC|ASC)", Required: false, Default: "DESC", Enum: []string{"DESC", "ASC"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "appGroup", "createBy", "createdAt", "status", "workloadType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "appGroup", "createBy", "createdAt", "status", "workloadType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{

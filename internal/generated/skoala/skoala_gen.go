@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 9
+const generatedSchemaVersion = 11
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -39,8 +39,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"higress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"console": &runtime.SchemaSpec{Type: "object"}, "controller": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "automaticHttps": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"email": &runtime.SchemaSpec{Type: "string"}, "enable": &runtime.SchemaSpec{Type: "boolean"}}}, "autoscaling": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "maxReplicas": &runtime.SchemaSpec{Type: "string"}, "minReplicas": &runtime.SchemaSpec{Type: "string"}, "targetCpuUtilizationPercentage": &runtime.SchemaSpec{Type: "string"}}}, "enableRbac": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "object"}, "image": &runtime.SchemaSpec{Type: "string"}, "imagePullSecrets": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "labels": &runtime.SchemaSpec{Type: "object"}, "livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "podAnnotations": &runtime.SchemaSpec{Type: "object"}, "podLabels": &runtime.SchemaSpec{Type: "object"}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "externalTrafficPolicy": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "loadBalancerClass": &runtime.SchemaSpec{Type: "string"}, "loadBalancerIp": &runtime.SchemaSpec{Type: "string"}, "loadBalancerSourceRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}}}}}, "customValues": &runtime.SchemaSpec{Type: "object"}, "gateway": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "autoscaling": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "maxReplicas": &runtime.SchemaSpec{Type: "string"}, "minReplicas": &runtime.SchemaSpec{Type: "string"}, "targetCpuUtilizationPercentage": &runtime.SchemaSpec{Type: "string"}}}, "deployType": &runtime.SchemaSpec{Type: "string"}, "enableRbac": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "object"}, "envoyLog": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"componentLevel": &runtime.SchemaSpec{Type: "object"}, "globalLevel": &runtime.SchemaSpec{Type: "string"}}}, "hostNetwork": &runtime.SchemaSpec{Type: "boolean"}, "httpPort": &runtime.SchemaSpec{Type: "integer"}, "httpsPort": &runtime.SchemaSpec{Type: "integer"}, "image": &runtime.SchemaSpec{Type: "string"}, "ingressClass": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "podAnnotations": &runtime.SchemaSpec{Type: "object"}, "podLabels": &runtime.SchemaSpec{Type: "object"}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "externalTrafficPolicy": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "loadBalancerClass": &runtime.SchemaSpec{Type: "string"}, "loadBalancerIp": &runtime.SchemaSpec{Type: "string"}, "loadBalancerSourceRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}}}}}, "observability": &runtime.SchemaSpec{Type: "boolean"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "meta": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gatewayType": &runtime.SchemaSpec{Type: "string"}, "managerType": &runtime.SchemaSpec{Type: "string"}}}}}, "gatewayName": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"higress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"console": &runtime.SchemaSpec{Type: "object"}, "controller": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "automaticHttps": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"email": &runtime.SchemaSpec{Type: "string"}, "enable": &runtime.SchemaSpec{Type: "boolean"}}}, "autoscaling": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "maxReplicas": &runtime.SchemaSpec{Type: "string"}, "minReplicas": &runtime.SchemaSpec{Type: "string"}, "targetCpuUtilizationPercentage": &runtime.SchemaSpec{Type: "string"}}}, "enableRbac": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "object"}, "image": &runtime.SchemaSpec{Type: "string"}, "imagePullSecrets": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "labels": &runtime.SchemaSpec{Type: "object"}, "livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "podAnnotations": &runtime.SchemaSpec{Type: "object"}, "podLabels": &runtime.SchemaSpec{Type: "object"}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "externalTrafficPolicy": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "loadBalancerClass": &runtime.SchemaSpec{Type: "string"}, "loadBalancerIp": &runtime.SchemaSpec{Type: "string"}, "loadBalancerSourceRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}}}}}, "customValues": &runtime.SchemaSpec{Type: "object"}, "gateway": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "autoscaling": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "maxReplicas": &runtime.SchemaSpec{Type: "string"}, "minReplicas": &runtime.SchemaSpec{Type: "string"}, "targetCpuUtilizationPercentage": &runtime.SchemaSpec{Type: "string"}}}, "deployType": &runtime.SchemaSpec{Type: "string"}, "enableRbac": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "object"}, "envoyLog": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"componentLevel": &runtime.SchemaSpec{Type: "object"}, "globalLevel": &runtime.SchemaSpec{Type: "string"}}}, "hostNetwork": &runtime.SchemaSpec{Type: "boolean"}, "httpPort": &runtime.SchemaSpec{Type: "integer"}, "httpsPort": &runtime.SchemaSpec{Type: "integer"}, "image": &runtime.SchemaSpec{Type: "string"}, "ingressClass": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "podAnnotations": &runtime.SchemaSpec{Type: "object"}, "podLabels": &runtime.SchemaSpec{Type: "object"}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "externalTrafficPolicy": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "loadBalancerClass": &runtime.SchemaSpec{Type: "string"}, "loadBalancerIp": &runtime.SchemaSpec{Type: "string"}, "loadBalancerSourceRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}}}}}, "observability": &runtime.SchemaSpec{Type: "boolean"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "meta": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gatewayType": &runtime.SchemaSpec{Type: "string"}, "managerType": &runtime.SchemaSpec{Type: "string"}}}}}, "gatewayName": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "AIGateway",
@@ -55,6 +56,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "AIGateway",
@@ -69,6 +71,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "AIGateway",
@@ -83,6 +86,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "AIGateway",
@@ -97,8 +101,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "enName", "hash", "icon", "order"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "enName", "hash", "icon", "order"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "AIGateway",
@@ -115,10 +119,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "clusterPhase", "consoleUrl", "createdAt", "gatewayName", "namespaceName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "clusterPhase", "consoleUrl", "createdAt", "gatewayName", "namespaceName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "AIGateway",
@@ -133,6 +135,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "AIGateway",
@@ -149,8 +152,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"higress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"console": &runtime.SchemaSpec{Type: "object"}, "controller": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "automaticHttps": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"email": &runtime.SchemaSpec{Type: "string"}, "enable": &runtime.SchemaSpec{Type: "boolean"}}}, "autoscaling": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "maxReplicas": &runtime.SchemaSpec{Type: "string"}, "minReplicas": &runtime.SchemaSpec{Type: "string"}, "targetCpuUtilizationPercentage": &runtime.SchemaSpec{Type: "string"}}}, "enableRbac": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "object"}, "image": &runtime.SchemaSpec{Type: "string"}, "imagePullSecrets": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "labels": &runtime.SchemaSpec{Type: "object"}, "livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "podAnnotations": &runtime.SchemaSpec{Type: "object"}, "podLabels": &runtime.SchemaSpec{Type: "object"}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "externalTrafficPolicy": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "loadBalancerClass": &runtime.SchemaSpec{Type: "string"}, "loadBalancerIp": &runtime.SchemaSpec{Type: "string"}, "loadBalancerSourceRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}}}}}, "customValues": &runtime.SchemaSpec{Type: "object"}, "gateway": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "autoscaling": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "maxReplicas": &runtime.SchemaSpec{Type: "string"}, "minReplicas": &runtime.SchemaSpec{Type: "string"}, "targetCpuUtilizationPercentage": &runtime.SchemaSpec{Type: "string"}}}, "deployType": &runtime.SchemaSpec{Type: "string"}, "enableRbac": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "object"}, "envoyLog": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"componentLevel": &runtime.SchemaSpec{Type: "object"}, "globalLevel": &runtime.SchemaSpec{Type: "string"}}}, "hostNetwork": &runtime.SchemaSpec{Type: "boolean"}, "httpPort": &runtime.SchemaSpec{Type: "integer"}, "httpsPort": &runtime.SchemaSpec{Type: "integer"}, "image": &runtime.SchemaSpec{Type: "string"}, "ingressClass": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "podAnnotations": &runtime.SchemaSpec{Type: "object"}, "podLabels": &runtime.SchemaSpec{Type: "object"}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "externalTrafficPolicy": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "loadBalancerClass": &runtime.SchemaSpec{Type: "string"}, "loadBalancerIp": &runtime.SchemaSpec{Type: "string"}, "loadBalancerSourceRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}}}}}, "observability": &runtime.SchemaSpec{Type: "boolean"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "meta": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gatewayType": &runtime.SchemaSpec{Type: "string"}, "managerType": &runtime.SchemaSpec{Type: "string"}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"higress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"console": &runtime.SchemaSpec{Type: "object"}, "controller": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "automaticHttps": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"email": &runtime.SchemaSpec{Type: "string"}, "enable": &runtime.SchemaSpec{Type: "boolean"}}}, "autoscaling": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "maxReplicas": &runtime.SchemaSpec{Type: "string"}, "minReplicas": &runtime.SchemaSpec{Type: "string"}, "targetCpuUtilizationPercentage": &runtime.SchemaSpec{Type: "string"}}}, "enableRbac": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "object"}, "image": &runtime.SchemaSpec{Type: "string"}, "imagePullSecrets": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "labels": &runtime.SchemaSpec{Type: "object"}, "livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "podAnnotations": &runtime.SchemaSpec{Type: "object"}, "podLabels": &runtime.SchemaSpec{Type: "object"}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "externalTrafficPolicy": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "loadBalancerClass": &runtime.SchemaSpec{Type: "string"}, "loadBalancerIp": &runtime.SchemaSpec{Type: "string"}, "loadBalancerSourceRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}}}}}, "customValues": &runtime.SchemaSpec{Type: "object"}, "gateway": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "autoscaling": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "maxReplicas": &runtime.SchemaSpec{Type: "string"}, "minReplicas": &runtime.SchemaSpec{Type: "string"}, "targetCpuUtilizationPercentage": &runtime.SchemaSpec{Type: "string"}}}, "deployType": &runtime.SchemaSpec{Type: "string"}, "enableRbac": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "object"}, "envoyLog": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"componentLevel": &runtime.SchemaSpec{Type: "object"}, "globalLevel": &runtime.SchemaSpec{Type: "string"}}}, "hostNetwork": &runtime.SchemaSpec{Type: "boolean"}, "httpPort": &runtime.SchemaSpec{Type: "integer"}, "httpsPort": &runtime.SchemaSpec{Type: "integer"}, "image": &runtime.SchemaSpec{Type: "string"}, "ingressClass": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "podAnnotations": &runtime.SchemaSpec{Type: "object"}, "podLabels": &runtime.SchemaSpec{Type: "object"}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "grpc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "string"}}}, "httpGet": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "tcpSocket": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}}}, "terminationGracePeriodSeconds": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "externalTrafficPolicy": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "loadBalancerClass": &runtime.SchemaSpec{Type: "string"}, "loadBalancerIp": &runtime.SchemaSpec{Type: "string"}, "loadBalancerSourceRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}}}}}, "observability": &runtime.SchemaSpec{Type: "boolean"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "meta": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gatewayType": &runtime.SchemaSpec{Type: "string"}, "managerType": &runtime.SchemaSpec{Type: "string"}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "ConfigCenter",
@@ -168,10 +172,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "clusterName", "configCount", "createdAt", "healthNodeCount"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "clusterName", "configCount", "createdAt", "healthNodeCount"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -187,8 +189,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advanced": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contour": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "diagnostic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"args": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}}}, "disableEndpointSlices": &runtime.SchemaSpec{Type: "boolean"}, "recreate": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "rollingUpdate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxSurge": &runtime.SchemaSpec{Type: "string"}, "maxUnavailable": &runtime.SchemaSpec{Type: "string"}}}, "tracingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customTags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"tagName": &runtime.SchemaSpec{Type: "string"}, "tagType": &runtime.SchemaSpec{Type: "string"}, "tagValue": &runtime.SchemaSpec{Type: "string"}}}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "maxPathLength": &runtime.SchemaSpec{Type: "integer"}, "sampling": &runtime.SchemaSpec{Type: "number"}}}}}, "envoy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowSidecarInject": &runtime.SchemaSpec{Type: "boolean"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "dnsLookupFamily": &runtime.SchemaSpec{Type: "string"}, "enableStatsPrefix": &runtime.SchemaSpec{Type: "boolean"}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "numTrustedHops": &runtime.SchemaSpec{Type: "integer"}, "recreate": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "rollingUpdate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxSurge": &runtime.SchemaSpec{Type: "string"}, "maxUnavailable": &runtime.SchemaSpec{Type: "string"}}}}}, "log": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contourDebug": &runtime.SchemaSpec{Type: "boolean"}, "customLog": &runtime.SchemaSpec{Type: "object"}, "envoyLogLevel": &runtime.SchemaSpec{Type: "string"}, "kubernetesDebug": &runtime.SchemaSpec{Type: "integer"}, "logToInsight": &runtime.SchemaSpec{Type: "boolean"}}}, "maxHeapSize": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"size": &runtime.SchemaSpec{Type: "string"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "normal": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contour": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"replicas": &runtime.SchemaSpec{Type: "integer"}, "rootNamespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "envoy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"replicas": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "allowSharedIp": &runtime.SchemaSpec{Type: "boolean"}, "http": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerPort": &runtime.SchemaSpec{Type: "integer"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}}}, "https": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerPort": &runtime.SchemaSpec{Type: "integer"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}}}, "lbAddr": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "trafficPolicy": &runtime.SchemaSpec{Type: "string"}}}}}}}, "plugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"globalAuthConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authContext": &runtime.SchemaSpec{Type: "object"}, "authPluginName": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}}}, "globalExtProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}, "globalRatelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "ratelimitPluginName": &runtime.SchemaSpec{Type: "string"}}}}}}}, "gatewayName": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advanced": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contour": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "diagnostic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"args": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}}}, "disableEndpointSlices": &runtime.SchemaSpec{Type: "boolean"}, "recreate": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "rollingUpdate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxSurge": &runtime.SchemaSpec{Type: "string"}, "maxUnavailable": &runtime.SchemaSpec{Type: "string"}}}, "tracingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customTags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"tagName": &runtime.SchemaSpec{Type: "string"}, "tagType": &runtime.SchemaSpec{Type: "string"}, "tagValue": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "maxPathLength": &runtime.SchemaSpec{Type: "integer"}, "sampling": &runtime.SchemaSpec{Type: "number"}}}}}, "envoy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowSidecarInject": &runtime.SchemaSpec{Type: "boolean"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "dnsLookupFamily": &runtime.SchemaSpec{Type: "string"}, "enableStatsPrefix": &runtime.SchemaSpec{Type: "boolean"}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "numTrustedHops": &runtime.SchemaSpec{Type: "integer"}, "recreate": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "rollingUpdate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxSurge": &runtime.SchemaSpec{Type: "string"}, "maxUnavailable": &runtime.SchemaSpec{Type: "string"}}}}}, "log": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contourDebug": &runtime.SchemaSpec{Type: "boolean"}, "customLog": &runtime.SchemaSpec{Type: "object"}, "envoyLogLevel": &runtime.SchemaSpec{Type: "string"}, "kubernetesDebug": &runtime.SchemaSpec{Type: "integer"}, "logToInsight": &runtime.SchemaSpec{Type: "boolean"}}}, "maxHeapSize": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"size": &runtime.SchemaSpec{Type: "string"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "normal": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contour": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"replicas": &runtime.SchemaSpec{Type: "integer"}, "rootNamespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "envoy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"replicas": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "allowSharedIp": &runtime.SchemaSpec{Type: "boolean"}, "http": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerPort": &runtime.SchemaSpec{Type: "integer"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}}}, "https": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerPort": &runtime.SchemaSpec{Type: "integer"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}}}, "lbAddr": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "trafficPolicy": &runtime.SchemaSpec{Type: "string"}}}}}}}, "plugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"globalAuthConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authContext": &runtime.SchemaSpec{Type: "object"}, "authPluginName": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}}}, "globalExtProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}, "globalRatelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "ratelimitPluginName": &runtime.SchemaSpec{Type: "string"}}}}}}}, "gatewayName": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -207,6 +210,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"Unlimited": &runtime.SchemaSpec{Type: "boolean"}, "aliasName": &runtime.SchemaSpec{Type: "string"}, "key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -225,6 +229,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secretConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caCrt": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "tlsCrt": &runtime.SchemaSpec{Type: "string"}, "tlsKey": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -243,6 +248,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"force": &runtime.SchemaSpec{Type: "boolean"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -257,8 +263,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "gatewayUsage", DefaultColumns: []string{"canDelete", "resourceCount", "sesameResourceType"},
-		},
+		Output:   runtime.OutputHints{ListPath: "gatewayUsage", DefaultColumns: []string{"canDelete", "resourceCount", "sesameResourceType"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -274,6 +280,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "ruleName", Flag: "rule-name", In: "path", GoType: "string", Help: "ruleName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -292,6 +299,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"diagnostic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"args": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -320,10 +328,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -352,10 +358,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -373,8 +377,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "beginTime", Flag: "begin-time", In: "query", GoType: "int64", Help: "in second (query, int32)", Required: false, Format: "int32"},
 			{Name: "endTime", Flag: "end-time", In: "query", GoType: "int64", Help: "default to now (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "fail", "ok", "resTime", "success"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "fail", "ok", "resTime", "success"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -394,8 +398,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "interval", Flag: "interval", In: "query", GoType: "string", Help: "interval (query, int64)", Required: false, Format: "int64"},
 			{Name: "unit", Flag: "unit", In: "query", GoType: "string", Help: "时间单位 (query, one of: TIME_UNIT_UNSPECIFIED|Day|Hour|Minute|Second|Millisecond)", Required: false, Default: "TIME_UNIT_UNSPECIFIED", Enum: []string{"TIME_UNIT_UNSPECIFIED", "Day", "Hour", "Minute", "Second", "Millisecond"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiName", "count", "duration"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiName", "count", "duration"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -410,6 +414,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -425,8 +430,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "kind", Flag: "kind", In: "query", GoType: "string", Help: "kind (query, one of: HTTP_STATS_KIND_UNSPECIFIED|HttpStatsKindGateway|HttpStatsKindService|HttpStatsKindAPI)", Required: false, Default: "HTTP_STATS_KIND_UNSPECIFIED", Enum: []string{"HTTP_STATS_KIND_UNSPECIFIED", "HttpStatsKindGateway", "HttpStatsKindService", "HttpStatsKindAPI"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "fail", "ok", "resTime", "success"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "fail", "ok", "resTime", "success"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -445,6 +450,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "interval", Flag: "interval", In: "query", GoType: "string", Help: "interval (query, int64)", Required: false, Format: "int64"},
 			{Name: "unit", Flag: "unit", In: "query", GoType: "string", Help: "时间单位 (query, one of: TIME_UNIT_UNSPECIFIED|Day|Hour|Minute|Second|Millisecond)", Required: false, Default: "TIME_UNIT_UNSPECIFIED", Enum: []string{"TIME_UNIT_UNSPECIFIED", "Day", "Hour", "Minute", "Second", "Millisecond"}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -459,6 +465,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -473,6 +480,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -487,6 +495,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -504,6 +513,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "from", Flag: "from", In: "query", GoType: "string", Help: "开始时间: 时间戳(s) (query)", Required: false},
 			{Name: "to", Flag: "to", In: "query", GoType: "string", Help: "结束时间: 时间戳(s) (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -518,7 +528,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "namespaces"},
+		Output:   runtime.OutputHints{ListPath: "namespaces"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -534,6 +545,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "podName", Flag: "pod-name", In: "path", GoType: "string", Help: "podName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -548,6 +560,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -562,6 +575,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -577,6 +591,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "ruleName", Flag: "rule-name", In: "path", GoType: "string", Help: "ruleName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -598,10 +613,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "logSearch", Flag: "log-search", In: "query", GoType: "string", Help: "模糊查询 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timeStamp"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timeStamp"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -610,6 +623,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Gateway_GetProvisionedComponents",
 		Method:      "GET",
 		PathTpl:     "/apis/sesame.skoala.io/v1alpha1/components",
+		Security:    &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -624,6 +638,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -639,10 +654,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "filter", Flag: "filter", In: "query", GoType: "string", Help: "optional (query)", Required: false},
 			{Name: "status", Flag: "status", In: "query", GoType: "string", Help: "- GATEWAY_STATUS_UNSPECIFIED: unknown (query, one of: GATEWAY_STATUS_UNSPECIFIED|Unknown|Error|Starting|Running)", Required: false, Default: "GATEWAY_STATUS_UNSPECIFIED", Enum: []string{"GATEWAY_STATUS_UNSPECIFIED", "Unknown", "Error", "Starting", "Running"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCount", "clusterName", "clusterPhase", "createdAt", "gatewayName", "namespaceName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCount", "clusterName", "clusterPhase", "createdAt", "gatewayName", "namespaceName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -659,8 +672,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"filter": &runtime.SchemaSpec{Type: "string"}, "namespaceNames": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "status": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCount", "clusterName", "clusterPhase", "createdAt", "gatewayName", "namespaceName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCount", "clusterName", "clusterPhase", "createdAt", "gatewayName", "namespaceName"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -689,10 +702,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiName", "authority", "bytesReceived", "bytesSent", "downstreamDirectRemoteAddress", "duration"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiName", "authority", "bytesReceived", "bytesSent", "downstreamDirectRemoteAddress", "duration"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -711,10 +722,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"phase", "ipFixed", "namespaceName", "podIp", "podName", "workloadName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"phase", "ipFixed", "namespaceName", "podIp", "podName", "workloadName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -730,8 +739,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "component", Flag: "component", In: "path", GoType: "string", Help: "component (path, required, one of: GATEWAY_COMPONENT_TYPE_UNSPECIFIED|Contour|Envoy)", Required: true, Enum: []string{"GATEWAY_COMPONENT_TYPE_UNSPECIFIED", "Contour", "Envoy"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"podName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"podName"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -749,10 +758,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "Unlimited", "aliasName", "key", "value"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "Unlimited", "aliasName", "key", "value"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -771,10 +778,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"errMsg", "secretName", "secretNamespaceName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"errMsg", "secretName", "secretNamespaceName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -788,6 +793,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "clusterName", Flag: "cluster-name", In: "path", GoType: "string", Help: "clusterName (path, required)", Required: true},
 			{Name: "rootNamespace", Flag: "root-namespace", In: "query", GoType: "string", Help: "安装网关/或被其管辖的名字空间,即它在网关的root namespaces列表中 (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -803,6 +809,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "atTime", Flag: "at-time", In: "query", GoType: "int64", Help: "atTime (query, int32)", Required: false, Format: "int32"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -820,8 +827,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "endTime", Flag: "end-time", In: "query", GoType: "int64", Help: "endTime (query, int32)", Required: false, Format: "int32"},
 			{Name: "step", Flag: "step", In: "query", GoType: "int64", Help: "step (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "contour", DefaultColumns: []string{"errorMessage", "status"},
-		},
+		Output:   runtime.OutputHints{ListPath: "contour", DefaultColumns: []string{"errorMessage", "status"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -838,8 +845,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "podName", Flag: "pod-name", In: "path", GoType: "string", Help: "podName (path, required)", Required: true},
 			{Name: "atTime", Flag: "at-time", In: "query", GoType: "int64", Help: "atTime (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"errorMessage", "status"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"errorMessage", "status"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -858,8 +865,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "endTime", Flag: "end-time", In: "query", GoType: "int64", Help: "endTime (query, int32)", Required: false, Format: "int32"},
 			{Name: "step", Flag: "step", In: "query", GoType: "int64", Help: "step (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"errorMessage", "status"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"errorMessage", "status"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -878,6 +885,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -896,6 +904,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "redisUrl": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -914,6 +923,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"switch": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -932,6 +942,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "redisUrl": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}}}, "switch": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -948,8 +959,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advanced": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contour": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "diagnostic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"args": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}}}, "disableEndpointSlices": &runtime.SchemaSpec{Type: "boolean"}, "recreate": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "rollingUpdate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxSurge": &runtime.SchemaSpec{Type: "string"}, "maxUnavailable": &runtime.SchemaSpec{Type: "string"}}}, "tracingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customTags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"tagName": &runtime.SchemaSpec{Type: "string"}, "tagType": &runtime.SchemaSpec{Type: "string"}, "tagValue": &runtime.SchemaSpec{Type: "string"}}}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "maxPathLength": &runtime.SchemaSpec{Type: "integer"}, "sampling": &runtime.SchemaSpec{Type: "number"}}}}}, "envoy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowSidecarInject": &runtime.SchemaSpec{Type: "boolean"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "dnsLookupFamily": &runtime.SchemaSpec{Type: "string"}, "enableStatsPrefix": &runtime.SchemaSpec{Type: "boolean"}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "numTrustedHops": &runtime.SchemaSpec{Type: "integer"}, "recreate": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "rollingUpdate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxSurge": &runtime.SchemaSpec{Type: "string"}, "maxUnavailable": &runtime.SchemaSpec{Type: "string"}}}}}, "log": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contourDebug": &runtime.SchemaSpec{Type: "boolean"}, "customLog": &runtime.SchemaSpec{Type: "object"}, "envoyLogLevel": &runtime.SchemaSpec{Type: "string"}, "kubernetesDebug": &runtime.SchemaSpec{Type: "integer"}, "logToInsight": &runtime.SchemaSpec{Type: "boolean"}}}, "maxHeapSize": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"size": &runtime.SchemaSpec{Type: "string"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "normal": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contour": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"replicas": &runtime.SchemaSpec{Type: "integer"}, "rootNamespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "envoy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"replicas": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "allowSharedIp": &runtime.SchemaSpec{Type: "boolean"}, "http": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerPort": &runtime.SchemaSpec{Type: "integer"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}}}, "https": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerPort": &runtime.SchemaSpec{Type: "integer"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}}}, "lbAddr": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "trafficPolicy": &runtime.SchemaSpec{Type: "string"}}}}}}}, "plugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"globalAuthConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authContext": &runtime.SchemaSpec{Type: "object"}, "authPluginName": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}}}, "globalExtProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}, "globalRatelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "ratelimitPluginName": &runtime.SchemaSpec{Type: "string"}}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advanced": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contour": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "diagnostic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"args": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}}}, "disableEndpointSlices": &runtime.SchemaSpec{Type: "boolean"}, "recreate": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "rollingUpdate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxSurge": &runtime.SchemaSpec{Type: "string"}, "maxUnavailable": &runtime.SchemaSpec{Type: "string"}}}, "tracingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customTags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"tagName": &runtime.SchemaSpec{Type: "string"}, "tagType": &runtime.SchemaSpec{Type: "string"}, "tagValue": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "maxPathLength": &runtime.SchemaSpec{Type: "integer"}, "sampling": &runtime.SchemaSpec{Type: "number"}}}}}, "envoy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowSidecarInject": &runtime.SchemaSpec{Type: "boolean"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "dnsLookupFamily": &runtime.SchemaSpec{Type: "string"}, "enableStatsPrefix": &runtime.SchemaSpec{Type: "boolean"}, "nodeSelector": &runtime.SchemaSpec{Type: "object"}, "numTrustedHops": &runtime.SchemaSpec{Type: "integer"}, "recreate": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "rollingUpdate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxSurge": &runtime.SchemaSpec{Type: "string"}, "maxUnavailable": &runtime.SchemaSpec{Type: "string"}}}}}, "log": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contourDebug": &runtime.SchemaSpec{Type: "boolean"}, "customLog": &runtime.SchemaSpec{Type: "object"}, "envoyLogLevel": &runtime.SchemaSpec{Type: "string"}, "kubernetesDebug": &runtime.SchemaSpec{Type: "integer"}, "logToInsight": &runtime.SchemaSpec{Type: "boolean"}}}, "maxHeapSize": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"size": &runtime.SchemaSpec{Type: "string"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "normal": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contour": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"replicas": &runtime.SchemaSpec{Type: "integer"}, "rootNamespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "envoy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"replicas": &runtime.SchemaSpec{Type: "integer"}, "service": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "allowSharedIp": &runtime.SchemaSpec{Type: "boolean"}, "http": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerPort": &runtime.SchemaSpec{Type: "integer"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}}}, "https": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerPort": &runtime.SchemaSpec{Type: "integer"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}}}, "lbAddr": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "trafficPolicy": &runtime.SchemaSpec{Type: "string"}}}}}}}, "plugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"globalAuthConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authContext": &runtime.SchemaSpec{Type: "object"}, "authPluginName": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}}}, "globalExtProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}, "globalRatelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "ratelimitPluginName": &runtime.SchemaSpec{Type: "string"}}}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Gateway",
@@ -969,6 +981,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"Unlimited": &runtime.SchemaSpec{Type: "boolean"}, "aliasName": &runtime.SchemaSpec{Type: "string"}, "key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -987,8 +1000,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiNames": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "operation": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "failApi", DefaultColumns: []string{"apiName", "reason"},
-		},
+		Output:   runtime.OutputHints{ListPath: "failApi", DefaultColumns: []string{"apiName", "reason"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1005,8 +1018,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}, "apiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiGroup": &runtime.SchemaSpec{Type: "string"}, "apiName": &runtime.SchemaSpec{Type: "string"}, "directResponse": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "path": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "redirect": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "route": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"routeService": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableGrpc": &runtime.SchemaSpec{Type: "boolean"}, "mirror": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "sesameId": &runtime.SchemaSpec{Type: "string"}, "showServiceName": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}, "apiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiGroup": &runtime.SchemaSpec{Type: "string"}, "apiName": &runtime.SchemaSpec{Type: "string"}, "directResponse": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "path": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "redirect": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "route": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"routeService": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableGrpc": &runtime.SchemaSpec{Type: "boolean"}, "mirror": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "sesameId": &runtime.SchemaSpec{Type: "string"}, "showServiceName": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1023,8 +1037,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}, "apiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiGroup": &runtime.SchemaSpec{Type: "string"}, "apiName": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exact": &runtime.SchemaSpec{Type: "string"}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "permitInsecure": &runtime.SchemaSpec{Type: "boolean"}, "routeRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"directResponse": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}}, "queryParameters": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}}, "redirect": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "routeAction": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"routeService": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableGrpc": &runtime.SchemaSpec{Type: "boolean"}, "mirror": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "sesameId": &runtime.SchemaSpec{Type: "string"}, "showServiceName": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}, "apiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiGroup": &runtime.SchemaSpec{Type: "string"}, "apiName": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exact": &runtime.SchemaSpec{Type: "string"}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "permitInsecure": &runtime.SchemaSpec{Type: "boolean"}, "routeRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"directResponse": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "queryParameters": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "redirect": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "routeAction": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"routeService": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableGrpc": &runtime.SchemaSpec{Type: "boolean"}, "mirror": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "sesameId": &runtime.SchemaSpec{Type: "string"}, "showServiceName": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1044,6 +1059,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "header": &runtime.SchemaSpec{Type: "object"}, "insecureSkipVerify": &runtime.SchemaSpec{Type: "boolean"}, "method": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "query": &runtime.SchemaSpec{Type: "object"}, "scheme": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1059,6 +1075,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "apiName", Flag: "api-name", In: "path", GoType: "string", Help: "apiName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1075,6 +1092,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "apiName", Flag: "api-name", In: "query", GoType: "[]string", Help: "apiName (query)", Required: false},
 			{Name: "all", Flag: "all", In: "query", GoType: "bool", Help: "all (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1091,6 +1109,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "apiName", Flag: "api-name", In: "query", GoType: "[]string", Help: "apiName (query)", Required: false},
 			{Name: "all", Flag: "all", In: "query", GoType: "bool", Help: "all (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1107,6 +1126,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "apiName", Flag: "api-name", In: "path", GoType: "string", Help: "apiName (path, required)", Required: true},
 			{Name: "apiGroup", Flag: "api-group", In: "query", GoType: "string", Help: "apiGroup (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1122,7 +1142,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "apiName", Flag: "api-name", In: "path", GoType: "string", Help: "apiName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "routeRules"},
+		Output:   runtime.OutputHints{ListPath: "routeRules"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1138,6 +1159,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "apiName", Flag: "api-name", In: "path", GoType: "string", Help: "apiName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1156,8 +1178,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "data": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "failApi", DefaultColumns: []string{"apiName", "reason"},
-		},
+		Output:   runtime.OutputHints{ListPath: "failApi", DefaultColumns: []string{"apiName", "reason"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1176,8 +1198,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "failApi", DefaultColumns: []string{"apiName", "reason"},
-		},
+		Output:   runtime.OutputHints{ListPath: "failApi", DefaultColumns: []string{"apiName", "reason"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1197,10 +1219,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCreateType", "apiGroup", "apiName", "enabled", "fqdn", "matchType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCreateType", "apiGroup", "apiName", "enabled", "fqdn", "matchType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1215,7 +1235,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "groupNames"},
+		Output:   runtime.OutputHints{ListPath: "groupNames"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1235,10 +1256,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCreateType", "apiGroup", "apiName", "enabled", "fqdn", "matchType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCreateType", "apiGroup", "apiName", "enabled", "fqdn", "matchType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1254,7 +1273,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "query", GoType: "string", Help: "serviceName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "apiNames"},
+		Output:   runtime.OutputHints{ListPath: "apiNames"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1274,6 +1294,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "step", Flag: "step", In: "query", GoType: "int64", Help: "in second (query, int32)", Required: false, Format: "int32"},
 			{Name: "calcStep", Flag: "calc-step", In: "query", GoType: "int64", Help: "the step for calc (query, int32)", Required: false, Format: "int32"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1291,8 +1312,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}, "apiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiGroup": &runtime.SchemaSpec{Type: "string"}, "apiName": &runtime.SchemaSpec{Type: "string"}, "directResponse": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "path": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "redirect": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "route": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"routeService": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableGrpc": &runtime.SchemaSpec{Type: "boolean"}, "mirror": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "sesameId": &runtime.SchemaSpec{Type: "string"}, "showServiceName": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}, "apiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiGroup": &runtime.SchemaSpec{Type: "string"}, "apiName": &runtime.SchemaSpec{Type: "string"}, "directResponse": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "path": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "redirect": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "route": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"routeService": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableGrpc": &runtime.SchemaSpec{Type: "boolean"}, "mirror": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "sesameId": &runtime.SchemaSpec{Type: "string"}, "showServiceName": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1310,8 +1332,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1328,6 +1351,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "apiName", Flag: "api-name", In: "path", GoType: "string", Help: "apiName (path, required)", Required: true},
 			{Name: "enabled", Flag: "enabled", In: "path", GoType: "string", Help: "true为上线 false为下线 (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1345,8 +1369,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiGroup": &runtime.SchemaSpec{Type: "string"}, "apiName": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exact": &runtime.SchemaSpec{Type: "string"}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "permitInsecure": &runtime.SchemaSpec{Type: "boolean"}, "routeRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"directResponse": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}}, "queryParameters": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}}, "redirect": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "routeAction": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"routeService": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableGrpc": &runtime.SchemaSpec{Type: "boolean"}, "mirror": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "sesameId": &runtime.SchemaSpec{Type: "string"}, "showServiceName": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiGroup": &runtime.SchemaSpec{Type: "string"}, "apiName": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"exact": &runtime.SchemaSpec{Type: "string"}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "permitInsecure": &runtime.SchemaSpec{Type: "boolean"}, "routeRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"directResponse": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"body": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "queryParameters": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "redirect": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "statusCode": &runtime.SchemaSpec{Type: "integer"}}}, "routeAction": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"routeService": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableGrpc": &runtime.SchemaSpec{Type: "boolean"}, "mirror": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "sesameId": &runtime.SchemaSpec{Type: "string"}, "showServiceName": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPI",
@@ -1364,8 +1389,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedApiConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "default": &runtime.SchemaSpec{Type: "boolean"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "authPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}, "cookieRewritePolicy": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cookieDomainRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}}}, "cookiePathRewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"path": &runtime.SchemaSpec{Type: "string"}}}, "cookieSameSite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"sameSite": &runtime.SchemaSpec{Type: "string"}}}, "cookieSecure": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secure": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "domainIpPolicyStatus": &runtime.SchemaSpec{Type: "string"}, "extProcPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "healthCheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"healthThresholdCount": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "intervalSeconds": &runtime.SchemaSpec{Type: "string"}, "path": &runtime.SchemaSpec{Type: "string"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "string"}, "unhealthThresholdCount": &runtime.SchemaSpec{Type: "string"}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}, "jwtPreRoutePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "require": &runtime.SchemaSpec{Type: "string"}}}}}, "loadBalancePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestHashPolicies": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hashSourceIp": &runtime.SchemaSpec{Type: "boolean"}, "headerHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "queryParameterHashPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"parameterName": &runtime.SchemaSpec{Type: "string"}}}, "terminal": &runtime.SchemaSpec{Type: "boolean"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "pathRewritePolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"oldPath": &runtime.SchemaSpec{Type: "string"}, "replacement": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "requestHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "responseHeadersPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"remove": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "set": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "retryPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"count": &runtime.SchemaSpec{Type: "string"}, "grpcRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "httpRetryOn": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"httpRetryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retriablesStatusCode": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "timeoutPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"idle": &runtime.SchemaSpec{Type: "string"}, "idleConnection": &runtime.SchemaSpec{Type: "string"}, "response": &runtime.SchemaSpec{Type: "string"}}}, "websocketPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayAPIMetrics",
@@ -1385,8 +1411,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "interval", Flag: "interval", In: "query", GoType: "string", Help: "interval (query, int64)", Required: false, Format: "int64"},
 			{Name: "unit", Flag: "unit", In: "query", GoType: "string", Help: "时间单位 (query, one of: TIME_UNIT_UNSPECIFIED|Day|Hour|Minute|Second|Millisecond)", Required: false, Default: "TIME_UNIT_UNSPECIFIED", Enum: []string{"TIME_UNIT_UNSPECIFIED", "Day", "Hour", "Minute", "Second", "Millisecond"}},
 		},
-		Output: runtime.OutputHints{ListPath: "avgTimeStatistics", DefaultColumns: []string{"time", "value"},
-		},
+		Output:   runtime.OutputHints{ListPath: "avgTimeStatistics", DefaultColumns: []string{"time", "value"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayService",
@@ -1405,6 +1431,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedAccessServiceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"circuitBreakerPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxConnections": &runtime.SchemaSpec{Type: "integer"}, "maxPendingRequests": &runtime.SchemaSpec{Type: "integer"}, "maxRequests": &runtime.SchemaSpec{Type: "integer"}, "maxRetries": &runtime.SchemaSpec{Type: "integer"}}}, "healthcheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}}}, "outlierDetectionPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"baseEjectionTime": &runtime.SchemaSpec{Type: "integer"}, "consecutiveServerErrors": &runtime.SchemaSpec{Type: "integer"}, "interval": &runtime.SchemaSpec{Type: "integer"}, "maxEjectionPercent": &runtime.SchemaSpec{Type: "integer"}}}, "tlsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableTls": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "secret": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secretName": &runtime.SchemaSpec{Type: "string"}, "secretNamespaceName": &runtime.SchemaSpec{Type: "string"}, "subjectAltName": &runtime.SchemaSpec{Type: "string"}}}}}}}, "basicAccessServiceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "hostnames": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}}}, "clusterService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterId": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "externalService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}, "hostedRegistryService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterId": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "eurekaService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}, "meshService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"meshId": &runtime.SchemaSpec{Type: "string"}, "meshName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "nacosService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"groupName": &runtime.SchemaSpec{Type: "string"}, "namespaceId": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "registrationName": &runtime.SchemaSpec{Type: "string"}, "zookeeperService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}}}, "meshService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"meshId": &runtime.SchemaSpec{Type: "string"}, "meshName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "registryService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterId": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "consulService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}, "eurekaService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}, "meshService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"meshId": &runtime.SchemaSpec{Type: "string"}, "meshName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "nacosService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"groupName": &runtime.SchemaSpec{Type: "string"}, "namespaceId": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "registrationId": &runtime.SchemaSpec{Type: "string"}, "registrationName": &runtime.SchemaSpec{Type: "string"}, "zookeeperService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayService",
@@ -1420,6 +1447,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "sesameId", Flag: "sesame-id", In: "path", GoType: "string", Help: "sesameId (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayService",
@@ -1435,8 +1463,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "sesameId", Flag: "sesame-id", In: "path", GoType: "string", Help: "服务id 格式为 sesame_service_name.sesame_namespace_name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "api", DefaultColumns: []string{"apiCreateType", "apiGroup", "apiName", "enabled", "fqdn", "matchType"},
-		},
+		Output:   runtime.OutputHints{ListPath: "api", DefaultColumns: []string{"apiCreateType", "apiGroup", "apiName", "enabled", "fqdn", "matchType"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayService",
@@ -1456,10 +1484,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCount", "createdAt", "serviceName", "serviceType", "sesameId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCount", "createdAt", "serviceName", "serviceType", "sesameId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayService",
@@ -1474,8 +1500,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"secretName", "secretNamespaceName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"secretName", "secretNamespaceName"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayService",
@@ -1495,6 +1521,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"basicAccessServiceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hostname": &runtime.SchemaSpec{Type: "string"}, "hostnames": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}}}, "clusterService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterId": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "externalService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}, "hostedRegistryService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterId": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "eurekaService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}, "meshService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"meshId": &runtime.SchemaSpec{Type: "string"}, "meshName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "nacosService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"groupName": &runtime.SchemaSpec{Type: "string"}, "namespaceId": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "registrationName": &runtime.SchemaSpec{Type: "string"}, "zookeeperService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}}}, "meshService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"meshId": &runtime.SchemaSpec{Type: "string"}, "meshName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "registryService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterId": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "consulService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}, "eurekaService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}, "meshService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"meshId": &runtime.SchemaSpec{Type: "string"}, "meshName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "nacosService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"groupName": &runtime.SchemaSpec{Type: "string"}, "namespaceId": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, "registrationId": &runtime.SchemaSpec{Type: "string"}, "registrationName": &runtime.SchemaSpec{Type: "string"}, "zookeeperService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"serviceName": &runtime.SchemaSpec{Type: "string"}}}}}}}, "updateApi": &runtime.SchemaSpec{Type: "boolean"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "GatewayService",
@@ -1514,6 +1541,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"advancedAccessServiceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"circuitBreakerPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"maxConnections": &runtime.SchemaSpec{Type: "integer"}, "maxPendingRequests": &runtime.SchemaSpec{Type: "integer"}, "maxRequests": &runtime.SchemaSpec{Type: "integer"}, "maxRetries": &runtime.SchemaSpec{Type: "integer"}}}, "healthcheckPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"port": &runtime.SchemaSpec{Type: "integer"}}}, "outlierDetectionPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"baseEjectionTime": &runtime.SchemaSpec{Type: "integer"}, "consecutiveServerErrors": &runtime.SchemaSpec{Type: "integer"}, "interval": &runtime.SchemaSpec{Type: "integer"}, "maxEjectionPercent": &runtime.SchemaSpec{Type: "integer"}}}, "tlsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableTls": &runtime.SchemaSpec{Type: "boolean"}, "port": &runtime.SchemaSpec{Type: "integer"}, "secret": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"secretName": &runtime.SchemaSpec{Type: "string"}, "secretNamespaceName": &runtime.SchemaSpec{Type: "string"}, "subjectAltName": &runtime.SchemaSpec{Type: "string"}}}}}}}, "updateApi": &runtime.SchemaSpec{Type: "boolean"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Grafana",
@@ -1532,7 +1560,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "from", Flag: "from", In: "query", GoType: "string", Help: "开始时间: 时间戳(s) (query)", Required: false},
 			{Name: "to", Flag: "to", In: "query", GoType: "string", Help: "结束时间: 时间戳(s) (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "url"},
+		Output:   runtime.OutputHints{ListPath: "url"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Grafana",
@@ -1549,6 +1578,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "from", Flag: "from", In: "query", GoType: "string", Help: "开始时间: 时间戳(s) (query)", Required: false},
 			{Name: "to", Flag: "to", In: "query", GoType: "string", Help: "结束时间: 时间戳(s) (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Grafana",
@@ -1565,6 +1595,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "from", Flag: "from", In: "query", GoType: "string", Help: "开始时间: 时间戳(s) (query)", Required: false},
 			{Name: "to", Flag: "to", In: "query", GoType: "string", Help: "结束时间: 时间戳(s) (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Grafana",
@@ -1582,6 +1613,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "from", Flag: "from", In: "query", GoType: "string", Help: "开始时间: 时间戳(s) (query)", Required: false},
 			{Name: "to", Flag: "to", In: "query", GoType: "string", Help: "结束时间: 时间戳(s) (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Hive",
@@ -1590,8 +1622,8 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Hive_GetComponents",
 		Method:      "GET",
 		PathTpl:     "/apis/hive.skoala.io/v1alpha1/components/version",
-		Output: runtime.OutputHints{ListPath: "components", DefaultColumns: []string{"name"},
-		},
+		Output:      runtime.OutputHints{ListPath: "components", DefaultColumns: []string{"name"}},
+		Security:    &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Hive",
@@ -1600,6 +1632,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Hive_GetVersion",
 		Method:      "GET",
 		PathTpl:     "/apis/hive.skoala.io/v1alpha1/version",
+		Security:    &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1614,6 +1647,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "laneName", Flag: "lane-name", In: "path", GoType: "string", Help: "laneName (path, required)", Required: true},
 			{Name: "actionName", Flag: "action-name", In: "path", GoType: "string", Help: "actionName (path, required, one of: ACTION_UNSPECIFIED|ACTIVE|INACTIVE)", Required: true, Enum: []string{"ACTION_UNSPECIFIED", "ACTIVE", "INACTIVE"}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1631,6 +1665,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"service": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "subset": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1646,6 +1681,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"laneName": &runtime.SchemaSpec{Type: "string"}, "meshId": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1661,8 +1697,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "gatewayCluster": &runtime.SchemaSpec{Type: "string"}, "gatewayName": &runtime.SchemaSpec{Type: "string"}, "gatewayNamespace": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "path": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "port": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "serviceNamespace": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "gatewayCluster": &runtime.SchemaSpec{Type: "string"}, "gatewayName": &runtime.SchemaSpec{Type: "string"}, "gatewayNamespace": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "path": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "port": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "serviceNamespace": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1676,6 +1713,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "meshId", Flag: "mesh-id", In: "path", GoType: "string", Help: "meshId (path, required)", Required: true},
 			{Name: "laneName", Flag: "lane-name", In: "path", GoType: "string", Help: "laneName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1689,6 +1727,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "meshId", Flag: "mesh-id", In: "path", GoType: "string", Help: "meshId (path, required)", Required: true},
 			{Name: "laneName", Flag: "lane-name", In: "path", GoType: "string", Help: "laneName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1704,8 +1743,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"services": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "subset": &runtime.SchemaSpec{Type: "string"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"services": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "subset": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1719,7 +1759,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "meshId", Flag: "mesh-id", In: "path", GoType: "string", Help: "meshId (path, required)", Required: true},
 			{Name: "laneName", Flag: "lane-name", In: "path", GoType: "string", Help: "laneName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "failedReason"},
+		Output:   runtime.OutputHints{ListPath: "failedReason"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1733,6 +1774,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "meshId", Flag: "mesh-id", In: "path", GoType: "string", Help: "meshId (path, required)", Required: true},
 			{Name: "laneName", Flag: "lane-name", In: "path", GoType: "string", Help: "laneName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1748,8 +1790,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "数据范围, 单位：秒（s） (query, int64)", Required: false, Format: "int64"},
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "end (query, int64)", Required: false, Format: "int64"},
 		},
-		Output: runtime.OutputHints{ListPath: "edges", DefaultColumns: []string{"id", "source", "target"},
-		},
+		Output:   runtime.OutputHints{ListPath: "edges", DefaultColumns: []string{"id", "source", "target"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1765,10 +1807,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSearch", Flag: "page-search", In: "query", GoType: "string", Help: "搜索, 形式如：name=abc或name=abc;phase=PHASE_ACTIVE (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"phase", "laneName", "meshId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"phase", "laneName", "meshId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1782,8 +1822,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "meshId", Flag: "mesh-id", In: "path", GoType: "string", Help: "meshId (path, required)", Required: true},
 			{Name: "laneName", Flag: "lane-name", In: "path", GoType: "string", Help: "laneName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"availableReplicas", "namespaceName", "replicas", "serviceName", "status", "subset"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"availableReplicas", "namespaceName", "replicas", "serviceName", "status", "subset"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1801,10 +1841,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "分页 (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"gatewayCluster", "gatewayName", "gatewayNamespace", "sidecarInject"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"gatewayCluster", "gatewayName", "gatewayNamespace", "sidecarInject"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1819,7 +1857,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "laneName", Flag: "lane-name", In: "query", GoType: "string", Help: "空值时返回所有service (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "services"},
+		Output:   runtime.OutputHints{ListPath: "services"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1835,7 +1874,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "ports"},
+		Output:   runtime.OutputHints{ListPath: "ports"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1850,7 +1890,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "subsets"},
+		Output:   runtime.OutputHints{ListPath: "subsets"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1866,8 +1907,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "gatewayCluster": &runtime.SchemaSpec{Type: "string"}, "gatewayName": &runtime.SchemaSpec{Type: "string"}, "gatewayNamespace": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "path": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "port": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "serviceNamespace": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "gatewayCluster": &runtime.SchemaSpec{Type: "string"}, "gatewayName": &runtime.SchemaSpec{Type: "string"}, "gatewayNamespace": &runtime.SchemaSpec{Type: "string"}, "matchRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"contains": &runtime.SchemaSpec{Type: "string"}, "exact": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "notContains": &runtime.SchemaSpec{Type: "string"}, "notExact": &runtime.SchemaSpec{Type: "string"}, "notPresent": &runtime.SchemaSpec{Type: "boolean"}, "present": &runtime.SchemaSpec{Type: "boolean"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "httpMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "path": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "regex": &runtime.SchemaSpec{Type: "string"}}}, "port": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "serviceNamespace": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Lane",
@@ -1882,6 +1924,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "laneName", Flag: "lane-name", In: "path", GoType: "string", Help: "laneName (path, required)", Required: true},
 			{Name: "enabled", Flag: "enabled", In: "path", GoType: "string", Help: "true为上线 false为下线 (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -1900,6 +1943,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cp": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"http1MaxPendingRequests": &runtime.SchemaSpec{Type: "integer"}, "http2MaxRequests": &runtime.SchemaSpec{Type: "integer"}, "maxRequestsPerConnection": &runtime.SchemaSpec{Type: "integer"}, "maxRetries": &runtime.SchemaSpec{Type: "integer"}}}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -1919,6 +1963,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fault": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"abort": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcStatus": &runtime.SchemaSpec{Type: "string"}, "http2Error": &runtime.SchemaSpec{Type: "string"}, "httpStatus": &runtime.SchemaSpec{Type: "integer"}, "percentage": &runtime.SchemaSpec{Type: "number"}}}, "delay": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fixedDelay": &runtime.SchemaSpec{Type: "string"}, "percentage": &runtime.SchemaSpec{Type: "number"}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -1938,6 +1983,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"@type": &runtime.SchemaSpec{Type: "string"}}}, "yaml": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -1956,6 +2002,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"od": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"baseEjectionTime": &runtime.SchemaSpec{Type: "string"}, "consecutiveErrors": &runtime.SchemaSpec{Type: "integer"}, "interval": &runtime.SchemaSpec{Type: "string"}, "maxEjectionPercent": &runtime.SchemaSpec{Type: "integer"}, "minHealthPercent": &runtime.SchemaSpec{Type: "integer"}}}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -1974,6 +2021,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}, "retry": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"attempts": &runtime.SchemaSpec{Type: "integer"}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -1992,6 +2040,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}, "rewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authority": &runtime.SchemaSpec{Type: "string"}, "uri": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2011,6 +2060,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"istioPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}}}, "extprocPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"extprocPluginName": &runtime.SchemaSpec{Type: "string"}}}, "jwtPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"jwtPluginName": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "ratelimitPluginName": &runtime.SchemaSpec{Type: "string"}}}, "wasmPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"imagePullPolicy": &runtime.SchemaSpec{Type: "string"}, "imagePullSecret": &runtime.SchemaSpec{Type: "string"}, "phase": &runtime.SchemaSpec{Type: "string"}, "pluginConfig": &runtime.SchemaSpec{Type: "string"}, "wasmPluginName": &runtime.SchemaSpec{Type: "string"}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2030,6 +2080,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2048,6 +2099,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}, "timeout": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2063,6 +2115,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2078,6 +2131,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2098,6 +2152,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"meshNamespace": &runtime.SchemaSpec{Type: "string"}, "output": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2113,6 +2168,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2128,6 +2184,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2143,6 +2200,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2162,6 +2220,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"pluginType": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2177,6 +2236,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2192,6 +2252,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2206,8 +2267,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespaceServices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespaceServices": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2219,6 +2281,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "type", Flag: "type", In: "path", GoType: "string", Help: "type (path, required, one of: RESOURCE_TYPE_UNSPECIFIED|VIRTUAL_SERVICE|DESTINATION_RULE|GATEWAY|SERVICE_ENTRY|ENVOY_FILTER|PROXY_CONFIG|SIDECAR|WORKLOAD_GROUP|WORKLOAD_ENTRY|AUTHORIZATION_POLICY|PEER_AUTHENTICATION|REQUEST_AUTHENTICATION|WASM_PLUGIN|TELEMETRY)", Required: true, Enum: []string{"RESOURCE_TYPE_UNSPECIFIED", "VIRTUAL_SERVICE", "DESTINATION_RULE", "GATEWAY", "SERVICE_ENTRY", "ENVOY_FILTER", "PROXY_CONFIG", "SIDECAR", "WORKLOAD_GROUP", "WORKLOAD_ENTRY", "AUTHORIZATION_POLICY", "PEER_AUTHENTICATION", "REQUEST_AUTHENTICATION", "WASM_PLUGIN", "TELEMETRY"}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2234,6 +2297,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2249,6 +2313,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2264,6 +2329,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2281,6 +2347,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 			{Name: "output", Flag: "output", In: "query", GoType: "string", Help: "- OUTPUT_FORMAT_UNSPECIFIED: Unspecified type. (query, one of: OUTPUT_FORMAT_UNSPECIFIED|YAML|SPEC)", Required: false, Default: "OUTPUT_FORMAT_UNSPECIFIED", Enum: []string{"OUTPUT_FORMAT_UNSPECIFIED", "YAML", "SPEC"}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2296,6 +2363,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2311,6 +2379,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2326,6 +2395,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2340,7 +2410,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "ports"},
+		Output:   runtime.OutputHints{ListPath: "ports"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2357,6 +2428,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 			{Name: "protocol", Flag: "protocol", In: "path", GoType: "string", Help: "protocol (path, required, one of: GOVERN_PROTOCOL_UNSPECIFIED|GOVERN_TCP|GOVERN_HTTP|GOVERN_HTTP2|GOVERN_HTTPS|GOVERN_TLS|GOVERN_GRPC|GOVERN_UNSUPPORTED)", Required: true, Enum: []string{"GOVERN_PROTOCOL_UNSPECIFIED", "GOVERN_TCP", "GOVERN_HTTP", "GOVERN_HTTP2", "GOVERN_HTTPS", "GOVERN_TLS", "GOVERN_GRPC", "GOVERN_UNSUPPORTED"}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2372,6 +2444,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "pluginName", Flag: "plugin-name", In: "path", GoType: "string", Help: "插件名称，传列表的第一个元素的名称即可 (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2387,6 +2460,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2403,6 +2477,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "start (query, int64)", Required: false, Format: "int64"},
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "end (query, int64)", Required: false, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2418,6 +2493,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "port (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2432,8 +2508,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2450,10 +2526,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "status"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "status"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2468,8 +2542,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2484,8 +2558,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"lb", "port"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"lb", "port"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2505,10 +2579,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSearch", Flag: "page-search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "type", "createTime", "meshId", "yaml"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "type", "createTime", "meshId", "yaml"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2523,8 +2595,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2540,7 +2612,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 			{Name: "ruleName", Flag: "rule-name", In: "path", GoType: "string", Help: "ruleName (path, required, one of: RULE_UNSPECIFIED|RULE_CONN_POOL|RULE_OUTLIER_DETECTION|RULE_REWRITE|RULE_FAULT|RULE_RETRY|RULE_TIMEOUT|RULE_LB)", Required: true, Enum: []string{"RULE_UNSPECIFIED", "RULE_CONN_POOL", "RULE_OUTLIER_DETECTION", "RULE_REWRITE", "RULE_FAULT", "RULE_RETRY", "RULE_TIMEOUT", "RULE_LB"}},
 		},
-		Output: runtime.OutputHints{ListPath: "ports"},
+		Output:   runtime.OutputHints{ListPath: "ports"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2555,8 +2628,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2571,8 +2644,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2590,10 +2663,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "type", "status"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "type", "status"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2610,8 +2681,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "port", Flag: "port", In: "path", GoType: "string", Help: "不筛选传0 (path, required)", Required: true},
 			{Name: "pluginType", Flag: "plugin-type", In: "query", GoType: "string", Help: "- EXTPROC: ext-proc (query, one of: JWT|AUTH|RATELIMIT|WASM|EXTPROC|UNDEFINE)", Required: false, Default: "JWT", Enum: []string{"JWT", "AUTH", "RATELIMIT", "WASM", "EXTPROC", "UNDEFINE"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"pluginName", "pluginType", "ports", "showName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"pluginName", "pluginType", "ports", "showName"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2626,8 +2697,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "ports", DefaultColumns: []string{"domain", "port", "ratelimitPluginName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "ports", DefaultColumns: []string{"domain", "port", "ratelimitPluginName"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2642,8 +2713,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"domain", "port", "ratelimitPluginName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"domain", "port", "ratelimitPluginName"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2658,8 +2729,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port", "protocol"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port", "protocol"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2674,8 +2745,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port", "timeout"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"port", "timeout"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2690,6 +2761,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2707,8 +2779,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"pluginSort": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"pluginName": &runtime.SchemaSpec{Type: "string"}, "sort": &runtime.SchemaSpec{Type: "integer"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"pluginSort": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"pluginName": &runtime.SchemaSpec{Type: "string"}, "sort": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2728,6 +2801,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cp": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"http1MaxPendingRequests": &runtime.SchemaSpec{Type: "integer"}, "http2MaxRequests": &runtime.SchemaSpec{Type: "integer"}, "maxRequestsPerConnection": &runtime.SchemaSpec{Type: "integer"}, "maxRetries": &runtime.SchemaSpec{Type: "integer"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2747,6 +2821,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fault": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"abort": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcStatus": &runtime.SchemaSpec{Type: "string"}, "http2Error": &runtime.SchemaSpec{Type: "string"}, "httpStatus": &runtime.SchemaSpec{Type: "integer"}, "percentage": &runtime.SchemaSpec{Type: "number"}}}, "delay": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fixedDelay": &runtime.SchemaSpec{Type: "string"}, "percentage": &runtime.SchemaSpec{Type: "number"}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2766,6 +2841,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"lb": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2786,6 +2862,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"@type": &runtime.SchemaSpec{Type: "string"}}}, "yaml": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2805,6 +2882,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"od": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"baseEjectionTime": &runtime.SchemaSpec{Type: "string"}, "consecutiveErrors": &runtime.SchemaSpec{Type: "integer"}, "interval": &runtime.SchemaSpec{Type: "string"}, "maxEjectionPercent": &runtime.SchemaSpec{Type: "integer"}, "minHealthPercent": &runtime.SchemaSpec{Type: "integer"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2824,6 +2902,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"retry": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"attempts": &runtime.SchemaSpec{Type: "integer"}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2843,6 +2922,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authority": &runtime.SchemaSpec{Type: "string"}, "uri": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2863,6 +2943,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"connectionPool": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"http1MaxPendingRequests": &runtime.SchemaSpec{Type: "integer"}, "http2MaxRequests": &runtime.SchemaSpec{Type: "integer"}, "maxRequestsPerConnection": &runtime.SchemaSpec{Type: "integer"}, "maxRetries": &runtime.SchemaSpec{Type: "integer"}}}, "fault": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"abort": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"grpcStatus": &runtime.SchemaSpec{Type: "string"}, "http2Error": &runtime.SchemaSpec{Type: "string"}, "httpStatus": &runtime.SchemaSpec{Type: "integer"}, "percentage": &runtime.SchemaSpec{Type: "number"}}}, "delay": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fixedDelay": &runtime.SchemaSpec{Type: "string"}, "percentage": &runtime.SchemaSpec{Type: "number"}}}}}, "lb": &runtime.SchemaSpec{Type: "string"}, "outlierDetection": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"baseEjectionTime": &runtime.SchemaSpec{Type: "string"}, "consecutiveErrors": &runtime.SchemaSpec{Type: "integer"}, "interval": &runtime.SchemaSpec{Type: "string"}, "maxEjectionPercent": &runtime.SchemaSpec{Type: "integer"}, "minHealthPercent": &runtime.SchemaSpec{Type: "integer"}}}, "retries": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"attempts": &runtime.SchemaSpec{Type: "integer"}, "perTryTimeout": &runtime.SchemaSpec{Type: "string"}, "retryOn": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "rewrite": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authority": &runtime.SchemaSpec{Type: "string"}, "uri": &runtime.SchemaSpec{Type: "string"}}}, "timeout": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2881,6 +2962,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"istioPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}}}, "extprocPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"extprocPluginName": &runtime.SchemaSpec{Type: "string"}}}, "jwtPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"jwtPluginName": &runtime.SchemaSpec{Type: "string"}}}, "rateLimitPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "ratelimitPluginName": &runtime.SchemaSpec{Type: "string"}}}, "wasmPlugin": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"imagePullPolicy": &runtime.SchemaSpec{Type: "string"}, "imagePullSecret": &runtime.SchemaSpec{Type: "string"}, "phase": &runtime.SchemaSpec{Type: "string"}, "pluginConfig": &runtime.SchemaSpec{Type: "string"}, "wasmPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "pluginType": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2900,6 +2982,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Mesh",
@@ -2919,6 +3002,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"timeout": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -2936,6 +3020,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "dataId", Flag: "data-id", In: "path", GoType: "string", Help: "dataId (path, required)", Required: true},
 			{Name: "group", Flag: "group", In: "query", GoType: "string", Help: "group (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -2952,6 +3037,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "nacosNamespace", Flag: "nacos-namespace", In: "path", GoType: "string", Help: "nacosNamespace (path, required)", Required: true},
 			{Name: "op", Flag: "op", In: "query", GoType: "string", Help: "- Create: check for create (query, one of: Create|Delete|All)", Required: false, Default: "Create", Enum: []string{"Create", "Delete", "All"}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -2967,8 +3053,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"affinity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nodeAffinity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"preferredDuringSchedulingIgnoredDuringExecution": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"preference": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchExpressions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}}}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}, "requiredDuringSchedulingIgnoredDuringExecution": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nodeSelectorTerms": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchExpressions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}}}}}}}}}}, "certificationEnabled": &runtime.SchemaSpec{Type: "boolean"}, "component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "databaseEnabled": &runtime.SchemaSpec{Type: "boolean"}, "databaseParam": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"db": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "insightEnabled": &runtime.SchemaSpec{Type: "boolean"}, "jvmPercentage": &runtime.SchemaSpec{Type: "number"}, "lbParam": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "lbAddr": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}}}, "ldap": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"admin": &runtime.SchemaSpec{Type: "string"}, "basedc": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "logTarget": &runtime.SchemaSpec{Type: "string"}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appProtocol": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "staticIpAnnotations": &runtime.SchemaSpec{Type: "object"}, "type": &runtime.SchemaSpec{Type: "string"}, "volume": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "storageClass": &runtime.SchemaSpec{Type: "string"}}}}}, "createNamespace": &runtime.SchemaSpec{Type: "boolean"}, "insightEnabled": &runtime.SchemaSpec{Type: "boolean"}, "nacosName": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"affinity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nodeAffinity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"preferredDuringSchedulingIgnoredDuringExecution": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"preference": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchExpressions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "weight": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "requiredDuringSchedulingIgnoredDuringExecution": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nodeSelectorTerms": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchExpressions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}}}}}, "certificationEnabled": &runtime.SchemaSpec{Type: "boolean"}, "component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "databaseEnabled": &runtime.SchemaSpec{Type: "boolean"}, "databaseParam": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"db": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "insightEnabled": &runtime.SchemaSpec{Type: "boolean"}, "jvmPercentage": &runtime.SchemaSpec{Type: "number"}, "lbParam": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "lbAddr": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}}}, "ldap": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"admin": &runtime.SchemaSpec{Type: "string"}, "basedc": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "logTarget": &runtime.SchemaSpec{Type: "string"}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appProtocol": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "staticIpAnnotations": &runtime.SchemaSpec{Type: "object"}, "type": &runtime.SchemaSpec{Type: "string"}, "volume": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "storageClass": &runtime.SchemaSpec{Type: "string"}}}}}, "createNamespace": &runtime.SchemaSpec{Type: "boolean"}, "insightEnabled": &runtime.SchemaSpec{Type: "boolean"}, "nacosName": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -2988,6 +3075,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appName": &runtime.SchemaSpec{Type: "string"}, "betaIps": &runtime.SchemaSpec{Type: "string"}, "configTags": &runtime.SchemaSpec{Type: "string"}, "content": &runtime.SchemaSpec{Type: "string"}, "dataId": &runtime.SchemaSpec{Type: "string"}, "desc": &runtime.SchemaSpec{Type: "string"}, "file": &runtime.SchemaSpec{Type: "string"}, "group": &runtime.SchemaSpec{Type: "string"}, "import": &runtime.SchemaSpec{Type: "boolean"}, "policy": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3006,6 +3094,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nacosNamespace": &runtime.SchemaSpec{Type: "string"}, "namespaceDesc": &runtime.SchemaSpec{Type: "string"}, "namespaceShowName": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3026,6 +3115,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "string"}, "dataType": &runtime.SchemaSpec{Type: "string"}, "detail": &runtime.SchemaSpec{Type: "string"}, "inputPattern": &runtime.SchemaSpec{Type: "string"}, "nacosGroupName": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3044,6 +3134,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deleteConfigs": &runtime.SchemaSpec{Type: "boolean"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3063,6 +3154,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dataId": &runtime.SchemaSpec{Type: "string"}, "group": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3082,6 +3174,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dataId": &runtime.SchemaSpec{Type: "string"}, "delType": &runtime.SchemaSpec{Type: "string"}, "group": &runtime.SchemaSpec{Type: "string"}, "ids": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3097,6 +3190,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 			{Name: "nacosNamespace", Flag: "nacos-namespace", In: "path", GoType: "string", Help: "nacosNamespace (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3114,6 +3208,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "nacosService", Flag: "nacos-service", In: "path", GoType: "string", Help: "nacosService (path, required)", Required: true},
 			{Name: "nacosGroupName", Flag: "nacos-group-name", In: "query", GoType: "string", Help: "nacosGroupName (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3132,6 +3227,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "apiId", Flag: "api-id", In: "path", GoType: "string", Help: "apiId (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "nacosGroupName", Flag: "nacos-group-name", In: "query", GoType: "string", Help: "nacosGroupName (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3146,6 +3242,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3163,6 +3260,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "dataId", Flag: "data-id", In: "path", GoType: "string", Help: "dataId (path, required)", Required: true},
 			{Name: "group", Flag: "group", In: "query", GoType: "string", Help: "group (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3180,6 +3278,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "dataId", Flag: "data-id", In: "path", GoType: "string", Help: "dataId (path, required)", Required: true},
 			{Name: "group", Flag: "group", In: "query", GoType: "string", Help: "group (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3198,6 +3297,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "historyNid", Flag: "history-nid", In: "path", GoType: "string", Help: "historyNid (path, required)", Required: true},
 			{Name: "group", Flag: "group", In: "query", GoType: "string", Help: "group (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3213,6 +3313,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 			{Name: "nacosNamespace", Flag: "nacos-namespace", In: "path", GoType: "string", Help: "nacosNamespace (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3227,6 +3328,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3244,8 +3346,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "nacosService", Flag: "nacos-service", In: "path", GoType: "string", Help: "nacosService (path, required)", Required: true},
 			{Name: "nacosGroupName", Flag: "nacos-group-name", In: "query", GoType: "string", Help: "nacosGroupName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"name", "defaultCheckPort", "defaultPort", "serviceName", "useIpPort4Check"},
-		},
+		Output:   runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"name", "defaultCheckPort", "defaultPort", "serviceName", "useIpPort4Check"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3263,6 +3365,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "nacosService", Flag: "nacos-service", In: "path", GoType: "string", Help: "nacosService (path, required)", Required: true},
 			{Name: "nacosGroupName", Flag: "nacos-group-name", In: "query", GoType: "string", Help: "nacosGroupName (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3283,6 +3386,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "nacosClusterName": &runtime.SchemaSpec{Type: "string"}, "nacosGroupName": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3305,6 +3409,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "port", Flag: "port", In: "query", GoType: "int64", Help: "port (query, int32)", Required: false, Format: "int32"},
 			{Name: "ephemeral", Flag: "ephemeral", In: "query", GoType: "bool", Help: "ephemeral (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3326,6 +3431,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "metadata": &runtime.SchemaSpec{Type: "object"}, "nacosGroupName": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3344,6 +3450,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nodeAddresses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3360,10 +3467,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "certificationEnabled", "clusterName", "clusterPhase", "consoleAddress", "createAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "certificationEnabled", "clusterName", "clusterPhase", "consoleAddress", "createAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3385,10 +3490,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "id", "appName", "content", "dataId", "existBeta"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "id", "appName", "content", "dataId", "existBeta"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3408,10 +3511,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "appName", "content", "createTime", "dataId", "group"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "appName", "content", "createTime", "dataId", "group"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3430,8 +3531,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "group", Flag: "group", In: "query", GoType: "string", Help: "group (query)", Required: false},
 			{Name: "ip", Flag: "ip", In: "query", GoType: "string", Help: "ip (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"dataId", "group", "ip", "md5"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"dataId", "group", "ip", "md5"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3449,7 +3550,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "nacosService", Flag: "nacos-service", In: "path", GoType: "string", Help: "多个cluster的情况下以,隔开 (path, required)", Required: true},
 			{Name: "nacosGroupName", Flag: "nacos-group-name", In: "query", GoType: "string", Help: "nacosGroupName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "ips"},
+		Output:   runtime.OutputHints{ListPath: "ips"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3466,10 +3568,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "type", "configCount", "namespaceShowName", "quota"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "type", "configCount", "namespaceShowName", "quota"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3484,8 +3584,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "abilities", "address", "failAccessCnt", "ip"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "abilities", "address", "failAccessCnt", "ip"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3506,10 +3606,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "clusterCount", "governed", "groupName", "healthyInstanceCount", "ipCount"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "clusterCount", "governed", "groupName", "healthyInstanceCount", "ipCount"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3533,10 +3631,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "enabled", "ephemeral", "healthy", "instanceHeartBeatInterval", "instanceHeartBeatTimeOut"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "enabled", "ephemeral", "healthy", "instanceHeartBeatInterval", "instanceHeartBeatTimeOut"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3556,10 +3652,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"addrStr", "agent", "app", "cluster", "ip", "namespaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"addrStr", "agent", "app", "cluster", "ip", "namespaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3574,6 +3668,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3592,8 +3687,8 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"metadata": &runtime.SchemaSpec{Type: "object"}, "nacosClusterName": &runtime.SchemaSpec{Type: "string"}, "nacosGroupName": &runtime.SchemaSpec{Type: "string"}, "nacosNamespace": &runtime.SchemaSpec{Type: "string"}, "nacosService": &runtime.SchemaSpec{Type: "string"}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "enabled", "ephemeral", "healthy", "instanceHeartBeatInterval", "instanceHeartBeatTimeOut"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "enabled", "ephemeral", "healthy", "instanceHeartBeatInterval", "instanceHeartBeatTimeOut"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3612,6 +3707,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"node": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"abilities": &runtime.SchemaSpec{Type: "string"}, "address": &runtime.SchemaSpec{Type: "string"}, "failAccessCnt": &runtime.SchemaSpec{Type: "integer"}, "ip": &runtime.SchemaSpec{Type: "string"}, "ipFixed": &runtime.SchemaSpec{Type: "boolean"}, "metadata": &runtime.SchemaSpec{Type: "string"}, "modifyTime": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "podIps": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "port": &runtime.SchemaSpec{Type: "integer"}, "state": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3626,6 +3722,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3646,6 +3743,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appName": &runtime.SchemaSpec{Type: "string"}, "content": &runtime.SchemaSpec{Type: "string"}, "group": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3662,8 +3760,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"affinity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nodeAffinity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"preferredDuringSchedulingIgnoredDuringExecution": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"preference": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchExpressions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}}}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}, "requiredDuringSchedulingIgnoredDuringExecution": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nodeSelectorTerms": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchExpressions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}}}}}}}}}}, "certificationEnabled": &runtime.SchemaSpec{Type: "boolean"}, "component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "databaseEnabled": &runtime.SchemaSpec{Type: "boolean"}, "databaseParam": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"db": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "insightEnabled": &runtime.SchemaSpec{Type: "boolean"}, "jvmPercentage": &runtime.SchemaSpec{Type: "number"}, "lbParam": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "lbAddr": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}}}, "ldap": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"admin": &runtime.SchemaSpec{Type: "string"}, "basedc": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "logTarget": &runtime.SchemaSpec{Type: "string"}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appProtocol": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "staticIpAnnotations": &runtime.SchemaSpec{Type: "object"}, "type": &runtime.SchemaSpec{Type: "string"}, "volume": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "storageClass": &runtime.SchemaSpec{Type: "string"}}}}}, "insightEnabled": &runtime.SchemaSpec{Type: "boolean"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"affinity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nodeAffinity": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"preferredDuringSchedulingIgnoredDuringExecution": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"preference": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchExpressions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "weight": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "requiredDuringSchedulingIgnoredDuringExecution": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nodeSelectorTerms": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchExpressions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operator": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}}}}}, "certificationEnabled": &runtime.SchemaSpec{Type: "boolean"}, "component": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "databaseEnabled": &runtime.SchemaSpec{Type: "boolean"}, "databaseParam": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"db": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "insightEnabled": &runtime.SchemaSpec{Type: "boolean"}, "jvmPercentage": &runtime.SchemaSpec{Type: "number"}, "lbParam": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addrPoolName": &runtime.SchemaSpec{Type: "string"}, "lbAddr": &runtime.SchemaSpec{Type: "string"}, "lbType": &runtime.SchemaSpec{Type: "string"}}}, "ldap": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"admin": &runtime.SchemaSpec{Type: "string"}, "basedc": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}}, "logTarget": &runtime.SchemaSpec{Type: "string"}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appProtocol": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "staticIpAnnotations": &runtime.SchemaSpec{Type: "object"}, "type": &runtime.SchemaSpec{Type: "string"}, "volume": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "storageClass": &runtime.SchemaSpec{Type: "string"}}}}}, "insightEnabled": &runtime.SchemaSpec{Type: "boolean"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3684,6 +3783,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appName": &runtime.SchemaSpec{Type: "string"}, "configTags": &runtime.SchemaSpec{Type: "string"}, "content": &runtime.SchemaSpec{Type: "string"}, "createIp": &runtime.SchemaSpec{Type: "string"}, "createTime": &runtime.SchemaSpec{Type: "string"}, "createUser": &runtime.SchemaSpec{Type: "string"}, "desc": &runtime.SchemaSpec{Type: "string"}, "effect": &runtime.SchemaSpec{Type: "string"}, "group": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "md5": &runtime.SchemaSpec{Type: "string"}, "modifyTime": &runtime.SchemaSpec{Type: "string"}, "schema": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "use": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3703,6 +3803,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespaceDesc": &runtime.SchemaSpec{Type: "string"}, "namespaceShowName": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3723,6 +3824,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"metadata": &runtime.SchemaSpec{Type: "object"}, "nacosGroupName": &runtime.SchemaSpec{Type: "string"}, "protectThreshold": &runtime.SchemaSpec{Type: "number"}, "selector": &runtime.SchemaSpec{Type: "object"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3744,6 +3846,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "string"}, "dataType": &runtime.SchemaSpec{Type: "string"}, "detail": &runtime.SchemaSpec{Type: "string"}, "inputPattern": &runtime.SchemaSpec{Type: "string"}, "nacosGroupName": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3765,6 +3868,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "ephemeral": &runtime.SchemaSpec{Type: "boolean"}, "ip": &runtime.SchemaSpec{Type: "string"}, "metadata": &runtime.SchemaSpec{Type: "object"}, "nacosClusterName": &runtime.SchemaSpec{Type: "string"}, "nacosGroupName": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "weight": &runtime.SchemaSpec{Type: "integer"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Nacos",
@@ -3783,10 +3887,11 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"nacosUserName": &runtime.SchemaSpec{Type: "string"}, "nacosUserNewPassword": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "NacosPlugin",
-		Use:         "get",
+		Use:         "plugin-get",
 		Short:       "托管 Nacos 的插件详情",
 		OperationID: "Plugin_Get",
 		Method:      "GET",
@@ -3798,10 +3903,11 @@ var Specs = []runtime.CommandSpec{
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "NacosPlugin",
-		Use:         "get-govern",
+		Use:         "plugin-get-govern",
 		Short:       "托管 Nacos 基础信息中的服务治理信息",
 		OperationID: "Plugin_GetGovern",
 		Method:      "GET",
@@ -3812,10 +3918,11 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "NacosPlugin",
-		Use:         "list",
+		Use:         "plugin-list",
 		Short:       "托管 Nacos 的插件列表",
 		OperationID: "Plugin_List",
 		Method:      "GET",
@@ -3826,12 +3933,12 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "nacosName", Flag: "nacos-name", In: "path", GoType: "string", Help: "nacosName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "enabled", "meshStatus", "seataStatus", "sentinelStatus"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "enabled", "meshStatus", "seataStatus", "sentinelStatus"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "NacosPlugin",
-		Use:         "update",
+		Use:         "plugin-update",
 		Short:       "更新托管 Nacos 的插件详情",
 		OperationID: "Plugin_Update",
 		Method:      "PUT",
@@ -3844,8 +3951,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"mesh": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "seata": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "deleteConfigs": &runtime.SchemaSpec{Type: "boolean"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "mysql": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}, "nacos": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addr": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appProtocol": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}}, "pwd": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "type": &runtime.SchemaSpec{Type: "string"}}}, "sentinel": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "deleteConfigs": &runtime.SchemaSpec{Type: "boolean"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "nacos": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addr": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appProtocol": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}}, "pwd": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "type": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"mesh": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "seata": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "deleteConfigs": &runtime.SchemaSpec{Type: "boolean"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "mysql": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"host": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}, "nacos": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addr": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appProtocol": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "pwd": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "type": &runtime.SchemaSpec{Type: "string"}}}, "sentinel": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"images": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "deleteConfigs": &runtime.SchemaSpec{Type: "boolean"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "nacos": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addr": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}, "ports": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"appProtocol": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "nodePort": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "protocol": &runtime.SchemaSpec{Type: "string"}, "targetPort": &runtime.SchemaSpec{Type: "integer"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "pwd": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "type": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3859,8 +3967,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addresses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "extId": &runtime.SchemaSpec{Type: "string"}, "isAuth": &runtime.SchemaSpec{Type: "boolean"}, "isHosted": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"id": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "password": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addresses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "extId": &runtime.SchemaSpec{Type: "string"}, "isAuth": &runtime.SchemaSpec{Type: "boolean"}, "isHosted": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"id": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "password": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3878,6 +3987,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "string"}, "dataType": &runtime.SchemaSpec{Type: "string"}, "detail": &runtime.SchemaSpec{Type: "string"}, "inputPattern": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3890,6 +4000,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "registryId", Flag: "registry-id", In: "path", GoType: "string", Help: "[(validator.field) = {regex: \"^(ireg|book|hreg|hgtw){1}-(\\\\w){6,30}$\"}]; (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3906,6 +4017,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "dataType", Flag: "data-type", In: "query", GoType: "string", Help: "dataType (query, one of: DATA_TYPE_UNSPECIFIED|swagger|markdown)", Required: false, Default: "DATA_TYPE_UNSPECIFIED", Enum: []string{"DATA_TYPE_UNSPECIFIED", "swagger", "markdown"}},
 			{Name: "detail", Flag: "detail", In: "query", GoType: "string", Help: "detail (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3918,6 +4030,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "registryId", Flag: "registry-id", In: "path", GoType: "string", Help: "[(validator.field) = {regex: \"^(ireg|book|hreg|hgtw){1}-(\\\\w){6,30}$\"}]; (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3934,6 +4047,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceId", Flag: "namespace-id", In: "query", GoType: "string", Help: "namespaceId (query)", Required: false},
 			{Name: "groupName", Flag: "group-name", In: "query", GoType: "string", Help: "groupName (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3952,6 +4066,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"detail": &runtime.SchemaSpec{Type: "object"}, "end": &runtime.SchemaSpec{Type: "string"}, "groupName": &runtime.SchemaSpec{Type: "string"}, "metadata": &runtime.SchemaSpec{Type: "object"}, "namespaceId": &runtime.SchemaSpec{Type: "string"}, "registryType": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3969,6 +4084,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "start (query, int64)", Required: false, Format: "int64"},
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "end (query, int64)", Required: false, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3982,6 +4098,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "registryId", Flag: "registry-id", In: "path", GoType: "string", Help: "registryId (path, required)", Required: true},
 			{Name: "serviceName", Flag: "service-name", In: "path", GoType: "string", Help: "serviceName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -3999,6 +4116,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"detail": &runtime.SchemaSpec{Type: "object"}, "end": &runtime.SchemaSpec{Type: "string"}, "groupName": &runtime.SchemaSpec{Type: "string"}, "namespaceId": &runtime.SchemaSpec{Type: "string"}, "registryType": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -4014,10 +4132,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "extId", "healthInstanceCount", "isAuth"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "extId", "healthInstanceCount", "isAuth"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -4035,10 +4151,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "clusterName", "createdAt", "healthNodeCount", "namespaceName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "clusterName", "createdAt", "healthNodeCount", "namespaceName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -4058,10 +4172,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "disableInsight", Flag: "disable-insight", In: "query", GoType: "bool", Help: "是否获取insight数据，默认为获取 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "enabled", "frameworkType", "host", "instanceStatus", "serviceName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "enabled", "frameworkType", "host", "instanceStatus", "serviceName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -4077,10 +4189,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "healthInstanceCount", "instanceCount"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "healthInstanceCount", "instanceCount"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -4094,10 +4204,10 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addresses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "isAuth": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"id": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "password": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addresses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "isAuth": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"id": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "password": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "namespaces", DefaultColumns: []string{"name", "id"},
-		},
+		Output:   runtime.OutputHints{ListPath: "namespaces", DefaultColumns: []string{"name", "id"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -4112,8 +4222,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addresses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "extId": &runtime.SchemaSpec{Type: "string"}, "isAuth": &runtime.SchemaSpec{Type: "boolean"}, "isHosted": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"id": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}}, "password": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addresses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "extId": &runtime.SchemaSpec{Type: "string"}, "isAuth": &runtime.SchemaSpec{Type: "boolean"}, "isHosted": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"id": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "password": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -4132,6 +4243,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "groupName": &runtime.SchemaSpec{Type: "string"}, "namespaceId": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Registry",
@@ -4150,6 +4262,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "string"}, "dataType": &runtime.SchemaSpec{Type: "string"}, "detail": &runtime.SchemaSpec{Type: "string"}, "inputPattern": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Seata",
@@ -4173,10 +4286,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "branchId", Flag: "branch-id", In: "query", GoType: "string", Help: "branchId (query)", Required: false},
 			{Name: "authorization", Flag: "authorization", In: "query", GoType: "[]string", Help: "authorization (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"branchId", "gmtCreate", "gmtModified", "pk", "resourceId", "rowKey"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"branchId", "gmtCreate", "gmtModified", "pk", "resourceId", "rowKey"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Seata",
@@ -4200,10 +4311,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "timeEnd", Flag: "time-end", In: "query", GoType: "string", Help: "创建结束时间：时间戳（ms） (query)", Required: false},
 			{Name: "status", Flag: "status", In: "query", GoType: "string", Help: "status (query, one of: Tx_Unspecified|Begin|Committing|CommitRetrying|Rollbacking|RollbackRetrying|TimeoutRollbacking|TimeoutRollbackRetrying|AsyncCommitting|Committed|CommitFailed|Rollbacked|RollbackFailed|TimeoutRollbacked|TimeoutRollbackFailed|Finished|CommitRetryTimeout|RollbackRetryTimeout|UnKnown)", Required: false, Default: "Tx_Unspecified", Enum: []string{"Tx_Unspecified", "Begin", "Committing", "CommitRetrying", "Rollbacking", "RollbackRetrying", "TimeoutRollbacking", "TimeoutRollbackRetrying", "AsyncCommitting", "Committed", "CommitFailed", "Rollbacked", "RollbackFailed", "TimeoutRollbacked", "TimeoutRollbackFailed", "Finished", "CommitRetryTimeout", "RollbackRetryTimeout", "UnKnown"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"applicationData", "applicationId", "beginTime", "status", "timeout", "transactionId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"applicationData", "applicationId", "beginTime", "status", "timeout", "transactionId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4223,6 +4332,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authorityRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "limitApp": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "string"}, "strategy": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4242,6 +4352,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"degradeRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "number"}, "grade": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "limitApp": &runtime.SchemaSpec{Type: "string"}, "minRequestAmount": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "string"}, "slowRatioThreshold": &runtime.SchemaSpec{Type: "number"}, "statIntervalMs": &runtime.SchemaSpec{Type: "integer"}, "timeWindow": &runtime.SchemaSpec{Type: "integer"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4261,6 +4372,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"flowRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "clusterConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fallbackToLocalWhenFail": &runtime.SchemaSpec{Type: "boolean"}, "thresholdType": &runtime.SchemaSpec{Type: "string"}}}, "clusterMode": &runtime.SchemaSpec{Type: "boolean"}, "controlBehavior": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "number"}, "grade": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "limitApp": &runtime.SchemaSpec{Type: "string"}, "maxQueueingTimeMs": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "refResource": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "string"}, "strategy": &runtime.SchemaSpec{Type: "string"}, "warmUpPeriodSec": &runtime.SchemaSpec{Type: "integer"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4280,6 +4392,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clients": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "machineId": &runtime.SchemaSpec{Type: "string"}, "machineType": &runtime.SchemaSpec{Type: "string"}, "maxQps": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "remainingClients": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "tokenServerName": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4297,8 +4410,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"paramFlowRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "number"}, "durationInSec": &runtime.SchemaSpec{Type: "integer"}, "grade": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "paramFlowItemList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"classType": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "integer"}, "object": &runtime.SchemaSpec{Type: "string"}}}}, "paramIdx": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"paramFlowRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "number"}, "durationInSec": &runtime.SchemaSpec{Type: "integer"}, "grade": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "paramFlowItemList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"classType": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "integer"}, "object": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "paramIdx": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4318,6 +4432,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"systemRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "avgRt": &runtime.SchemaSpec{Type: "integer"}, "highestCpuUsage": &runtime.SchemaSpec{Type: "number"}, "highestSystemLoad": &runtime.SchemaSpec{Type: "number"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "maxThread": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "qps": &runtime.SchemaSpec{Type: "number"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4334,6 +4449,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4350,6 +4466,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "serverId", Flag: "server-id", In: "path", GoType: "string", Help: "serverId (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4366,6 +4483,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4382,6 +4500,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4399,6 +4518,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "instanceIp", Flag: "instance-ip", In: "path", GoType: "string", Help: "instanceIp (path, required)", Required: true},
 			{Name: "heartbeatPort", Flag: "heartbeat-port", In: "path", GoType: "string", Help: "心跳端口 (path, required, int32)", Required: true, Format: "int32"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4415,6 +4535,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4431,6 +4552,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4447,6 +4569,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4463,7 +4586,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "tokenServer", Flag: "token-server", In: "path", GoType: "string", Help: "token server id，格式比如为 10.64.1.158@8722 (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "clients"},
+		Output:   runtime.OutputHints{ListPath: "clients"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4480,6 +4604,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4496,6 +4621,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4514,6 +4640,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "nacosNamespace", Flag: "nacos-namespace", In: "query", GoType: "string", Help: "nacosNamespace (query)", Required: false},
 			{Name: "nacosGroup", Flag: "nacos-group", In: "query", GoType: "string", Help: "nacosGroup (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4530,6 +4657,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4545,6 +4673,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sentinelName", Flag: "sentinel-name", In: "path", GoType: "string", Help: "sentinelName (path, required)", Required: true},
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "appName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4561,6 +4690,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "ruleId", Flag: "rule-id", In: "path", GoType: "string", Help: "ruleId (path, required, int64)", Required: true, Format: "int64"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4575,7 +4705,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "sentinelName", Flag: "sentinel-name", In: "path", GoType: "string", Help: "sentinelName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items"},
+		Output:   runtime.OutputHints{ListPath: "items"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4594,10 +4725,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "resource", Flag: "resource", In: "query", GoType: "string", Help: "模糊搜索资源名字段 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "ip", "limitApp", "port", "resource"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "ip", "limitApp", "port", "resource"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4614,7 +4743,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "serverId", Flag: "server-id", In: "query", GoType: "string", Help: "模糊搜索服务器标识字段 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items"},
+		Output:   runtime.OutputHints{ListPath: "items"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4633,10 +4763,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "resource", Flag: "resource", In: "query", GoType: "string", Help: "模糊搜索资源名字段 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "count", "grade", "ip", "limitApp"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "count", "grade", "ip", "limitApp"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4655,10 +4783,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "resource", Flag: "resource", In: "query", GoType: "string", Help: "模糊搜索资源名字段 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "clusterMode", "controlBehavior", "count", "grade"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "clusterMode", "controlBehavior", "count", "grade"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4677,10 +4803,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 			{Name: "resource", Flag: "resource", In: "query", GoType: "string", Help: "模糊搜索资源名字段 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "count", "durationInSec", "grade", "ip"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "count", "durationInSec", "grade", "ip"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4697,8 +4821,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 			{Name: "instanceIps", Flag: "instance-ips", In: "query", GoType: "[]string", Help: "实例 ip (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"resource"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"resource"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4716,10 +4840,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "avgRt", "highestCpuUsage", "highestSystemLoad", "ip"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "app", "avgRt", "highestCpuUsage", "highestSystemLoad", "ip"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4735,7 +4857,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sentinelName", Flag: "sentinel-name", In: "path", GoType: "string", Help: "sentinelName (path, required)", Required: true},
 			{Name: "appName", Flag: "app-name", In: "path", GoType: "string", Help: "注册在 sentinel dashboard 的服务名 (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items"},
+		Output:   runtime.OutputHints{ListPath: "items"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4756,6 +4879,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authorityRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "limitApp": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "string"}, "strategy": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4776,6 +4900,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"degradeRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "number"}, "grade": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "limitApp": &runtime.SchemaSpec{Type: "string"}, "minRequestAmount": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "string"}, "slowRatioThreshold": &runtime.SchemaSpec{Type: "number"}, "statIntervalMs": &runtime.SchemaSpec{Type: "integer"}, "timeWindow": &runtime.SchemaSpec{Type: "integer"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4796,6 +4921,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"flowRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "clusterConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"fallbackToLocalWhenFail": &runtime.SchemaSpec{Type: "boolean"}, "thresholdType": &runtime.SchemaSpec{Type: "string"}}}, "clusterMode": &runtime.SchemaSpec{Type: "boolean"}, "controlBehavior": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "number"}, "grade": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "limitApp": &runtime.SchemaSpec{Type: "string"}, "maxQueueingTimeMs": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "refResource": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "string"}, "strategy": &runtime.SchemaSpec{Type: "string"}, "warmUpPeriodSec": &runtime.SchemaSpec{Type: "integer"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4814,8 +4940,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"paramFlowRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "number"}, "durationInSec": &runtime.SchemaSpec{Type: "integer"}, "grade": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "paramFlowItemList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"classType": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "integer"}, "object": &runtime.SchemaSpec{Type: "string"}}}}, "paramIdx": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"paramFlowRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "number"}, "durationInSec": &runtime.SchemaSpec{Type: "integer"}, "grade": &runtime.SchemaSpec{Type: "string"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "paramFlowItemList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"classType": &runtime.SchemaSpec{Type: "string"}, "count": &runtime.SchemaSpec{Type: "integer"}, "object": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "paramIdx": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sentinel",
@@ -4836,6 +4963,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"systemRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"app": &runtime.SchemaSpec{Type: "string"}, "avgRt": &runtime.SchemaSpec{Type: "integer"}, "highestCpuUsage": &runtime.SchemaSpec{Type: "number"}, "highestSystemLoad": &runtime.SchemaSpec{Type: "number"}, "id": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "maxThread": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "qps": &runtime.SchemaSpec{Type: "number"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sesame",
@@ -4844,8 +4972,8 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Sesame_GetComponents",
 		Method:      "GET",
 		PathTpl:     "/apis/sesame.skoala.io/v1alpha1/components/version",
-		Output: runtime.OutputHints{ListPath: "components", DefaultColumns: []string{"name"},
-		},
+		Output:      runtime.OutputHints{ListPath: "components", DefaultColumns: []string{"name"}},
+		Security:    &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Sesame",
@@ -4854,6 +4982,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Sesame_GetVersion",
 		Method:      "GET",
 		PathTpl:     "/apis/sesame.skoala.io/v1alpha1/version",
+		Security:    &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -4868,10 +4997,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -4885,6 +5012,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "clusterName", Flag: "cluster-name", In: "path", GoType: "string", Help: "clusterName (path, required)", Required: true},
 			{Name: "portNumber", Flag: "port-number", In: "path", GoType: "string", Help: "portNumber (path, required, int32)", Required: true, Format: "int32"},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -4898,6 +5026,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "clusterName", Flag: "cluster-name", In: "path", GoType: "string", Help: "clusterName (path, required)", Required: true},
 			{Name: "prerequisite", Flag: "prerequisite", In: "path", GoType: "string", Help: "prerequisite (path, required, one of: PREREQUISITE_UNSPECIFIED|InsightAgent|SkoalaInit|InsightTracing|MetalLb)", Required: true, Enum: []string{"PREREQUISITE_UNSPECIFIED", "InsightAgent", "SkoalaInit", "InsightTracing", "MetalLb"}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -4912,6 +5041,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespaceName", Flag: "namespace-name", In: "path", GoType: "string", Help: "namespaceName (path, required)", Required: true},
 			{Name: "resourceQuotaName", Flag: "resource-quota-name", In: "path", GoType: "string", Help: "resourceQuotaName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -4923,6 +5053,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "swaggerUrl", Flag: "swagger-url", In: "query", GoType: "string", Help: "swaggerUrl (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -4934,6 +5065,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -4949,8 +5081,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "componentsType", Flag: "components-type", In: "path", GoType: "string", Help: "组件类型 nacos,gateway (path, required, one of: nacos|gateway)", Required: true, Enum: []string{"nacos", "gateway"}},
 			{Name: "componentsName", Flag: "components-name", In: "path", GoType: "string", Help: "组件name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"description", "ruleName", "severity", "startAt", "targetName", "targetType"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"description", "ruleName", "severity", "startAt", "targetName", "targetType"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -4967,10 +5099,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "logTime", "resourceName", "resourceType", "status"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "logTime", "resourceName", "resourceType", "status"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -4984,10 +5114,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"name", "id", "clusterPhase", "clusterProvider", "version"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "clusters", DefaultColumns: []string{"name", "id", "clusterPhase", "clusterProvider", "version"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5003,10 +5131,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "autoAssign", "avoidBuggyIps"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "autoAssign", "avoidBuggyIps"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5025,10 +5151,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "namespaceName", "serviceName", "serviceType", "sesameId", "sesameNamespaceName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "namespaceName", "serviceName", "serviceType", "sesameId", "sesameNamespaceName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5041,7 +5165,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "clusterName", Flag: "cluster-name", In: "path", GoType: "string", Help: "clusterName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items"},
+		Output:   runtime.OutputHints{ListPath: "items"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5064,10 +5189,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "hosts", Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "hosts", Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5081,10 +5204,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "id", "meshVersion"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "id", "meshVersion"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5102,10 +5223,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespaceName", "serviceName", "serviceType", "sesameId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespaceName", "serviceName", "serviceType", "sesameId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5120,10 +5239,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5138,10 +5255,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "address"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "address"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5156,10 +5271,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"nodeName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"nodeName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5172,8 +5285,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "prerequisite", Flag: "prerequisite", In: "path", GoType: "string", Help: "prerequisite (path, required, one of: PREREQUISITE_UNSPECIFIED|InsightAgent|SkoalaInit|InsightTracing|MetalLb)", Required: true, Enum: []string{"PREREQUISITE_UNSPECIFIED", "InsightAgent", "SkoalaInit", "InsightTracing", "MetalLb"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"chartVersion", "clusterName", "ok"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"chartVersion", "clusterName", "ok"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5188,10 +5301,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "address"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "address"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5210,10 +5321,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "hosts", Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "hosts", Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5236,10 +5345,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"isHosted", "kubernetesClusterName", "kubernetesNamespaceName", "meshDeployType", "meshId", "meshName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"isHosted", "kubernetesClusterName", "kubernetesNamespaceName", "meshDeployType", "meshId", "meshName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala",
@@ -5253,10 +5360,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala-v1alpha3",
@@ -5269,8 +5374,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "query", GoType: "string", Help: "workspaceId (query)", Required: false},
 			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "clusterName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "cluster", DefaultColumns: []string{"name", "id", "clusterPhase", "clusterProvider", "version"},
-		},
+		Output:   runtime.OutputHints{ListPath: "cluster", DefaultColumns: []string{"name", "id", "clusterPhase", "clusterProvider", "version"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala-v1alpha3",
@@ -5290,10 +5395,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"gatewayType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"gatewayType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala-v1alpha3",
@@ -5309,10 +5412,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "namespaceName", "workspaceId", "workspaceName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "namespaceName", "workspaceId", "workspaceName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala-v1alpha3",
@@ -5327,10 +5428,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespaceName", "status"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespaceName", "status"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala-v1alpha3",
@@ -5350,10 +5449,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"gatewayType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"gatewayType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Skoala-v1alpha3",
@@ -5365,7 +5462,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "query", GoType: "string", Help: "workspaceId (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "permissions"},
+		Output:   runtime.OutputHints{ListPath: "permissions"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5381,6 +5479,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"auth": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}, "inCluster": &runtime.SchemaSpec{Type: "boolean"}}}, "requestBodyBufferSettings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowPartialMessage": &runtime.SchemaSpec{Type: "boolean"}, "maxRequestBytes": &runtime.SchemaSpec{Type: "integer"}, "packAsBytes": &runtime.SchemaSpec{Type: "boolean"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "validation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caCertificate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "subjectName": &runtime.SchemaSpec{Type: "string"}}}}}, "describe": &runtime.SchemaSpec{Type: "string"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}, "inCluster": &runtime.SchemaSpec{Type: "boolean"}}}, "processingMode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestBodyMode": &runtime.SchemaSpec{Type: "string"}, "requestHeaderMode": &runtime.SchemaSpec{Type: "string"}, "requestTrailerMode": &runtime.SchemaSpec{Type: "string"}, "responseBodyMode": &runtime.SchemaSpec{Type: "string"}, "responseHeaderMode": &runtime.SchemaSpec{Type: "string"}, "responseTrailerMode": &runtime.SchemaSpec{Type: "string"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "validation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caCertificate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "subjectName": &runtime.SchemaSpec{Type: "string"}}}}}, "jwt": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cacheTime": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "forwardJwt": &runtime.SchemaSpec{Type: "boolean"}, "jwtValidConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"audiences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "issuer": &runtime.SchemaSpec{Type: "string"}}}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}, "inCluster": &runtime.SchemaSpec{Type: "boolean"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "validation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caCertificate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "subjectName": &runtime.SchemaSpec{Type: "string"}}}}}, "pluginName": &runtime.SchemaSpec{Type: "string"}, "rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableRateLimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}, "inCluster": &runtime.SchemaSpec{Type: "boolean"}}}, "rlsRuleAddress": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "validation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caCertificate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "subjectName": &runtime.SchemaSpec{Type: "string"}}}}}, "wasm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"imageUrl": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5393,6 +5492,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceID (path, required)", Required: true},
 			{Name: "pluginName", Flag: "plugin-name", In: "path", GoType: "string", Help: "插件名称 (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5405,7 +5505,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceID (path, required)", Required: true},
 			{Name: "pluginName", Flag: "plugin-name", In: "path", GoType: "string", Help: "插件名称 (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "address"},
+		Output:   runtime.OutputHints{ListPath: "address"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5418,7 +5519,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceID (path, required)", Required: true},
 			{Name: "pluginName", Flag: "plugin-name", In: "path", GoType: "string", Help: "pluginName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "domain"},
+		Output:   runtime.OutputHints{ListPath: "domain"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5433,6 +5535,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "domain", Flag: "domain", In: "path", GoType: "string", Help: "domain (path, required)", Required: true},
 			{Name: "rlsRuleName", Flag: "rls-rule-name", In: "path", GoType: "string", Help: "rlsRuleName (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5449,10 +5552,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "disabled", "inCluster", "pluginName", "pluginType", "updatedAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "disabled", "inCluster", "pluginName", "pluginType", "updatedAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5466,8 +5567,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pluginName", Flag: "plugin-name", In: "path", GoType: "string", Help: "pluginName (path, required)", Required: true},
 			{Name: "domain", Flag: "domain", In: "path", GoType: "string", Help: "domain (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "Unlimited", "aliasName", "key", "value"},
-		},
+		Output:   runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "Unlimited", "aliasName", "key", "value"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5484,6 +5585,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"add": &runtime.SchemaSpec{Type: "boolean"}, "pluginUsage": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "gvr": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"group": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "meshInstance": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "needUpdate": &runtime.SchemaSpec{Type: "boolean"}, "resourceType": &runtime.SchemaSpec{Type: "string"}, "usedTime": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "integer"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5500,6 +5602,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"auth": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}, "inCluster": &runtime.SchemaSpec{Type: "boolean"}}}, "requestBodyBufferSettings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowPartialMessage": &runtime.SchemaSpec{Type: "boolean"}, "maxRequestBytes": &runtime.SchemaSpec{Type: "integer"}, "packAsBytes": &runtime.SchemaSpec{Type: "boolean"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "validation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caCertificate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "subjectName": &runtime.SchemaSpec{Type: "string"}}}}}, "describe": &runtime.SchemaSpec{Type: "string"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}, "inCluster": &runtime.SchemaSpec{Type: "boolean"}}}, "processingMode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestBodyMode": &runtime.SchemaSpec{Type: "string"}, "requestHeaderMode": &runtime.SchemaSpec{Type: "string"}, "requestTrailerMode": &runtime.SchemaSpec{Type: "string"}, "responseBodyMode": &runtime.SchemaSpec{Type: "string"}, "responseHeaderMode": &runtime.SchemaSpec{Type: "string"}, "responseTrailerMode": &runtime.SchemaSpec{Type: "string"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "validation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caCertificate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "subjectName": &runtime.SchemaSpec{Type: "string"}}}}}, "jwt": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cacheTime": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "forwardJwt": &runtime.SchemaSpec{Type: "boolean"}, "jwtValidConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"audiences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "issuer": &runtime.SchemaSpec{Type: "string"}}}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}, "inCluster": &runtime.SchemaSpec{Type: "boolean"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "validation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caCertificate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "subjectName": &runtime.SchemaSpec{Type: "string"}}}}}, "rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableRateLimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}, "inCluster": &runtime.SchemaSpec{Type: "boolean"}}}, "rlsRuleAddress": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "validation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caCertificate": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "subjectName": &runtime.SchemaSpec{Type: "string"}}}}}, "wasm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"imageUrl": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPlugin",
@@ -5513,6 +5616,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pluginName", Flag: "plugin-name", In: "path", GoType: "string", Help: "插件名称 (path, required)", Required: true},
 			{Name: "status", Flag: "status", In: "path", GoType: "string", Help: "插件状态，true为启用，false为禁用 (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5526,8 +5630,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"auth": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "requestBodyBufferSettings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowPartialMessage": &runtime.SchemaSpec{Type: "boolean"}, "maxRequestBytes": &runtime.SchemaSpec{Type: "integer"}, "packAsBytes": &runtime.SchemaSpec{Type: "boolean"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "describe": &runtime.SchemaSpec{Type: "string"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "processingMode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestBodyMode": &runtime.SchemaSpec{Type: "string"}, "requestHeaderMode": &runtime.SchemaSpec{Type: "string"}, "requestTrailerMode": &runtime.SchemaSpec{Type: "string"}, "responseBodyMode": &runtime.SchemaSpec{Type: "string"}, "responseHeaderMode": &runtime.SchemaSpec{Type: "string"}, "responseTrailerMode": &runtime.SchemaSpec{Type: "string"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "instanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployLocation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "imageUrl": &runtime.SchemaSpec{Type: "string"}, "ratelimitDeployConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "config": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "enableHealthCheck": &runtime.SchemaSpec{Type: "boolean"}, "enableRatelimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "labels": &runtime.SchemaSpec{Type: "object"}, "logLevel": &runtime.SchemaSpec{Type: "string"}, "ratelimitRuleConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"generic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "next": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Ref: "#/definitions/GenericKVRuleKeyValueRatelimit"}}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "ip": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ip": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}}}}}}, "requestHeader": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"header": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "redisExternal": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"password": &runtime.SchemaSpec{Type: "string"}, "redisUrl": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "redisSidecar": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "resourceRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}}}, "redisType": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resourceRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "telemetry": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"prometheus": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}}}, "tracing": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "samplingRate": &runtime.SchemaSpec{Type: "integer"}}}}}}}}}, "jwt": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cacheTime": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "forwardJwt": &runtime.SchemaSpec{Type: "boolean"}, "jwtValidConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"audiences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "issuer": &runtime.SchemaSpec{Type: "string"}}}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "pluginName": &runtime.SchemaSpec{Type: "string"}, "pluginTemplateName": &runtime.SchemaSpec{Type: "string"}, "pluginType": &runtime.SchemaSpec{Type: "string"}, "rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableRateLimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "rlsRuleAddress": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "wasm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"imageUrl": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"auth": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "requestBodyBufferSettings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowPartialMessage": &runtime.SchemaSpec{Type: "boolean"}, "maxRequestBytes": &runtime.SchemaSpec{Type: "integer"}, "packAsBytes": &runtime.SchemaSpec{Type: "boolean"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "describe": &runtime.SchemaSpec{Type: "string"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "processingMode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestBodyMode": &runtime.SchemaSpec{Type: "string"}, "requestHeaderMode": &runtime.SchemaSpec{Type: "string"}, "requestTrailerMode": &runtime.SchemaSpec{Type: "string"}, "responseBodyMode": &runtime.SchemaSpec{Type: "string"}, "responseHeaderMode": &runtime.SchemaSpec{Type: "string"}, "responseTrailerMode": &runtime.SchemaSpec{Type: "string"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "instanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployLocation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "imageUrl": &runtime.SchemaSpec{Type: "string"}, "ratelimitDeployConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "config": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "enableHealthCheck": &runtime.SchemaSpec{Type: "boolean"}, "enableRatelimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "labels": &runtime.SchemaSpec{Type: "object"}, "logLevel": &runtime.SchemaSpec{Type: "string"}, "ratelimitRuleConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"generic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "next": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Ref: "#/definitions/GenericKVRuleKeyValueRatelimit", Type: "object"}}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "ip": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ip": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "requestHeader": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"header": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}, "redisExternal": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"password": &runtime.SchemaSpec{Type: "string"}, "redisUrl": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "redisSidecar": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "resourceRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}}}, "redisType": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resourceRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "telemetry": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"prometheus": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}}}, "tracing": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "samplingRate": &runtime.SchemaSpec{Type: "integer"}}}}}}}}}, "jwt": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cacheTime": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "forwardJwt": &runtime.SchemaSpec{Type: "boolean"}, "jwtValidConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"audiences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "issuer": &runtime.SchemaSpec{Type: "string"}}}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "pluginName": &runtime.SchemaSpec{Type: "string"}, "pluginTemplateName": &runtime.SchemaSpec{Type: "string"}, "pluginType": &runtime.SchemaSpec{Type: "string"}, "rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableRateLimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "rlsRuleAddress": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "wasm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"imageUrl": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5543,6 +5648,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"describe": &runtime.SchemaSpec{Type: "string"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "icon": &runtime.SchemaSpec{Type: "string"}, "images": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "pluginTemplateName": &runtime.SchemaSpec{Type: "string"}, "pluginType": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5555,6 +5661,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceID (path, required)", Required: true},
 			{Name: "pluginName", Flag: "plugin-name", In: "path", GoType: "string", Help: "插件名称 (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5567,6 +5674,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceID (path, required)", Required: true},
 			{Name: "pluginTemplateName", Flag: "plugin-template-name", In: "path", GoType: "string", Help: "插件名称 (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5579,8 +5687,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceID (path, required)", Required: true},
 			{Name: "pluginName", Flag: "plugin-name", In: "path", GoType: "string", Help: "插件名称 (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "usage", DefaultColumns: []string{"name", "clusterName", "meshInstance", "namespaceName", "needUpdate", "resourceType"},
-		},
+		Output:   runtime.OutputHints{ListPath: "usage", DefaultColumns: []string{"name", "clusterName", "meshInstance", "namespaceName", "needUpdate", "resourceType"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5593,8 +5701,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceID (path, required)", Required: true},
 			{Name: "pluginTemplateName", Flag: "plugin-template-name", In: "path", GoType: "string", Help: "插件名称 (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createType", "createdAt", "disabled", "pluginName", "pluginType", "templateName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createType", "createdAt", "disabled", "pluginName", "pluginType", "templateName"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5612,10 +5720,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createType", "createdAt", "disabled", "pluginName", "pluginType", "templateName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createType", "createdAt", "disabled", "pluginName", "pluginType", "templateName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5633,10 +5739,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "describe", "disabled", "displayName", "icon", "pluginTemplateName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "describe", "disabled", "displayName", "icon", "pluginTemplateName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5651,8 +5755,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"auth": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "requestBodyBufferSettings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowPartialMessage": &runtime.SchemaSpec{Type: "boolean"}, "maxRequestBytes": &runtime.SchemaSpec{Type: "integer"}, "packAsBytes": &runtime.SchemaSpec{Type: "boolean"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "describe": &runtime.SchemaSpec{Type: "string"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "processingMode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestBodyMode": &runtime.SchemaSpec{Type: "string"}, "requestHeaderMode": &runtime.SchemaSpec{Type: "string"}, "requestTrailerMode": &runtime.SchemaSpec{Type: "string"}, "responseBodyMode": &runtime.SchemaSpec{Type: "string"}, "responseHeaderMode": &runtime.SchemaSpec{Type: "string"}, "responseTrailerMode": &runtime.SchemaSpec{Type: "string"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "instanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployLocation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "imageUrl": &runtime.SchemaSpec{Type: "string"}, "ratelimitDeployConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "config": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "enableHealthCheck": &runtime.SchemaSpec{Type: "boolean"}, "enableRatelimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "labels": &runtime.SchemaSpec{Type: "object"}, "logLevel": &runtime.SchemaSpec{Type: "string"}, "ratelimitRuleConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"generic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "next": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Ref: "#/definitions/GenericKVRuleKeyValueRatelimit"}}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "ip": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ip": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}}}}}}, "requestHeader": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"header": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "redisExternal": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"password": &runtime.SchemaSpec{Type: "string"}, "redisUrl": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "redisSidecar": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "resourceRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}}}, "redisType": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resourceRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "telemetry": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"prometheus": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}}}, "tracing": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "samplingRate": &runtime.SchemaSpec{Type: "integer"}}}}}}}}}, "jwt": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cacheTime": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "forwardJwt": &runtime.SchemaSpec{Type: "boolean"}, "jwtValidConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"audiences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "issuer": &runtime.SchemaSpec{Type: "string"}}}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableRateLimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "rlsRuleAddress": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "wasm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"imageUrl": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"auth": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "requestBodyBufferSettings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowPartialMessage": &runtime.SchemaSpec{Type: "boolean"}, "maxRequestBytes": &runtime.SchemaSpec{Type: "integer"}, "packAsBytes": &runtime.SchemaSpec{Type: "boolean"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "describe": &runtime.SchemaSpec{Type: "string"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProc": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "processingMode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestBodyMode": &runtime.SchemaSpec{Type: "string"}, "requestHeaderMode": &runtime.SchemaSpec{Type: "string"}, "requestTrailerMode": &runtime.SchemaSpec{Type: "string"}, "responseBodyMode": &runtime.SchemaSpec{Type: "string"}, "responseHeaderMode": &runtime.SchemaSpec{Type: "string"}, "responseTrailerMode": &runtime.SchemaSpec{Type: "string"}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "instanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployLocation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "imageUrl": &runtime.SchemaSpec{Type: "string"}, "ratelimitDeployConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "config": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "enableHealthCheck": &runtime.SchemaSpec{Type: "boolean"}, "enableRatelimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "labels": &runtime.SchemaSpec{Type: "object"}, "logLevel": &runtime.SchemaSpec{Type: "string"}, "ratelimitRuleConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"generic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "next": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Ref: "#/definitions/GenericKVRuleKeyValueRatelimit", Type: "object"}}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "ip": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ip": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "requestHeader": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"header": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}, "redisExternal": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"password": &runtime.SchemaSpec{Type: "string"}, "redisUrl": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "redisSidecar": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "resourceRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}}}, "redisType": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resourceRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "serviceType": &runtime.SchemaSpec{Type: "string"}, "telemetry": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"prometheus": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}}}, "tracing": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "samplingRate": &runtime.SchemaSpec{Type: "integer"}}}}}}}}}, "jwt": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cacheTime": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "forwardJwt": &runtime.SchemaSpec{Type: "boolean"}, "jwtValidConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"audiences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "issuer": &runtime.SchemaSpec{Type: "string"}}}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableRateLimitHeaders": &runtime.SchemaSpec{Type: "boolean"}, "failOpen": &runtime.SchemaSpec{Type: "boolean"}, "pluginAddress": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"address": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalance": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "clusterNamespaceService": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespaceName": &runtime.SchemaSpec{Type: "string"}, "serviceName": &runtime.SchemaSpec{Type: "string"}, "servicePort": &runtime.SchemaSpec{Type: "integer"}}}}}, "rlsRuleAddress": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "wasm": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"imageUrl": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "SkoalaPluginTemplate",
@@ -5669,6 +5774,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"describe": &runtime.SchemaSpec{Type: "string"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "icon": &runtime.SchemaSpec{Type: "string"}, "images": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "pluginType": &runtime.SchemaSpec{Type: "string"}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Statics",
@@ -5685,6 +5791,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "interval", Flag: "interval", In: "query", GoType: "string", Help: "interval (query, int64)", Required: false, Format: "int64"},
 			{Name: "unit", Flag: "unit", In: "query", GoType: "string", Help: "时间单位 (query, one of: TIME_UNIT_UNSPECIFIED|Day|Hour|Minute|Second|Millisecond)", Required: false, Default: "TIME_UNIT_UNSPECIFIED", Enum: []string{"TIME_UNIT_UNSPECIFIED", "Day", "Hour", "Minute", "Second", "Millisecond"}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Statics",
@@ -5702,8 +5809,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "unit", Flag: "unit", In: "query", GoType: "string", Help: "时间单位 (query, one of: TIME_UNIT_UNSPECIFIED|Day|Hour|Minute|Second|Millisecond)", Required: false, Default: "TIME_UNIT_UNSPECIFIED", Enum: []string{"TIME_UNIT_UNSPECIFIED", "Day", "Hour", "Minute", "Second", "Millisecond"}},
 			{Name: "completion", Flag: "completion", In: "query", GoType: "bool", Help: "是否补全缺失参数 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "fail", DefaultColumns: []string{"gatewayName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "fail", DefaultColumns: []string{"gatewayName"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Statics",
@@ -5715,8 +5822,21 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "errGatewayInfo", DefaultColumns: []string{"gatewayName", "location", "reason"},
+		Output:   runtime.OutputHints{ListPath: "errGatewayInfo", DefaultColumns: []string{"gatewayName", "location", "reason"}},
+		Security: &runtime.SecurityHint{},
+	},
+	{
+		Group:       "Statics",
+		Use:         "gateway-overview-list-in-workspace-gateway-names",
+		Short:       "总体概览网关名称列表",
+		OperationID: "GatewayOverview_ListInWorkspaceGatewayNames",
+		Method:      "GET",
+		PathTpl:     "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/gateway/names",
+		Params: []runtime.ParamSpec{
+			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 		},
+		Output:   runtime.OutputHints{ListPath: "items"},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Statics",
@@ -5728,8 +5848,8 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiNum", "gatewayName", "location"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiNum", "gatewayName", "location"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Statics",
@@ -5743,10 +5863,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Statics",
@@ -5760,22 +5878,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
-	},
-	{
-		Group:       "Statics",
-		Use:         "list-in-workspace-gateway-names",
-		Short:       "总体概览网关名称列表",
-		OperationID: "GatewayOverview_ListInWorkspaceGatewayNames",
-		Method:      "GET",
-		PathTpl:     "/apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/gateway/names",
-		Params: []runtime.ParamSpec{
-			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
-		},
-		Output: runtime.OutputHints{ListPath: "items"},
+		Output:   runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Statics",
@@ -5789,10 +5893,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Statics",
@@ -5805,8 +5907,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
 			{Name: "hostedQuery", Flag: "hosted-query", In: "query", GoType: "string", Help: "- ALL: 全部 (query, one of: ALL|NOT_HOSTED|HOSTED)", Required: false, Default: "ALL", Enum: []string{"ALL", "NOT_HOSTED", "HOSTED"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"registryName", "serviceCount"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"registryName", "serviceCount"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Virtualhost",
@@ -5820,6 +5922,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "clusterName", Flag: "cluster-name", In: "path", GoType: "string", Help: "clusterName (path, required)", Required: true},
 			{Name: "fqdn", Flag: "fqdn", In: "query", GoType: "string", Help: "fqdn (query)", Required: false},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Virtualhost",
@@ -5836,8 +5939,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"virtualhostConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}, "context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "corsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowCredentials": &runtime.SchemaSpec{Type: "boolean"}, "allowHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "allowMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "allowOrigin": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "exposeHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "maxAge": &runtime.SchemaSpec{Type: "string"}}}, "extProcPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtProviders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtPluginName": &runtime.SchemaSpec{Type: "string"}}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "protocol": &runtime.SchemaSpec{Type: "string"}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "tlsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clientValidation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caSecretName": &runtime.SchemaSpec{Type: "string"}, "caSecretNamespaceName": &runtime.SchemaSpec{Type: "string"}, "skipClientCertValidation": &runtime.SchemaSpec{Type: "boolean"}}}, "enableFallbackCertificate": &runtime.SchemaSpec{Type: "boolean"}, "minimumProtocolVersion": &runtime.SchemaSpec{Type: "string"}, "secretName": &runtime.SchemaSpec{Type: "string"}, "secretNamespaceName": &runtime.SchemaSpec{Type: "string"}}}, "virtualhostAuthPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}, "context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"virtualhostConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}, "context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "corsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowCredentials": &runtime.SchemaSpec{Type: "boolean"}, "allowHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "allowMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "allowOrigin": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "exposeHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "maxAge": &runtime.SchemaSpec{Type: "string"}}}, "extProcPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtProviders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtPluginName": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "protocol": &runtime.SchemaSpec{Type: "string"}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "tlsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clientValidation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caSecretName": &runtime.SchemaSpec{Type: "string"}, "caSecretNamespaceName": &runtime.SchemaSpec{Type: "string"}, "skipClientCertValidation": &runtime.SchemaSpec{Type: "boolean"}}}, "enableFallbackCertificate": &runtime.SchemaSpec{Type: "boolean"}, "minimumProtocolVersion": &runtime.SchemaSpec{Type: "string"}, "secretName": &runtime.SchemaSpec{Type: "string"}, "secretNamespaceName": &runtime.SchemaSpec{Type: "string"}}}, "virtualhostAuthPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}, "context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Virtualhost",
@@ -5853,6 +5957,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "fqdn", Flag: "fqdn", In: "path", GoType: "string", Help: "fqdn (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Virtualhost",
@@ -5868,8 +5973,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "gatewayName", Flag: "gateway-name", In: "path", GoType: "string", Help: "gatewayName (path, required)", Required: true},
 			{Name: "fqdn", Flag: "fqdn", In: "path", GoType: "string", Help: "fqdn (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "jwtProviders", DefaultColumns: []string{"default", "jwtPluginName"},
-		},
+		Output:   runtime.OutputHints{ListPath: "jwtProviders", DefaultColumns: []string{"default", "jwtPluginName"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Virtualhost",
@@ -5887,10 +5992,8 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCount", "enableAuth", "enableExtProc", "enableGlobalRateLimit", "enableJWT", "fqdn"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"apiCount", "enableAuth", "enableExtProc", "enableGlobalRateLimit", "enableJWT", "fqdn"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "Virtualhost",
@@ -5908,12 +6011,13 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"virtualhostConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}, "context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "corsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowCredentials": &runtime.SchemaSpec{Type: "boolean"}, "allowHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "allowMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "allowOrigin": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "exposeHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "maxAge": &runtime.SchemaSpec{Type: "string"}}}, "extProcPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtProviders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtPluginName": &runtime.SchemaSpec{Type: "string"}}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "protocol": &runtime.SchemaSpec{Type: "string"}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "tlsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clientValidation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caSecretName": &runtime.SchemaSpec{Type: "string"}, "caSecretNamespaceName": &runtime.SchemaSpec{Type: "string"}, "skipClientCertValidation": &runtime.SchemaSpec{Type: "boolean"}}}, "enableFallbackCertificate": &runtime.SchemaSpec{Type: "boolean"}, "minimumProtocolVersion": &runtime.SchemaSpec{Type: "string"}, "secretName": &runtime.SchemaSpec{Type: "string"}, "secretNamespaceName": &runtime.SchemaSpec{Type: "string"}}}, "virtualhostAuthPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}, "context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"virtualhostConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}, "context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "corsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowCredentials": &runtime.SchemaSpec{Type: "boolean"}, "allowHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "allowMethod": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "allowOrigin": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "exposeHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "maxAge": &runtime.SchemaSpec{Type: "string"}}}, "extProcPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "extProcConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "extProcPluginName": &runtime.SchemaSpec{Type: "string"}}}}}, "fqdn": &runtime.SchemaSpec{Type: "string"}, "globalRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"disabled": &runtime.SchemaSpec{Type: "boolean"}, "globalRateLimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"genericKvRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "ipRule": &runtime.SchemaSpec{Type: "object"}, "requestHeaderRule": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headerName": &runtime.SchemaSpec{Type: "string"}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "ipPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"allowRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "denyRules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cidr": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "level": &runtime.SchemaSpec{Type: "string"}}}, "jwtProviders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"default": &runtime.SchemaSpec{Type: "boolean"}, "jwtPluginName": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "localRateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}, "protocol": &runtime.SchemaSpec{Type: "string"}, "rateLimitPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"global": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rlsRuleName": &runtime.SchemaSpec{Type: "string"}}}, "local": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"burst": &runtime.SchemaSpec{Type: "integer"}, "request": &runtime.SchemaSpec{Type: "integer"}, "responseHeadersToAdd": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}, "responseStatusCode": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"code": &runtime.SchemaSpec{Type: "string"}}}, "unit": &runtime.SchemaSpec{Type: "string"}}}}}, "tlsPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clientValidation": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caSecretName": &runtime.SchemaSpec{Type: "string"}, "caSecretNamespaceName": &runtime.SchemaSpec{Type: "string"}, "skipClientCertValidation": &runtime.SchemaSpec{Type: "boolean"}}}, "enableFallbackCertificate": &runtime.SchemaSpec{Type: "boolean"}, "minimumProtocolVersion": &runtime.SchemaSpec{Type: "string"}, "secretName": &runtime.SchemaSpec{Type: "string"}, "secretNamespaceName": &runtime.SchemaSpec{Type: "string"}}}, "virtualhostAuthPolicy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authPluginName": &runtime.SchemaSpec{Type: "string"}, "context": &runtime.SchemaSpec{Type: "object"}, "disabled": &runtime.SchemaSpec{Type: "boolean"}}}, "default": &runtime.SchemaSpec{Type: "boolean"}}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "ratelimitRule",
-		Use:         "create-ratelimit-rule",
+		Use:         "global-ratelimit-rule-create-ratelimit-rule",
 		Short:       "创建限流插件的域名限流规则",
 		OperationID: "GlobalRatelimitRule_CreateRatelimitRule",
 		Method:      "POST",
@@ -5923,12 +6027,13 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ruleConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"generic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "next": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Ref: "#/definitions/GenericKVRuleKeyValueRatelimit"}}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "ip": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ip": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}}}}}}, "requestHeader": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"header": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ruleConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"generic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "next": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Ref: "#/definitions/GenericKVRuleKeyValueRatelimit", Type: "object"}}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "ip": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ip": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "requestHeader": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"header": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "ratelimitRule",
-		Use:         "delete-ratelimit-rule",
+		Use:         "global-ratelimit-rule-delete-ratelimit-rule",
 		Short:       "删除限流插件的域名限流规则",
 		OperationID: "GlobalRatelimitRule_DeleteRatelimitRule",
 		Method:      "DELETE",
@@ -5937,10 +6042,11 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceID (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "ratelimitRule",
-		Use:         "get-ratelimit-rule",
+		Use:         "global-ratelimit-rule-get-ratelimit-rule",
 		Short:       "限流插件的域名限流规则详情",
 		OperationID: "GlobalRatelimitRule_GetRatelimitRule",
 		Method:      "GET",
@@ -5949,12 +6055,12 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceID (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"domain"},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"domain"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "ratelimitRule",
-		Use:         "list-ratelimit-rule",
+		Use:         "global-ratelimit-rule-list-ratelimit-rule",
 		Short:       "限流插件的域名限流规则列表",
 		OperationID: "GlobalRatelimitRule_ListRatelimitRule",
 		Method:      "GET",
@@ -5965,14 +6071,12 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "ratelimitRule",
-		Use:         "list-rls-domain-rules",
+		Use:         "global-ratelimit-rule-list-rls-domain-rules",
 		Short:       "限流插件的域名限流规则列表",
 		OperationID: "GlobalRatelimitRule_ListRLSDomainRules",
 		Method:      "GET",
@@ -5983,12 +6087,12 @@ var Specs = []runtime.CommandSpec{
 			{Name: "domain", Flag: "domain", In: "path", GoType: "string", Help: "domain (path, required)", Required: true},
 			{Name: "rlsRuleType", Flag: "rls-rule-type", In: "query", GoType: "string", Help: "限流规则类型 (query, one of: ALLRLSTYPE|GENERICKV|REQUESTHEADER|IP)", Required: false, Default: "ALLRLSTYPE", Enum: []string{"ALLRLSTYPE", "GENERICKV", "REQUESTHEADER", "IP"}},
 		},
-		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "rlsRuleType"},
-		},
+		Output:   runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "rlsRuleType"}},
+		Security: &runtime.SecurityHint{},
 	},
 	{
 		Group:       "ratelimitRule",
-		Use:         "update-ratelimit-rule",
+		Use:         "global-ratelimit-rule-update-ratelimit-rule",
 		Short:       "更新限流插件的域名限流规则",
 		OperationID: "GlobalRatelimitRule_UpdateRatelimitRule",
 		Method:      "PUT",
@@ -5999,7 +6103,8 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ruleConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"generic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "next": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Ref: "#/definitions/GenericKVRuleKeyValueRatelimit"}}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}, "ip": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ip": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}}}}}}, "requestHeader": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"header": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}}}}}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ruleConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"generic": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "next": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Ref: "#/definitions/GenericKVRuleKeyValueRatelimit", Type: "object"}}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "ip": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ip": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "requestHeader": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"header": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{AllOf: []*runtime.SchemaSpec{&runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "ratelimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"requestsPerUnit": &runtime.SchemaSpec{Type: "integer"}, "unit": &runtime.SchemaSpec{Type: "string"}, "unlimited": &runtime.SchemaSpec{Type: "boolean"}}}, "value": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, "rlsRuleType": &runtime.SchemaSpec{Type: "string"}}}, &runtime.SchemaSpec{Type: "object"}}}}}}, &runtime.SchemaSpec{Type: "object"}}}}}},
 		},
+		Security: &runtime.SecurityHint{},
 	},
 }

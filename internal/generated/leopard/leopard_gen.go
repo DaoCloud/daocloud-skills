@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 9
+const generatedSchemaVersion = 11
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -39,8 +39,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "startTime", Flag: "start-time", In: "query", GoType: "string", Help: "startTime (query, uint64)", Required: false, Format: "uint64"},
 			{Name: "endTime", Flag: "end-time", In: "query", GoType: "string", Help: "endTime (query, uint64)", Required: false, Format: "uint64"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"amountDue", "productName", "voucherPayment"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"amountDue", "productName", "voucherPayment"}},
 	},
 	{
 		Group:       "Bill",
@@ -63,10 +62,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "billingTimeStart", Flag: "billing-time-start", In: "query", GoType: "string", Help: "billingTimeStart (query)", Required: false},
 			{Name: "billingTimeEnd", Flag: "billing-time-end", In: "query", GoType: "string", Help: "billingTimeEnd (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "amountDue", "billId", "billingItem", "billingMonth", "billingType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "amountDue", "billId", "billingItem", "billingMonth", "billingType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Bill",
@@ -80,8 +76,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "productName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "skuId": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "userId": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "amountDue", "billId", "billingItem", "billingMonth", "billingType"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "amountDue", "billId", "billingItem", "billingMonth", "billingType"}},
 	},
 	{
 		Group:       "Order",
@@ -90,8 +85,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Order_GetProducts",
 		Method:      "GET",
 		PathTpl:     "/apis/leopard.io/v1alpha1/orders/products",
-		Output: runtime.OutputHints{ListPath: "products", DefaultColumns: []string{"name", "id"},
-		},
+		Output:      runtime.OutputHints{ListPath: "products", DefaultColumns: []string{"name", "id"}},
 	},
 	{
 		Group:       "Product",
@@ -115,8 +109,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"billingType": &runtime.SchemaSpec{Type: "string"}, "filter": &runtime.SchemaSpec{Type: "object"}, "filterByAnd": &runtime.SchemaSpec{Type: "boolean"}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "product": &runtime.SchemaSpec{Type: "string"}, "regionId": &runtime.SchemaSpec{Type: "string"}, "sortOrder": &runtime.SchemaSpec{Type: "string"}, "sortType": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "available", "billingType", "canTransferPayAsYouGo", "displayOrder", "inventory"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "available", "billingType", "canTransferPayAsYouGo", "displayOrder", "inventory"}},
 	},
 	{
 		Group:       "Product",
@@ -131,10 +124,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "available", "billingType", "canTransferPayAsYouGo", "displayOrder", "inventory"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "available", "billingType", "canTransferPayAsYouGo", "displayOrder", "inventory"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Transaction",
@@ -155,9 +145,6 @@ var Specs = []runtime.CommandSpec{
 			{Name: "transactionChannel", Flag: "transaction-channel", In: "query", GoType: "string", Help: "transactionChannel (query)", Required: false},
 			{Name: "username", Flag: "username", In: "query", GoType: "string", Help: "username (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"amount", "balance", "billingId", "paymentType", "serialNumber", "transactionChannel"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"amount", "balance", "billingId", "paymentType", "serialNumber", "transactionChannel"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 }
