@@ -14,3 +14,64 @@ auth:
 # (e.g. the Module availability guidance in internal/skill-include/SKILL.md).
 skill:
   include: internal/skill-include
+
+# Chained lookups that otherwise cost a round trip to read one field out of a
+# pod and feed it into a second query. Each workflow returns only the final
+# step, so the result stays a normal list that -o table can lay out.
+workflow:
+  version: 1
+  commands:
+    - use: pod-diagnose
+      short: "Collect a pod's detail, events and node neighbours in one call"
+      long: |
+        Gathers the three read-only lookups a pod diagnosis always needs, from a
+        single get-pod: the pod itself, its namespace events, and everything
+        scheduled on its node.
+
+        Replaces three separate commands and the two round trips spent reading
+        spec.nodeName out of the first one. The result is a JSON object with
+        `pod`, `events` and `neighbors` keys.
+      example: |
+        dce pod-diagnose --cluster my-cluster --namespace default --pod web-0
+      inputs:
+        - name: cluster
+          flag: cluster
+          type: string
+          required: true
+          help: Cluster name
+        - name: namespace
+          flag: namespace
+          type: string
+          required: true
+          help: Namespace of the pod
+        - name: pod
+          flag: pod
+          type: string
+          required: true
+          help: Pod name
+      steps:
+        - id: pod
+          uses: kpanda.Core_GetPod
+          params:
+            cluster: ${input.cluster}
+            namespace: ${input.namespace}
+            name: ${input.pod}
+        # `name` alone filters events by involved object. Passing `kind`
+        # without `kind-name` makes the server return 500, so do not add it.
+        - id: events
+          uses: kpanda.Core_ListEvents
+          params:
+            cluster: ${input.cluster}
+            namespace: ${input.namespace}
+            name: ${input.pod}
+        - id: neighbors
+          uses: kpanda.Core_ListPodsByNode
+          when:
+            - value: ${steps.pod.spec.nodeName}
+              operator: notin
+              values: [""]
+          params:
+            cluster: ${input.cluster}
+            node: ${steps.pod.spec.nodeName}
+      output:
+        from: '{"pod":${steps.pod},"events":${steps.events},"neighbors":${steps.neighbors}}'
