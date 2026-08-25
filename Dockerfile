@@ -1,5 +1,5 @@
 # ---- build stage ----
-FROM --platform=$BUILDPLATFORM docker.m.daocloud.io/library/golang:1.25.7 AS builder
+FROM --platform=$BUILDPLATFORM docker.m.daocloud.io/library/golang:1.25.13 AS builder
 
 ARG TARGETOS
 ARG TARGETARCH
