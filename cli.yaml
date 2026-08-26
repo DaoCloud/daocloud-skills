@@ -15,9 +15,9 @@ auth:
 skill:
   include: internal/skill-include
 
-# Chained lookups that otherwise cost a round trip to read one field out of a
-# pod and feed it into a second query. Each workflow returns only the final
-# step, so the result stays a normal list that -o table can lay out.
+# Read-only workflows compose dependent API lookups. A workflow can use one
+# step's field as a later input and return a deliberately shaped aggregate via
+# `output.from`.
 workflow:
   version: 1
   commands:
@@ -75,3 +75,49 @@ workflow:
             node: ${steps.pod.spec.nodeName}
       output:
         from: '{"pod":${steps.pod},"events":${steps.events},"neighbors":${steps.neighbors}}'
+    - use: personal-access-summary-page
+      short: "Collect one page of the signed-in user's access summary"
+      long: |
+        Gets the signed-in account first, then uses its UID to collect one page
+        each of its groups, role bindings, and visible workspaces, together with
+        its effective global permissions.
+
+        This workflow intentionally represents one page. Its callers must use
+        the returned pagination totals to request all pages before reporting a
+        complete access summary.
+      example: |
+        dce personal-access-summary-page --page 1 --page-size 100 -o json
+      inputs:
+        - name: page
+          type: int64
+          default: "1"
+          help: Page number for the paginated collections
+        - name: pageSize
+          flag: page-size
+          type: int64
+          default: "100"
+          help: Items per page for the paginated collections
+      steps:
+        - id: user
+          uses: ghippo.Account_GetUser
+        - id: groups
+          uses: ghippo.Users_ListUserGroups
+          params:
+            id: ${steps.user.uid}
+            page: ${input.page}
+            pageSize: ${input.pageSize}
+        - id: role_bindings
+          uses: ghippo.Users_ListUserSubjects
+          params:
+            id: ${steps.user.uid}
+            page: ${input.page}
+            pageSize: ${input.pageSize}
+        - id: global_permissions
+          uses: ghippo.Account_GetGlobalPermissions
+        - id: workspaces
+          uses: ghippo.Workspace_ListWorkspaces
+          params:
+            page: ${input.page}
+            pageSize: ${input.pageSize}
+      output:
+        from: '{"user":${steps.user},"groups":${steps.groups},"roleBindings":${steps.role_bindings},"globalPermissions":${steps.global_permissions},"workspaces":${steps.workspaces}}'
