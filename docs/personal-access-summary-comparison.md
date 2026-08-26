@@ -73,10 +73,7 @@ Step 3  汇总呈现
 | HTTP 请求数 | 5 | 5 |
 | 返回形态 | 5 份独立 JSON | 1 份聚合 JSON **字符串**,需 `jq 'fromjson'` |
 
-两版都不做二次读取复核。早期版本要求采集后重查 page 1 比对 `pagination.total`,后来
-去掉了:非 workflow 版复核要多打 3 次请求,workflow 版更差——它一次调用跑满五步,复核
-会把不分页的 `get-user` 和 `get-global-permissions` 也重跑一遍,多打 5 次。现在两版都
-按单次观测呈现,不声称经过二次验证。
+两版都按单次观测呈现,不声称经过二次验证。
 
 ---
 
