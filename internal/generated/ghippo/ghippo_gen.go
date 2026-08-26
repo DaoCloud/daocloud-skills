@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 9
+const generatedSchemaVersion = 11
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -32,8 +32,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "About_ListDevelopers",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/about/developers",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "message"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "message"}},
 	},
 	{
 		Group:       "About",
@@ -42,8 +41,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "About_ListGProductVersions",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/about/versions",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "version"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "version"}},
 	},
 	{
 		Group:       "About",
@@ -56,10 +54,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page: 当前页码，默认值为1 (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "每页数量,默认为 10 (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "license"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "license"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Account",
@@ -165,8 +160,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Account_ListAccessTokens",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/current-user/accesstokens",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createdAt", "expiredAt", "updatedAt"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createdAt", "expiredAt", "updatedAt"}},
 	},
 	{
 		Group:       "Account",
@@ -175,8 +169,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Account_ListSSHKeys",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/current-user/sshkeys",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "createdAt", "expiredAt", "publicKey", "sshKeyName", "updatedAt"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "createdAt", "expiredAt", "publicKey", "sshKeyName", "updatedAt"}},
 	},
 	{
 		Group:       "Account",
@@ -317,8 +310,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "searchUser", Flag: "search-user", In: "query", GoType: "string", Help: "searchUser (query)", Required: false},
 			{Name: "exportType", Flag: "export-type", In: "query", GoType: "string", Help: "exportType (query, one of: Csv|Excel)", Required: false, Default: "Csv", Enum: []string{"Csv", "Excel"}},
 		},
-		Output: runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"},
-		},
+		Output: runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"}},
 	},
 	{
 		Group:       "Audit",
@@ -339,8 +331,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "searchUser", Flag: "search-user", In: "query", GoType: "string", Help: "searchUser (query)", Required: false},
 			{Name: "exportType", Flag: "export-type", In: "query", GoType: "string", Help: "exportType (query, one of: Csv|Excel)", Required: false, Default: "Csv", Enum: []string{"Csv", "Excel"}},
 		},
-		Output: runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"},
-		},
+		Output: runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"}},
 	},
 	{
 		Group:       "Audit",
@@ -377,8 +368,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "start (query)", Required: false},
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "end (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"Count", "EventName", "ResourceType"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"Count", "EventName", "ResourceType"}},
 	},
 	{
 		Group:       "Audit",
@@ -391,8 +381,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "start (query)", Required: false},
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "end (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"FailedCount", "SuccessCount", "TotalCount", "UserName"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"FailedCount", "SuccessCount", "TotalCount", "UserName"}},
 	},
 	{
 		Group:       "Audit",
@@ -455,10 +444,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "搜索偏移量 (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "分页大小 (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "auditName", "client", "clusterName", "createdAt", "gproduct"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "auditName", "client", "clusterName", "createdAt", "gproduct"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Audit",
@@ -478,10 +464,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "分页大小 (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "gproduct", "ip", "operator", "resourceName", "resourceType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"createdAt", "gproduct", "ip", "operator", "resourceName", "resourceType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Audit",
@@ -503,10 +486,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "搜索偏移量 (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "分页大小 (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "auditName", "client", "clusterName", "createdAt", "ip"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "auditName", "client", "clusterName", "createdAt", "ip"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Audit",
@@ -576,8 +556,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "clientId", Flag: "client-id", In: "query", GoType: "string", Help: "clientId (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "baseUrl", "clientId", "secret"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "baseUrl", "clientId", "secret"}},
 	},
 	{
 		Group:       "Client",
@@ -613,8 +592,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "FeatureGate_ListFeatureGates",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/feature-gate",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "description", "enabled"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "description", "enabled"}},
 	},
 	{
 		Group:       "GProductLicenses",
@@ -653,8 +631,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "GProductLicenses_GetGProductLicensesExpired",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/gproduct-licenses/expired",
-		Output: runtime.OutputHints{ListPath: "expireSoonLicenses", DefaultColumns: []string{"name", "id", "expiredAt", "level", "module", "status"},
-		},
+		Output:      runtime.OutputHints{ListPath: "expireSoonLicenses", DefaultColumns: []string{"name", "id", "expiredAt", "level", "module", "status"}},
 	},
 	{
 		Group:       "GProductLicenses",
@@ -675,8 +652,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"yaml": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "licenses", DefaultColumns: []string{"name", "id", "expiredAt", "level", "module", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "licenses", DefaultColumns: []string{"name", "id", "expiredAt", "level", "module", "status"}},
 	},
 	{
 		Group:       "Group",
@@ -751,10 +727,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "搜索偏移量 (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "分页大小 (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createdAt", "description", "email", "updatedAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createdAt", "description", "email", "updatedAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Group",
@@ -771,10 +744,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "type", Flag: "type", In: "query", GoType: "string", Help: "role type (query)", Required: false},
 			{Name: "authorized", Flag: "authorized", In: "query", GoType: "bool", Help: "是否授权 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "authorized", "createdAt", "description", "updatedAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "authorized", "createdAt", "description", "updatedAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Group",
@@ -789,10 +759,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "id", "roleId", "roleName", "subjectName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "id", "roleId", "roleName", "subjectName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Group",
@@ -807,10 +774,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "搜索偏移量 (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "分页大小 (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "canAuthorize", "createdAt", "description", "userCount"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "canAuthorize", "createdAt", "description", "userCount"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Group",
@@ -914,8 +878,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "IDP_ListIDPs",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/idp",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"alias", "authorizationUrl", "clientAuthentications", "clientId", "clientSecret", "displayName"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"alias", "authorizationUrl", "clientAuthentications", "clientId", "clientSecret", "displayName"}},
 	},
 	{
 		Group:       "IDP",
@@ -1023,8 +986,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Ldap_ListLdaps",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha2/ldaps",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "enabled", "vendor"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "enabled", "vendor"}},
 	},
 	{
 		Group:       "Ldap",
@@ -1280,10 +1242,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "搜索偏移量 (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "分页大小 (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "id", "createdAt", "message", "read", "subject"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "id", "createdAt", "message", "read", "subject"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Message",
@@ -1420,8 +1379,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Openapi_Certs",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/certs",
-		Output: runtime.OutputHints{ListPath: "keys", DefaultColumns: []string{"alg", "e", "kid", "kty", "n", "use"},
-		},
+		Output:      runtime.OutputHints{ListPath: "keys", DefaultColumns: []string{"alg", "e", "kid", "kty", "n", "use"}},
 	},
 	{
 		Group:       "ProductNavigator",
@@ -1430,8 +1388,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "ProductNavigator_Info",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/product-nav/info",
-		Output: runtime.OutputHints{ListPath: "categories", DefaultColumns: []string{"name"},
-		},
+		Output:      runtime.OutputHints{ListPath: "categories", DefaultColumns: []string{"name"}},
 	},
 	{
 		Group:       "Publish",
@@ -1536,10 +1493,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "search (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "authScope", "description"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "authScope", "description"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Role",
@@ -1554,10 +1508,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "search (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "id"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Role",
@@ -1572,10 +1523,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "search (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"folderAlias", "folderId", "memberId", "memberName", "memberType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"folderAlias", "folderId", "memberId", "memberName", "memberType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Role",
@@ -1590,10 +1538,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "search (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"memberId", "memberName", "memberType", "workspaceAlias", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"memberId", "memberName", "memberType", "workspaceAlias", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Role",
@@ -1610,10 +1555,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "roleType", Flag: "role-type", In: "query", GoType: "string", Help: "roleType (query, one of: query_all_role_type|query_system|query_custom)", Required: false, Default: "query_all_role_type", Enum: []string{"query_all_role_type", "query_system", "query_custom"}},
 			{Name: "scope", Flag: "scope", In: "query", GoType: "string", Help: "scope (query, one of: query_all_auth_scope|query_platform|query_folder|query_workspace)", Required: false, Default: "query_all_auth_scope", Enum: []string{"query_all_auth_scope", "query_platform", "query_folder", "query_workspace"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "description", "scope", "updatedAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createdAt", "description", "scope", "updatedAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Role",
@@ -1627,10 +1569,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "search (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "authScope", "description"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "authScope", "description"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Role",
@@ -1679,8 +1618,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "SecurityPolicy_GetPasswordPolicy",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/securitypolicy/password",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "value"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "value"}},
 	},
 	{
 		Group:       "SecurityPolicy",
@@ -1847,8 +1785,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "channel", Flag: "channel", In: "query", GoType: "string", Help: "channel (query)", Required: false},
 			{Name: "channelTemplate", Flag: "channel-template", In: "query", GoType: "string", Help: "channelTemplate (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "channel", "channelTemplate", "domain", "enable", "template"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "channel", "channelTemplate", "domain", "enable", "template"}},
 	},
 	{
 		Group:       "Sms",
@@ -1917,8 +1854,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Theme_GetLoginThemeCSS",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/themes/login_page.css",
-		Output: runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"},
-		},
+		Output:      runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"}},
 	},
 	{
 		Group:       "Theme",
@@ -1935,8 +1871,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Theme_GetThemeCSS",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/themes/theme.css",
-		Output: runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"},
-		},
+		Output:      runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"}},
 	},
 	{
 		Group:       "Theme",
@@ -2145,8 +2080,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createdAt", "expiredAt", "updatedAt"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createdAt", "expiredAt", "updatedAt"}},
 	},
 	{
 		Group:       "Users",
@@ -2161,10 +2095,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "搜索偏移量 (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "分页大小 (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Users",
@@ -2181,10 +2112,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "type", Flag: "type", In: "query", GoType: "string", Help: "role type (query)", Required: false},
 			{Name: "authorized", Flag: "authorized", In: "query", GoType: "bool", Help: "是否授权 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "authorized", "createdAt", "description", "updatedAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "authorized", "createdAt", "description", "updatedAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Users",
@@ -2199,10 +2127,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "id", "roleName", "subjectName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "id", "roleName", "subjectName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Users",
@@ -2218,10 +2143,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Number of results per page", Required: false, Default: "20", Format: "int32"},
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "当前页, 大于等于 0，小于等于 1000 (query, int32)", Required: false, Default: "1", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "canAuthorize", "createdAt", "description", "email"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "canAuthorize", "createdAt", "description", "email"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Users",
@@ -2369,8 +2291,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Webhook_ListGproductWebhookEvents",
 		Method:      "GET",
 		PathTpl:     "/apis/ghippo.io/v1alpha1/gproduct-webhook-events",
-		Output: runtime.OutputHints{ListPath: "gEvents", DefaultColumns: []string{"name", "localizedName"},
-		},
+		Output:      runtime.OutputHints{ListPath: "gEvents", DefaultColumns: []string{"name", "localizedName"}},
 	},
 	{
 		Group:       "Webhook",
@@ -2387,10 +2308,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"body", "eventName", "gproduct", "headers", "method", "objectName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"body", "eventName", "gproduct", "headers", "method", "objectName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Webhook",
@@ -2407,10 +2325,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createdAt", "domain", "enabled", "endpoint"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createdAt", "domain", "enabled", "endpoint"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Webhook",
@@ -2426,10 +2341,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "action", "clientId", "errMessage", "eventData", "eventTime"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "action", "clientId", "errMessage", "eventData", "eventTime"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Webhook",
@@ -2444,10 +2356,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "clientId", Flag: "client-id", In: "query", GoType: "string", Help: "clientId (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "action", "clientId", "createdAt", "headers"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "action", "clientId", "createdAt", "headers"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Webhook",
@@ -2628,10 +2537,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "搜索偏移量 (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "分页大小 (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "authorized", "canAuthorize", "createdAt", "description"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "authorized", "canAuthorize", "createdAt", "description"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2658,10 +2564,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "每页条数 (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "当前页 (query, int32)", Required: false, Default: "1", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "authorized", "canAuthorize", "description", "email"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "authorized", "canAuthorize", "description", "email"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2715,10 +2618,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "resourceType", Flag: "resource-type", In: "query", GoType: "[]string", Help: "resourceType (query)", Required: false},
 			{Name: "resourceScope", Flag: "resource-scope", In: "query", GoType: "string", Help: "resourceScope (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"bound", "clusterStatus", "gproduct", "resourceName", "resourceScope", "resourceType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"bound", "clusterStatus", "gproduct", "resourceName", "resourceScope", "resourceType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2734,10 +2634,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "resourceName", Flag: "resource-name", In: "query", GoType: "string", Help: "resourceName (query)", Required: false},
 			{Name: "resourceType", Flag: "resource-type", In: "query", GoType: "[]string", Help: "resourceType (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"bound", "clusterStatus", "gproduct", "resourceName", "resourceScope", "resourceType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"bound", "clusterStatus", "gproduct", "resourceName", "resourceScope", "resourceType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2762,10 +2659,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "resourceName", Flag: "resource-name", In: "query", GoType: "string", Help: "resourceName (query)", Required: false},
 			{Name: "resourceType", Flag: "resource-type", In: "query", GoType: "string", Help: "resourceType (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterStatus", "gproduct", "module", "resourceName", "resourceScope", "resourceType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterStatus", "gproduct", "module", "resourceName", "resourceScope", "resourceType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2787,10 +2681,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "alias"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "alias"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2807,10 +2698,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "memberType", Flag: "member-type", In: "query", GoType: "string", Help: "memberType (query)", Required: false},
 			{Name: "roleName", Flag: "role-name", In: "query", GoType: "string", Help: "roleName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"folderId", "memberId", "memberName", "memberType", "roleName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"folderId", "memberId", "memberName", "memberType", "roleName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2825,10 +2713,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "memberName", Flag: "member-name", In: "query", GoType: "string", Help: "memberName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"memberId", "memberName", "memberType", "roleName", "workspaceId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"memberId", "memberName", "memberType", "roleName", "workspaceId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2861,10 +2746,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "resourceName", Flag: "resource-name", In: "query", GoType: "string", Help: "resourceName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterStatus", "gproduct", "module", "resourceName", "resourceScope", "resourceType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterStatus", "gproduct", "module", "resourceName", "resourceScope", "resourceType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2877,8 +2759,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "resourceName", Flag: "resource-name", In: "path", GoType: "string", Help: "resourceName (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "gpus", DefaultColumns: []string{"type", "alias", "isDynamic"},
-		},
+		Output: runtime.OutputHints{ListPath: "gpus", DefaultColumns: []string{"type", "alias", "isDynamic"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2893,10 +2774,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "alias"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "alias"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",
@@ -2926,10 +2804,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "folder", Flag: "folder", In: "query", GoType: "string", Help: "folder (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"folderAlias", "folderId", "parentAlias", "parentId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"folderAlias", "folderId", "parentAlias", "parentId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Workspace",

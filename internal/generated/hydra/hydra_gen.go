@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 9
+const generatedSchemaVersion = 11
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -42,8 +42,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "exportType", Flag: "export-type", In: "query", GoType: "string", Help: "exportType (query, one of: EXPORT_TYPE_UNSPECIFIED|EXPORT_TYPE_CSV|EXPORT_TYPE_EXCEL)", Required: false, Default: "EXPORT_TYPE_UNSPECIFIED", Enum: []string{"EXPORT_TYPE_UNSPECIFIED", "EXPORT_TYPE_CSV", "EXPORT_TYPE_EXCEL"}},
 			{Name: "routeName", Flag: "route-name", In: "query", GoType: "string", Help: "routeName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"},
-		},
+		Output: runtime.OutputHints{ListPath: "extensions", DefaultColumns: []string{"@type"}},
 	},
 	{
 		Group:       "AIGuardrailsService",
@@ -71,8 +70,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"blockStrategy", "cluster", "creationTime", "denyMessage", "updateTime"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"blockStrategy", "cluster", "creationTime", "denyMessage", "updateTime"}},
 	},
 	{
 		Group:       "AIGuardrailsService",
@@ -95,8 +93,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "level", Flag: "level", In: "query", GoType: "string", Help: "level (query, one of: GUARDRAILS_LEVEL_UNSPECIFIED|GUARDRAILS_LEVEL_HIGH|GUARDRAILS_LEVEL_MEDIUM|GUARDRAILS_LEVEL_LOW)", Required: false, Default: "GUARDRAILS_LEVEL_UNSPECIFIED", Enum: []string{"GUARDRAILS_LEVEL_UNSPECIFIED", "GUARDRAILS_LEVEL_HIGH", "GUARDRAILS_LEVEL_MEDIUM", "GUARDRAILS_LEVEL_LOW"}},
 			{Name: "routeName", Flag: "route-name", In: "query", GoType: "string", Help: "routeName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "denyMessage", "duration", "functionArgs", "functionName", "level"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "denyMessage", "duration", "functionArgs", "functionName", "level"}},
 	},
 	{
 		Group:       "AIGuardrailsService",
@@ -162,8 +159,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endTime": &runtime.SchemaSpec{Type: "string"}, "ids": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "models": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "period": &runtime.SchemaSpec{Type: "string"}, "startTime": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "dataPoints", DefaultColumns: []string{"model", "modelType", "timestamp"},
-		},
+		Output: runtime.OutputHints{ListPath: "dataPoints", DefaultColumns: []string{"model", "modelType", "timestamp"}},
 	},
 	{
 		Group:       "APIKeyManagement",
@@ -179,8 +175,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "models", Flag: "models", In: "query", GoType: "[]string", Help: "models (query)", Required: false},
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "period (query, one of: TIME_PERIOD_UNSPECIFIED|TIME_PERIOD_HOUR|TIME_PERIOD_DAY|TIME_PERIOD_WEEK|TIME_PERIOD_MONTH)", Required: false, Default: "TIME_PERIOD_UNSPECIFIED", Enum: []string{"TIME_PERIOD_UNSPECIFIED", "TIME_PERIOD_HOUR", "TIME_PERIOD_DAY", "TIME_PERIOD_WEEK", "TIME_PERIOD_MONTH"}},
 		},
-		Output: runtime.OutputHints{ListPath: "dataPoints", DefaultColumns: []string{"model", "modelType", "timestamp"},
-		},
+		Output: runtime.OutputHints{ListPath: "dataPoints", DefaultColumns: []string{"model", "modelType", "timestamp"}},
 	},
 	{
 		Group:       "APIKeyManagement",
@@ -196,8 +191,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "id", "createBy", "disabled", "expireTime"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "id", "createBy", "disabled", "expireTime"}},
 	},
 	{
 		Group:       "AdminFilesStorageService",
@@ -340,8 +334,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "creationTimestamp", "cluster", "containerReadyCount"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "creationTimestamp", "cluster", "containerReadyCount"}},
 	},
 	{
 		Group:       "AdminFilesStorageService",
@@ -398,8 +391,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "files", DefaultColumns: []string{"name", "type", "modificationTimestamp", "size"},
-		},
+		Output: runtime.OutputHints{ListPath: "files", DefaultColumns: []string{"name", "type", "modificationTimestamp", "size"}},
 	},
 	{
 		Group:       "AdminFilesStorageService",
@@ -416,8 +408,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "capacity", "cluster", "createTime", "description"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "capacity", "cluster", "createTime", "description"}},
 	},
 	{
 		Group:       "AdminFilesStorageService",
@@ -436,8 +427,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "count", "firstTimestamp", "lastTimestamp", "message", "objKind"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "count", "firstTimestamp", "lastTimestamp", "message", "objKind"}},
 	},
 	{
 		Group:       "AdminFilesStorageService",
@@ -455,8 +445,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "status.phase", "creationTimestamp", "cluster", "description"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "status.phase", "creationTimestamp", "cluster", "description"}},
 	},
 	{
 		Group:       "AdminFilesStorageService",
@@ -470,8 +459,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "itemType", Flag: "item-type", In: "path", GoType: "string", Help: "Reference file storage resource type (path, required, one of: model|dataset)", Required: true, Enum: []string{"model", "dataset"}},
 			{Name: "workspace", Flag: "workspace", In: "query", GoType: "int64", Help: "workspace (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"}},
 	},
 	{
 		Group:       "AdminFilesStorageService",
@@ -543,8 +531,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"models": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"hidden": &runtime.SchemaSpec{Type: "boolean"}, "modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelDescription": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelSupportFeature": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "providerId": &runtime.SchemaSpec{Type: "string"}, "providerName": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "publicAccessModelName": &runtime.SchemaSpec{Type: "string"}, "publicEndpointBaseUrl": &runtime.SchemaSpec{Type: "string"}, "publicEndpointEnabled": &runtime.SchemaSpec{Type: "boolean"}, "publicModelConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"rateLimit": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"duration": &runtime.SchemaSpec{Type: "string"}, "limit": &runtime.SchemaSpec{Type: "string"}, "limitedBy": &runtime.SchemaSpec{Type: "string"}}}}}, "readme": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enUs": &runtime.SchemaSpec{Type: "string"}, "zhCn": &runtime.SchemaSpec{Type: "string"}}}, "servingSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deployTemplates": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"customDeployArgs": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "inferenceRuntime": &runtime.SchemaSpec{Type: "string"}, "resourcesRequirements": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "templateDescription": &runtime.SchemaSpec{Type: "string"}, "templateName": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}}}}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "hidden", "modelAvatar", "modelId", "providerId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "hidden", "modelAvatar", "modelId", "providerId"}},
 	},
 	{
 		Group:       "AdminModelManagement",
@@ -593,8 +580,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "modelId", Flag: "model-id", In: "path", GoType: "string", Help: "modelId (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"workspaceId", "workspaceName"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"workspaceId", "workspaceName"}},
 	},
 	{
 		Group:       "AdminModelManagement",
@@ -612,8 +598,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "showDeployTemplate", Flag: "show-deploy-template", In: "query", GoType: "bool", Help: "是否展示公共模型价格 (query)", Required: false},
 			{Name: "selector", Flag: "selector", In: "query", GoType: "string", Help: "是否只展示已配置过部署模板的模型 (query, one of: ALL|HAS_DEPLOY_TEMPLATE|NO_DEPLOY_TEMPLATE)", Required: false, Default: "ALL", Enum: []string{"ALL", "HAS_DEPLOY_TEMPLATE", "NO_DEPLOY_TEMPLATE"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "hidden", "modelAvatar", "modelId", "providerId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "hidden", "modelAvatar", "modelId", "providerId"}},
 	},
 	{
 		Group:       "AdminModelManagement",
@@ -626,8 +611,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"URL": &runtime.SchemaSpec{Type: "string"}, "YAML": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"error", "exist"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"error", "exist"}},
 	},
 	{
 		Group:       "AdminModelManagement",
@@ -751,8 +735,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelId", "templateId", "updateTimestamp", "workspace"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelId", "templateId", "updateTimestamp", "workspace"}},
 	},
 	{
 		Group:       "AdminModelTemplateManagement",
@@ -836,8 +819,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "clusterName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "id", "clusterName", "modelId", "modelTag", "mountPath"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "id", "clusterName", "modelId", "modelTag", "mountPath"}},
 	},
 	{
 		Group:       "AdminModelWeightsVolumeManagement",
@@ -903,8 +885,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"providerAvatar", "providerId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"providerAvatar", "providerId"}},
 	},
 	{
 		Group:       "AdminProviderManagement",
@@ -984,8 +965,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "agentInstalled", "baseUrl", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "agentInstalled", "baseUrl", "status"}},
 	},
 	{
 		Group:       "CoreService",
@@ -1024,8 +1004,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "accessModelName", Flag: "access-model-name", In: "query", GoType: "string", Help: "accessModelName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "accessModelName", "cluster", "lwsName"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "accessModelName", "cluster", "lwsName"}},
 	},
 	{
 		Group:       "CoreService",
@@ -1037,8 +1016,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "gpuCount", "gpuMemory", "gpuProduct", "nodeName"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"clusterName", "gpuCount", "gpuMemory", "gpuProduct", "nodeName"}},
 	},
 	{
 		Group:       "CoreService",
@@ -1131,8 +1109,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "digest", "imageSize"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "digest", "imageSize"}},
 	},
 	{
 		Group:       "Image",
@@ -1153,8 +1130,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "onlyBind", Flag: "only-bind", In: "query", GoType: "bool", Help: "if true only return bound data. (query)", Required: false},
 			{Name: "all", Flag: "all", In: "query", GoType: "bool", Help: "if true return all projects. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "visible"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "visible"}},
 	},
 	{
 		Group:       "Image",
@@ -1172,8 +1148,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "host", "scope"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "host", "scope"}},
 	},
 	{
 		Group:       "Image",
@@ -1192,8 +1167,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "updateTimestamp"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "updateTimestamp"}},
 	},
 	{
 		Group:       "Image",
@@ -1207,8 +1181,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "Namespace is the metadata.namespace of the referenced secret. (path, required)", Required: true},
 			{Name: "type", Flag: "type", In: "query", GoType: "string", Help: "Type is used to filter secrets by type. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "type", "cluster"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "type", "cluster"}},
 	},
 	{
 		Group:       "MAASService",
@@ -1221,8 +1194,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "loadBalanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"strategy": &runtime.SchemaSpec{Type: "string"}, "weightedConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "ratelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "baseOn": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "integer"}, "limit": &runtime.SchemaSpec{Type: "integer"}, "workspace": &runtime.SchemaSpec{Type: "integer"}}}}}}, "tokenWeight": &runtime.SchemaSpec{Type: "string"}, "upstreamModels": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "endpoint": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"}},
 	},
 	{
 		Group:       "MAASService",
@@ -1234,8 +1206,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "modelId", Flag: "model-id", In: "path", GoType: "string", Help: "模型ID (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"}},
 	},
 	{
 		Group:       "MAASService",
@@ -1251,8 +1222,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "cluster", "enabled", "gatewayStatus", "tokenWeight"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "cluster", "enabled", "gatewayStatus", "tokenWeight"}},
 	},
 	{
 		Group:       "MAASService",
@@ -1268,8 +1238,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"loadBalanceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"strategy": &runtime.SchemaSpec{Type: "string"}, "weightedConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "weight": &runtime.SchemaSpec{Type: "integer"}}}}}}}}, "ratelimitConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "baseOn": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "integer"}, "limit": &runtime.SchemaSpec{Type: "integer"}, "workspace": &runtime.SchemaSpec{Type: "integer"}}}}}}, "tokenWeight": &runtime.SchemaSpec{Type: "string"}, "upstreamModels": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiKey": &runtime.SchemaSpec{Type: "string"}, "endpoint": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "status": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"}},
 	},
 	{
 		Group:       "MAASService",
@@ -1285,8 +1254,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "upstreamModels", DefaultColumns: []string{"apiKey", "endpoint", "modelId", "status"}},
 	},
 	{
 		Group:       "Management",
@@ -1303,8 +1271,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Management_ListGPUTypes",
 		Method:      "GET",
 		PathTpl:     "/apis/hydra.io/v1alpha1/gpu-types",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"gpuName", "gpuType"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"gpuName", "gpuType"}},
 	},
 	{
 		Group:       "Management",
@@ -1313,8 +1280,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Management_ListInferenceRuntimes",
 		Method:      "GET",
 		PathTpl:     "/apis/hydra.io/v1alpha1/inference-runtimes",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"distributedSupported", "runtimeCommand"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"distributedSupported", "runtimeCommand"}},
 	},
 	{
 		Group:       "ModelManagement",
@@ -1343,8 +1309,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "showPublicModelPrice", Flag: "show-public-model-price", In: "query", GoType: "bool", Help: "是否展示公共模型价格 (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "finetune", "modelAvatar", "modelDeploymentsExists", "modelId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "finetune", "modelAvatar", "modelDeploymentsExists", "modelId"}},
 	},
 	{
 		Group:       "ModelServingManagement",
@@ -1417,8 +1382,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "creationTimestamp", "id", "modelName", "accessModelName"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "creationTimestamp", "id", "modelName", "accessModelName"}},
 	},
 	{
 		Group:       "ModelServingManagement",
@@ -1461,8 +1425,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"providerAvatar", "providerId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"providerAvatar", "providerId"}},
 	},
 	{
 		Group:       "QueueManagement",
@@ -1513,8 +1476,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "type", "cluster", "description", "preemptionWithinClusterQueue"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "type", "cluster", "description", "preemptionWithinClusterQueue"}},
 	},
 	{
 		Group:       "QueueManagement",
@@ -1533,8 +1495,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "type", "cluster", "description", "preemptionWithinClusterQueue"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "type", "cluster", "description", "preemptionWithinClusterQueue"}},
 	},
 	{
 		Group:       "SKUManagement",
@@ -1561,8 +1522,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"baseUrl", "region"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"baseUrl", "region"}},
 	},
 	{
 		Group:       "SKUManagement",
@@ -1581,8 +1541,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "available", "description", "paymentMethod", "priceCurrency", "pricePerUnit"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "available", "description", "paymentMethod", "priceCurrency", "pricePerUnit"}},
 	},
 	{
 		Group:       "UserService",
@@ -1639,8 +1598,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endTime": &runtime.SchemaSpec{Type: "string"}, "ids": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "models": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "period": &runtime.SchemaSpec{Type: "string"}, "startTime": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "dataPoints", DefaultColumns: []string{"model", "modelType", "timestamp"},
-		},
+		Output: runtime.OutputHints{ListPath: "dataPoints", DefaultColumns: []string{"model", "modelType", "timestamp"}},
 	},
 	{
 		Group:       "WSAPIKeyManagement",
@@ -1657,8 +1615,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "models", Flag: "models", In: "query", GoType: "[]string", Help: "models (query)", Required: false},
 			{Name: "period", Flag: "period", In: "query", GoType: "string", Help: "period (query, one of: TIME_PERIOD_UNSPECIFIED|TIME_PERIOD_HOUR|TIME_PERIOD_DAY|TIME_PERIOD_WEEK|TIME_PERIOD_MONTH)", Required: false, Default: "TIME_PERIOD_UNSPECIFIED", Enum: []string{"TIME_PERIOD_UNSPECIFIED", "TIME_PERIOD_HOUR", "TIME_PERIOD_DAY", "TIME_PERIOD_WEEK", "TIME_PERIOD_MONTH"}},
 		},
-		Output: runtime.OutputHints{ListPath: "dataPoints", DefaultColumns: []string{"model", "modelType", "timestamp"},
-		},
+		Output: runtime.OutputHints{ListPath: "dataPoints", DefaultColumns: []string{"model", "modelType", "timestamp"}},
 	},
 	{
 		Group:       "WSAPIKeyManagement",
@@ -1675,8 +1632,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "id", "createBy", "disabled", "expireTime"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "id", "createBy", "disabled", "expireTime"}},
 	},
 	{
 		Group:       "WSAPIKeyManagement",
@@ -1693,8 +1649,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "id", "createBy", "disabled", "expireTime"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "creationTimestamp", "id", "createBy", "disabled", "expireTime"}},
 	},
 	{
 		Group:       "WSAPIKeyManagement",
@@ -1765,8 +1720,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "sortOrder", Flag: "sort-order", In: "query", GoType: "string", Help: "sortOrder (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "cachedTokens", "inputTokens", "instanceId", "instanceName", "lastUsedTime"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "cachedTokens", "inputTokens", "instanceId", "instanceName", "lastUsedTime"}},
 	},
 	{
 		Group:       "WSDashboardManagement",
@@ -1787,8 +1741,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sortBy", Flag: "sort-by", In: "query", GoType: "string", Help: "sortBy (query)", Required: false},
 			{Name: "sortOrder", Flag: "sort-order", In: "query", GoType: "string", Help: "sortOrder (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cachedTokens", "inputTokens", "lastUsedTime", "outputTokens", "requestCount", "totalTokens"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cachedTokens", "inputTokens", "lastUsedTime", "outputTokens", "requestCount", "totalTokens"}},
 	},
 	{
 		Group:       "WSDatasetManagement",
@@ -1858,8 +1811,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "datasetAvatar", "datasetId", "datasetName", "providerId", "source"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "datasetAvatar", "datasetId", "datasetName", "providerId", "source"}},
 	},
 	{
 		Group:       "WSDatasetManagement",
@@ -1950,8 +1902,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "datasetFormat", Flag: "dataset-format", In: "query", GoType: "string", Help: "datasetFormat (query, one of: DATASET_FORMAT_UNSPECIFIED|DATASET_FORMAT_ALPACA|DATASET_FORMAT_SHAREGPT)", Required: false, Default: "DATASET_FORMAT_UNSPECIFIED", Enum: []string{"DATASET_FORMAT_UNSPECIFIED", "DATASET_FORMAT_ALPACA", "DATASET_FORMAT_SHAREGPT"}},
 			{Name: "datasetUsageType", Flag: "dataset-usage-type", In: "query", GoType: "string", Help: "datasetUsageType (query, one of: DATASET_USAGE_TYPE_UNSPECIFIED|DATASET_USAGE_TYPE_SFT|DATASET_USAGE_TYPE_KTO|DATASET_USAGE_TYPE_PREFERENCE)", Required: false, Default: "DATASET_USAGE_TYPE_UNSPECIFIED", Enum: []string{"DATASET_USAGE_TYPE_UNSPECIFIED", "DATASET_USAGE_TYPE_SFT", "DATASET_USAGE_TYPE_KTO", "DATASET_USAGE_TYPE_PREFERENCE"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "id", "clusterName", "datasetFormat", "datasetId", "datasetTag"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "id", "clusterName", "datasetFormat", "datasetId", "datasetTag"}},
 	},
 	{
 		Group:       "WSDatasetVolumeManagement",
@@ -1986,8 +1937,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cutoffLen": &runtime.SchemaSpec{Type: "integer"}, "datasetId": &runtime.SchemaSpec{Type: "string"}, "datasetVolumeId": &runtime.SchemaSpec{Type: "string"}, "ddpTimeout": &runtime.SchemaSpec{Type: "string"}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "finetuneConfigName": &runtime.SchemaSpec{Type: "string"}, "finetuneJobName": &runtime.SchemaSpec{Type: "string"}, "maxSamples": &runtime.SchemaSpec{Type: "integer"}, "name": &runtime.SchemaSpec{Type: "string"}, "overwriteCache": &runtime.SchemaSpec{Type: "boolean"}, "perDeviceEvalBatchSize": &runtime.SchemaSpec{Type: "integer"}, "predictWithGenerate": &runtime.SchemaSpec{Type: "boolean"}, "preprocessingNumWorkers": &runtime.SchemaSpec{Type: "integer"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"}},
 	},
 	{
 		Group:       "WSEvalJobManagement",
@@ -1999,8 +1949,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "workspace", Flag: "workspace", In: "path", GoType: "string", Help: "workspace (path, required, int32)", Required: true, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"}},
 	},
 	{
 		Group:       "WSEvalJobManagement",
@@ -2029,8 +1978,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"}},
 	},
 	{
 		Group:       "WSEvalJobManagement",
@@ -2062,8 +2010,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "finetuneJobId", Flag: "finetune-job-id", In: "query", GoType: "string", Help: "finetuneJobId (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "creationTimestamp", "id", "cluster"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "creationTimestamp", "id", "cluster"}},
 	},
 	{
 		Group:       "WSExportJobService",
@@ -2139,8 +2086,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "finetuneJobId", Flag: "finetune-job-id", In: "query", GoType: "string", Help: "finetuneJobId (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "exportJobs", DefaultColumns: []string{"name", "namespace", "cluster", "creationTime", "exportDevice", "exportLegacyFormat"},
-		},
+		Output: runtime.OutputHints{ListPath: "exportJobs", DefaultColumns: []string{"name", "namespace", "cluster", "creationTime", "exportDevice", "exportLegacyFormat"}},
 	},
 	{
 		Group:       "WSFilesStorageService",
@@ -2234,8 +2180,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "files", DefaultColumns: []string{"name", "type", "modificationTimestamp", "size"},
-		},
+		Output: runtime.OutputHints{ListPath: "files", DefaultColumns: []string{"name", "type", "modificationTimestamp", "size"}},
 	},
 	{
 		Group:       "WSFilesStorageService",
@@ -2253,8 +2198,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "capacity", "cluster", "createTime", "description"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "status.phase", "capacity", "cluster", "createTime", "description"}},
 	},
 	{
 		Group:       "WSFilesStorageService",
@@ -2268,8 +2212,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "FilesStorage name (path, required)", Required: true},
 			{Name: "itemType", Flag: "item-type", In: "path", GoType: "string", Help: "Reference file storage resource type (path, required, one of: model|dataset)", Required: true, Enum: []string{"model", "dataset"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id"}},
 	},
 	{
 		Group:       "WSFilesStorageService",
@@ -2366,8 +2309,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "creationTimestamp", "cluster", "containerReadyCount"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "creationTimestamp", "cluster", "containerReadyCount"}},
 	},
 	{
 		Group:       "WSFilesStorageService",
@@ -2426,8 +2368,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "count", "firstTimestamp", "lastTimestamp", "message", "objKind"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "count", "firstTimestamp", "lastTimestamp", "message", "objKind"}},
 	},
 	{
 		Group:       "WSFilesStorageService",
@@ -2446,8 +2387,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "status.phase", "creationTimestamp", "cluster", "description"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "status.phase", "creationTimestamp", "cluster", "description"}},
 	},
 	{
 		Group:       "WSFilesStorageService",
@@ -2537,8 +2477,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "datasetId", Flag: "dataset-id", In: "query", GoType: "string", Help: "datasetId (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "cluster", "createdAt", "finetuningType", "modelSource"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "cluster", "createdAt", "finetuningType", "modelSource"}},
 	},
 	{
 		Group:       "WSFineTuneConfigManagement",
@@ -2570,8 +2509,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "dataset": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cutoffLen": &runtime.SchemaSpec{Type: "integer"}, "datasetId": &runtime.SchemaSpec{Type: "string"}, "datasetName": &runtime.SchemaSpec{Type: "string"}, "datasetTag": &runtime.SchemaSpec{Type: "string"}, "datasetVolumeId": &runtime.SchemaSpec{Type: "string"}, "maxSamples": &runtime.SchemaSpec{Type: "integer"}, "valSize": &runtime.SchemaSpec{Type: "number"}}}, "dpo": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dpoLabelSmoothing": &runtime.SchemaSpec{Type: "number"}, "prefBeta": &runtime.SchemaSpec{Type: "number"}, "prefFtx": &runtime.SchemaSpec{Type: "number"}, "prefLoss": &runtime.SchemaSpec{Type: "string"}, "refModel": &runtime.SchemaSpec{Type: "string"}}}, "env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "finetuningType": &runtime.SchemaSpec{Type: "string"}, "lora": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"additionalTarget": &runtime.SchemaSpec{Type: "string"}, "booster": &runtime.SchemaSpec{Type: "string"}, "createNewAdapter": &runtime.SchemaSpec{Type: "boolean"}, "loraAlpha": &runtime.SchemaSpec{Type: "integer"}, "loraDropout": &runtime.SchemaSpec{Type: "number"}, "loraPlusLrEmbedding": &runtime.SchemaSpec{Type: "number"}, "loraPlusLrRatio": &runtime.SchemaSpec{Type: "number"}, "loraRank": &runtime.SchemaSpec{Type: "integer"}, "loraTarget": &runtime.SchemaSpec{Type: "string"}, "pissaConvert": &runtime.SchemaSpec{Type: "boolean"}, "pissaInit": &runtime.SchemaSpec{Type: "boolean"}, "pissaIter": &runtime.SchemaSpec{Type: "integer"}, "quantizationBit": &runtime.SchemaSpec{Type: "integer"}, "quantizationMethod": &runtime.SchemaSpec{Type: "string"}, "ropeScaling": &runtime.SchemaSpec{Type: "string"}, "useDora": &runtime.SchemaSpec{Type: "boolean"}, "useRslora": &runtime.SchemaSpec{Type: "boolean"}}}, "model": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelAvatar": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "modelName": &runtime.SchemaSpec{Type: "string"}, "modelTag": &runtime.SchemaSpec{Type: "string"}, "modelVolumeId": &runtime.SchemaSpec{Type: "string"}, "template": &runtime.SchemaSpec{Type: "string"}, "trustRemoteCode": &runtime.SchemaSpec{Type: "boolean"}}}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "stage": &runtime.SchemaSpec{Type: "string"}, "training": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"computeType": &runtime.SchemaSpec{Type: "string"}, "ddpTimeout": &runtime.SchemaSpec{Type: "integer"}, "deepspeedOffload": &runtime.SchemaSpec{Type: "boolean"}, "deepspeedStage": &runtime.SchemaSpec{Type: "integer"}, "gradientAccumulationSteps": &runtime.SchemaSpec{Type: "integer"}, "gradientCheckpointing": &runtime.SchemaSpec{Type: "boolean"}, "learningRate": &runtime.SchemaSpec{Type: "number"}, "loggingSteps": &runtime.SchemaSpec{Type: "integer"}, "lrSchedulerType": &runtime.SchemaSpec{Type: "string"}, "maxGradNorm": &runtime.SchemaSpec{Type: "number"}, "neftAlpha": &runtime.SchemaSpec{Type: "number"}, "numTrainEpochs": &runtime.SchemaSpec{Type: "number"}, "optimizer": &runtime.SchemaSpec{Type: "string"}, "outputSubPath": &runtime.SchemaSpec{Type: "string"}, "perDeviceTrainBatchSize": &runtime.SchemaSpec{Type: "integer"}, "saveSteps": &runtime.SchemaSpec{Type: "integer"}, "seed": &runtime.SchemaSpec{Type: "integer"}, "warmupRatio": &runtime.SchemaSpec{Type: "number"}, "warmupSteps": &runtime.SchemaSpec{Type: "integer"}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"}},
 	},
 	{
 		Group:       "WSFineTuneJobManagement",
@@ -2596,8 +2534,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspace", Flag: "workspace", In: "path", GoType: "string", Help: "workspace (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "env", DefaultColumns: []string{"name", "value"}},
 	},
 	{
 		Group:       "WSFineTuneJobManagement",
@@ -2616,8 +2553,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "creationTimestamp", "id", "cluster", "completionTimestamp"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "creationTimestamp", "id", "cluster", "completionTimestamp"}},
 	},
 	{
 		Group:       "WSModelManagement",
@@ -2689,8 +2625,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "finetune", "modelAvatar", "modelDeploymentsExists", "modelId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "finetune", "modelAvatar", "modelDeploymentsExists", "modelId"}},
 	},
 	{
 		Group:       "WSModelManagement",
@@ -2707,8 +2642,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "finetune", "modelAvatar", "modelDeploymentsExists", "modelId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelName", "finetune", "modelAvatar", "modelDeploymentsExists", "modelId"}},
 	},
 	{
 		Group:       "WSModelManagement",
@@ -2741,8 +2675,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "configMapMounts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"configMapName": &runtime.SchemaSpec{Type: "string"}, "mountPath": &runtime.SchemaSpec{Type: "string"}, "subPath": &runtime.SchemaSpec{Type: "string"}}}}, "enableMetrics": &runtime.SchemaSpec{Type: "boolean"}, "healthCheck": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"livenessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"checkType": &runtime.SchemaSpec{Type: "string"}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "path": &runtime.SchemaSpec{Type: "string"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "readinessProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"checkType": &runtime.SchemaSpec{Type: "string"}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "path": &runtime.SchemaSpec{Type: "string"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}, "startupProbe": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"checkType": &runtime.SchemaSpec{Type: "string"}, "command": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "failureThreshold": &runtime.SchemaSpec{Type: "integer"}, "host": &runtime.SchemaSpec{Type: "string"}, "httpHeaders": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "initialDelaySeconds": &runtime.SchemaSpec{Type: "integer"}, "path": &runtime.SchemaSpec{Type: "string"}, "periodSeconds": &runtime.SchemaSpec{Type: "integer"}, "port": &runtime.SchemaSpec{Type: "integer"}, "scheme": &runtime.SchemaSpec{Type: "string"}, "successThreshold": &runtime.SchemaSpec{Type: "integer"}, "timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}}}}, "modelId": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "nodeSize": &runtime.SchemaSpec{Type: "integer"}, "preflight": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "nodeCheckBusbwThresholdGbps": &runtime.SchemaSpec{Type: "string"}, "nodeCheckIbHcas": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "replicas": &runtime.SchemaSpec{Type: "integer"}, "resourceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtimeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "imagePullSecretName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "runtimeImage": &runtime.SchemaSpec{Type: "string"}, "runtimeType": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}, "schedulingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"placementPolicy": &runtime.SchemaSpec{Type: "string"}, "priorityClass": &runtime.SchemaSpec{Type: "string"}, "queueName": &runtime.SchemaSpec{Type: "string"}}}, "tokenWeight": &runtime.SchemaSpec{Type: "string"}, "weightVolumeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "modelTag": &runtime.SchemaSpec{Type: "string"}, "mountPath": &runtime.SchemaSpec{Type: "string"}, "storageRef": &runtime.SchemaSpec{Type: "string"}, "storageSource": &runtime.SchemaSpec{Type: "string"}, "subPath": &runtime.SchemaSpec{Type: "string"}}}, "weightVolumeId": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"},
-		},
+		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"}},
 	},
 	{
 		Group:       "WSModelServingManagement",
@@ -2759,8 +2692,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"},
-		},
+		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"}},
 	},
 	{
 		Group:       "WSModelServingManagement",
@@ -2776,8 +2708,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "modelId": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "nodeSize": &runtime.SchemaSpec{Type: "integer"}, "resourceConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "integer"}, "gpuCores": &runtime.SchemaSpec{Type: "integer"}, "gpuCount": &runtime.SchemaSpec{Type: "integer"}, "gpuType": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "integer"}, "perGpuMemory": &runtime.SchemaSpec{Type: "integer"}}}, "runtimeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"env": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "imagePullSecretName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "runtimeCommand": &runtime.SchemaSpec{Type: "string"}, "runtimeImage": &runtime.SchemaSpec{Type: "string"}, "runtimeType": &runtime.SchemaSpec{Type: "string"}, "versionRequired": &runtime.SchemaSpec{Type: "string"}}}, "schedulingConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"placementPolicy": &runtime.SchemaSpec{Type: "string"}, "priorityClass": &runtime.SchemaSpec{Type: "string"}, "queueName": &runtime.SchemaSpec{Type: "string"}}}, "weightVolumeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"modelId": &runtime.SchemaSpec{Type: "string"}, "modelTag": &runtime.SchemaSpec{Type: "string"}, "mountPath": &runtime.SchemaSpec{Type: "string"}, "storageRef": &runtime.SchemaSpec{Type: "string"}, "storageSource": &runtime.SchemaSpec{Type: "string"}, "subPath": &runtime.SchemaSpec{Type: "string"}}}, "weightVolumeId": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "message", "ready"},
-		},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "message", "ready"}},
 	},
 	{
 		Group:       "WSModelServingManagement",
@@ -2794,8 +2725,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "cluster": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"},
-		},
+		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"}},
 	},
 	{
 		Group:       "WSModelServingManagement",
@@ -2808,8 +2738,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "workspace", Flag: "workspace", In: "path", GoType: "string", Help: "workspace (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"},
-		},
+		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"}},
 	},
 	{
 		Group:       "WSModelServingManagement",
@@ -2828,8 +2757,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "creationTimestamp", "id", "modelName", "accessModelName"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "creationTimestamp", "id", "modelName", "accessModelName"}},
 	},
 	{
 		Group:       "WSModelServingManagement",
@@ -2846,8 +2774,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "replicas": &runtime.SchemaSpec{Type: "integer"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"},
-		},
+		Output: runtime.OutputHints{ListPath: "configMapMounts", DefaultColumns: []string{"configMapName", "mountPath", "subPath"}},
 	},
 	{
 		Group:       "WSModelTemplateManagement",
@@ -2908,8 +2835,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelId", "templateId", "updateTimestamp", "workspace"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "modelId", "templateId", "updateTimestamp", "workspace"}},
 	},
 	{
 		Group:       "WSModelTemplateManagement",
@@ -2999,8 +2925,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "clusterName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "id", "clusterName", "modelId", "modelTag", "mountPath"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "id", "clusterName", "modelId", "modelTag", "mountPath"}},
 	},
 	{
 		Group:       "WSModelWeightsVolumeManagement",
@@ -3046,8 +2971,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "providerAvatar", "providerId", "workspace"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"creationTimestamp", "providerAvatar", "providerId", "workspace"}},
 	},
 	{
 		Group:       "WebSearchAgentService",
@@ -3072,8 +2996,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "workspace", Flag: "workspace", In: "query", GoType: "int64", Help: "workspace (query, int32)", Required: false, Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"allocatedQuota", "nextRefreshTime", "quota", "refreshCycle", "unlimitedQuota", "updateTime"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"allocatedQuota", "nextRefreshTime", "quota", "refreshCycle", "unlimitedQuota", "updateTime"}},
 	},
 	{
 		Group:       "WorkspaceQuotaService",
@@ -3121,8 +3044,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster"}},
 	},
 	{
 		Group:       "WorkspaceService",
@@ -3139,8 +3061,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.sort", Flag: "page.sort", In: "query", GoType: "string", Help: "排序规则，支持字符串和数字类型的字段进行排序 (query)", Required: false},
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "agentInstalled", "baseUrl", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "agentInstalled", "baseUrl", "status"}},
 	},
 	{
 		Group:       "WorkspaceService",
@@ -3160,8 +3081,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "name", Flag: "name", In: "query", GoType: "string", Help: "name (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace"}},
 	},
 	{
 		Group:       "WorkspaceService",
@@ -3178,7 +3098,6 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page.search", Flag: "page.search", In: "query", GoType: "string", Help: "搜索关键字，支持模糊搜索,精准匹配和高级搜索. (query)", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"alias", "workspaceId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"alias", "workspaceId"}},
 	},
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 9
+const generatedSchemaVersion = 11
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -70,8 +70,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "step", Flag: "step", In: "query", GoType: "string", Help: "step unit is minute (query, int64)", Required: false, Format: "int64"},
 			{Name: "groupByType", Flag: "group-by-type", In: "query", GoType: "bool", Help: "groupByType (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"end", "start"},
-		},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"end", "start"}},
 	},
 	{
 		Group:       "Alert",
@@ -85,8 +84,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "notificationTemplate": &runtime.SchemaSpec{Type: "string"}, "notifyRepeatConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "severity": &runtime.SchemaSpec{Type: "string"}}}}, "receivers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"names": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "type": &runtime.SchemaSpec{Type: "string"}}}}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "description": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "string"}, "expr": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "logFilterCondition": &runtime.SchemaSpec{Type: "string"}, "logQueryString": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "severity": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}, "thresholdNum": &runtime.SchemaSpec{Type: "number"}, "thresholdSymbol": &runtime.SchemaSpec{Type: "string"}}}}, "targetType": &runtime.SchemaSpec{Type: "string"}, "targets": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"},
-		},
+		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"}},
 	},
 	{
 		Group:       "Alert",
@@ -140,8 +138,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "description": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "string"}, "expr": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "logFilterCondition": &runtime.SchemaSpec{Type: "string"}, "logQueryString": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "severity": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}, "thresholdNum": &runtime.SchemaSpec{Type: "number"}, "thresholdSymbol": &runtime.SchemaSpec{Type: "string"}}}}, "targetType": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"},
-		},
+		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"}},
 	},
 	{
 		Group:       "Alert",
@@ -155,8 +152,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"activeTimeInterval": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"timeRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}}}}, "weekdayRange": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "matches": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"}},
 	},
 	{
 		Group:       "Alert",
@@ -294,8 +290,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"},
-		},
+		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"}},
 	},
 	{
 		Group:       "Alert",
@@ -360,8 +355,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"},
-		},
+		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"}},
 	},
 	{
 		Group:       "Alert",
@@ -374,8 +368,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "id", Flag: "id", In: "path", GoType: "string", Help: "id (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"}},
 	},
 	{
 		Group:       "Alert",
@@ -423,10 +416,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sorts", Flag: "sorts", In: "query", GoType: "[]string", Help: "sorts determines the data list order, support multiple sort option. (query)", Required: false},
 			{Name: "status", Flag: "status", In: "query", GoType: "[]string", Help: "filter by alert's status (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "id", "builtin", "clusterName", "description", "groupId"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "id", "builtin", "clusterName", "description", "groupId"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Alert",
@@ -446,10 +436,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "sorts", Flag: "sorts", In: "query", GoType: "[]string", Help: "sorts determines the data list order, support multiple sort option. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createAt", "description", "duration", "expr"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "createAt", "description", "duration", "expr"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Alert",
@@ -469,10 +456,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "sorts", Flag: "sorts", In: "query", GoType: "[]string", Help: "sorts determines the data list order, support multiple sort option. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "id", "builtin", "clusterName", "createAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "id", "builtin", "clusterName", "createAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Alert",
@@ -491,10 +475,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "sorts", Flag: "sorts", In: "query", GoType: "[]string", Help: "sorts determines the data list order, support multiple sort option. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "id", "clusterName", "createAt", "description"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "id", "clusterName", "createAt", "description"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Alert",
@@ -511,10 +492,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sorts", Flag: "sorts", In: "query", GoType: "[]string", Help: "sorts determines the data list order, support multiple sort option. (query)", Required: false},
 			{Name: "exactSearch", Flag: "exact-search", In: "query", GoType: "bool", Help: "exact search by name (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createAt", "template", "updateAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createAt", "template", "updateAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Alert",
@@ -533,10 +511,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sorts", Flag: "sorts", In: "query", GoType: "[]string", Help: "sorts determines the data list order, support multiple sort option. (query)", Required: false},
 			{Name: "exactSearch", Flag: "exact-search", In: "query", GoType: "bool", Help: "exact search by name (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createAt", "description", "updateAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "type", "createAt", "description", "updateAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Alert",
@@ -549,8 +524,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "targetType", Flag: "target-type", In: "query", GoType: "string", Help: "filter by target type (query, one of: TARGET_TYPE_UNSPECIFIED|GLOBAL|CLUSTER|NAMESPACE|NODE|DEPLOYMENT|STATEFULSET|DAEMONSET|POD)", Required: false, Default: "TARGET_TYPE_UNSPECIFIED", Enum: []string{"TARGET_TYPE_UNSPECIFIED", "GLOBAL", "CLUSTER", "NAMESPACE", "NODE", "DEPLOYMENT", "STATEFULSET", "DAEMONSET", "POD"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "targetType"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "targetType"}},
 	},
 	{
 		Group:       "Alert",
@@ -568,10 +542,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "sorts", Flag: "sorts", In: "query", GoType: "[]string", Help: "sorts determines the data list order, support multiple sort option. (query)", Required: false},
 			{Name: "targetType", Flag: "target-type", In: "query", GoType: "string", Help: "TARGET_TYPE_UNSPECIFIED | GLOBAL | CLUSTER | NAMESPACE | NODE | DEPLOYMENT | STATEFULSET | DAEMONSET | POD", Required: false, Default: "TARGET_TYPE_UNSPECIFIED", Enum: []string{"TARGET_TYPE_UNSPECIFIED", "GLOBAL", "CLUSTER", "NAMESPACE", "NODE", "DEPLOYMENT", "STATEFULSET", "DAEMONSET", "POD"}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "count", "createAt", "description", "targetType"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "count", "createAt", "description", "targetType"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Alert",
@@ -588,8 +559,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "clusterName (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "namespace (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "id", "clusterName", "createAt", "description"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "id", "clusterName", "createAt", "description"}},
 	},
 	{
 		Group:       "Alert",
@@ -607,10 +577,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "exactSearch", Flag: "exact-search", In: "query", GoType: "bool", Help: "exact search by name (query)", Required: false},
 			{Name: "builtin", Flag: "builtin", In: "query", GoType: "bool", Help: "search builtin only (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "builtin", "description", "updateAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "builtin", "description", "updateAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Alert",
@@ -629,10 +596,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "exactSearch", Flag: "exact-search", In: "query", GoType: "bool", Help: "exact search by name (query)", Required: false},
 			{Name: "builtin", Flag: "builtin", In: "query", GoType: "bool", Help: "search builtin only (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "builtin", "createAt", "description", "updateAt"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "builtin", "createAt", "description", "updateAt"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Alert",
@@ -660,8 +624,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "matches": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "namespace": &runtime.SchemaSpec{Type: "string"}, "size": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "id", "builtin", "clusterName", "description", "groupId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "id", "builtin", "clusterName", "description", "groupId"}},
 	},
 	{
 		Group:       "Alert",
@@ -704,8 +667,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "notificationTemplate": &runtime.SchemaSpec{Type: "string"}, "notifyRepeatConfig": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"interval": &runtime.SchemaSpec{Type: "integer"}, "severity": &runtime.SchemaSpec{Type: "string"}}}}, "receivers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"names": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "type": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"},
-		},
+		Output: runtime.OutputHints{ListPath: "notifyRepeatConfig", DefaultColumns: []string{"interval", "severity"}},
 	},
 	{
 		Group:       "Alert",
@@ -788,8 +750,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "rules": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "description": &runtime.SchemaSpec{Type: "string"}, "duration": &runtime.SchemaSpec{Type: "string"}, "expr": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "logFilterCondition": &runtime.SchemaSpec{Type: "string"}, "logQueryString": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "severity": &runtime.SchemaSpec{Type: "string"}, "source": &runtime.SchemaSpec{Type: "string"}, "thresholdNum": &runtime.SchemaSpec{Type: "number"}, "thresholdSymbol": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"},
-		},
+		Output: runtime.OutputHints{ListPath: "rules", DefaultColumns: []string{"name", "description", "duration", "expr", "logFilterCondition", "logQueryString"}},
 	},
 	{
 		Group:       "Alert",
@@ -806,8 +767,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"activeTimeInterval": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"timeRanges": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}}}}, "weekdayRange": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}}, "description": &runtime.SchemaSpec{Type: "string"}, "matches": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "matches", DefaultColumns: []string{"type", "key", "value"}},
 	},
 	{
 		Group:       "Alert",
@@ -837,8 +797,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterName": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "yamlString": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "errors", DefaultColumns: []string{"code", "message"},
-		},
+		Output: runtime.OutputHints{ListPath: "errors", DefaultColumns: []string{"code", "message"}},
 	},
 	{
 		Group:       "Event",
@@ -870,10 +829,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "before", Flag: "before", In: "query", GoType: "int64", Help: "Optional. (query, int32)", Required: false, Default: "50", Format: "int32"},
 			{Name: "after", Flag: "after", In: "query", GoType: "int64", Help: "Optional. (query, int32)", Required: false, Default: "50", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "type", "metadata.creationTimestamp", "action", "clusterName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", TokenParam: "after",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "type", "metadata.creationTimestamp", "action", "clusterName"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", TokenParam: "after"}},
 	},
 	{
 		Group:       "Event",
@@ -923,8 +879,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "interval", Flag: "interval", In: "query", GoType: "string", Help: "interval e.g 1440s (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "Optional. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"normalCount", "timestamp", "warningCount"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"normalCount", "timestamp", "warningCount"}},
 	},
 	{
 		Group:       "Event",
@@ -949,10 +904,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "type", "metadata.creationTimestamp", "action", "clusterName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "type", "metadata.creationTimestamp", "action", "clusterName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "FeatureGate",
@@ -975,8 +927,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "FeatureGate_GetFeatureGates",
 		Method:      "GET",
 		PathTpl:     "/apis/insight.io/v1alpha1/feature-gates",
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "description", "enabled", "status"},
-		},
+		Output:      runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "description", "enabled", "status"}},
 	},
 	{
 		Group:       "Insight",
@@ -1075,8 +1026,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "namespaceFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "traceIdSearch": &runtime.SchemaSpec{Type: "string"}, "workloadFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "workloadSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "sorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "fileFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "nodeFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timestamp"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timestamp"}},
 	},
 	{
 		Group:       "Log",
@@ -1090,8 +1040,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"after": &runtime.SchemaSpec{Type: "integer"}, "before": &runtime.SchemaSpec{Type: "integer"}, "endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}}}, "nanotimestamp": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "container": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "pod": &runtime.SchemaSpec{Type: "string"}}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "file": &runtime.SchemaSpec{Type: "string"}, "node": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timestamp"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"log", "timestamp"}},
 	},
 	{
 		Group:       "Log",
@@ -1105,8 +1054,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"endTime": &runtime.SchemaSpec{Type: "string"}, "event": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "interval": &runtime.SchemaSpec{Type: "string"}, "resource": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "containerSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "namespaceFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "podSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "traceIdSearch": &runtime.SchemaSpec{Type: "string"}, "workloadFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "workloadSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "startTime": &runtime.SchemaSpec{Type: "string"}, "system": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "fileFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "logSearch": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "luceneFilter": &runtime.SchemaSpec{Type: "string"}, "nodeFilter": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"count", "timestamp"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"count", "timestamp"}},
 	},
 	{
 		Group:       "Log",
@@ -1133,8 +1081,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabel": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "extraLabel": &runtime.SchemaSpec{Type: "object"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"time": &runtime.SchemaSpec{Type: "string"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
 	},
 	{
 		Group:       "Metric",
@@ -1148,8 +1095,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabel": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "extraLabel": &runtime.SchemaSpec{Type: "object"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}, "step": &runtime.SchemaSpec{Type: "number"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
 	},
 	{
 		Group:       "Metric",
@@ -1212,8 +1158,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "time", Flag: "time", In: "query", GoType: "string", Help: "time unix timestamp .e.g. 1697597347 (query, int64)", Required: false, Format: "int64"},
 			{Name: "filters", Flag: "filters", In: "query", GoType: "[]string", Help: "可重复传入。可选值：\n  CLUSTER_TOTAL | CLUSTER_NORMAL_TOTAL\n  NODE_TOTAL    | NODE_NORMAL_TOTAL\n  DEPLOYMENT_TOTAL  | DEPLOYMENT_NORMAL_TOTAL\n  STATEFULSET_TOTAL | STATEFULSET_NORMAL_TOTAL\n  DAEMONSET_TOTAL   | DAEMONSET_NORMAL_TOTAL\n  JOB_TOTAL         | JOB_NORMAL_TOTAL\n  POD_TOTAL         | POD_NORMAL_TOTAL\n  GPU_COUNT | GPU_ALLOCATED_COUNT\n  LOG_TOTAL | TRACE_TOTAL\n省略时返回上述全部 16 项。\n", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
 	},
 	{
 		Group:       "Overview",
@@ -1229,8 +1174,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "end unix timestamp .e.g. 1697597347 (query, int64)", Required: false, Format: "int64"},
 			{Name: "step", Flag: "step", In: "query", GoType: "string", Help: "采样间隔秒 (double)。默认 60。", Required: false, Format: "double"},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
 	},
 	{
 		Group:       "Overview",
@@ -1247,10 +1191,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "end unix timestamp .e.g. 1697597347 (query, int64)", Required: false, Format: "int64"},
 			{Name: "step", Flag: "step", In: "query", GoType: "string", Help: "采样间隔秒 (double)。默认 60。", Required: false, Format: "double"},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "Overview",
@@ -1266,10 +1207,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "time", Flag: "time", In: "query", GoType: "string", Help: "timestamp unix timestamp .e.g. 1697597347 (query, int64)", Required: false, Format: "int64"},
 			{Name: "spanKinds", Flag: "span-kinds", In: "query", GoType: "[]string", Help: "spanKinds is the list of span kinds to include (logical OR) in the resulting metrics aggregation. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "Probe",
@@ -1348,10 +1286,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "sorts", Flag: "sorts", In: "query", GoType: "string", Help: "单一排序字段，格式 \"<field>[,asc|desc]\"，仅省略方向时默认 desc。\n支持：job_name,desc | job_name,asc | create_at,desc | create_at,asc\n默认：create_at,desc\n", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "status.phase", "kind", "metadata.creationTimestamp", "apiVersion"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"metadata.name", "metadata.namespace", "status.phase", "kind", "metadata.creationTimestamp", "apiVersion"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Probe",
@@ -1410,8 +1345,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
 	},
 	{
 		Group:       "Resource",
@@ -1429,10 +1363,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1448,8 +1379,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
 	},
 	{
 		Group:       "Resource",
@@ -1467,10 +1397,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1486,8 +1413,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
 	},
 	{
 		Group:       "Resource",
@@ -1505,10 +1431,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1524,8 +1447,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
 	},
 	{
 		Group:       "Resource",
@@ -1543,10 +1465,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1587,8 +1506,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "urls", DefaultColumns: []string{"en", "vendor", "zh"},
-		},
+		Output: runtime.OutputHints{ListPath: "urls", DefaultColumns: []string{"en", "vendor", "zh"}},
 	},
 	{
 		Group:       "Resource",
@@ -1604,8 +1522,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
 	},
 	{
 		Group:       "Resource",
@@ -1620,8 +1537,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "urls", DefaultColumns: []string{"en", "vendor", "zh"},
-		},
+		Output: runtime.OutputHints{ListPath: "urls", DefaultColumns: []string{"en", "vendor", "zh"}},
 	},
 	{
 		Group:       "Resource",
@@ -1657,8 +1573,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "step", Flag: "step", In: "query", GoType: "string", Help: "Query resolution step width in duration format or float number of seconds. Optional. (query, double)", Required: false, Format: "double"},
 			{Name: "queryList", Flag: "query-list", In: "query", GoType: "[]string", Help: "Query list. support below metrics: (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "metrics", DefaultColumns: []string{"errorMessage", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "metrics", DefaultColumns: []string{"errorMessage", "status"}},
 	},
 	{
 		Group:       "Resource",
@@ -1668,8 +1583,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Resource_GetServerComponentSummary",
 		Method:      "GET",
 		PathTpl:     "/apis/insight.io/v1alpha1/server/component",
-		Output: runtime.OutputHints{ListPath: "summary", DefaultColumns: []string{"name", "phase", "creationTimestamp", "availability", "message", "version"},
-		},
+		Output:      runtime.OutputHints{ListPath: "summary", DefaultColumns: []string{"name", "phase", "creationTimestamp", "availability", "message", "version"}},
 	},
 	{
 		Group:       "Resource",
@@ -1685,8 +1599,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "workloadData", DefaultColumns: []string{"name", "workloadKind"},
-		},
+		Output: runtime.OutputHints{ListPath: "workloadData", DefaultColumns: []string{"name", "workloadKind"}},
 	},
 	{
 		Group:       "Resource",
@@ -1702,8 +1615,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "path", GoType: "string", Help: "namespace (path, required)", Required: true},
 			{Name: "name", Flag: "name", In: "path", GoType: "string", Help: "name (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"},
-		},
+		Output: runtime.OutputHints{ListPath: "conditions", DefaultColumns: []string{"type", "lastTransitionTime", "lastUpdateTime", "message", "reason", "status"}},
 	},
 	{
 		Group:       "Resource",
@@ -1721,10 +1633,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "page (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "pageSize (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1742,10 +1651,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "accessScope", "kubeSystemId", "role"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "accessScope", "kubeSystemId", "role"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1759,8 +1665,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "showAllCluster", Flag: "show-all-cluster", In: "query", GoType: "bool", Help: "show_all_cluster default is false, will only return cluster with (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "accessScope", "kubeSystemId", "role"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase", "accessScope", "kubeSystemId", "role"}},
 	},
 	{
 		Group:       "Resource",
@@ -1779,10 +1684,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1801,10 +1703,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1823,10 +1722,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1845,10 +1741,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "status.phase"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "status.phase"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1862,8 +1755,7 @@ var Specs = []runtime.CommandSpec{
 		Params: []runtime.ParamSpec{
 			{Name: "cluster", Flag: "cluster", In: "path", GoType: "string", Help: "cluster (path, required)", Required: true},
 		},
-		Output: runtime.OutputHints{ListPath: "namespaces", DefaultColumns: []string{"name", "role"},
-		},
+		Output: runtime.OutputHints{ListPath: "namespaces", DefaultColumns: []string{"name", "role"}},
 	},
 	{
 		Group:       "Resource",
@@ -1881,10 +1773,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1902,10 +1791,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "phase"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1924,10 +1810,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase", "cpuUsage", "memoryUsage", "nodeName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1945,10 +1828,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "tracingEnabled"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "tracingEnabled"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Resource",
@@ -1967,10 +1847,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "Page is current page. (query, int32)", Required: false, Default: "1", Format: "int32"},
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Size is the data number shown per page. (query, int32)", Required: false, Default: "20", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "namespace", "phase"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "ServiceGraph",
@@ -1984,8 +1861,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterNames": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "clusters": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "end": &runtime.SchemaSpec{Type: "string"}, "extensionLabels": &runtime.SchemaSpec{Type: "string"}, "filters": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"aggType": &runtime.SchemaSpec{Type: "string"}, "clauses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dataType": &runtime.SchemaSpec{Type: "string"}, "field": &runtime.SchemaSpec{Type: "string"}, "floatValue": &runtime.SchemaSpec{Type: "number"}, "operation": &runtime.SchemaSpec{Type: "string"}, "stringValue": &runtime.SchemaSpec{Type: "string"}}}}, "dependencyMaxDepth": &runtime.SchemaSpec{Type: "integer"}}}, "graphType": &runtime.SchemaSpec{Type: "string"}, "layer": &runtime.SchemaSpec{Type: "string"}, "namespaces": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "services": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "showUpDownRelatedNode": &runtime.SchemaSpec{Type: "boolean"}, "showVirtualNode": &runtime.SchemaSpec{Type: "boolean"}, "start": &runtime.SchemaSpec{Type: "string"}, "workloads": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
-		Output: runtime.OutputHints{ListPath: "edges", DefaultColumns: []string{"id", "source", "target"},
-		},
+		Output: runtime.OutputHints{ListPath: "edges", DefaultColumns: []string{"id", "source", "target"}},
 	},
 	{
 		Group:       "ServiceGraph",
@@ -2024,8 +1900,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "clusterName (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "only for auth (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "traces", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "spanCount", "startTime"},
-		},
+		Output: runtime.OutputHints{ListPath: "traces", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "spanCount", "startTime"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2048,10 +1923,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "clusterName (query)", Required: false},
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "only for auth (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "traces", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "spanCount", "startTime"}, Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "traces", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "spanCount", "startTime"}, Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2075,10 +1947,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "ratePer", Flag: "rate-per", In: "query", GoType: "string", Help: "ratePer is the duration in which the per-second rate of change is calculated for a cumulative counter metric. (query, int64)", Required: false, Format: "int64"},
 			{Name: "spanKinds", Flag: "span-kinds", In: "query", GoType: "[]string", Help: "spanKinds is the list of span kinds to include (logical OR) in the resulting metrics aggregation. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "metrics", DefaultColumns: []string{"operationName", "spanKind"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "metrics", DefaultColumns: []string{"operationName", "spanKind"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2126,10 +1995,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "ratePer", Flag: "rate-per", In: "query", GoType: "string", Help: "ratePer is the duration in which the per-second rate of change is calculated for a cumulative counter metric. (query, int64)", Required: false, Format: "int64"},
 			{Name: "spanKinds", Flag: "span-kinds", In: "query", GoType: "[]string", Help: "spanKinds is the list of span kinds to include (logical OR) in the resulting metrics aggregation. (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "clusterName", "podName", "reqPercentage"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "clusterName", "podName", "reqPercentage"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2152,10 +2018,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "cluster (query)", Required: false},
 			{Name: "clusterName", Flag: "cluster-name", In: "query", GoType: "string", Help: "clusterName (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "errorRate", "repLatency", "reqRate", "serviceName"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "errorRate", "repLatency", "reqRate", "serviceName"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2172,8 +2035,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clauses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"boolValue": &runtime.SchemaSpec{Type: "boolean"}, "field": &runtime.SchemaSpec{Type: "string"}, "floatValue": &runtime.SchemaSpec{Type: "number"}, "operation": &runtime.SchemaSpec{Type: "string"}, "stringValue": &runtime.SchemaSpec{Type: "string"}}}}, "endTime": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "sort": &runtime.SchemaSpec{Type: "string"}, "startTime": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"duration", "sourcePod", "spanId", "startTime", "status", "traceId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"duration", "sourcePod", "spanId", "startTime", "status", "traceId"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2193,10 +2055,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "e.g. 2022-06-24T08:00:47.850Z (query)", Required: false},
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "e.g. 2022-06-24T08:00:47.850Z (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "values", Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "values", Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2215,10 +2074,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "start", Flag: "start", In: "query", GoType: "string", Help: "e.g. 2022-06-24T08:00:47.850Z (query)", Required: false},
 			{Name: "end", Flag: "end", In: "query", GoType: "string", Help: "e.g. 2022-06-24T08:00:47.850Z (query)", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "tags", Pagination: &runtime.PaginationHint{
-			Strategy: "cursor", LimitParam: "limit",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "tags", Pagination: &runtime.PaginationHint{Strategy: "cursor", LimitParam: "limit"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2287,8 +2143,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "durationMax": &runtime.SchemaSpec{Type: "string"}, "durationMin": &runtime.SchemaSpec{Type: "string"}, "end": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "onlyErrorSpans": &runtime.SchemaSpec{Type: "boolean"}, "operationName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "sort": &runtime.SchemaSpec{Type: "string"}, "spanId": &runtime.SchemaSpec{Type: "string"}, "spanKinds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "tags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "traceId": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "countItems", DefaultColumns: []string{"error", "normal", "timestamp", "total"},
-		},
+		Output: runtime.OutputHints{ListPath: "countItems", DefaultColumns: []string{"error", "normal", "timestamp", "total"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2302,8 +2157,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "durationMax": &runtime.SchemaSpec{Type: "string"}, "durationMin": &runtime.SchemaSpec{Type: "string"}, "end": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "onlyErrorSpans": &runtime.SchemaSpec{Type: "boolean"}, "operationName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "serviceName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "sort": &runtime.SchemaSpec{Type: "string"}, "spanId": &runtime.SchemaSpec{Type: "string"}, "spanKinds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "tags": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"key": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}, "traceId": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "serviceName", "spanId"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"duration", "method", "operationName", "protocol", "serviceName", "spanId"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2320,8 +2174,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clauses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"boolValue": &runtime.SchemaSpec{Type: "boolean"}, "field": &runtime.SchemaSpec{Type: "string"}, "floatValue": &runtime.SchemaSpec{Type: "number"}, "operation": &runtime.SchemaSpec{Type: "string"}, "stringValue": &runtime.SchemaSpec{Type: "string"}}}}, "endTime": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "sort": &runtime.SchemaSpec{Type: "string"}, "startTime": &runtime.SchemaSpec{Type: "string"}, "topN": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "duration", DefaultColumns: []string{"timestamp", "value"},
-		},
+		Output: runtime.OutputHints{ListPath: "duration", DefaultColumns: []string{"timestamp", "value"}},
 	},
 	{
 		Group:       "Tracing",
@@ -2338,8 +2191,7 @@ var Specs = []runtime.CommandSpec{
 			Required: true,
 			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clauses": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"boolValue": &runtime.SchemaSpec{Type: "boolean"}, "field": &runtime.SchemaSpec{Type: "string"}, "floatValue": &runtime.SchemaSpec{Type: "number"}, "operation": &runtime.SchemaSpec{Type: "string"}, "stringValue": &runtime.SchemaSpec{Type: "string"}}}}, "endTime": &runtime.SchemaSpec{Type: "string"}, "interval": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "sort": &runtime.SchemaSpec{Type: "string"}, "startTime": &runtime.SchemaSpec{Type: "string"}, "topN": &runtime.SchemaSpec{Type: "string"}}},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"address", "avgDuration", "errorRate", "sourceCluster", "sourceNamespace", "sourceService"},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"address", "avgDuration", "errorRate", "sourceCluster", "sourceNamespace", "sourceService"}},
 	},
 	{
 		Group:       "User",
@@ -2355,9 +2207,6 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "每页条数 (query, int32)", Required: false, Default: "20", Format: "int32"},
 			{Name: "page", Flag: "page", In: "query", GoType: "int64", Help: "当前页 (query, int32)", Required: false, Default: "1", Format: "int32"},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "enabled"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"name", "id", "enabled"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 }

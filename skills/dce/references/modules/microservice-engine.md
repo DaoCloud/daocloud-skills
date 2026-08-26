@@ -2966,7 +2966,7 @@ dce microservice-engine nacos list-service-instance \
 
 ## NacosPlugin
 
-### `dce microservice-engine nacosplugin get`
+### `dce microservice-engine nacosplugin plugin-get`
 
 - Summary: 托管 Nacos 的插件详情
 - HTTP: `GET /apis/hive.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespace}/nacoses/{nacosName}/plugins/{name}`
@@ -2979,7 +2979,7 @@ dce microservice-engine nacos list-service-instance \
   - `--nacos-name` (path, required): nacosName
   - `--name` (path, required): name
 
-### `dce microservice-engine nacosplugin get-govern`
+### `dce microservice-engine nacosplugin plugin-get-govern`
 
 - Summary: 托管 Nacos 基础信息中的服务治理信息
 - HTTP: `GET /apis/hive.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespace}/nacoses/{nacosName}/governs`
@@ -2991,7 +2991,7 @@ dce microservice-engine nacos list-service-instance \
   - `--namespace` (path, required): namespace
   - `--nacos-name` (path, required): nacosName
 
-### `dce microservice-engine nacosplugin list`
+### `dce microservice-engine nacosplugin plugin-list`
 
 - Summary: 托管 Nacos 的插件列表
 - HTTP: `GET /apis/hive.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespace}/nacoses/{nacosName}/plugins`
@@ -3004,7 +3004,7 @@ dce microservice-engine nacos list-service-instance \
   - `--nacos-name` (path, required): nacosName
 - Output: list path `items`; columns `name`, `enabled`, `meshStatus`, `seataStatus`, `sentinelStatus`
 
-### `dce microservice-engine nacosplugin update`
+### `dce microservice-engine nacosplugin plugin-update`
 
 - Summary: 更新托管 Nacos 的插件详情
 - HTTP: `PUT /apis/hive.skoala.io/v1alpha1/workspaces/{workspaceId}/clusters/{clusterName}/namespaces/{namespace}/nacoses/{nacosName}/plugins`
@@ -4497,6 +4497,16 @@ dce microservice-engine skoala-v1alpha3 list-gateways \
   - `--workspace-id` (path, required): workspaceId
 - Output: list path `errGatewayInfo`; columns `gatewayName`, `location`, `reason`
 
+### `dce microservice-engine statics gateway-overview-list-in-workspace-gateway-names`
+
+- Summary: 总体概览网关名称列表
+- HTTP: `GET /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/gateway/names`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace-id` (path, required): workspaceId
+- Output: list path `items`
+
 ### `dce microservice-engine statics gateway-overview-rank-api-num`
 
 - Summary: 总体概览 API 排行数据
@@ -4530,16 +4540,6 @@ dce microservice-engine skoala-v1alpha3 list-gateways \
   - `--page` (query, int32): page
   - `--page-size` (query, int32): pageSize
 - Output: pagination `offset`
-
-### `dce microservice-engine statics list-in-workspace-gateway-names`
-
-- Summary: 总体概览网关名称列表
-- HTTP: `GET /apis/sesame.skoala.io/v1alpha1/workspaces/{workspaceId}/gateway/names`
-- Auth: required
-- Body: none
-- Flags:
-  - `--workspace-id` (path, required): workspaceId
-- Output: list path `items`
 
 ### `dce microservice-engine statics list-stats-seata`
 
@@ -4647,7 +4647,7 @@ dce microservice-engine skoala-v1alpha3 list-gateways \
 
 ## ratelimitRule
 
-### `dce microservice-engine ratelimitrule create-ratelimit-rule`
+### `dce microservice-engine ratelimitrule global-ratelimit-rule-create-ratelimit-rule`
 
 - Summary: 创建限流插件的域名限流规则
 - HTTP: `POST /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/ratelimit/rules`
@@ -4656,7 +4656,7 @@ dce microservice-engine skoala-v1alpha3 list-gateways \
 - Flags:
   - `--workspace-id` (path, required): workspaceID
 
-### `dce microservice-engine ratelimitrule delete-ratelimit-rule`
+### `dce microservice-engine ratelimitrule global-ratelimit-rule-delete-ratelimit-rule`
 
 - Summary: 删除限流插件的域名限流规则
 - HTTP: `DELETE /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/ratelimit/rules/{name}`
@@ -4666,7 +4666,7 @@ dce microservice-engine skoala-v1alpha3 list-gateways \
   - `--workspace-id` (path, required): workspaceID
   - `--name` (path, required): name
 
-### `dce microservice-engine ratelimitrule get-ratelimit-rule`
+### `dce microservice-engine ratelimitrule global-ratelimit-rule-get-ratelimit-rule`
 
 - Summary: 限流插件的域名限流规则详情
 - HTTP: `GET /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/ratelimit/rules/{name}`
@@ -4677,7 +4677,7 @@ dce microservice-engine skoala-v1alpha3 list-gateways \
   - `--name` (path, required): name
 - Output: list path `items`; columns `domain`
 
-### `dce microservice-engine ratelimitrule list-ratelimit-rule`
+### `dce microservice-engine ratelimitrule global-ratelimit-rule-list-ratelimit-rule`
 
 - Summary: 限流插件的域名限流规则列表
 - HTTP: `GET /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/ratelimit/rules`
@@ -4690,7 +4690,7 @@ dce microservice-engine skoala-v1alpha3 list-gateways \
   - `--page-size` (query, int32): pageSize
 - Output: list path `items`; columns `name`; pagination `offset`
 
-### `dce microservice-engine ratelimitrule list-rls-domain-rules`
+### `dce microservice-engine ratelimitrule global-ratelimit-rule-list-rls-domain-rules`
 
 - Summary: 限流插件的域名限流规则列表
 - HTTP: `GET /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/plugins/rls/{pluginName}/domain/{domain}`
@@ -4703,7 +4703,7 @@ dce microservice-engine skoala-v1alpha3 list-gateways \
   - `--rls-rule-type` (query, default `ALLRLSTYPE`, one of: ALLRLSTYPE|GENERICKV|REQUESTHEADER|IP): 限流规则类型
 - Output: list path `rules`; columns `name`, `rlsRuleType`
 
-### `dce microservice-engine ratelimitrule update-ratelimit-rule`
+### `dce microservice-engine ratelimitrule global-ratelimit-rule-update-ratelimit-rule`
 
 - Summary: 更新限流插件的域名限流规则
 - HTTP: `PUT /apis/sesame.skoala.io/v1alpha2/workspaces/{workspaceId}/ratelimit/rules/{name}`

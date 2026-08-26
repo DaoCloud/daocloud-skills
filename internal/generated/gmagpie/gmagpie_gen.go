@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 9
+const generatedSchemaVersion = 11
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -41,10 +41,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Number of results per page", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cluster", "nodeCount"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cluster", "nodeCount"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Fee",
@@ -63,10 +60,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 			{Name: "workspace", Flag: "workspace", In: "query", GoType: "string", Help: "Filter by workspace name or ID", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "podCount", "workspace"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "podCount", "workspace"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Fee",
@@ -85,10 +79,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Filter by cluster name or ID", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "cluster", "ip", "node"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "cluster", "ip", "node"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Fee",
@@ -109,10 +100,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "Filter by namespace", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Filter by cluster name or ID", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "pod", "workspace"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "pod", "workspace"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Fee",
@@ -130,10 +118,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Number of results per page", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespaceCount", "podCount", "workspace"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespaceCount", "podCount", "workspace"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "GPU",
@@ -163,8 +148,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Price_GetGPUModels",
 		Method:      "GET",
 		PathTpl:     "/apis/gmagpie.io/v1alpha1/gpu_models",
-		Output: runtime.OutputHints{ListPath: "models", DefaultColumns: []string{"memory", "model"},
-		},
+		Output:      runtime.OutputHints{ListPath: "models", DefaultColumns: []string{"memory", "model"}},
 	},
 	{
 		Group:       "Price",
@@ -173,8 +157,7 @@ var Specs = []runtime.CommandSpec{
 		OperationID: "Price_GetPrice",
 		Method:      "GET",
 		PathTpl:     "/apis/gmagpie.io/v1alpha1/price",
-		Output: runtime.OutputHints{ListPath: "gpuPrice", DefaultColumns: []string{"model", "price"},
-		},
+		Output:      runtime.OutputHints{ListPath: "gpuPrice", DefaultColumns: []string{"model", "price"}},
 	},
 	{
 		Group:       "Report",
@@ -192,10 +175,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Number of results per page", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cluster", "critical", "info", "ip", "node", "total"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cluster", "critical", "info", "ip", "node", "total"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Report",
@@ -213,10 +193,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Number of results per page", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"event", "resourceType", "total"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"event", "resourceType", "total"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Report",
@@ -234,10 +211,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Number of results per page", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"failed", "success", "total", "username"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"failed", "success", "total", "username"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Report",
@@ -255,10 +229,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Number of results per page", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cluster", "nodeCount"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"cluster", "nodeCount"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Report",
@@ -277,10 +248,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 			{Name: "workspace", Flag: "workspace", In: "query", GoType: "string", Help: "Filter by workspace name or ID", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "podCount", "workspace"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "podCount", "workspace"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Report",
@@ -299,10 +267,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Filter by cluster name or ID", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "cluster", "ip", "node"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "cluster", "ip", "node"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Report",
@@ -323,10 +288,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "namespace", Flag: "namespace", In: "query", GoType: "string", Help: "Filter by namespace", Required: false},
 			{Name: "cluster", Flag: "cluster", In: "query", GoType: "string", Help: "Filter by cluster name or ID", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "pod", "workspace"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespace", "cluster", "pod", "workspace"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 	{
 		Group:       "Report",
@@ -344,9 +306,6 @@ var Specs = []runtime.CommandSpec{
 			{Name: "pageSize", Flag: "page-size", In: "query", GoType: "int64", Help: "Number of results per page", Required: false, Default: "20", Format: "int32"},
 			{Name: "search", Flag: "search", In: "query", GoType: "string", Help: "Fuzzy search keyword", Required: false},
 		},
-		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespaceCount", "podCount", "workspace"}, Pagination: &runtime.PaginationHint{
-			Strategy: "offset", TokenParam: "page", LimitParam: "pageSize",
-		},
-		},
+		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"namespaceCount", "podCount", "workspace"}, Pagination: &runtime.PaginationHint{Strategy: "offset", TokenParam: "page", LimitParam: "pageSize"}},
 	},
 }
