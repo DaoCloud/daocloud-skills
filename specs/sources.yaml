@@ -190,3 +190,21 @@ sources:
     swagger:
       files:
         - specs/crane/crane.swagger.json
+
+  agentclaw:
+    display_name: agentclaw
+    # AgentClaw swagger is not yet published; vendored copies live under specs/agentclaw
+    # (same pattern as crane). Refresh them from the AgentClaw repo when the API changes.
+    local_path: ..
+    backend: swagger
+    swagger:
+      files:
+        - specs/agentclaw/agent.swagger.json
+        - specs/agentclaw/feature_gate.swagger.json
+        - specs/agentclaw/skill_publish.swagger.json
+        - specs/agentclaw/model.swagger.json
+        - specs/agentclaw/networkpolicy.swagger.json
+        - specs/agentclaw/overview.swagger.json
+        - specs/agentclaw/skill.swagger.json
+        - specs/agentclaw/user.swagger.json
+        - specs/agentclaw/workspace.swagger.json
