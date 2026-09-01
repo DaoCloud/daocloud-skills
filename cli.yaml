@@ -14,3 +14,126 @@ auth:
 # (e.g. the Module availability guidance in internal/skill-include/SKILL.md).
 skill:
   include: internal/skill-include
+
+# Read-only workflows compose dependent API lookups. A workflow can use one
+# step's field as a later input and return a deliberately shaped aggregate via
+# `output.from`.
+workflow:
+  version: 1
+  commands:
+    - use: pod-diagnose
+      short: "Collect a pod's detail, events and node neighbours in one call"
+      long: |
+        Gathers the three read-only lookups a pod diagnosis always needs, from a
+        single get-pod: the pod itself, its namespace events, and everything
+        scheduled on its node.
+
+        Replaces three separate commands and the two round trips spent reading
+        spec.nodeName out of the first one. The result is a JSON object with
+        `pod`, `events` and `neighbors` keys.
+      example: |
+        dce pod-diagnose --cluster my-cluster --namespace default --pod web-0
+      inputs:
+        - name: cluster
+          flag: cluster
+          type: string
+          required: true
+          help: Cluster name
+        - name: namespace
+          flag: namespace
+          type: string
+          required: true
+          help: Namespace of the pod
+        - name: pod
+          flag: pod
+          type: string
+          required: true
+          help: Pod name
+      steps:
+        - id: pod
+          uses: kpanda.Core_GetPod
+          params:
+            cluster: ${input.cluster}
+            namespace: ${input.namespace}
+            name: ${input.pod}
+        # `name` alone filters events by involved object. Passing `kind`
+        # without `kind-name` makes the server return 500, so do not add it.
+        - id: events
+          uses: kpanda.Core_ListEvents
+          params:
+            cluster: ${input.cluster}
+            namespace: ${input.namespace}
+            name: ${input.pod}
+        - id: neighbors
+          uses: kpanda.Core_ListPodsByNode
+          when:
+            - value: ${steps.pod.spec.nodeName}
+              operator: notin
+              values: [""]
+          params:
+            cluster: ${input.cluster}
+            node: ${steps.pod.spec.nodeName}
+      output:
+        from: '{"pod":${steps.pod},"events":${steps.events},"neighbors":${steps.neighbors}}'
+    - use: personal-access-summary-page
+      short: "Collect one page of the signed-in user's access summary"
+      long: |
+        Gets the signed-in account first, then uses its UID to collect one page
+        each of its groups, role bindings, visible workspaces and folders,
+        together with its effective global permissions and every standing
+        credential it holds — access tokens and SSH keys.
+
+        Role bindings come from Users_ListUserSubjects rather than
+        Users_ListUserRoles: the latter drops internal roles from `items` while
+        still counting them in `pagination.total`, so `Admin` goes missing.
+
+        This workflow intentionally represents one page. Its callers must use
+        the returned pagination totals to request all pages before reporting a
+        complete access summary.
+      example: |
+        dce personal-access-summary-page --page 1 --page-size 100 -o json
+      inputs:
+        - name: page
+          type: int64
+          default: "1"
+          help: Page number for the paginated collections
+        - name: pageSize
+          flag: page-size
+          type: int64
+          default: "100"
+          help: Items per page for the paginated collections
+      steps:
+        - id: user
+          uses: ghippo.Account_GetUser
+        - id: groups
+          uses: ghippo.Users_ListUserGroups
+          params:
+            id: ${steps.user.uid}
+            page: ${input.page}
+            pageSize: ${input.pageSize}
+        - id: role_bindings
+          uses: ghippo.Users_ListUserSubjects
+          params:
+            id: ${steps.user.uid}
+            page: ${input.page}
+            pageSize: ${input.pageSize}
+        - id: global_permissions
+          uses: ghippo.Account_GetGlobalPermissions
+        - id: workspaces
+          uses: ghippo.Workspace_ListWorkspaces
+          params:
+            page: ${input.page}
+            pageSize: ${input.pageSize}
+        - id: folders
+          uses: ghippo.Workspace_ListFolders
+          params:
+            page: ${input.page}
+            pageSize: ${input.pageSize}
+        # Long-lived tokens and SSH keys are standing ways in, so an access
+        # summary that omits them is incomplete. Neither is paginated.
+        - id: access_tokens
+          uses: ghippo.Account_ListAccessTokens
+        - id: ssh_keys
+          uses: ghippo.Account_ListSSHKeys
+      output:
+        from: '{"user":${steps.user},"groups":${steps.groups},"roleBindings":${steps.role_bindings},"globalPermissions":${steps.global_permissions},"workspaces":${steps.workspaces},"folders":${steps.folders},"accessTokens":${steps.access_tokens},"sshKeys":${steps.ssh_keys}}'
