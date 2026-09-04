@@ -3,13 +3,13 @@ module github.com/DaoCloud/daocloud-skills
 go 1.25.13
 
 require (
-	github.com/lathe-cli/lathe v0.6.1-0.20260824071105-c383c72023c2
+	github.com/lathe-cli/lathe v0.6.1
 	github.com/spf13/cobra v1.10.2
 )
 
 require (
 	github.com/agnivade/levenshtein v1.2.1 // indirect
-	github.com/gofrs/flock v0.13.0 // indirect
+	github.com/gofrs/flock v0.13.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/lathe-cli/kitup/go v0.1.3 // indirect
 	github.com/santhosh-tekuri/jsonschema/v6 v6.0.3 // indirect

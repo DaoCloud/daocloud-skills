@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 11
+const generatedSchemaVersion = 16
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -38,7 +38,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"atomic": &runtime.SchemaSpec{Type: "boolean"}, "chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "chartName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "releaseName": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "checkReleaseName": &runtime.SchemaSpec{Type: "boolean"}, "createNamespace": &runtime.SchemaSpec{Type: "boolean"}, "debug": &runtime.SchemaSpec{Type: "boolean"}, "disableHooks": &runtime.SchemaSpec{Type: "boolean"}, "disableOpenApiValidation": &runtime.SchemaSpec{Type: "boolean"}, "repo": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "string"}, "wait": &runtime.SchemaSpec{Type: "boolean"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"atomic": &runtime.SchemaSpec{Type: "boolean", Description: "If set, the installation process deletes the installation on failure. The --wait flag will be set automatically if --atomic is used."}, "chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "chartName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "releaseName": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "checkReleaseName": &runtime.SchemaSpec{Type: "boolean", Description: "Check whether the release name entered during installation matches the release name in charts annotations."}, "createNamespace": &runtime.SchemaSpec{Type: "boolean", Description: "Create the release namespace if not present."}, "debug": &runtime.SchemaSpec{Type: "boolean", Description: "Enable verbose output."}, "disableHooks": &runtime.SchemaSpec{Type: "boolean", Description: "Prevent hooks from running during install."}, "disableOpenApiValidation": &runtime.SchemaSpec{Type: "boolean", Description: "If set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema."}, "repo": &runtime.SchemaSpec{Type: "string", Description: "The repo represents for the charts belongs to."}, "timeout": &runtime.SchemaSpec{Type: "string", Description: "Time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)."}, "wait": &runtime.SchemaSpec{Type: "boolean", Description: "If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful. It will wait for as long as timeout."}}},
 		},
 	},
 	{
@@ -53,7 +53,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "description": &runtime.SchemaSpec{Type: "string"}, "insecureSkipTLSVerify": &runtime.SchemaSpec{Type: "boolean"}, "labels": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "token": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}, "userName": &runtime.SchemaSpec{Type: "string"}, "verificationMethod": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", Description: "Annotations to attach arbitrary metadata to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "description": &runtime.SchemaSpec{Type: "string", Description: "The description represents for the resource."}, "insecureSkipTLSVerify": &runtime.SchemaSpec{Type: "boolean", Description: "InsecureSkipTLSVerify will use insecure HTTPS to download the helmrepo's index."}, "labels": &runtime.SchemaSpec{Type: "object", Description: "Labels are key/value pairs that are attached to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string", Description: "The name represents for the resource name."}, "password": &runtime.SchemaSpec{Type: "string"}, "token": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}, "userName": &runtime.SchemaSpec{Type: "string"}, "verificationMethod": &runtime.SchemaSpec{Type: "string", Description: "- VERIFICATION_METHOD_UNSPECIFIED: The repository verification method is unspecified.\n - None: The repository is public and does not require authentication.\n - BasicAuth: BasicAuth contains data needed for basic authentication.", Enum: []string{"VERIFICATION_METHOD_UNSPECIFIED", "None", "BasicAuth"}}}},
 		},
 	},
 	{
@@ -154,7 +154,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespace": &runtime.SchemaSpec{Type: "string"}, "releaseName": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespace": &runtime.SchemaSpec{Type: "string", Description: "release_name is the name of the release namspace."}, "releaseName": &runtime.SchemaSpec{Type: "string", Description: "release_name is the name of the release."}, "values": &runtime.SchemaSpec{Type: "string", Description: "Config is the set of extra Values added to the chart.\nThese values override the default values inside of the chart."}, "version": &runtime.SchemaSpec{Type: "string", Description: "The version represents for the resource version."}}},
 		},
 	},
 	{
@@ -186,7 +186,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"version": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"version": &runtime.SchemaSpec{Type: "string", Description: "Version is an int which represents the version of the chart."}}},
 		},
 	},
 	{
@@ -454,7 +454,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cleanupOnFail": &runtime.SchemaSpec{Type: "boolean"}, "debug": &runtime.SchemaSpec{Type: "boolean"}, "disableHooks": &runtime.SchemaSpec{Type: "boolean"}, "force": &runtime.SchemaSpec{Type: "boolean"}, "maxHistory": &runtime.SchemaSpec{Type: "integer"}, "revision": &runtime.SchemaSpec{Type: "integer"}, "timeout": &runtime.SchemaSpec{Type: "string"}, "wait": &runtime.SchemaSpec{Type: "boolean"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "RollbackHelmReleaseRequest rollbacks a release.", Properties: map[string]*runtime.SchemaSpec{"cleanupOnFail": &runtime.SchemaSpec{Type: "boolean", Description: "Allow deletion of new resources created in this upgrade when upgrade fails."}, "debug": &runtime.SchemaSpec{Type: "boolean", Description: "Enable verbose output."}, "disableHooks": &runtime.SchemaSpec{Type: "boolean", Description: "Prevent hooks from running during install."}, "force": &runtime.SchemaSpec{Type: "boolean", Description: "Force resource updates through a replacement strategy."}, "maxHistory": &runtime.SchemaSpec{Type: "integer", Description: "Limit the maximum number of revisions saved per release. Use 0 for no limit (default 10).", Format: "int32"}, "revision": &runtime.SchemaSpec{Type: "integer", Description: "Revision that needs to rollback to.", Format: "int32"}, "timeout": &runtime.SchemaSpec{Type: "string", Description: "Time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)."}, "wait": &runtime.SchemaSpec{Type: "boolean", Description: "If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful. It will wait for as long as timeout."}}},
 		},
 	},
 	{
@@ -471,7 +471,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"atomic": &runtime.SchemaSpec{Type: "boolean"}, "chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "chartName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "force": &runtime.SchemaSpec{Type: "boolean"}, "releaseName": &runtime.SchemaSpec{Type: "string"}, "resetValues": &runtime.SchemaSpec{Type: "boolean"}, "values": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "cleanupOnFail": &runtime.SchemaSpec{Type: "boolean"}, "debug": &runtime.SchemaSpec{Type: "boolean"}, "disableHooks": &runtime.SchemaSpec{Type: "boolean"}, "disableOpenApiValidation": &runtime.SchemaSpec{Type: "boolean"}, "force": &runtime.SchemaSpec{Type: "boolean"}, "install": &runtime.SchemaSpec{Type: "boolean"}, "maxHistory": &runtime.SchemaSpec{Type: "integer"}, "repo": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "string"}, "wait": &runtime.SchemaSpec{Type: "boolean"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"atomic": &runtime.SchemaSpec{Type: "boolean", Description: "If set, the installation process deletes the installation on failure. The --wait flag will be set automatically if --atomic is used."}, "chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "chartName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "force": &runtime.SchemaSpec{Type: "boolean"}, "releaseName": &runtime.SchemaSpec{Type: "string"}, "resetValues": &runtime.SchemaSpec{Type: "boolean"}, "values": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "cleanupOnFail": &runtime.SchemaSpec{Type: "boolean", Description: "Allow deletion of new resources created in this upgrade when upgrade fails."}, "debug": &runtime.SchemaSpec{Type: "boolean", Description: "Enable verbose output."}, "disableHooks": &runtime.SchemaSpec{Type: "boolean", Description: "Prevent hooks from running during install."}, "disableOpenApiValidation": &runtime.SchemaSpec{Type: "boolean", Description: "If set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema."}, "force": &runtime.SchemaSpec{Type: "boolean", Description: "Force resource updates through a replacement strategy."}, "install": &runtime.SchemaSpec{Type: "boolean", Description: "If a release by this name doesn't already exist, run an install."}, "maxHistory": &runtime.SchemaSpec{Type: "integer", Description: "Limit the maximum number of revisions saved per release. Use 0 for no limit (default 10).", Format: "int32"}, "repo": &runtime.SchemaSpec{Type: "string", Description: "The repo represents for the charts belongs to."}, "timeout": &runtime.SchemaSpec{Type: "string", Description: "Time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)."}, "wait": &runtime.SchemaSpec{Type: "boolean", Description: "If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful. It will wait for as long as timeout."}}},
 		},
 	},
 	{
@@ -487,7 +487,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "description": &runtime.SchemaSpec{Type: "string"}, "insecureSkipTLSVerify": &runtime.SchemaSpec{Type: "boolean"}, "labels": &runtime.SchemaSpec{Type: "object"}, "password": &runtime.SchemaSpec{Type: "string"}, "token": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}, "userName": &runtime.SchemaSpec{Type: "string"}, "verificationMethod": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", Description: "Annotations to attach arbitrary metadata to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "description": &runtime.SchemaSpec{Type: "string", Description: "The description represents for the resource."}, "insecureSkipTLSVerify": &runtime.SchemaSpec{Type: "boolean", Description: "InsecureSkipTLSVerify will use insecure HTTPS to download the helmrepo's index."}, "labels": &runtime.SchemaSpec{Type: "object", Description: "Labels are key/value pairs that are attached to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "password": &runtime.SchemaSpec{Type: "string"}, "token": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}, "userName": &runtime.SchemaSpec{Type: "string"}, "verificationMethod": &runtime.SchemaSpec{Type: "string", Description: "- VERIFICATION_METHOD_UNSPECIFIED: The repository verification method is unspecified.\n - None: The repository is public and does not require authentication.\n - BasicAuth: BasicAuth contains data needed for basic authentication.", Enum: []string{"VERIFICATION_METHOD_UNSPECIFIED", "None", "BasicAuth"}}}},
 		},
 	},
 	{
@@ -503,7 +503,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"insecureSkipTLSVerify": &runtime.SchemaSpec{Type: "boolean"}, "password": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}, "userName": &runtime.SchemaSpec{Type: "string"}, "verificationMethod": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"insecureSkipTLSVerify": &runtime.SchemaSpec{Type: "boolean", Description: "InsecureSkipTLSVerify will use insecure HTTPS to download the helmrepo's index."}, "password": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}, "userName": &runtime.SchemaSpec{Type: "string"}, "verificationMethod": &runtime.SchemaSpec{Type: "string", Description: "- VERIFICATION_METHOD_UNSPECIFIED: The repository verification method is unspecified.\n - None: The repository is public and does not require authentication.\n - BasicAuth: BasicAuth contains data needed for basic authentication.", Enum: []string{"VERIFICATION_METHOD_UNSPECIFIED", "None", "BasicAuth"}}}},
 		},
 	},
 	{
@@ -521,7 +521,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the CustomResource YAML details."}}},
 		},
 	},
 	{
@@ -540,7 +540,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the CustomResource YAML details."}}},
 		},
 	},
 	{
@@ -555,7 +555,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the customResourceDefinition YAML details."}}},
 		},
 	},
 	{
@@ -571,7 +571,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "array", Description: "The data field is the resource YAML details.", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "data"},
 	},
@@ -806,7 +806,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}, "patchType": &runtime.SchemaSpec{Type: "string"}, "subResources": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the CustomResource YAML details."}, "patchType": &runtime.SchemaSpec{Type: "string", Description: "The patch type for patching the resources.", Enum: []string{"PATCH_TYPE_UNSPECIFIED", "PATCH_TYPE_JSON", "PATCH_TYPE_MERGE", "PATCH_TYPE_APPLY"}}, "subResources": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
 	},
 	{
@@ -825,7 +825,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the CustomResource YAML details."}}},
 		},
 	},
 	{
@@ -844,7 +844,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the CustomResource YAML details."}}},
 		},
 	},
 	{
@@ -864,7 +864,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the CustomResource YAML details."}}},
 		},
 	},
 	{
@@ -880,7 +880,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the customResourceDefinition YAML details."}}},
 		},
 	},
 	{
@@ -900,7 +900,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the CustomResource YAML details."}}},
 		},
 	},
 	{
@@ -1372,7 +1372,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "The request of patching deployment.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The json data of patch."}}},
 		},
 	},
 	{
@@ -1389,7 +1389,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "The request of patching deployment.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The json data of patch."}}},
 		},
 	},
 	{
@@ -1406,7 +1406,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "The request of patching deployment.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The json data of patch."}}},
 		},
 	},
 	{
@@ -1488,7 +1488,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"revision": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"revision": &runtime.SchemaSpec{Type: "string", Description: "The version of Daemonset.\nRevision indicates the revision of the state represented by Data.", Format: "int64"}}},
 		},
 	},
 	{
@@ -1505,7 +1505,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"revision": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"revision": &runtime.SchemaSpec{Type: "string", Format: "int64"}}},
 		},
 	},
 	{
@@ -1522,7 +1522,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"revision": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"revision": &runtime.SchemaSpec{Type: "string", Description: "Revision indicates the revision of the state represented by Data.", Format: "int64"}}},
 		},
 	},
 	{
@@ -1591,7 +1591,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Update ReplicaSet in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "Data is the replicaSet YAML details."}}},
 		},
 	},
 	{
@@ -1624,7 +1624,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpuRequestToLimitPercent": &runtime.SchemaSpec{Type: "integer"}, "memoryRequestToLimitPercent": &runtime.SchemaSpec{Type: "integer"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object", Description: "date defines the content of ClusterResourceOverride.", Properties: map[string]*runtime.SchemaSpec{"cpuRequestToLimitPercent": &runtime.SchemaSpec{Type: "integer", Description: "CPURequestToLimitPercent (if > 0) overrides CPU request to a percentage of CPU limit.", Format: "int32"}, "memoryRequestToLimitPercent": &runtime.SchemaSpec{Type: "integer", Description: "MemoryRequestToLimitPercent (if > 0) overrides memory request to a percentage of memory limit.", Format: "int32"}}}}},
 		},
 	},
 	{
@@ -1672,7 +1672,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "CreateVerticalPodAutoscalerRequest requests to create a vpa.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data field is the vpa YAML details."}}},
 		},
 	},
 	{
@@ -1872,7 +1872,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpuRequestToLimitPercent": &runtime.SchemaSpec{Type: "integer"}, "memoryRequestToLimitPercent": &runtime.SchemaSpec{Type: "integer"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object", Description: "date defines the content of ClusterResourceOverride.", Properties: map[string]*runtime.SchemaSpec{"cpuRequestToLimitPercent": &runtime.SchemaSpec{Type: "integer", Description: "CPURequestToLimitPercent (if > 0) overrides CPU request to a percentage of CPU limit.", Format: "int32"}, "memoryRequestToLimitPercent": &runtime.SchemaSpec{Type: "integer", Description: "MemoryRequestToLimitPercent (if > 0) overrides memory request to a percentage of memory limit.", Format: "int32"}}}}},
 		},
 	},
 	{
@@ -1923,7 +1923,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "UpdateVerticalPodAutoscalerRequest requests to update a vpa.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "Data is the vpa YAML details."}}},
 		},
 	},
 	{
@@ -2158,7 +2158,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"paused": &runtime.SchemaSpec{Type: "boolean"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"paused": &runtime.SchemaSpec{Type: "boolean", Description: "Paused indicates that the cronjob is paused."}}},
 		},
 	},
 	{
@@ -2175,7 +2175,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"resourceVersion": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Get restart job information.", Properties: map[string]*runtime.SchemaSpec{"resourceVersion": &runtime.SchemaSpec{Type: "string", Description: "ResourceVersion of the job."}}},
 		},
 	},
 	{
@@ -2192,7 +2192,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"paused": &runtime.SchemaSpec{Type: "boolean"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"paused": &runtime.SchemaSpec{Type: "boolean", Description: "Paused indicates that the cronjob is paused."}}},
 		},
 	},
 	{
@@ -2204,7 +2204,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/kpanda.io/v1alpha1/cloudshells",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "container": &runtime.SchemaSpec{Type: "string"}, "data": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"metadata": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "cluster": &runtime.SchemaSpec{Type: "string"}, "creationTimestamp": &runtime.SchemaSpec{Type: "string"}, "deletionTimestamp": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string"}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "resourceVersion": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}, "workspaceAlias": &runtime.SchemaSpec{Type: "string"}}}, "spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cleanup": &runtime.SchemaSpec{Type: "boolean"}, "commandAction": &runtime.SchemaSpec{Type: "string"}, "once": &runtime.SchemaSpec{Type: "boolean"}, "secretRef": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}}}, "ttl": &runtime.SchemaSpec{Type: "integer"}}}, "status": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"accessUrl": &runtime.SchemaSpec{Type: "string"}, "phase": &runtime.SchemaSpec{Type: "string"}}}}}, "filePath": &runtime.SchemaSpec{Type: "string"}, "logCount": &runtime.SchemaSpec{Type: "integer"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "podName": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string", Description: "cluster specified the cluster name for cloudshell."}, "container": &runtime.SchemaSpec{Type: "string", Description: "container defines which container or init container to create cloud shell."}, "data": &runtime.SchemaSpec{Type: "object", Description: "cloud_shell defines the data of cloud shell.", Properties: map[string]*runtime.SchemaSpec{"metadata": &runtime.SchemaSpec{Type: "object", Description: "Standard object's metadata.", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "cluster": &runtime.SchemaSpec{Type: "string", Description: "The name of the cluster which the object belongs to.\nThis is used to distinguish resources with same name and namespace in\ndifferent clusters. This field is not set anywhere right now and apiserver\nis going to ignore it if set in create or update request."}, "creationTimestamp": &runtime.SchemaSpec{Type: "string", Description: "CreationTimestamp is a timestamp representing the server time when this\nobject was created. It is not guaranteed to be set in happens-before order\nacross separate operations. Clients may not set this value. It is\nrepresented in RFC3339 form and is in UTC.\n\nPopulated by the system.\nRead-only.\nNull for lists.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata\n+optional", Format: "int64"}, "deletionTimestamp": &runtime.SchemaSpec{Type: "string", Description: "DeletionTimestamp is RFC 3339 date and time at which this resource will be\ndeleted. This field is set by the server when a graceful deletion is\nrequested by the user, and is not directly settable by a client. The\nresource is expected to be deleted (no longer visible from resource lists,\nand not reachable by name) after the time in this field, once the\nfinalizers list is empty. As long as the finalizers list contains items,\ndeletion is blocked. Once the deletionTimestamp is set, this value may not\nbe unset or be set further into the future, although it may be shortened or\nthe resource may be deleted prior to this time. For example, a user may\nrequest that a pod is deleted in 30 seconds. The Kubelet will react by\nsending a graceful termination signal to the containers in the pod. After\nthat 30 seconds, the Kubelet will send a hard termination signal (SIGKILL)\nto the container and after cleanup, remove the pod from the API. In the\npresence of network partitions, this object may still exist after this\ntimestamp, until an administrator or automated process can determine the\nresource is fully terminated.\nIf not set, graceful deletion of the object has not been requested.\n\nPopulated by the system when a graceful deletion is requested.\nRead-only.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata\n+optional", Format: "int64"}, "labels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string", Description: "Namespace defines the space within each name must be unique. An empty\nnamespace is equivalent to the \"default\" namespace, but \"default\" is the\ncanonical representation. Not all objects are required to be scoped to a\nnamespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL.\nCannot be updated.\nMore info: http://kubernetes.io/docs/user-guide/namespaces\n+optional"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Description: "OwnerReference contains enough information to let you identify an owning\nobject. An owning object must be in the same namespace as the dependent, or\nbe cluster-scoped, so there is no namespace field.", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string", Description: "API version of the referent."}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string", Description: "Kind of the referent."}, "name": &runtime.SchemaSpec{Type: "string", Description: "Name of the referent."}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "resourceVersion": &runtime.SchemaSpec{Type: "string", Description: "An opaque value that represents the internal version of this object that\ncan be used by clients to determine when objects have changed. May be used\nfor optimistic concurrency, change detection, and the watch operation on a\nresource or set of resources. Clients must treat these values as opaque and\npassed unmodified back to the server. They may only be valid for a\nparticular resource or set of resources.\n\nPopulated by the system.\nRead-only.\nValue must be treated as opaque by clients and .\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency"}, "uid": &runtime.SchemaSpec{Type: "string", Description: "UID is the unique in time and space value for this object. It is typically\ngenerated by the server on successful creation of a resource and is not\nallowed to change on PUT operations.\n\nPopulated by the system.\nRead-only.\nMore info: http://kubernetes.io/docs/user-guide/identifiers#uids\n+optional"}, "workspaceAlias": &runtime.SchemaSpec{Type: "string", Description: "The name of the workspace which the object belongs to.\nThis is used to distinguish resources with same name and namespace in\ndifferent workspaces. This field is not set anywhere right now and\napiserver is going to ignore it if set in create or update request."}}}, "spec": &runtime.SchemaSpec{Type: "object", Description: "CloudShellSpec defines the desired state of CloudShell.", Properties: map[string]*runtime.SchemaSpec{"cleanup": &runtime.SchemaSpec{Type: "boolean", Description: "cleanup specified whether to delete cloudshell resources when\ncorresponding job status is completed."}, "commandAction": &runtime.SchemaSpec{Type: "string", Description: "command action specified a initialized command to cloudshell server."}, "once": &runtime.SchemaSpec{Type: "boolean"}, "secretRef": &runtime.SchemaSpec{Type: "object", Description: "LocalSecretReference is a reference to a secret within the enclosing\nnamespace.", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string", Description: "Name is the name of resource being referenced."}}}, "ttl": &runtime.SchemaSpec{Type: "integer", Description: "ttl specified a period time that the cloudshell server pod is\nstop. if not to set, default 500s.", Format: "int32"}}}, "status": &runtime.SchemaSpec{Type: "object", Description: "CloudShellStatus defines the observed state of CloudShell.", Properties: map[string]*runtime.SchemaSpec{"accessUrl": &runtime.SchemaSpec{Type: "string", Description: "access url is be set to expose cloudshell server."}, "phase": &runtime.SchemaSpec{Type: "string", Description: "phase specified status of cloudshell server."}}}}}, "filePath": &runtime.SchemaSpec{Type: "string", Description: "file_path defines the file path."}, "logCount": &runtime.SchemaSpec{Type: "integer", Description: "log_count defines the count of display logs.", Format: "int32"}, "namespace": &runtime.SchemaSpec{Type: "string", Description: "namespace defines the namespace of the specified pod."}, "podName": &runtime.SchemaSpec{Type: "string", Description: "pod_name defines the name of the specified pod."}, "type": &runtime.SchemaSpec{Type: "string", Description: "type specified the cloudshell command type (exec, logs, bash).", Enum: []string{"CLOUD_SHELL_TYPE_UNSPECIFIED", "bash", "exec", "logs", "upload", "download"}}}},
 		},
 	},
 	{
@@ -2219,7 +2219,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "DeleteCloudShellResponse defines the delete api request.", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string", Description: "cluster specified the cluster name for cloudshell."}, "type": &runtime.SchemaSpec{Type: "string", Description: "type specified the cloudshell command type (exec, logs, bash).", Enum: []string{"CLOUD_SHELL_TYPE_UNSPECIFIED", "bash", "exec", "logs", "upload", "download"}}}},
 		},
 	},
 	{
@@ -2243,7 +2243,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/kpanda.io/v1alpha1/clusters",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"aliasName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "describe": &runtime.SchemaSpec{Type: "string"}, "direct": &runtime.SchemaSpec{Type: "boolean"}, "kubeConfigString": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}, "provider": &runtime.SchemaSpec{Type: "string"}, "region": &runtime.SchemaSpec{Type: "string"}, "shimCluster": &runtime.SchemaSpec{Type: "boolean"}, "zone": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "IntegrateClusterRequest requests to integrates a cluster.", Properties: map[string]*runtime.SchemaSpec{"aliasName": &runtime.SchemaSpec{Type: "string", Description: "It is an alias given by the user and can be changed at will. It cannot be\nempty."}, "annotations": &runtime.SchemaSpec{Type: "object", Description: "Annotations to attach arbitrary metadata to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "describe": &runtime.SchemaSpec{Type: "string", Description: "describe represents the details of the member cluster."}, "direct": &runtime.SchemaSpec{Type: "boolean", Description: "direct Indicates whether the egress agent is created for the sub cluster, if true the egress agent is not created for the sub cluster."}, "kubeConfigString": &runtime.SchemaSpec{Type: "string", Description: "kubeConfig of the cluster."}, "labels": &runtime.SchemaSpec{Type: "object", Description: "Labels are key/value pairs that are attached to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string", Description: "Name is the user-specified identifier.\nThis field may not be updated."}, "provider": &runtime.SchemaSpec{Type: "string", Description: "Provider represents the cloud provider name of the member cluster.", Enum: []string{"GENERIC", "DAOCLOUD_KUBESPRAY", "DAOCLOUD_CLUSTER_API", "DAOCLOUD_DCE4", "REDHAT_OPENSHIFT4", "SUSE_RANCHER", "VMWARE_TANZU", "AWS_EKS", "ALIYUN_ACK", "TENCENT_TKE", "HUAWEI_CCE", "MICROSOFT_AZURE", "K3S", "Oracle_OKE"}}, "region": &runtime.SchemaSpec{Type: "string", Description: "Region represents the region of the member cluster locate in."}, "shimCluster": &runtime.SchemaSpec{Type: "boolean", Description: "shim_cluster represents whether the cluster is a shim cluster."}, "zone": &runtime.SchemaSpec{Type: "string", Description: "Zone represents the zone of the member cluster locate in."}}},
 		},
 	},
 	{
@@ -2258,7 +2258,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"expirationSeconds": &runtime.SchemaSpec{Type: "integer"}, "kubeSystemID": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"expirationSeconds": &runtime.SchemaSpec{Type: "integer", Description: "ExpirationSeconds is the requested duration of validity of the request.", Format: "int32"}, "kubeSystemID": &runtime.SchemaSpec{Type: "string", Description: "kubeSystemID is the cluster system ID."}}},
 		},
 	},
 	{
@@ -2273,7 +2273,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "expirationSeconds": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "expirationSeconds": &runtime.SchemaSpec{Type: "integer", Description: "ExpirationSeconds is the requested duration of validity of the request.", Format: "int32"}}},
 		},
 	},
 	{
@@ -2288,7 +2288,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deleteInsightAgent": &runtime.SchemaSpec{Type: "boolean"}, "deleteKpandaNamespace": &runtime.SchemaSpec{Type: "boolean"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "DeleteClusterRequest returns clusters information.", Properties: map[string]*runtime.SchemaSpec{"deleteInsightAgent": &runtime.SchemaSpec{Type: "boolean"}, "deleteKpandaNamespace": &runtime.SchemaSpec{Type: "boolean", Description: "DeleteKpandaNamespace represents whether to delete namespace of kpanda."}}},
 		},
 	},
 	{
@@ -2303,7 +2303,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "EditClusterLabelsRequest returns true when pod termination has been\nrequested.", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object", Description: "Labels are key/value pairs that are attached to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -2417,7 +2417,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"aliasName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "describe": &runtime.SchemaSpec{Type: "string"}, "kubeConfigString": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "provider": &runtime.SchemaSpec{Type: "string"}, "region": &runtime.SchemaSpec{Type: "string"}, "zone": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "UpdateClusterRequest requests to update a cluster.", Properties: map[string]*runtime.SchemaSpec{"aliasName": &runtime.SchemaSpec{Type: "string", Description: "It is an alias given by the user and can be changed at will. It cannot be\nempty."}, "annotations": &runtime.SchemaSpec{Type: "object", Description: "Annotations to attach arbitrary metadata to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "describe": &runtime.SchemaSpec{Type: "string", Description: "Describe represents the details of the member cluster."}, "kubeConfigString": &runtime.SchemaSpec{Type: "string", Description: "KubeConfig of the cluster."}, "labels": &runtime.SchemaSpec{Type: "object", Description: "Labels are key/value pairs that are attached to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "provider": &runtime.SchemaSpec{Type: "string", Description: "Provider represents the cloud provider name of the member cluster.", Enum: []string{"GENERIC", "DAOCLOUD_KUBESPRAY", "DAOCLOUD_CLUSTER_API", "DAOCLOUD_DCE4", "REDHAT_OPENSHIFT4", "SUSE_RANCHER", "VMWARE_TANZU", "AWS_EKS", "ALIYUN_ACK", "TENCENT_TKE", "HUAWEI_CCE", "MICROSOFT_AZURE", "K3S", "Oracle_OKE"}}, "region": &runtime.SchemaSpec{Type: "string", Description: "Region represents the region of the member cluster locate in."}, "zone": &runtime.SchemaSpec{Type: "string", Description: "Zone represents the zone of the member cluster locate in."}}},
 		},
 	},
 	{
@@ -2432,7 +2432,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"kubeConfigString": &runtime.SchemaSpec{Type: "string"}, "shimCluster": &runtime.SchemaSpec{Type: "boolean"}, "unjoinCluster": &runtime.SchemaSpec{Type: "boolean"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "ValidateClusterRequest requests to check if residuals which affect integrating exist in a cluster.", Properties: map[string]*runtime.SchemaSpec{"kubeConfigString": &runtime.SchemaSpec{Type: "string", Description: "KubeConfig of the cluster."}, "shimCluster": &runtime.SchemaSpec{Type: "boolean", Description: "ShimCluster represents whether the cluster is a shim cluster."}, "unjoinCluster": &runtime.SchemaSpec{Type: "boolean", Description: "JoinCluster represents whther the request is to join cluster.\nif true, the kube_config_string is required param, otherwise, the name is required."}}},
 		},
 	},
 	{
@@ -2444,7 +2444,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/kpanda.io/v1alpha1/clusters/validate",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"kubeConfigString": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"kubeConfigString": &runtime.SchemaSpec{Type: "string", Description: "KubeConfig of the cluster."}}},
 		},
 	},
 	{
@@ -2524,7 +2524,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"settings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addonSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableHelmRepoRefresh": &runtime.SchemaSpec{Type: "boolean"}, "helmOperationBaseImage": &runtime.SchemaSpec{Type: "string"}, "helmOperationHistoryLimit": &runtime.SchemaSpec{Type: "integer"}, "helmOperationJobTemplateResources": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object"}, "storage": &runtime.SchemaSpec{Type: "string"}}}, "requests": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string"}, "memory": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "object"}, "storage": &runtime.SchemaSpec{Type: "string"}}}}}, "helmOperationTimeoutSecond": &runtime.SchemaSpec{Type: "string"}, "helmRepoRefreshInterval": &runtime.SchemaSpec{Type: "integer"}}}, "clusterKubeconfigSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"expireWarningThreshold": &runtime.SchemaSpec{Type: "string"}}}, "clusterlcmSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableDeletionProtection": &runtime.SchemaSpec{Type: "boolean"}, "enableLocalService": &runtime.SchemaSpec{Type: "boolean"}}}, "etcdBackupRestoreSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"baseImage": &runtime.SchemaSpec{Type: "string"}}}, "kubeanSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clusterOperationsBackEndLimit": &runtime.SchemaSpec{Type: "string"}}}, "network": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "externalAddress": &runtime.SchemaSpec{Type: "string"}, "healthy": &runtime.SchemaSpec{Type: "boolean"}, "intelligentDetection": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "setting": &runtime.SchemaSpec{Type: "string"}}}}, "plugins": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "externalAddress": &runtime.SchemaSpec{Type: "string"}, "healthy": &runtime.SchemaSpec{Type: "boolean"}, "intelligentDetection": &runtime.SchemaSpec{Type: "boolean"}, "name": &runtime.SchemaSpec{Type: "string"}, "setting": &runtime.SchemaSpec{Type: "string"}}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"settings": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addonSetting": &runtime.SchemaSpec{Type: "object", Description: "The settings of addon.", Properties: map[string]*runtime.SchemaSpec{"enableHelmRepoRefresh": &runtime.SchemaSpec{Type: "boolean", Description: "EnableHelmRepoRefresh is to control whether to auto refresh all the helm repos in the cluster."}, "helmOperationBaseImage": &runtime.SchemaSpec{Type: "string"}, "helmOperationHistoryLimit": &runtime.SchemaSpec{Type: "integer", Description: "The OperationHistoryLimit info in the cluster.", Format: "int32"}, "helmOperationJobTemplateResources": &runtime.SchemaSpec{Type: "object", Description: "ResourceRequirements describes the compute resource requirements.", Properties: map[string]*runtime.SchemaSpec{"limits": &runtime.SchemaSpec{Type: "object", Description: "ResourceList returns a string representation of a resource list in a human\nreadable format.", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string", Description: "Cpu is the total pod cpu resource. Unit: m."}, "memory": &runtime.SchemaSpec{Type: "string", Description: "Memory is the total memory resource. Unit: byte."}, "resources": &runtime.SchemaSpec{Type: "object", Description: "Resources contains all resources include cpu, memory, storage.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "storage": &runtime.SchemaSpec{Type: "string", Description: "Storage is the total storage resource. Unit: byte."}}}, "requests": &runtime.SchemaSpec{Type: "object", Description: "ResourceList returns a string representation of a resource list in a human\nreadable format.", Properties: map[string]*runtime.SchemaSpec{"cpu": &runtime.SchemaSpec{Type: "string", Description: "Cpu is the total pod cpu resource. Unit: m."}, "memory": &runtime.SchemaSpec{Type: "string", Description: "Memory is the total memory resource. Unit: byte."}, "resources": &runtime.SchemaSpec{Type: "object", Description: "Resources contains all resources include cpu, memory, storage.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "storage": &runtime.SchemaSpec{Type: "string", Description: "Storage is the total storage resource. Unit: byte."}}}}}, "helmOperationTimeoutSecond": &runtime.SchemaSpec{Type: "string", Description: "HelmOperationTimeoutSecond is the time limit of installing/uninstalling a helmrelease, unit: second.", Format: "int64"}, "helmRepoRefreshInterval": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}}, "clusterKubeconfigSetting": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"expireWarningThreshold": &runtime.SchemaSpec{Type: "string", Format: "int64"}}}, "clusterlcmSetting": &runtime.SchemaSpec{Type: "object", Description: "The settings of cl.", Properties: map[string]*runtime.SchemaSpec{"enableDeletionProtection": &runtime.SchemaSpec{Type: "boolean", Description: "enable_deletion_protection controlled whether the cluster\ncan use the reset function."}, "enableLocalService": &runtime.SchemaSpec{Type: "boolean", Description: "enable_local_service controlled whether to use the\nlocal repo source when creating the cluster."}}}, "etcdBackupRestoreSetting": &runtime.SchemaSpec{Type: "object", Description: "The setting for etcdbackuprestore.", Properties: map[string]*runtime.SchemaSpec{"baseImage": &runtime.SchemaSpec{Type: "string", Description: "The base image for the etcdbackuprestore deployment."}}}, "kubeanSetting": &runtime.SchemaSpec{Type: "object", Description: "The setting for kubean.", Properties: map[string]*runtime.SchemaSpec{"clusterOperationsBackEndLimit": &runtime.SchemaSpec{Type: "string", Description: "Set the maximum number of cluster ops reserved for each kubean cluster."}}}, "network": &runtime.SchemaSpec{Type: "array", Description: "The network plugins info in the cluster.", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean", Description: "The user has activated the application for this plugin."}, "externalAddress": &runtime.SchemaSpec{Type: "string", Description: "ExternalAddress is a address which access the plugin from outside the cluster."}, "healthy": &runtime.SchemaSpec{Type: "boolean", Description: "Healthy is to show a plugin state when installed."}, "intelligentDetection": &runtime.SchemaSpec{Type: "boolean", Description: "IntelligentDetection indicate the plugin is whether intelligent."}, "name": &runtime.SchemaSpec{Type: "string", Description: "The name of the plugin.", Enum: []string{"PLUGIN_NAME_UNSPECIFIED", "HPA", "Insight", "GPU", "METALLB", "Spiderpool", "CustomMetrics", "CronHPA", "VPA", "Hwameistor", "Flannel", "KubeOvn", "OLM", "EgressGateway", "Snapshot", "DRA"}}, "setting": &runtime.SchemaSpec{Type: "string", Description: "The setting of the plugin. every plugin encode the setting to json string."}}}}, "plugins": &runtime.SchemaSpec{Type: "array", Description: "The plugins info in the cluster.", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean", Description: "The user has activated the application for this plugin."}, "externalAddress": &runtime.SchemaSpec{Type: "string", Description: "ExternalAddress is a address which access the plugin from outside the cluster."}, "healthy": &runtime.SchemaSpec{Type: "boolean", Description: "Healthy is to show a plugin state when installed."}, "intelligentDetection": &runtime.SchemaSpec{Type: "boolean", Description: "IntelligentDetection indicate the plugin is whether intelligent."}, "name": &runtime.SchemaSpec{Type: "string", Description: "The name of the plugin.", Enum: []string{"PLUGIN_NAME_UNSPECIFIED", "HPA", "Insight", "GPU", "METALLB", "Spiderpool", "CustomMetrics", "CronHPA", "VPA", "Hwameistor", "Flannel", "KubeOvn", "OLM", "EgressGateway", "Snapshot", "DRA"}}, "setting": &runtime.SchemaSpec{Type: "string", Description: "The setting of the plugin. every plugin encode the setting to json string."}}}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "network", DefaultColumns: []string{"name", "enabled", "externalAddress", "healthy", "intelligentDetection", "setting"}},
 	},
@@ -2540,7 +2540,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ansibleExtraArgs": &runtime.SchemaSpec{Type: "object"}, "kubesprayArgs": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerdInsecureRegistries": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "dockerInsecureRegistries": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "enableNodeSysctlTuning": &runtime.SchemaSpec{Type: "boolean"}, "params": &runtime.SchemaSpec{Type: "object"}, "sshSecretName": &runtime.SchemaSpec{Type: "string"}, "sysctlParams": &runtime.SchemaSpec{Type: "object"}, "yumRepos": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "nodeInfos": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dualStackNetwork": &runtime.SchemaSpec{Type: "boolean"}, "hostName": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "osKernelVersion": &runtime.SchemaSpec{Type: "string"}, "pass": &runtime.SchemaSpec{Type: "string"}, "role": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}}, "role": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ansibleExtraArgs": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "kubesprayArgs": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerdInsecureRegistries": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "dockerInsecureRegistries": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "enableNodeSysctlTuning": &runtime.SchemaSpec{Type: "boolean", Description: "EnableNodeSysctlTuning enable systcl tunning variables."}, "params": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "sshSecretName": &runtime.SchemaSpec{Type: "string"}, "sysctlParams": &runtime.SchemaSpec{Type: "object", Description: "SysctlParams is work when enabel NodeSysctlTunning.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "yumRepos": &runtime.SchemaSpec{Type: "array", Description: "YumRepos is the yum repository for echo node to be added.", Items: &runtime.SchemaSpec{Type: "string"}}}}, "nodeInfos": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dualStackNetwork": &runtime.SchemaSpec{Type: "boolean"}, "hostName": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "osKernelVersion": &runtime.SchemaSpec{Type: "string"}, "pass": &runtime.SchemaSpec{Type: "string"}, "role": &runtime.SchemaSpec{Type: "string", Enum: []string{"ROlE_UNSPECIFIED", "Worker", "Controller"}}, "user": &runtime.SchemaSpec{Type: "string"}}}}, "role": &runtime.SchemaSpec{Type: "string", Enum: []string{"ROlE_UNSPECIFIED", "Worker", "Controller"}}, "type": &runtime.SchemaSpec{Type: "string", Description: " - PrivateKey: If you choose this mode, the type of secret should be filled in. The key of data should be \"kubernetes.io/ssh-auth\".\nThe key of data should be \"ssh-privatekey\".", Enum: []string{"TYPE_UNSPECIFIED", "Password", "PrivateKey"}}}},
 		},
 	},
 	{
@@ -2568,7 +2568,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/kpanda.io/v1alpha1/cluster-lcm",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"aliasName": &runtime.SchemaSpec{Type: "string"}, "annotations": &runtime.SchemaSpec{Type: "object"}, "clusterName": &runtime.SchemaSpec{Type: "string"}, "describe": &runtime.SchemaSpec{Type: "string"}, "dkgClusterName": &runtime.SchemaSpec{Type: "string"}, "kubesprayArgs": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"containerdInsecureRegistries": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "dnsConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableNodeLocalDns": &runtime.SchemaSpec{Type: "boolean"}, "upstreamDnsServers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "dockerInsecureRegistries": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "enableNodeSysctlTuning": &runtime.SchemaSpec{Type: "boolean"}, "enableVerboseLogging": &runtime.SchemaSpec{Type: "boolean"}, "highLevelParams": &runtime.SchemaSpec{Type: "string"}, "kubernetesVersion": &runtime.SchemaSpec{Type: "string"}, "networkConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"calicoConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"autoDetectionMethod": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}, "iptablesBackend": &runtime.SchemaSpec{Type: "string"}, "ipv4Tunnel": &runtime.SchemaSpec{Type: "string"}, "ipv6Tunnel": &runtime.SchemaSpec{Type: "string"}}}, "ciliumConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"extraVars": &runtime.SchemaSpec{Type: "object"}}}, "cni": &runtime.SchemaSpec{Type: "string"}, "commonNetworkConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableDualStack": &runtime.SchemaSpec{Type: "boolean"}, "enableVip": &runtime.SchemaSpec{Type: "boolean"}, "kubeProxyMode": &runtime.SchemaSpec{Type: "string"}, "kubeVipAddr": &runtime.SchemaSpec{Type: "string"}, "kubeVipLbEnable": &runtime.SchemaSpec{Type: "boolean"}, "podIPv4CIDR": &runtime.SchemaSpec{Type: "string"}, "podIPv6CIDR": &runtime.SchemaSpec{Type: "string"}, "serviceIPv4CIDR": &runtime.SchemaSpec{Type: "string"}, "serviceIPv6CIDR": &runtime.SchemaSpec{Type: "string"}}}, "flannelConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"backendType": &runtime.SchemaSpec{Type: "string"}}}, "kubeOvnConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"defaultGatewayIpv4": &runtime.SchemaSpec{Type: "string"}, "defaultGatewayIpv6": &runtime.SchemaSpec{Type: "string"}, "defaultInterfaceName": &runtime.SchemaSpec{Type: "string"}, "defaultVlanId": &runtime.SchemaSpec{Type: "string"}, "networkType": &runtime.SchemaSpec{Type: "string"}}}}}, "nodeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ansibleExtraArgs": &runtime.SchemaSpec{Type: "object"}, "nodeInfo": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dualStackNetwork": &runtime.SchemaSpec{Type: "boolean"}, "hostName": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "osKernelVersion": &runtime.SchemaSpec{Type: "string"}, "pass": &runtime.SchemaSpec{Type: "string"}, "role": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}}, "sshInfo": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"pass": &runtime.SchemaSpec{Type: "string"}, "secretName": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}}}, "ntpConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean"}, "servers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "timezone": &runtime.SchemaSpec{Type: "string"}}}, "params": &runtime.SchemaSpec{Type: "object"}, "runtime": &runtime.SchemaSpec{Type: "string"}, "runtimeVersion": &runtime.SchemaSpec{Type: "string"}, "skipDocker": &runtime.SchemaSpec{Type: "boolean"}, "sysctlParams": &runtime.SchemaSpec{Type: "object"}, "yumRepos": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "labels": &runtime.SchemaSpec{Type: "object"}, "preinstallAddons": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addons": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"atomic": &runtime.SchemaSpec{Type: "boolean"}, "chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "chartName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "releaseName": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "checkReleaseName": &runtime.SchemaSpec{Type: "boolean"}, "cluster": &runtime.SchemaSpec{Type: "string"}, "createNamespace": &runtime.SchemaSpec{Type: "boolean"}, "debug": &runtime.SchemaSpec{Type: "boolean"}, "disableHooks": &runtime.SchemaSpec{Type: "boolean"}, "disableOpenApiValidation": &runtime.SchemaSpec{Type: "boolean"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "repo": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "string"}, "wait": &runtime.SchemaSpec{Type: "boolean"}}}}, "repoUrl": &runtime.SchemaSpec{Type: "string"}}}}, "region": &runtime.SchemaSpec{Type: "string"}, "retry": &runtime.SchemaSpec{Type: "boolean"}, "zone": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"aliasName": &runtime.SchemaSpec{Type: "string", Description: "It is an alias given by the user and can be changed at will."}, "annotations": &runtime.SchemaSpec{Type: "object", Description: "Annotations to attach arbitrary metadata to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "clusterName": &runtime.SchemaSpec{Type: "string", Description: "The name of the cluster which needs to be create."}, "describe": &runtime.SchemaSpec{Type: "string", Description: "describe represents the details of the cluster."}, "dkgClusterName": &runtime.SchemaSpec{Type: "string", Description: "The name of the manger cluster."}, "kubesprayArgs": &runtime.SchemaSpec{Type: "object", Description: "The Parameters for creating a cluster by kubespray.", Properties: map[string]*runtime.SchemaSpec{"containerdInsecureRegistries": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "dnsConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableNodeLocalDns": &runtime.SchemaSpec{Type: "boolean"}, "upstreamDnsServers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}, "dockerInsecureRegistries": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "enableNodeSysctlTuning": &runtime.SchemaSpec{Type: "boolean", Description: "EnableNodeSysctlTuning enable systcl tunning variables."}, "enableVerboseLogging": &runtime.SchemaSpec{Type: "boolean", Description: "EnableVerboseLogging represents if print more detail logging when installing cluster.\nIt's true by default."}, "highLevelParams": &runtime.SchemaSpec{Type: "string", Description: "params filled in by the user."}, "kubernetesVersion": &runtime.SchemaSpec{Type: "string"}, "networkConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"calicoConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"autoDetectionMethod": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"TYPE_UNSPECIFIED", "FIRST_FOUND", "KUBERNETES_INTERNAL_IP", "CAN_REACH", "INTERFACE_REGEX", "SKIP_INTERFACE"}}, "value": &runtime.SchemaSpec{Type: "string"}}}, "iptablesBackend": &runtime.SchemaSpec{Type: "string", Enum: []string{"CALICO_IPTABLES_BACKEND_TYPE_UNSPECIFIED", "NFT", "Auto", "Legacy"}}, "ipv4Tunnel": &runtime.SchemaSpec{Type: "string", Enum: []string{"CALICO_TUNNEL_UNSPECIFIED", "IPIP", "IPIPCrossSubnet", "VXLAN", "VXLANCrossSubnet"}}, "ipv6Tunnel": &runtime.SchemaSpec{Type: "string", Enum: []string{"CALICO_TUNNEL_UNSPECIFIED", "IPIP", "IPIPCrossSubnet", "VXLAN", "VXLANCrossSubnet"}}}}, "ciliumConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"extraVars": &runtime.SchemaSpec{Type: "object", Description: "var1: \"value1\"\n     var2: \"value2\"", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}}, "cni": &runtime.SchemaSpec{Type: "string", Enum: []string{"CNI_UNSPECIFIED", "calico", "cilium", "flannel", "kube_ovn", "none"}}, "commonNetworkConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enableDualStack": &runtime.SchemaSpec{Type: "boolean"}, "enableVip": &runtime.SchemaSpec{Type: "boolean"}, "kubeProxyMode": &runtime.SchemaSpec{Type: "string", Enum: []string{"KUBE_PROXY_MODE_UNSPECIFIED", "iptables", "ipvs"}}, "kubeVipAddr": &runtime.SchemaSpec{Type: "string"}, "kubeVipLbEnable": &runtime.SchemaSpec{Type: "boolean"}, "podIPv4CIDR": &runtime.SchemaSpec{Type: "string"}, "podIPv6CIDR": &runtime.SchemaSpec{Type: "string"}, "serviceIPv4CIDR": &runtime.SchemaSpec{Type: "string"}, "serviceIPv6CIDR": &runtime.SchemaSpec{Type: "string"}}}, "flannelConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"backendType": &runtime.SchemaSpec{Type: "string", Enum: []string{"BACKEND_TYPE_UNSPECIFIED", "VXLAN", "HostGateway", "WireGuard"}}}}, "kubeOvnConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"defaultGatewayIpv4": &runtime.SchemaSpec{Type: "string"}, "defaultGatewayIpv6": &runtime.SchemaSpec{Type: "string"}, "defaultInterfaceName": &runtime.SchemaSpec{Type: "string"}, "defaultVlanId": &runtime.SchemaSpec{Type: "string"}, "networkType": &runtime.SchemaSpec{Type: "string", Enum: []string{"NETWORK_TYPE_UNSPECIFIED", "GENEVE", "VLAN"}}}}}}, "nodeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ansibleExtraArgs": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "nodeInfo": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dualStackNetwork": &runtime.SchemaSpec{Type: "boolean"}, "hostName": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "osKernelVersion": &runtime.SchemaSpec{Type: "string"}, "pass": &runtime.SchemaSpec{Type: "string"}, "role": &runtime.SchemaSpec{Type: "string", Enum: []string{"ROlE_UNSPECIFIED", "Worker", "Controller"}}, "user": &runtime.SchemaSpec{Type: "string"}}}}, "sshInfo": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"pass": &runtime.SchemaSpec{Type: "string"}, "secretName": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string", Description: " - PrivateKey: If you choose this mode, the type of secret should be filled in. The key of data should be \"kubernetes.io/ssh-auth\".\nThe key of data should be \"ssh-privatekey\".", Enum: []string{"TYPE_UNSPECIFIED", "Password", "PrivateKey"}}, "user": &runtime.SchemaSpec{Type: "string"}}}}}, "ntpConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enable": &runtime.SchemaSpec{Type: "boolean", Description: "Start the ntpd or chrony service and enable it at system boot."}, "servers": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "timezone": &runtime.SchemaSpec{Type: "string"}}}, "params": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "runtime": &runtime.SchemaSpec{Type: "string", Description: "Container runtime\ndocker for docker, crio for cri-o and containerd for containerd.\nAdditionally you can set this to kubeadm if you want to install etcd using kubeadm\nKubeadm etcd deployment is experimental and only available for new deployments\nIf this is not set, container manager will be inherited from the Kubespray defaults\nand not from k8s_cluster/k8s-cluster.yml, which might not be what you want.\nAlso this makes possible to use different container manager for etcd nodes.", Enum: []string{"RUNTIME_UNSPECIFIED", "containerd", "docker"}}, "runtimeVersion": &runtime.SchemaSpec{Type: "string"}, "skipDocker": &runtime.SchemaSpec{Type: "boolean", Description: "True means using the docker already exists on the node."}, "sysctlParams": &runtime.SchemaSpec{Type: "object", Description: "SysctlParams is work when enabel NodeSysctlTunning.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "yumRepos": &runtime.SchemaSpec{Type: "array", Description: "YumRepos is the yum repository for echo node to be added.", Items: &runtime.SchemaSpec{Type: "string"}}}}, "labels": &runtime.SchemaSpec{Type: "object", Description: "Labels are key/value pairs that are attached to objects.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "preinstallAddons": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"addons": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"atomic": &runtime.SchemaSpec{Type: "boolean", Description: "If set, the installation process deletes the installation on failure. The --wait flag will be set automatically if --atomic is used."}, "chart": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "chartName": &runtime.SchemaSpec{Type: "string"}, "description": &runtime.SchemaSpec{Type: "string"}, "releaseName": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "checkReleaseName": &runtime.SchemaSpec{Type: "boolean", Description: "Check whether the release name entered during installation matches the release name in charts annotations."}, "cluster": &runtime.SchemaSpec{Type: "string", Description: "cluster represents which cluster the chart belongs to."}, "createNamespace": &runtime.SchemaSpec{Type: "boolean", Description: "Create the release namespace if not present."}, "debug": &runtime.SchemaSpec{Type: "boolean", Description: "Enable verbose output."}, "disableHooks": &runtime.SchemaSpec{Type: "boolean", Description: "Prevent hooks from running during install."}, "disableOpenApiValidation": &runtime.SchemaSpec{Type: "boolean", Description: "If set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema."}, "namespace": &runtime.SchemaSpec{Type: "string", Description: "Namespace represents which namespace the helm release belongs to."}, "repo": &runtime.SchemaSpec{Type: "string", Description: "The repo represents for the charts belongs to."}, "timeout": &runtime.SchemaSpec{Type: "string", Description: "Time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)."}, "wait": &runtime.SchemaSpec{Type: "boolean", Description: "If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful. It will wait for as long as timeout."}}}}, "repoUrl": &runtime.SchemaSpec{Type: "string"}}}}, "region": &runtime.SchemaSpec{Type: "string"}, "retry": &runtime.SchemaSpec{Type: "boolean"}, "zone": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2631,7 +2631,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dkgClusterName": &runtime.SchemaSpec{Type: "string"}, "kubeVersion": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dkgClusterName": &runtime.SchemaSpec{Type: "string", Description: "The name of the manger cluster."}, "kubeVersion": &runtime.SchemaSpec{Type: "string"}, "operation": &runtime.SchemaSpec{Type: "string", Description: "operation represents the kubean operation name."}}},
 		},
 	},
 	{
@@ -2705,7 +2705,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dkgClusterName": &runtime.SchemaSpec{Type: "string"}, "kubeVersion": &runtime.SchemaSpec{Type: "string"}, "nodeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ansibleExtraArgs": &runtime.SchemaSpec{Type: "object"}, "nodeInfo": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dualStackNetwork": &runtime.SchemaSpec{Type: "boolean"}, "hostName": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "osKernelVersion": &runtime.SchemaSpec{Type: "string"}, "pass": &runtime.SchemaSpec{Type: "string"}, "role": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}}, "sshInfo": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"pass": &runtime.SchemaSpec{Type: "string"}, "secretName": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dkgClusterName": &runtime.SchemaSpec{Type: "string", Description: "The name of the manger cluster."}, "kubeVersion": &runtime.SchemaSpec{Type: "string"}, "nodeConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ansibleExtraArgs": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "nodeInfo": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"dualStackNetwork": &runtime.SchemaSpec{Type: "boolean"}, "hostName": &runtime.SchemaSpec{Type: "string"}, "ip": &runtime.SchemaSpec{Type: "string"}, "osKernelVersion": &runtime.SchemaSpec{Type: "string"}, "pass": &runtime.SchemaSpec{Type: "string"}, "role": &runtime.SchemaSpec{Type: "string", Enum: []string{"ROlE_UNSPECIFIED", "Worker", "Controller"}}, "user": &runtime.SchemaSpec{Type: "string"}}}}, "sshInfo": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"pass": &runtime.SchemaSpec{Type: "string"}, "secretName": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string", Description: " - PrivateKey: If you choose this mode, the type of secret should be filled in. The key of data should be \"kubernetes.io/ssh-auth\".\nThe key of data should be \"ssh-privatekey\".", Enum: []string{"TYPE_UNSPECIFIED", "Password", "PrivateKey"}}, "user": &runtime.SchemaSpec{Type: "string"}}}}}}},
 		},
 	},
 	{
@@ -2762,7 +2762,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespace": &runtime.SchemaSpec{Type: "string"}, "nodeNames": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "BatchBindNamespaceRequest is the request for node bind namespaces.", Properties: map[string]*runtime.SchemaSpec{"namespace": &runtime.SchemaSpec{Type: "string", Description: "Namespace is the namespace for node to be bound."}, "nodeNames": &runtime.SchemaSpec{Type: "array", Description: "NodeNames is the list of node name which\nneeds to be bound with namespace.", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "failedResults", DefaultColumns: []string{"error", "nodeName"}},
 	},
@@ -2831,7 +2831,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Create LimitRange in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "Data is the limitRange YAML details."}}},
 		},
 	},
 	{
@@ -2846,7 +2846,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}, "workspaceAlias": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Get Create Namespace information.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data is the service YAML details."}, "workspaceAlias": &runtime.SchemaSpec{Type: "string", Description: "workspace_alias the specified namespace belongs to."}, "workspaceId": &runtime.SchemaSpec{Type: "integer", Description: "workspace_id the specified namespace belongs to.", Format: "int32"}}},
 		},
 	},
 	{
@@ -2861,7 +2861,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Create PersistentVolume in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "Data is the persistentVolume YAML details."}}},
 		},
 	},
 	{
@@ -2877,7 +2877,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "CreatePersistentVolumeClaimRequest represents the request of create PVC in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2893,7 +2893,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Create ResourceQuota in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "Data is the resourceQuota YAML details."}}},
 		},
 	},
 	{
@@ -2909,7 +2909,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Create Secret in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2925,7 +2925,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Create Service in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2941,7 +2941,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "CreateStorageClassRequest represents the request of create ServiceAccount in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -3072,7 +3072,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object"},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "DisableNamespacePodSecurityRequest requests to remove pod security labels of a namespace."},
 		},
 	},
 	{
@@ -3088,7 +3088,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"podSecurity": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"level": &runtime.SchemaSpec{Type: "string"}, "mode": &runtime.SchemaSpec{Type: "string"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "EnableNamespacePodSecurityRequest request to enable pod security of a namespace.", Properties: map[string]*runtime.SchemaSpec{"podSecurity": &runtime.SchemaSpec{Type: "array", Description: "PodSecurity is a list of label combinations of mode plus level.", Items: &runtime.SchemaSpec{Type: "object", Description: "PodSecurity is the label combination of mode plus level.", Properties: map[string]*runtime.SchemaSpec{"level": &runtime.SchemaSpec{Type: "string", Description: "Level of Pod Security Standards to broadly cover the security spectrum.", Enum: []string{"LEVEL_UNSPECIFIED", "privileged", "baseline", "restricted"}}, "mode": &runtime.SchemaSpec{Type: "string", Description: "Mode of Pod Security Standards.", Enum: []string{"MODE_UNSPECIFIED", "enforce", "audit", "warn"}}}}}}},
 		},
 	},
 	{
@@ -3970,7 +3970,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -3986,7 +3986,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object", Description: "The data is the namespace YAML details.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -4003,7 +4003,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Patches the current secret.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object", Description: "The data is the secret YAML details.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -4020,7 +4020,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The json data of patch."}}},
 		},
 	},
 	{
@@ -4036,7 +4036,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "PutNodeLabels put node's labels.", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object", Description: "the labels of node.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -4052,7 +4052,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"taints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"effect": &runtime.SchemaSpec{Type: "string"}, "key": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "PutNodeTaints put node's taints.", Properties: map[string]*runtime.SchemaSpec{"taints": &runtime.SchemaSpec{Type: "array", Description: "If specified, the node's taints.", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"effect": &runtime.SchemaSpec{Type: "string", Description: "Valid effects are NoSchedule, PreferNoSchedule, and NoExecute.", Enum: []string{"TAINT_EFFECT_UNSPECIFIED", "NoSchedule", "PreferNoSchedule", "NoExecute"}}, "key": &runtime.SchemaSpec{Type: "string", Description: "Required. The taint key to be applied to a node."}, "value": &runtime.SchemaSpec{Type: "string", Description: "The taint value corresponding to the taint key."}}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "taints", DefaultColumns: []string{"effect", "key", "value"}},
 	},
@@ -4098,7 +4098,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"namespace": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "UnbindNodeToNamespaceRequest is the request for node unbind namespace.", Properties: map[string]*runtime.SchemaSpec{"namespace": &runtime.SchemaSpec{Type: "string", Description: "Namespace is the namespace for node to unbind."}}},
 		},
 	},
 	{
@@ -4132,7 +4132,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Update LimitRange in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "Data is the limitRange YAML details."}}},
 		},
 	},
 	{
@@ -4148,7 +4148,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Update Namespace information.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data is the namespace YAML details."}}},
 		},
 	},
 	{
@@ -4164,7 +4164,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "UpdateNodeRequest requests to update a node.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data is the node YAML details."}}},
 		},
 	},
 	{
@@ -4180,7 +4180,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", Description: "Annotations requested.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -4196,7 +4196,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"migSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "string"}, "strategy": &runtime.SchemaSpec{Type: "string"}}}, "mode": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"migSpec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "string"}, "strategy": &runtime.SchemaSpec{Type: "string", Enum: []string{"MIG_STRATEGY_UNSPECIFIED", "MIG_STRATEGY_SINGLE", "MIG_STRATEGY_MIXED"}}}}, "mode": &runtime.SchemaSpec{Type: "string", Enum: []string{"GPU_MODEL_UNSPECIFIED", "GPU_MODEL_MIG", "GPU_MODEL_GPU", "GPU_MODEL_VGPU"}}}},
 		},
 	},
 	{
@@ -4212,7 +4212,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Update PersistentVolume in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "Data is the persistentVolume YAML details."}}},
 		},
 	},
 	{
@@ -4246,7 +4246,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -4263,7 +4263,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -4280,7 +4280,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Update ResourceQuota in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "Data is the resourceQuota YAML details."}}},
 		},
 	},
 	{
@@ -4297,7 +4297,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Update Secret in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -4314,7 +4314,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "Update the Service information.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -4330,7 +4330,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "UpdateServiceAccount represents the request of update ServiceAccount in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string", Description: "Namespace is the metadata.namespace of the referenced pod.\nThis field is required in all cases."}}},
 		},
 	},
 	{
@@ -4378,7 +4378,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string"}, "strategy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"metadata": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "cluster": &runtime.SchemaSpec{Type: "string"}, "creationTimestamp": &runtime.SchemaSpec{Type: "string"}, "deletionTimestamp": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string"}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "resourceVersion": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}, "workspaceAlias": &runtime.SchemaSpec{Type: "string"}}}, "spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"etcdConnectionConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caData": &runtime.SchemaSpec{Type: "string"}, "certData": &runtime.SchemaSpec{Type: "string"}, "connectionTimeout": &runtime.SchemaSpec{Type: "string"}, "endpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "insecureSkipVerify": &runtime.SchemaSpec{Type: "boolean"}, "insecureTransport": &runtime.SchemaSpec{Type: "boolean"}, "keyData": &runtime.SchemaSpec{Type: "string"}, "serviceEndpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "snapshotTimeout": &runtime.SchemaSpec{Type: "string"}}}, "snapStoreConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"container": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "provider": &runtime.SchemaSpec{Type: "string"}, "s3Config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"accessKeyId": &runtime.SchemaSpec{Type: "string"}, "bucket": &runtime.SchemaSpec{Type: "string"}, "consoleAddress": &runtime.SchemaSpec{Type: "string"}, "endpoint": &runtime.SchemaSpec{Type: "string"}, "region": &runtime.SchemaSpec{Type: "string"}, "secretAccessKey": &runtime.SchemaSpec{Type: "string"}, "storePrefix": &runtime.SchemaSpec{Type: "string"}}}, "tempDir": &runtime.SchemaSpec{Type: "string"}}}, "snapshotterConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deltaSnapshotMemoryLimit": &runtime.SchemaSpec{Type: "integer"}, "deltaSnapshotPeriod": &runtime.SchemaSpec{Type: "string"}, "fullSnapshotSchedule": &runtime.SchemaSpec{Type: "string"}, "garbageCollectionPeriod": &runtime.SchemaSpec{Type: "string"}, "garbageCollectionPolicy": &runtime.SchemaSpec{Type: "string"}, "maxBackups": &runtime.SchemaSpec{Type: "integer"}}}}}, "maxBackups": &runtime.SchemaSpec{Type: "integer"}, "storeLocation": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}}, "status": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"phase": &runtime.SchemaSpec{Type: "string"}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"name": &runtime.SchemaSpec{Type: "string", Description: "The name for EtcdBackupStrategy."}, "strategy": &runtime.SchemaSpec{Type: "object", Description: "The data for the etcd backup strategy.", Properties: map[string]*runtime.SchemaSpec{"metadata": &runtime.SchemaSpec{Type: "object", Description: "Standard object's metadata.", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "cluster": &runtime.SchemaSpec{Type: "string", Description: "The name of the cluster which the object belongs to.\nThis is used to distinguish resources with same name and namespace in\ndifferent clusters. This field is not set anywhere right now and apiserver\nis going to ignore it if set in create or update request."}, "creationTimestamp": &runtime.SchemaSpec{Type: "string", Description: "CreationTimestamp is a timestamp representing the server time when this\nobject was created. It is not guaranteed to be set in happens-before order\nacross separate operations. Clients may not set this value. It is\nrepresented in RFC3339 form and is in UTC.\n\nPopulated by the system.\nRead-only.\nNull for lists.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata\n+optional", Format: "int64"}, "deletionTimestamp": &runtime.SchemaSpec{Type: "string", Description: "DeletionTimestamp is RFC 3339 date and time at which this resource will be\ndeleted. This field is set by the server when a graceful deletion is\nrequested by the user, and is not directly settable by a client. The\nresource is expected to be deleted (no longer visible from resource lists,\nand not reachable by name) after the time in this field, once the\nfinalizers list is empty. As long as the finalizers list contains items,\ndeletion is blocked. Once the deletionTimestamp is set, this value may not\nbe unset or be set further into the future, although it may be shortened or\nthe resource may be deleted prior to this time. For example, a user may\nrequest that a pod is deleted in 30 seconds. The Kubelet will react by\nsending a graceful termination signal to the containers in the pod. After\nthat 30 seconds, the Kubelet will send a hard termination signal (SIGKILL)\nto the container and after cleanup, remove the pod from the API. In the\npresence of network partitions, this object may still exist after this\ntimestamp, until an administrator or automated process can determine the\nresource is fully terminated.\nIf not set, graceful deletion of the object has not been requested.\n\nPopulated by the system when a graceful deletion is requested.\nRead-only.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata\n+optional", Format: "int64"}, "labels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string", Description: "Namespace defines the space within each name must be unique. An empty\nnamespace is equivalent to the \"default\" namespace, but \"default\" is the\ncanonical representation. Not all objects are required to be scoped to a\nnamespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL.\nCannot be updated.\nMore info: http://kubernetes.io/docs/user-guide/namespaces\n+optional"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Description: "OwnerReference contains enough information to let you identify an owning\nobject. An owning object must be in the same namespace as the dependent, or\nbe cluster-scoped, so there is no namespace field.", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string", Description: "API version of the referent."}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string", Description: "Kind of the referent."}, "name": &runtime.SchemaSpec{Type: "string", Description: "Name of the referent."}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "resourceVersion": &runtime.SchemaSpec{Type: "string", Description: "An opaque value that represents the internal version of this object that\ncan be used by clients to determine when objects have changed. May be used\nfor optimistic concurrency, change detection, and the watch operation on a\nresource or set of resources. Clients must treat these values as opaque and\npassed unmodified back to the server. They may only be valid for a\nparticular resource or set of resources.\n\nPopulated by the system.\nRead-only.\nValue must be treated as opaque by clients and .\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency"}, "uid": &runtime.SchemaSpec{Type: "string", Description: "UID is the unique in time and space value for this object. It is typically\ngenerated by the server on successful creation of a resource and is not\nallowed to change on PUT operations.\n\nPopulated by the system.\nRead-only.\nMore info: http://kubernetes.io/docs/user-guide/identifiers#uids\n+optional"}, "workspaceAlias": &runtime.SchemaSpec{Type: "string", Description: "The name of the workspace which the object belongs to.\nThis is used to distinguish resources with same name and namespace in\ndifferent workspaces. This field is not set anywhere right now and\napiserver is going to ignore it if set in create or update request."}}}, "spec": &runtime.SchemaSpec{Type: "object", Description: "EtcdBackupStrategySpec describes how the etcd backup strategy will look like.", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Description: "all configs for EtcdBackupStrategy.", Properties: map[string]*runtime.SchemaSpec{"etcdConnectionConfig": &runtime.SchemaSpec{Type: "object", Description: "config for etcd connection.", Properties: map[string]*runtime.SchemaSpec{"caData": &runtime.SchemaSpec{Type: "string", Description: "ca_date verify certificates of TLS-enabled secure servers using this CA bundle."}, "certData": &runtime.SchemaSpec{Type: "string", Description: "cert_data identify secure client using this TLS certificate file."}, "connectionTimeout": &runtime.SchemaSpec{Type: "string", Description: "connection_timeout etcd client connection timeout.", Format: "int64"}, "endpoints": &runtime.SchemaSpec{Type: "array", Description: "Endpoints are the endpoints from which the backup will be take or defragmentation will be called.\nThis need not be necessary match the entire etcd cluster.\nendpoints comma separated list of etcd endpoints.", Items: &runtime.SchemaSpec{Type: "string"}}, "insecureSkipVerify": &runtime.SchemaSpec{Type: "boolean", Description: "insecure_skip_verify skip server certificate verification."}, "insecureTransport": &runtime.SchemaSpec{Type: "boolean", Description: "insecure_transport disable transport security for client connections."}, "keyData": &runtime.SchemaSpec{Type: "string", Description: "key_data identify secure client using this TLS key file."}, "serviceEndpoints": &runtime.SchemaSpec{Type: "array", Description: "service_endpoints comma separated list of etcd endpoints that are used for etcd-backup-restore to connect to etcd through a (Kubernetes) service.", Items: &runtime.SchemaSpec{Type: "string"}}, "snapshotTimeout": &runtime.SchemaSpec{Type: "string", Description: "snapshot_timeout timeout duration for taking etcd snapshots.", Format: "int64"}}}, "snapStoreConfig": &runtime.SchemaSpec{Type: "object", Description: "config for SnapStore.", Properties: map[string]*runtime.SchemaSpec{"container": &runtime.SchemaSpec{Type: "string", Description: "container holds the name of bucket or container to which snapshot will be stored."}, "prefix": &runtime.SchemaSpec{Type: "string", Description: "prefix holds the prefix or directory under StorageContainer under which snapshot will be stored."}, "provider": &runtime.SchemaSpec{Type: "string", Description: "provider indicated the cloud provider.", Enum: []string{"SNAP_STORE_PROVIDER_UNSPECIFIED", "Local", "S3"}}, "s3Config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"accessKeyId": &runtime.SchemaSpec{Type: "string", Description: "username or access key id for minio."}, "bucket": &runtime.SchemaSpec{Type: "string", Description: "the bucket name for minio."}, "consoleAddress": &runtime.SchemaSpec{Type: "string", Description: "the  front-end address for minio."}, "endpoint": &runtime.SchemaSpec{Type: "string", Description: "endpoint for minio."}, "region": &runtime.SchemaSpec{Type: "string"}, "secretAccessKey": &runtime.SchemaSpec{Type: "string", Description: "password or secret key for minio."}, "storePrefix": &runtime.SchemaSpec{Type: "string", Description: "equal to SnapStoreConfig.prefix."}}}, "tempDir": &runtime.SchemaSpec{Type: "string"}}}, "snapshotterConfig": &runtime.SchemaSpec{Type: "object", Description: "config for Snapshotter.\nSnapshotter should parse from the deploy.", Properties: map[string]*runtime.SchemaSpec{"deltaSnapshotMemoryLimit": &runtime.SchemaSpec{Type: "integer", Format: "int64"}, "deltaSnapshotPeriod": &runtime.SchemaSpec{Type: "string", Description: "delta_snapshot_period Period after which delta snapshot will be persisted. If this value is set to be lesser\nthan 1, delta snapshotting will be disabled.", Format: "int64"}, "fullSnapshotSchedule": &runtime.SchemaSpec{Type: "string"}, "garbageCollectionPeriod": &runtime.SchemaSpec{Type: "string", Format: "int64"}, "garbageCollectionPolicy": &runtime.SchemaSpec{Type: "string", Description: "- ETCD_BACKUP_TYPE_UNSPECIFIED: etcd backup type is unspecified.\n - Exponential: Exponential policy stores the snapshots in a condensed manner as mentioned below:\nAll full backups and delta backups for the previous hour.\nLatest full snapshot of each previous hour for the day.\nLatest full snapshot of each previous day for 7 days.\nLatest full snapshot of the previous 4 weeks\n - LimitBased: If using LimitBased policy, the max-backups flag should be provided to indicate the\nnumber of recent-most backups to persist at each garbage collection cycle.", Enum: []string{"ETCD_BACKUP_TYPE_UNSPECIFIED", "Exponential", "LimitBased"}}, "maxBackups": &runtime.SchemaSpec{Type: "integer", Format: "int64"}}}}}, "maxBackups": &runtime.SchemaSpec{Type: "integer", Description: "max_backups maximum number of previous backups to keep.", Format: "int64"}, "storeLocation": &runtime.SchemaSpec{Type: "string", Description: "console address for etcd backup strategy."}, "type": &runtime.SchemaSpec{Type: "string", Description: " - BACKUP_TYPE_UNSPECIFIED: Backup strategy type is unspecified.", Enum: []string{"BACKUP_TYPE_UNSPECIFIED", "Manual", "Timing"}}}}, "status": &runtime.SchemaSpec{Type: "object", Description: "EtcdBackupStrategyStatus represents the current state of a etcd backup strategy.", Properties: map[string]*runtime.SchemaSpec{"phase": &runtime.SchemaSpec{Type: "string", Description: "Current state of a etcd backup strategy.", Enum: []string{"WORKLOAD_STATE_UNSPECIFIED", "Running", "Deleting", "Not_Ready", "Stopped", "Waiting"}}}}}}}},
 		},
 	},
 	{
@@ -4518,7 +4518,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"strategy": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"metadata": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "cluster": &runtime.SchemaSpec{Type: "string"}, "creationTimestamp": &runtime.SchemaSpec{Type: "string"}, "deletionTimestamp": &runtime.SchemaSpec{Type: "string"}, "labels": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string"}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "resourceVersion": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}, "workspaceAlias": &runtime.SchemaSpec{Type: "string"}}}, "spec": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"etcdConnectionConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caData": &runtime.SchemaSpec{Type: "string"}, "certData": &runtime.SchemaSpec{Type: "string"}, "connectionTimeout": &runtime.SchemaSpec{Type: "string"}, "endpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "insecureSkipVerify": &runtime.SchemaSpec{Type: "boolean"}, "insecureTransport": &runtime.SchemaSpec{Type: "boolean"}, "keyData": &runtime.SchemaSpec{Type: "string"}, "serviceEndpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "snapshotTimeout": &runtime.SchemaSpec{Type: "string"}}}, "snapStoreConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"container": &runtime.SchemaSpec{Type: "string"}, "prefix": &runtime.SchemaSpec{Type: "string"}, "provider": &runtime.SchemaSpec{Type: "string"}, "s3Config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"accessKeyId": &runtime.SchemaSpec{Type: "string"}, "bucket": &runtime.SchemaSpec{Type: "string"}, "consoleAddress": &runtime.SchemaSpec{Type: "string"}, "endpoint": &runtime.SchemaSpec{Type: "string"}, "region": &runtime.SchemaSpec{Type: "string"}, "secretAccessKey": &runtime.SchemaSpec{Type: "string"}, "storePrefix": &runtime.SchemaSpec{Type: "string"}}}, "tempDir": &runtime.SchemaSpec{Type: "string"}}}, "snapshotterConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"deltaSnapshotMemoryLimit": &runtime.SchemaSpec{Type: "integer"}, "deltaSnapshotPeriod": &runtime.SchemaSpec{Type: "string"}, "fullSnapshotSchedule": &runtime.SchemaSpec{Type: "string"}, "garbageCollectionPeriod": &runtime.SchemaSpec{Type: "string"}, "garbageCollectionPolicy": &runtime.SchemaSpec{Type: "string"}, "maxBackups": &runtime.SchemaSpec{Type: "integer"}}}}}, "maxBackups": &runtime.SchemaSpec{Type: "integer"}, "storeLocation": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}}}, "status": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"phase": &runtime.SchemaSpec{Type: "string"}}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"strategy": &runtime.SchemaSpec{Type: "object", Description: "The data for the etcd backup strategy.", Properties: map[string]*runtime.SchemaSpec{"metadata": &runtime.SchemaSpec{Type: "object", Description: "Standard object's metadata.", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "cluster": &runtime.SchemaSpec{Type: "string", Description: "The name of the cluster which the object belongs to.\nThis is used to distinguish resources with same name and namespace in\ndifferent clusters. This field is not set anywhere right now and apiserver\nis going to ignore it if set in create or update request."}, "creationTimestamp": &runtime.SchemaSpec{Type: "string", Description: "CreationTimestamp is a timestamp representing the server time when this\nobject was created. It is not guaranteed to be set in happens-before order\nacross separate operations. Clients may not set this value. It is\nrepresented in RFC3339 form and is in UTC.\n\nPopulated by the system.\nRead-only.\nNull for lists.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata\n+optional", Format: "int64"}, "deletionTimestamp": &runtime.SchemaSpec{Type: "string", Description: "DeletionTimestamp is RFC 3339 date and time at which this resource will be\ndeleted. This field is set by the server when a graceful deletion is\nrequested by the user, and is not directly settable by a client. The\nresource is expected to be deleted (no longer visible from resource lists,\nand not reachable by name) after the time in this field, once the\nfinalizers list is empty. As long as the finalizers list contains items,\ndeletion is blocked. Once the deletionTimestamp is set, this value may not\nbe unset or be set further into the future, although it may be shortened or\nthe resource may be deleted prior to this time. For example, a user may\nrequest that a pod is deleted in 30 seconds. The Kubelet will react by\nsending a graceful termination signal to the containers in the pod. After\nthat 30 seconds, the Kubelet will send a hard termination signal (SIGKILL)\nto the container and after cleanup, remove the pod from the API. In the\npresence of network partitions, this object may still exist after this\ntimestamp, until an administrator or automated process can determine the\nresource is fully terminated.\nIf not set, graceful deletion of the object has not been requested.\n\nPopulated by the system when a graceful deletion is requested.\nRead-only.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata\n+optional", Format: "int64"}, "labels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string", Description: "Namespace defines the space within each name must be unique. An empty\nnamespace is equivalent to the \"default\" namespace, but \"default\" is the\ncanonical representation. Not all objects are required to be scoped to a\nnamespace - the value of this field for those objects will be empty.\n\nMust be a DNS_LABEL.\nCannot be updated.\nMore info: http://kubernetes.io/docs/user-guide/namespaces\n+optional"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Description: "OwnerReference contains enough information to let you identify an owning\nobject. An owning object must be in the same namespace as the dependent, or\nbe cluster-scoped, so there is no namespace field.", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string", Description: "API version of the referent."}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string", Description: "Kind of the referent."}, "name": &runtime.SchemaSpec{Type: "string", Description: "Name of the referent."}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "resourceVersion": &runtime.SchemaSpec{Type: "string", Description: "An opaque value that represents the internal version of this object that\ncan be used by clients to determine when objects have changed. May be used\nfor optimistic concurrency, change detection, and the watch operation on a\nresource or set of resources. Clients must treat these values as opaque and\npassed unmodified back to the server. They may only be valid for a\nparticular resource or set of resources.\n\nPopulated by the system.\nRead-only.\nValue must be treated as opaque by clients and .\nMore info:\nhttps://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency"}, "uid": &runtime.SchemaSpec{Type: "string", Description: "UID is the unique in time and space value for this object. It is typically\ngenerated by the server on successful creation of a resource and is not\nallowed to change on PUT operations.\n\nPopulated by the system.\nRead-only.\nMore info: http://kubernetes.io/docs/user-guide/identifiers#uids\n+optional"}, "workspaceAlias": &runtime.SchemaSpec{Type: "string", Description: "The name of the workspace which the object belongs to.\nThis is used to distinguish resources with same name and namespace in\ndifferent workspaces. This field is not set anywhere right now and\napiserver is going to ignore it if set in create or update request."}}}, "spec": &runtime.SchemaSpec{Type: "object", Description: "EtcdBackupStrategySpec describes how the etcd backup strategy will look like.", Properties: map[string]*runtime.SchemaSpec{"config": &runtime.SchemaSpec{Type: "object", Description: "all configs for EtcdBackupStrategy.", Properties: map[string]*runtime.SchemaSpec{"etcdConnectionConfig": &runtime.SchemaSpec{Type: "object", Description: "config for etcd connection.", Properties: map[string]*runtime.SchemaSpec{"caData": &runtime.SchemaSpec{Type: "string", Description: "ca_date verify certificates of TLS-enabled secure servers using this CA bundle."}, "certData": &runtime.SchemaSpec{Type: "string", Description: "cert_data identify secure client using this TLS certificate file."}, "connectionTimeout": &runtime.SchemaSpec{Type: "string", Description: "connection_timeout etcd client connection timeout.", Format: "int64"}, "endpoints": &runtime.SchemaSpec{Type: "array", Description: "Endpoints are the endpoints from which the backup will be take or defragmentation will be called.\nThis need not be necessary match the entire etcd cluster.\nendpoints comma separated list of etcd endpoints.", Items: &runtime.SchemaSpec{Type: "string"}}, "insecureSkipVerify": &runtime.SchemaSpec{Type: "boolean", Description: "insecure_skip_verify skip server certificate verification."}, "insecureTransport": &runtime.SchemaSpec{Type: "boolean", Description: "insecure_transport disable transport security for client connections."}, "keyData": &runtime.SchemaSpec{Type: "string", Description: "key_data identify secure client using this TLS key file."}, "serviceEndpoints": &runtime.SchemaSpec{Type: "array", Description: "service_endpoints comma separated list of etcd endpoints that are used for etcd-backup-restore to connect to etcd through a (Kubernetes) service.", Items: &runtime.SchemaSpec{Type: "string"}}, "snapshotTimeout": &runtime.SchemaSpec{Type: "string", Description: "snapshot_timeout timeout duration for taking etcd snapshots.", Format: "int64"}}}, "snapStoreConfig": &runtime.SchemaSpec{Type: "object", Description: "config for SnapStore.", Properties: map[string]*runtime.SchemaSpec{"container": &runtime.SchemaSpec{Type: "string", Description: "container holds the name of bucket or container to which snapshot will be stored."}, "prefix": &runtime.SchemaSpec{Type: "string", Description: "prefix holds the prefix or directory under StorageContainer under which snapshot will be stored."}, "provider": &runtime.SchemaSpec{Type: "string", Description: "provider indicated the cloud provider.", Enum: []string{"SNAP_STORE_PROVIDER_UNSPECIFIED", "Local", "S3"}}, "s3Config": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"accessKeyId": &runtime.SchemaSpec{Type: "string", Description: "username or access key id for minio."}, "bucket": &runtime.SchemaSpec{Type: "string", Description: "the bucket name for minio."}, "consoleAddress": &runtime.SchemaSpec{Type: "string", Description: "the  front-end address for minio."}, "endpoint": &runtime.SchemaSpec{Type: "string", Description: "endpoint for minio."}, "region": &runtime.SchemaSpec{Type: "string"}, "secretAccessKey": &runtime.SchemaSpec{Type: "string", Description: "password or secret key for minio."}, "storePrefix": &runtime.SchemaSpec{Type: "string", Description: "equal to SnapStoreConfig.prefix."}}}, "tempDir": &runtime.SchemaSpec{Type: "string"}}}, "snapshotterConfig": &runtime.SchemaSpec{Type: "object", Description: "config for Snapshotter.\nSnapshotter should parse from the deploy.", Properties: map[string]*runtime.SchemaSpec{"deltaSnapshotMemoryLimit": &runtime.SchemaSpec{Type: "integer", Format: "int64"}, "deltaSnapshotPeriod": &runtime.SchemaSpec{Type: "string", Description: "delta_snapshot_period Period after which delta snapshot will be persisted. If this value is set to be lesser\nthan 1, delta snapshotting will be disabled.", Format: "int64"}, "fullSnapshotSchedule": &runtime.SchemaSpec{Type: "string"}, "garbageCollectionPeriod": &runtime.SchemaSpec{Type: "string", Format: "int64"}, "garbageCollectionPolicy": &runtime.SchemaSpec{Type: "string", Description: "- ETCD_BACKUP_TYPE_UNSPECIFIED: etcd backup type is unspecified.\n - Exponential: Exponential policy stores the snapshots in a condensed manner as mentioned below:\nAll full backups and delta backups for the previous hour.\nLatest full snapshot of each previous hour for the day.\nLatest full snapshot of each previous day for 7 days.\nLatest full snapshot of the previous 4 weeks\n - LimitBased: If using LimitBased policy, the max-backups flag should be provided to indicate the\nnumber of recent-most backups to persist at each garbage collection cycle.", Enum: []string{"ETCD_BACKUP_TYPE_UNSPECIFIED", "Exponential", "LimitBased"}}, "maxBackups": &runtime.SchemaSpec{Type: "integer", Format: "int64"}}}}}, "maxBackups": &runtime.SchemaSpec{Type: "integer", Description: "max_backups maximum number of previous backups to keep.", Format: "int64"}, "storeLocation": &runtime.SchemaSpec{Type: "string", Description: "console address for etcd backup strategy."}, "type": &runtime.SchemaSpec{Type: "string", Description: " - BACKUP_TYPE_UNSPECIFIED: Backup strategy type is unspecified.", Enum: []string{"BACKUP_TYPE_UNSPECIFIED", "Manual", "Timing"}}}}, "status": &runtime.SchemaSpec{Type: "object", Description: "EtcdBackupStrategyStatus represents the current state of a etcd backup strategy.", Properties: map[string]*runtime.SchemaSpec{"phase": &runtime.SchemaSpec{Type: "string", Description: "Current state of a etcd backup strategy.", Enum: []string{"WORKLOAD_STATE_UNSPECIFIED", "Running", "Deleting", "Not_Ready", "Stopped", "Waiting"}}}}}}}},
 		},
 	},
 	{
@@ -4533,7 +4533,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"etcdConnectionConfig": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"caData": &runtime.SchemaSpec{Type: "string"}, "certData": &runtime.SchemaSpec{Type: "string"}, "connectionTimeout": &runtime.SchemaSpec{Type: "string"}, "endpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "insecureSkipVerify": &runtime.SchemaSpec{Type: "boolean"}, "insecureTransport": &runtime.SchemaSpec{Type: "boolean"}, "keyData": &runtime.SchemaSpec{Type: "string"}, "serviceEndpoints": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "snapshotTimeout": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"etcdConnectionConfig": &runtime.SchemaSpec{Type: "object", Description: "config for etcd connection.", Properties: map[string]*runtime.SchemaSpec{"caData": &runtime.SchemaSpec{Type: "string", Description: "ca_date verify certificates of TLS-enabled secure servers using this CA bundle."}, "certData": &runtime.SchemaSpec{Type: "string", Description: "cert_data identify secure client using this TLS certificate file."}, "connectionTimeout": &runtime.SchemaSpec{Type: "string", Description: "connection_timeout etcd client connection timeout.", Format: "int64"}, "endpoints": &runtime.SchemaSpec{Type: "array", Description: "Endpoints are the endpoints from which the backup will be take or defragmentation will be called.\nThis need not be necessary match the entire etcd cluster.\nendpoints comma separated list of etcd endpoints.", Items: &runtime.SchemaSpec{Type: "string"}}, "insecureSkipVerify": &runtime.SchemaSpec{Type: "boolean", Description: "insecure_skip_verify skip server certificate verification."}, "insecureTransport": &runtime.SchemaSpec{Type: "boolean", Description: "insecure_transport disable transport security for client connections."}, "keyData": &runtime.SchemaSpec{Type: "string", Description: "key_data identify secure client using this TLS key file."}, "serviceEndpoints": &runtime.SchemaSpec{Type: "array", Description: "service_endpoints comma separated list of etcd endpoints that are used for etcd-backup-restore to connect to etcd through a (Kubernetes) service.", Items: &runtime.SchemaSpec{Type: "string"}}, "snapshotTimeout": &runtime.SchemaSpec{Type: "string", Description: "snapshot_timeout timeout duration for taking etcd snapshots.", Format: "int64"}}}}},
 		},
 	},
 	{
@@ -4548,7 +4548,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"accessKeyId": &runtime.SchemaSpec{Type: "string"}, "bucket": &runtime.SchemaSpec{Type: "string"}, "endpoint": &runtime.SchemaSpec{Type: "string"}, "region": &runtime.SchemaSpec{Type: "string"}, "secretAccessKey": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"accessKeyId": &runtime.SchemaSpec{Type: "string", Description: "username or access key id for S3."}, "bucket": &runtime.SchemaSpec{Type: "string", Description: "the bucket name for S3."}, "endpoint": &runtime.SchemaSpec{Type: "string", Description: "endpoint for S3."}, "region": &runtime.SchemaSpec{Type: "string", Description: "region for S3."}, "secretAccessKey": &runtime.SchemaSpec{Type: "string", Description: "password or secret key for S3."}}},
 		},
 	},
 	{
@@ -4648,7 +4648,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data is the ingress YAML details."}}},
 		},
 	},
 	{
@@ -4664,7 +4664,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data is the networkpolicy YAML details."}}},
 		},
 	},
 	{
@@ -4874,7 +4874,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "object", Description: "The data defines the update details of ingress.", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 	},
 	{
@@ -4891,7 +4891,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data is the ingress YAML details."}}},
 		},
 	},
 	{
@@ -4908,7 +4908,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "The data is the networkpolicy YAML details."}}},
 		},
 	},
 	{
@@ -4923,7 +4923,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}, "sharedLoadBalancerIP": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"servicePorts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer", Format: "int32"}}, "sharedLoadBalancerIP": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -4955,7 +4955,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "labels": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string"}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "roleRef": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "subject": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "labels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Description: "OwnerReference contains enough information to let you identify an owning\nobject. An owning object must be in the same namespace as the dependent, or\nbe cluster-scoped, so there is no namespace field.", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string", Description: "API version of the referent."}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string", Description: "Kind of the referent."}, "name": &runtime.SchemaSpec{Type: "string", Description: "Name of the referent."}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "roleRef": &runtime.SchemaSpec{Type: "object", Description: "RoleRef can reference a Role in the current namespace or a ClusterRole in\nthe global namespace. If the RoleRef cannot be resolved, the Authorizer\nmust return an error.", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "subject": &runtime.SchemaSpec{Type: "object", Description: "Subject holds references to the objects the role applies to.", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string", Description: "APIGroup holds the API group of the referenced subject.\nDefaults to \"\" for ServiceAccount subjects.\nDefaults to \"rbac.authorization.k8s.io\" for User and Group subjects."}, "kind": &runtime.SchemaSpec{Type: "string", Description: "Kind of object being referenced. Values defined by this API group are\n\"User\", \"Group\", and \"ServiceAccount\". If the Authorizer does not\nrecognized the kind value, the Authorizer should report an error."}, "name": &runtime.SchemaSpec{Type: "string", Description: "Name of the object being referenced."}, "namespace": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "subjects", DefaultColumns: []string{"name", "namespace", "kind", "APIGroup"}},
 	},
@@ -4972,7 +4972,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string", Description: "the name of role."}}},
 		},
 		Output: runtime.OutputHints{ListPath: "rules"},
 	},
@@ -4989,7 +4989,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object"}, "labels": &runtime.SchemaSpec{Type: "object"}, "name": &runtime.SchemaSpec{Type: "string"}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string"}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "roleRef": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "subject": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "labels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "name": &runtime.SchemaSpec{Type: "string", Description: "the name of RoleBinding."}, "ownerReferences": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Description: "OwnerReference contains enough information to let you identify an owning\nobject. An owning object must be in the same namespace as the dependent, or\nbe cluster-scoped, so there is no namespace field.", Properties: map[string]*runtime.SchemaSpec{"apiVersion": &runtime.SchemaSpec{Type: "string", Description: "API version of the referent."}, "blockOwnerDeletion": &runtime.SchemaSpec{Type: "boolean"}, "controller": &runtime.SchemaSpec{Type: "boolean"}, "kind": &runtime.SchemaSpec{Type: "string", Description: "Kind of the referent."}, "name": &runtime.SchemaSpec{Type: "string", Description: "Name of the referent."}, "uid": &runtime.SchemaSpec{Type: "string"}}}}, "roleRef": &runtime.SchemaSpec{Type: "object", Description: "RoleRef can reference a Role in the current namespace or a ClusterRole in\nthe global namespace. If the RoleRef cannot be resolved, the Authorizer\nmust return an error.", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string"}, "kind": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}}}, "subject": &runtime.SchemaSpec{Type: "object", Description: "Subject holds references to the objects the role applies to.", Properties: map[string]*runtime.SchemaSpec{"APIGroup": &runtime.SchemaSpec{Type: "string", Description: "APIGroup holds the API group of the referenced subject.\nDefaults to \"\" for ServiceAccount subjects.\nDefaults to \"rbac.authorization.k8s.io\" for User and Group subjects."}, "kind": &runtime.SchemaSpec{Type: "string", Description: "Kind of object being referenced. Values defined by this API group are\n\"User\", \"Group\", and \"ServiceAccount\". If the Authorizer does not\nrecognized the kind value, the Authorizer should report an error."}, "name": &runtime.SchemaSpec{Type: "string", Description: "Name of the object being referenced."}, "namespace": &runtime.SchemaSpec{Type: "string"}}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "subjects", DefaultColumns: []string{"name", "namespace", "kind", "APIGroup"}},
 	},
@@ -5280,7 +5280,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/kpanda.io/v1alpha1/registry/verify",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"password": &runtime.SchemaSpec{Type: "string"}, "registryHost": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"password": &runtime.SchemaSpec{Type: "string", Description: "The password of the registry."}, "registryHost": &runtime.SchemaSpec{Type: "string", Description: "The registry host which needs to verify."}, "username": &runtime.SchemaSpec{Type: "string", Description: "The username of the registry."}}},
 		},
 	},
 	{
@@ -5304,7 +5304,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "CreateStorageClassRequest represents the request of create StorageClass in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -5320,7 +5320,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "CreateVolumeSnapshotRequest represents the request of create VolumeSnapshot Snapshot in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string", Description: "name represents the name of VolumeSnapshot to snapshot belongs to."}}},
 		},
 	},
 	{
@@ -5481,7 +5481,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "UpdateStorageClassRequest represents the request of update StorageClass in the cluster.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -5498,7 +5498,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Description: "UpdateVolumeSnapshotRequest represents the request of update volume snapshot.", Properties: map[string]*runtime.SchemaSpec{"data": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -5513,7 +5513,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"workspaceAlias": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"workspaceAlias": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -5529,7 +5529,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"workspaceAlias": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"workspaceAlias": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -5575,7 +5575,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"workspaceAlias": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"workspaceAlias": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -5591,7 +5591,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"workspaceAlias": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"workspaceAlias": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -5627,7 +5627,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabels": &runtime.SchemaSpec{Type: "object"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"time": &runtime.SchemaSpec{Type: "string"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"time": &runtime.SchemaSpec{Type: "string", Format: "int64"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
 	},
@@ -5643,7 +5643,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabels": &runtime.SchemaSpec{Type: "object"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}, "step": &runtime.SchemaSpec{Type: "number"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"matchLabels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string", Format: "int64"}, "start": &runtime.SchemaSpec{Type: "string", Format: "int64"}, "step": &runtime.SchemaSpec{Type: "number", Format: "double"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
 	},
@@ -5659,7 +5659,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "start": &runtime.SchemaSpec{Type: "string"}, "step": &runtime.SchemaSpec{Type: "number"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "namespace": &runtime.SchemaSpec{Type: "string"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string", Format: "int64"}, "start": &runtime.SchemaSpec{Type: "string", Format: "int64"}, "step": &runtime.SchemaSpec{Type: "number", Format: "double"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
 	},
@@ -5675,7 +5675,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object"}, "namespace": &runtime.SchemaSpec{Type: "string"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"time": &runtime.SchemaSpec{Type: "string"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"labels": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "namespace": &runtime.SchemaSpec{Type: "string"}, "param": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"time": &runtime.SchemaSpec{Type: "string", Format: "int64"}}}, "queryList": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "data", DefaultColumns: []string{"errorMessage", "status"}},
 	},

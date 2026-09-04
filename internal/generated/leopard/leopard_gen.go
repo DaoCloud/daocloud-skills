@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 11
+const generatedSchemaVersion = 16
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -74,7 +74,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/leopard.io/v1alpha1/bills/query",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "productName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "skuId": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "userId": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"end": &runtime.SchemaSpec{Type: "string"}, "page": &runtime.SchemaSpec{Type: "integer", Format: "int32"}, "pageSize": &runtime.SchemaSpec{Type: "integer", Format: "int32"}, "productName": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "skuId": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}, "start": &runtime.SchemaSpec{Type: "string"}, "userId": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
 		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"type", "amountDue", "billId", "billingItem", "billingMonth", "billingType"}},
 	},
@@ -107,7 +107,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/leopard.io/v1alpha1/products/skus",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"billingType": &runtime.SchemaSpec{Type: "string"}, "filter": &runtime.SchemaSpec{Type: "object"}, "filterByAnd": &runtime.SchemaSpec{Type: "boolean"}, "page": &runtime.SchemaSpec{Type: "integer"}, "pageSize": &runtime.SchemaSpec{Type: "integer"}, "product": &runtime.SchemaSpec{Type: "string"}, "regionId": &runtime.SchemaSpec{Type: "string"}, "sortOrder": &runtime.SchemaSpec{Type: "string"}, "sortType": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"billingType": &runtime.SchemaSpec{Type: "string"}, "filter": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"values": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}}}}, "filterByAnd": &runtime.SchemaSpec{Type: "boolean"}, "page": &runtime.SchemaSpec{Type: "integer", Format: "int32"}, "pageSize": &runtime.SchemaSpec{Type: "integer", Format: "int32"}, "product": &runtime.SchemaSpec{Type: "string"}, "regionId": &runtime.SchemaSpec{Type: "string"}, "sortOrder": &runtime.SchemaSpec{Type: "string", Enum: []string{"ASC", "DESC"}}, "sortType": &runtime.SchemaSpec{Type: "string"}}},
 		},
 		Output: runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"id", "available", "billingType", "canTransferPayAsYouGo", "displayOrder", "inventory"}},
 	},

@@ -28,18 +28,57 @@ Filter for non-Running/Completed phases:
 
 ### Step 2 — Collect Pod Events
 For each problematic pod:
-- `dce container-management core list-events --cluster <cluster> --namespace <namespace> --kind Pod --name <pod> -o json`
+- `dce container-management core list-events --cluster <cluster> --namespace <namespace> --kind Pod --kind-name <pod> -o json`
 - `dce container-management core list-cluster-events --cluster <cluster> --kind Pod --name <pod> -o json`
 - `dce container-management core get-pod --cluster <cluster> --namespace <namespace> --name <pod> -o json`
+
+The two event commands name the pod through different flags, and the difference
+is not cosmetic:
+
+- `list-events` — `--kind-name` is the involvedObject. Its `--name` is a fuzzy
+  match on the event's own name, so passing the pod there silently filters for
+  the wrong thing. **`--kind` without `--kind-name` answers HTTP 500.**
+- `list-cluster-events` — `--name` is the involvedObject, and there is no
+  `--kind-name` flag.
 
 ### Step 3 — Retrieve Container Logs
 - `dce container-management insight get-pod-container-log --cluster <cluster> --namespace <namespace> --name <pod> --container <container> -o json`
 - Check for stack traces, OOM signals, exit codes, or missing dependencies.
 
+Skip this step only when the container has genuinely never run: `restartCount`
+is 0 **and** `lastState` is empty, or `status.containerStatuses` is an empty
+array. Nothing else qualifies.
+
+**`waiting` is not a reason to skip.** A CrashLoopBackOff container reports
+state `waiting` between restarts, but it has started and died once per restart
+and its logs are intact. Those logs are usually the only evidence that names the
+failure; everything else the API returns is the symptom. Skipping them here
+leaves you inferring a cause from the pod spec, which is how a diagnosis ends up
+confidently wrong.
+
+Treat an empty-looking `env` value the same way — this API flattens
+`valueFrom` to null and renders the value as `""`, so a variable injected from a
+Secret or the downward API is indistinguishable from one that was never set.
+Never conclude "the credential is missing" from that field alone; confirm
+against the logs or the referenced Secret.
+
+If the endpoint answers 5xx, the cluster's log pipeline is down, not this pod.
+**Stop after the first failure; do not repeat the call for the remaining
+containers.** The client retries 5xx three times with 1s/2s/4s backoff, so every
+dead call burns 7-23 seconds and returns nothing. Record the failure once, say
+in the report that logs were unavailable, and finish from events and pod spec.
+A missing log section never justifies withholding the diagnosis.
+
 ### Step 4 — Inspect Related Workloads
 If the pod is owned by a controller:
-- `dce container-management core list-pods --cluster <cluster> --namespace <namespace> --kind <owner-kind> --name <owner-name> -o json`
+- `dce container-management core list-pods --cluster <cluster> --namespace <namespace> --kind <owner-kind> --kind-name <owner-name> -o json`
 - Check replica counts, restart counts, and selector mismatches.
+
+`list-pods` follows the same rule as `list-events` in Step 2: `--kind-name` is
+the owner, `--name` is a fuzzy match on the pod's own name, and `--kind` without
+`--kind-name` answers **HTTP 500**. `<owner-kind>` must match the `kind` in
+`metadata.ownerReferences[0]` — one of `Deployment`, `StatefulSet`, `DaemonSet`,
+`Service`, `Job`, `CronJob`, `ReplicaSet`, `NetworkPolicy`.
 
 ### Step 5 — Node Affinity and Resource Analysis
 - `dce container-management core list-pods-by-node --cluster <cluster> --node <node> -o json`
@@ -53,7 +92,20 @@ Run `dce container-management cluster list-clusters -o json`, present list, ask 
 Run `dce container-management core list-cluster-pods --cluster <cluster> -o json`, present list filtered by non-Running phases, ask user to pick one.
 
 ## Auth not established
-Stop and instruct user to run `dce auth login --hostname <host>`.
+
+**HTTP 401 from any step means the token expired.** It is not a permission
+problem — that would be 403 — and it says nothing about the pod being
+diagnosed. Stop there instead of working through the remaining steps; every
+later call fails identically and only adds latency.
+
+Report it and have the user run the login themselves, naming the host actually
+in use:
+
+```bash
+dce auth login --hostname <host>
+```
+
+Never supply credentials on the user's behalf.
 
 ## Output Format
 
