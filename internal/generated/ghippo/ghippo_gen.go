@@ -8,7 +8,7 @@ import (
 	"github.com/lathe-cli/lathe/pkg/runtime"
 )
 
-const generatedSchemaVersion = 11
+const generatedSchemaVersion = 16
 
 func Mount(root *cobra.Command) error {
 	if err := runtime.AssertSchema(generatedSchemaVersion); err != nil {
@@ -77,7 +77,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/current-user/certify",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"certName": &runtime.SchemaSpec{Type: "string"}, "certNo": &runtime.SchemaSpec{Type: "string"}, "certType": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"certName": &runtime.SchemaSpec{Type: "string"}, "certNo": &runtime.SchemaSpec{Type: "string"}, "certType": &runtime.SchemaSpec{Type: "string", Enum: []string{"AliPay", "WeChat"}}}},
 		},
 	},
 	{
@@ -275,7 +275,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha3/audits/clear",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"days": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"days": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -287,7 +287,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha3/audits/kube/clear",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"days": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"days": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -497,7 +497,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha3/audits/set-auto-clear",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"days": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"days": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -509,7 +509,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha3/audits/set-auto-clear/kube",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"days": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"days": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -816,7 +816,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/idp",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"alias": &runtime.SchemaSpec{Type: "string"}, "authorizationUrl": &runtime.SchemaSpec{Type: "string"}, "clientAuthentications": &runtime.SchemaSpec{Type: "string"}, "clientId": &runtime.SchemaSpec{Type: "string"}, "clientSecret": &runtime.SchemaSpec{Type: "string"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "enableAutoLinkFlow": &runtime.SchemaSpec{Type: "boolean"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "logoutUrl": &runtime.SchemaSpec{Type: "string"}, "providerId": &runtime.SchemaSpec{Type: "string"}, "tokenUrl": &runtime.SchemaSpec{Type: "string"}, "userInfoUrl": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"alias": &runtime.SchemaSpec{Type: "string"}, "authorizationUrl": &runtime.SchemaSpec{Type: "string"}, "clientAuthentications": &runtime.SchemaSpec{Type: "string", Enum: []string{"client_secret_post", "client_secret_basic", "client_secret_jwt", "private_key_jwt"}}, "clientId": &runtime.SchemaSpec{Type: "string"}, "clientSecret": &runtime.SchemaSpec{Type: "string"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "enableAutoLinkFlow": &runtime.SchemaSpec{Type: "boolean"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "logoutUrl": &runtime.SchemaSpec{Type: "string"}, "providerId": &runtime.SchemaSpec{Type: "string", Enum: []string{"oidc"}}, "tokenUrl": &runtime.SchemaSpec{Type: "string"}, "userInfoUrl": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -892,7 +892,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authorizationUrl": &runtime.SchemaSpec{Type: "string"}, "clientAuthentications": &runtime.SchemaSpec{Type: "string"}, "clientId": &runtime.SchemaSpec{Type: "string"}, "clientSecret": &runtime.SchemaSpec{Type: "string"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "enableAutoLinkFlow": &runtime.SchemaSpec{Type: "boolean"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "logoutUrl": &runtime.SchemaSpec{Type: "string"}, "providerId": &runtime.SchemaSpec{Type: "string"}, "tokenUrl": &runtime.SchemaSpec{Type: "string"}, "userInfoUrl": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authorizationUrl": &runtime.SchemaSpec{Type: "string"}, "clientAuthentications": &runtime.SchemaSpec{Type: "string", Enum: []string{"client_secret_post", "client_secret_basic", "client_secret_jwt", "private_key_jwt"}}, "clientId": &runtime.SchemaSpec{Type: "string"}, "clientSecret": &runtime.SchemaSpec{Type: "string"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "enableAutoLinkFlow": &runtime.SchemaSpec{Type: "boolean"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "logoutUrl": &runtime.SchemaSpec{Type: "string"}, "providerId": &runtime.SchemaSpec{Type: "string", Enum: []string{"oidc"}}, "tokenUrl": &runtime.SchemaSpec{Type: "string"}, "userInfoUrl": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -904,7 +904,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/keycloak-event",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authDetails": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clientId": &runtime.SchemaSpec{Type: "string"}, "ipAddress": &runtime.SchemaSpec{Type: "string"}, "realmId": &runtime.SchemaSpec{Type: "string"}, "sessionId": &runtime.SchemaSpec{Type: "string"}, "userId": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "details": &runtime.SchemaSpec{Type: "object"}, "error": &runtime.SchemaSpec{Type: "string"}, "operationType": &runtime.SchemaSpec{Type: "string"}, "realmId": &runtime.SchemaSpec{Type: "string"}, "representation": &runtime.SchemaSpec{Type: "string"}, "resourcePath": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"authDetails": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"clientId": &runtime.SchemaSpec{Type: "string"}, "ipAddress": &runtime.SchemaSpec{Type: "string"}, "realmId": &runtime.SchemaSpec{Type: "string"}, "sessionId": &runtime.SchemaSpec{Type: "string"}, "userId": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}}}, "details": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "error": &runtime.SchemaSpec{Type: "string"}, "operationType": &runtime.SchemaSpec{Type: "string"}, "realmId": &runtime.SchemaSpec{Type: "string"}, "representation": &runtime.SchemaSpec{Type: "string"}, "resourcePath": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}, "type": &runtime.SchemaSpec{Type: "string"}, "uid": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -916,7 +916,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha2/ldap",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"bindCredential": &runtime.SchemaSpec{Type: "string"}, "bindDn": &runtime.SchemaSpec{Type: "string"}, "connectionUrl": &runtime.SchemaSpec{Type: "string"}, "editMode": &runtime.SchemaSpec{Type: "string"}, "email": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "firstName": &runtime.SchemaSpec{Type: "string"}, "fullSyncPeriod": &runtime.SchemaSpec{Type: "string"}, "lastName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "rdnLdapAttribute": &runtime.SchemaSpec{Type: "string"}, "readTimeout": &runtime.SchemaSpec{Type: "string"}, "startTls": &runtime.SchemaSpec{Type: "string"}, "userLdapFilter": &runtime.SchemaSpec{Type: "string"}, "userObjectClasses": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}, "usernameLdapAttribute": &runtime.SchemaSpec{Type: "string"}, "usersDn": &runtime.SchemaSpec{Type: "string"}, "uuidLdapAttribute": &runtime.SchemaSpec{Type: "string"}, "vendor": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"bindCredential": &runtime.SchemaSpec{Type: "string", Description: "Password of LDAP admin."}, "bindDn": &runtime.SchemaSpec{Type: "string"}, "connectionUrl": &runtime.SchemaSpec{Type: "string"}, "editMode": &runtime.SchemaSpec{Type: "string", Description: "READ_ONLY is a read-only LDAP store.\nWRITABLE means data will be synced back to LDAP on demand."}, "email": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "firstName": &runtime.SchemaSpec{Type: "string"}, "fullSyncPeriod": &runtime.SchemaSpec{Type: "string"}, "lastName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "rdnLdapAttribute": &runtime.SchemaSpec{Type: "string", Description: "Name of the LDAP attribute, which is used as RDN (top attribute) of typical user DN.\nUsually it's the same as the Username LDAP attribute, however it is not required.\nFor example for Active directory, it is common to use 'cn' as RDN attribute when username attribute might be 'sAMAccountName'."}, "readTimeout": &runtime.SchemaSpec{Type: "string", Description: "LDAP read timeout in milliseconds. This timeout applies for LDAP read operations."}, "startTls": &runtime.SchemaSpec{Type: "string", Description: "Encrypts the connection to LDAP using STARTTLS, which will disable connection pooling."}, "userLdapFilter": &runtime.SchemaSpec{Type: "string"}, "userObjectClasses": &runtime.SchemaSpec{Type: "string", Description: "All values of LDAP objectClass attribute for users in LDAP divided by comma.\nFor example: 'inetOrgPerson, organizationalPerson' .\nNewly created Keycloak users will be written to LDAP with all those object classes and existing LDAP user records are found just if they contain all those object classes."}, "username": &runtime.SchemaSpec{Type: "string"}, "usernameLdapAttribute": &runtime.SchemaSpec{Type: "string"}, "usersDn": &runtime.SchemaSpec{Type: "string"}, "uuidLdapAttribute": &runtime.SchemaSpec{Type: "string", Description: "Name of the LDAP attribute, which is used as a unique object identifier (UUID) for objects in LDAP.\nFor many LDAP server vendors, it is 'entryUUID'; however some are different.\nFor example, for Active directory it should be 'objectGUID'.\nIf your LDAP server does not support the notion of UUID, you can use any other attribute that is supposed to be unique among LDAP users in tree.\nFor example 'uid' or 'entryDN'."}, "vendor": &runtime.SchemaSpec{Type: "string", Enum: []string{"other", "ad"}}}},
 		},
 	},
 	{
@@ -1020,7 +1020,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha2/testLdapAuthentication",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "bindCredential": &runtime.SchemaSpec{Type: "string"}, "bindDn": &runtime.SchemaSpec{Type: "string"}, "componentId": &runtime.SchemaSpec{Type: "string"}, "connectionTimeout": &runtime.SchemaSpec{Type: "string"}, "connectionUrl": &runtime.SchemaSpec{Type: "string"}, "startTls": &runtime.SchemaSpec{Type: "string"}, "useTruststoreSpi": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "bindCredential": &runtime.SchemaSpec{Type: "string", Description: "Password of LDAP admin."}, "bindDn": &runtime.SchemaSpec{Type: "string"}, "componentId": &runtime.SchemaSpec{Type: "string"}, "connectionTimeout": &runtime.SchemaSpec{Type: "string"}, "connectionUrl": &runtime.SchemaSpec{Type: "string"}, "startTls": &runtime.SchemaSpec{Type: "string"}, "useTruststoreSpi": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -1032,7 +1032,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha2/testLdapConnection",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "bindCredential": &runtime.SchemaSpec{Type: "string"}, "bindDn": &runtime.SchemaSpec{Type: "string"}, "componentId": &runtime.SchemaSpec{Type: "string"}, "connectionTimeout": &runtime.SchemaSpec{Type: "string"}, "connectionUrl": &runtime.SchemaSpec{Type: "string"}, "startTls": &runtime.SchemaSpec{Type: "string"}, "useTruststoreSpi": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "bindCredential": &runtime.SchemaSpec{Type: "string"}, "bindDn": &runtime.SchemaSpec{Type: "string"}, "componentId": &runtime.SchemaSpec{Type: "string"}, "connectionTimeout": &runtime.SchemaSpec{Type: "string"}, "connectionUrl": &runtime.SchemaSpec{Type: "string"}, "startTls": &runtime.SchemaSpec{Type: "string", Description: "Encrypts the connection to LDAP using STARTTLS, which will disable connection pooling."}, "useTruststoreSpi": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -1047,7 +1047,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"bindCredential": &runtime.SchemaSpec{Type: "string"}, "bindDn": &runtime.SchemaSpec{Type: "string"}, "connectionUrl": &runtime.SchemaSpec{Type: "string"}, "editMode": &runtime.SchemaSpec{Type: "string"}, "email": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "firstName": &runtime.SchemaSpec{Type: "string"}, "fullSyncPeriod": &runtime.SchemaSpec{Type: "string"}, "lastName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "rdnLdapAttribute": &runtime.SchemaSpec{Type: "string"}, "readTimeout": &runtime.SchemaSpec{Type: "string"}, "startTls": &runtime.SchemaSpec{Type: "string"}, "userLdapFilter": &runtime.SchemaSpec{Type: "string"}, "userObjectClasses": &runtime.SchemaSpec{Type: "string"}, "username": &runtime.SchemaSpec{Type: "string"}, "usernameLdapAttribute": &runtime.SchemaSpec{Type: "string"}, "usersDn": &runtime.SchemaSpec{Type: "string"}, "uuidLdapAttribute": &runtime.SchemaSpec{Type: "string"}, "vendor": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"bindCredential": &runtime.SchemaSpec{Type: "string", Description: "Password of LDAP admin."}, "bindDn": &runtime.SchemaSpec{Type: "string"}, "connectionUrl": &runtime.SchemaSpec{Type: "string"}, "editMode": &runtime.SchemaSpec{Type: "string", Description: "READ_ONLY is a read-only LDAP store.\nWRITABLE means data will be synced back to LDAP on demand."}, "email": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "firstName": &runtime.SchemaSpec{Type: "string"}, "fullSyncPeriod": &runtime.SchemaSpec{Type: "string"}, "lastName": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "rdnLdapAttribute": &runtime.SchemaSpec{Type: "string", Description: "Name of the LDAP attribute, which is used as RDN (top attribute) of typical user DN.\nUsually it's the same as the Username LDAP attribute, however it is not required.\nFor example for Active directory, it is common to use 'cn' as RDN attribute when username attribute might be 'sAMAccountName'."}, "readTimeout": &runtime.SchemaSpec{Type: "string", Description: "LDAP read timeout in milliseconds. This timeout applies for LDAP read operations."}, "startTls": &runtime.SchemaSpec{Type: "string", Description: "Encrypts the connection to LDAP using STARTTLS, which will disable connection pooling."}, "userLdapFilter": &runtime.SchemaSpec{Type: "string"}, "userObjectClasses": &runtime.SchemaSpec{Type: "string", Description: "All values of LDAP objectClass attribute for users in LDAP divided by comma.\nFor example: 'inetOrgPerson, organizationalPerson' .\nNewly created Keycloak users will be written to LDAP with all those object classes and existing LDAP user records are found just if they contain all those object classes."}, "username": &runtime.SchemaSpec{Type: "string"}, "usernameLdapAttribute": &runtime.SchemaSpec{Type: "string"}, "usersDn": &runtime.SchemaSpec{Type: "string"}, "uuidLdapAttribute": &runtime.SchemaSpec{Type: "string", Description: "Name of the LDAP attribute, which is used as a unique object identifier (UUID) for objects in LDAP.\nFor many LDAP server vendors, it is 'entryUUID'; however some are different.\nFor example, for Active directory it should be 'objectGUID'.\nIf your LDAP server does not support the notion of UUID, you can use any other attribute that is supposed to be unique among LDAP users in tree.\nFor example 'uid' or 'entryDN'."}, "vendor": &runtime.SchemaSpec{Type: "string", Enum: []string{"other", "ad"}}}},
 		},
 	},
 	{
@@ -1198,7 +1198,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/messages/delete",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ids": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"ids": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer", Format: "int32"}}}},
 		},
 	},
 	{
@@ -1253,7 +1253,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/read-messages",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"all": &runtime.SchemaSpec{Type: "boolean"}, "ids": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"all": &runtime.SchemaSpec{Type: "boolean"}, "ids": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "integer", Format: "int32"}}}},
 		},
 	},
 	{
@@ -1322,7 +1322,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/oauth2",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"agentId": &runtime.SchemaSpec{Type: "string"}, "clientId": &runtime.SchemaSpec{Type: "string"}, "clientSecret": &runtime.SchemaSpec{Type: "string"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "providerType": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"agentId": &runtime.SchemaSpec{Type: "string"}, "clientId": &runtime.SchemaSpec{Type: "string"}, "clientSecret": &runtime.SchemaSpec{Type: "string"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "providerType": &runtime.SchemaSpec{Type: "string", Enum: []string{"wechatwork"}}}},
 		},
 	},
 	{
@@ -1361,7 +1361,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/oauth2",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"agentId": &runtime.SchemaSpec{Type: "string"}, "clientId": &runtime.SchemaSpec{Type: "string"}, "clientSecret": &runtime.SchemaSpec{Type: "string"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "providerType": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"agentId": &runtime.SchemaSpec{Type: "string"}, "clientId": &runtime.SchemaSpec{Type: "string"}, "clientSecret": &runtime.SchemaSpec{Type: "string"}, "displayName": &runtime.SchemaSpec{Type: "string"}, "providerType": &runtime.SchemaSpec{Type: "string", Enum: []string{"wechatwork"}}}},
 		},
 	},
 	{
@@ -1435,7 +1435,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/roles",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "perms": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "gproduct": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}}}}, "scope": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"description": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "perms": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "gproduct": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}}}}, "scope": &runtime.SchemaSpec{Type: "string", Enum: []string{"platform", "folder", "workspace"}}}},
 		},
 	},
 	{
@@ -1661,7 +1661,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/securitypolicy/accountlockout",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "failureResetSeconds": &runtime.SchemaSpec{Type: "integer"}, "maxFailuresWaitSeconds": &runtime.SchemaSpec{Type: "integer"}, "maxLoginFailures": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "failureResetSeconds": &runtime.SchemaSpec{Type: "integer", Format: "int32"}, "maxFailuresWaitSeconds": &runtime.SchemaSpec{Type: "integer", Format: "int32"}, "maxLoginFailures": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -1697,7 +1697,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/securitypolicy/password",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"items": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string"}, "value": &runtime.SchemaSpec{Type: "string"}}}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"items": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"MinimumLengthLabel", "NotRecentlyUsedLabel", "NotUsernameLabel", "NotEmailLabel", "DigitsLabel", "UppercaseCharactersLabel", "LowercaseCharactersLabel", "SpecialCharactersLabel", "ExpirePasswordLabel"}}, "value": &runtime.SchemaSpec{Type: "string"}}}}}},
 		},
 	},
 	{
@@ -1709,7 +1709,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/securitypolicy/sessiontimeout",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"timeoutSeconds": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"timeoutSeconds": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -1721,7 +1721,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/securitypolicy/sessionlimit/system",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "number": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "number": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -1745,7 +1745,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/securitypolicy/sessionlimit/user",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "number": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"enabled": &runtime.SchemaSpec{Type: "boolean"}, "number": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -1796,7 +1796,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/sms/verification",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"countryCode": &runtime.SchemaSpec{Type: "string"}, "phone": &runtime.SchemaSpec{Type: "string"}, "scene": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"countryCode": &runtime.SchemaSpec{Type: "string"}, "phone": &runtime.SchemaSpec{Type: "string"}, "scene": &runtime.SchemaSpec{Type: "string", Enum: []string{"Login", "Register", "ChangePhone"}}}},
 		},
 	},
 	{
@@ -1816,7 +1816,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/smtp-setting",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"from": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "ssl": &runtime.SchemaSpec{Type: "boolean"}, "starttls": &runtime.SchemaSpec{Type: "boolean"}, "user": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"from": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer", Format: "int32"}, "ssl": &runtime.SchemaSpec{Type: "boolean"}, "starttls": &runtime.SchemaSpec{Type: "boolean"}, "user": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -1828,7 +1828,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/smtp-setting/conn-test",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"from": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer"}, "ssl": &runtime.SchemaSpec{Type: "boolean"}, "starttls": &runtime.SchemaSpec{Type: "boolean"}, "to": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"from": &runtime.SchemaSpec{Type: "string"}, "host": &runtime.SchemaSpec{Type: "string"}, "password": &runtime.SchemaSpec{Type: "string"}, "port": &runtime.SchemaSpec{Type: "integer", Format: "int32"}, "ssl": &runtime.SchemaSpec{Type: "boolean"}, "starttls": &runtime.SchemaSpec{Type: "boolean"}, "to": &runtime.SchemaSpec{Type: "string"}, "user": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2197,7 +2197,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/users/certify",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"certName": &runtime.SchemaSpec{Type: "string"}, "certNo": &runtime.SchemaSpec{Type: "string"}, "subject": &runtime.SchemaSpec{Type: "string"}, "userId": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"certName": &runtime.SchemaSpec{Type: "string"}, "certNo": &runtime.SchemaSpec{Type: "string"}, "subject": &runtime.SchemaSpec{Type: "string", Enum: []string{"Individual", "Enterprise", "College"}}, "userId": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2225,7 +2225,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/webhook",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "clientId": &runtime.SchemaSpec{Type: "string"}, "headers": &runtime.SchemaSpec{Type: "string"}, "method": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "requestParameter": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string", Enum: []string{"action_create", "action_update", "action_delete", "action_login", "action_logout"}}, "clientId": &runtime.SchemaSpec{Type: "string"}, "headers": &runtime.SchemaSpec{Type: "string"}, "method": &runtime.SchemaSpec{Type: "string", Enum: []string{"method_get", "method_post", "method_put", "method_delete", "method_patch"}}, "name": &runtime.SchemaSpec{Type: "string"}, "requestParameter": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string", Enum: []string{"resource_type_user"}}, "url": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2237,7 +2237,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/webhook-endpoint",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "gproducts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gproduct": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"actions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "methods": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "string"}, "method": &runtime.SchemaSpec{Type: "string"}}}}}}}, "resourceType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "name": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "gproducts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gproduct": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"actions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "methods": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "string"}, "method": &runtime.SchemaSpec{Type: "string", Enum: []string{"method_get", "method_post", "method_put", "method_delete", "method_patch"}}}}}}}}, "resourceType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "name": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2370,7 +2370,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "clientId": &runtime.SchemaSpec{Type: "string"}, "headers": &runtime.SchemaSpec{Type: "string"}, "method": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "requestParameter": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string", Enum: []string{"action_create", "action_update", "action_delete", "action_login", "action_logout"}}, "clientId": &runtime.SchemaSpec{Type: "string"}, "headers": &runtime.SchemaSpec{Type: "string"}, "method": &runtime.SchemaSpec{Type: "string", Enum: []string{"method_get", "method_post", "method_put", "method_delete", "method_patch"}}, "name": &runtime.SchemaSpec{Type: "string"}, "requestParameter": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string", Enum: []string{"resource_type_user"}}, "url": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2385,7 +2385,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "gproducts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gproduct": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"actions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "methods": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "string"}, "method": &runtime.SchemaSpec{Type: "string"}}}}}}}, "resourceType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "name": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"domain": &runtime.SchemaSpec{Type: "string"}, "enabled": &runtime.SchemaSpec{Type: "boolean"}, "gproducts": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gproduct": &runtime.SchemaSpec{Type: "string"}, "resources": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"actions": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"action": &runtime.SchemaSpec{Type: "string"}, "methods": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"headers": &runtime.SchemaSpec{Type: "string"}, "method": &runtime.SchemaSpec{Type: "string", Enum: []string{"method_get", "method_post", "method_put", "method_delete", "method_patch"}}}}}}}}, "resourceType": &runtime.SchemaSpec{Type: "string"}}}}}}}, "name": &runtime.SchemaSpec{Type: "string"}, "url": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2443,7 +2443,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gproduct": &runtime.SchemaSpec{Type: "string"}, "quotaHard": &runtime.SchemaSpec{Type: "object"}, "resourceName": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gproduct": &runtime.SchemaSpec{Type: "string"}, "quotaHard": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "resourceName": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}}},
 		},
 	},
 	{
@@ -2471,7 +2471,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/folders",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"alias": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string"}, "parentFolderId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"alias": &runtime.SchemaSpec{Type: "string"}, "name": &runtime.SchemaSpec{Type: "string", Description: "Deprecated: Do not use."}, "parentFolderId": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -2484,7 +2484,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/workspaces",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"alias": &runtime.SchemaSpec{Type: "string"}, "parentFolderId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"alias": &runtime.SchemaSpec{Type: "string"}, "parentFolderId": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -2788,7 +2788,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"destFolderId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"destFolderId": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -2830,7 +2830,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/workspace-sharedresource-quota-hard",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"quotaHard": &runtime.SchemaSpec{Type: "object"}, "workspaceResourceId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"quotaHard": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "workspaceResourceId": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 	{
@@ -2873,7 +2873,7 @@ var Specs = []runtime.CommandSpec{
 		PathTpl:     "/apis/ghippo.io/v1alpha1/update-quota-check",
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gproduct": &runtime.SchemaSpec{Type: "string"}, "quotaHard": &runtime.SchemaSpec{Type: "object"}, "resourceName": &runtime.SchemaSpec{Type: "string"}, "resourceScope": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"gproduct": &runtime.SchemaSpec{Type: "string"}, "quotaHard": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "resourceName": &runtime.SchemaSpec{Type: "string"}, "resourceScope": &runtime.SchemaSpec{Type: "string"}, "resourceType": &runtime.SchemaSpec{Type: "string"}, "workspaceId": &runtime.SchemaSpec{Type: "integer", Format: "int32"}}},
 		},
 	},
 }
