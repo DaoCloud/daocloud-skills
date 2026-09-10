@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3`
-- Files: `docs/openapi/kpanda/v0.46.0.json`
-- Resolved SHA: `4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3`
+- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
+- Files: `docs/openapi/kpanda/v0.50.0.json`
+- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 
 ## Addon
 
@@ -233,7 +233,7 @@
 
 ### `dce container-management addon list-cluster-installed-helm-chart`
 
-- Summary: ListClusterInstalledHelmChart list the charts which installed belong to repo
+- Summary: ListClusterInstalledHelmChart list the charts which installed belong to
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/helmcharts/installed`
 - Auth: required
 - Body: none
@@ -277,7 +277,7 @@
 
 ### `dce container-management addon list-helm-release-resources`
 
-- Summary: ListHelmReleaseResources lists resources related to the specified helm release.
+- Summary: ListHelmReleaseResources lists resources related to the specified helm
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/helmreleases/{helmrelease}/resources`
 - Auth: required
 - Body: none
@@ -577,7 +577,7 @@
 
 ### `dce container-management apiextensions list-custom-resource-definition-groups`
 
-- Summary: ListCustomResourceDefinitionGroups lists all groups of customResourceDefinitions in the specified cluster
+- Summary: ListCustomResourceDefinitionGroups lists all groups of
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/crd-groups`
 - Auth: required
 - Body: none
@@ -587,7 +587,7 @@
 
 ### `dce container-management apiextensions list-custom-resource-definitions`
 
-- Summary: ListCustomResourceDefinitions lists customResourceDefinitions in the specified cluster
+- Summary: ListCustomResourceDefinitions lists customResourceDefinitions in the
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/customresourcedefinitions`
 - Auth: required
 - Body: none
@@ -657,7 +657,7 @@
 
 ### `dce container-management apiextensions update-cluster-custom-resource-status`
 
-- Summary: UpdateClusterCustomResourceStatus updates the status of a customResource of cluster scope
+- Summary: UpdateClusterCustomResourceStatus updates the status of a customResource of
 - HTTP: `PUT /apis/kpanda.io/v1alpha1/clusters/{cluster}/gvr/{group}/{version}/{resource}/{name}/status`
 - Auth: required
 - Body: required
@@ -1235,7 +1235,7 @@ dce container-management apps list-deployments \
 
 ### `dce container-management apps start-deployment`
 
-- Summary: StartDeployment starts a deployment under the namespace of a specific cluster
+- Summary: StartDeployment starts a deployment under the namespace of a specific
 - HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/deployments/{name}:start`
 - Auth: required
 - Body: none
@@ -1246,7 +1246,7 @@ dce container-management apps list-deployments \
 
 ### `dce container-management apps start-stateful-set`
 
-- Summary: StartStatefulSet starts a statefulset under the namespace of a specific cluster
+- Summary: StartStatefulSet starts a statefulset under the namespace of a specific
 - HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/statefulsets/{name}:start`
 - Auth: required
 - Body: none
@@ -1257,7 +1257,7 @@ dce container-management apps list-deployments \
 
 ### `dce container-management apps stop-deployment`
 
-- Summary: StopDeployment starts a deployment under the namespace of a specific cluster
+- Summary: StopDeployment starts a deployment under the namespace of a specific
 - HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/deployments/{name}:stop`
 - Auth: required
 - Body: none
@@ -1268,7 +1268,7 @@ dce container-management apps list-deployments \
 
 ### `dce container-management apps stop-stateful-set`
 
-- Summary: StopStatefulSet starts a statefulset under the namespace of a specific cluster
+- Summary: StopStatefulSet starts a statefulset under the namespace of a specific
 - HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/statefulsets/{name}:stop`
 - Auth: required
 - Body: none
@@ -1420,7 +1420,7 @@ dce container-management apps list-deployments \
 
 ### `dce container-management autoscaling get-vertical-pod-autoscaler-json`
 
-- Summary: GetVerticalPodAutoscalerJSON gets a vpa by namespace and name, returning a string in JSON format.
+- Summary: GetVerticalPodAutoscalerJSON gets a vpa by namespace and name, returning a
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/verticalpodautoscalers/{name}/json`
 - Auth: required
 - Body: none
@@ -1432,7 +1432,7 @@ dce container-management apps list-deployments \
 
 ### `dce container-management autoscaling list-cron-horizontal-pod-autoscalers`
 
-- Summary: ListCronHorizontalPodAutoscalers lists cron hpas in the specified cluster and namespace.
+- Summary: ListCronHorizontalPodAutoscalers lists cron hpas in the specified cluster
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/cronhorizontalpodautoscalers`
 - Auth: required
 - Body: none
@@ -1458,7 +1458,7 @@ dce container-management apps list-deployments \
 
 ### `dce container-management autoscaling list-horizontal-pod-autoscalers`
 
-- Summary: ListHorizontalPodAutoscalers lists hpas in the specified cluster and namespace.
+- Summary: ListHorizontalPodAutoscalers lists hpas in the specified cluster and
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/horizontalpodautoscalers`
 - Auth: required
 - Body: none
@@ -1487,7 +1487,7 @@ dce container-management apps list-deployments \
 
 ### `dce container-management autoscaling list-vertical-pod-autoscalers`
 
-- Summary: ListVerticalPodAutoscalers lists vpas in the specified cluster and namespace.
+- Summary: ListVerticalPodAutoscalers lists vpas in the specified cluster and
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/verticalpodautoscalers`
 - Auth: required
 - Body: none
@@ -1511,7 +1511,7 @@ dce container-management apps list-deployments \
 
 ### `dce container-management autoscaling update-cron-horizontal-pod-autoscaler`
 
-- Summary: UpdateCronHorizontalPodAutoscaler updates the specified cron hpa, the body must
+- Summary: UpdateCronHorizontalPodAutoscaler updates the specified cron hpa, the body
 - HTTP: `PUT /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/cronhorizontalpodautoscalers/{name}`
 - Auth: required
 - Body: required
@@ -1947,7 +1947,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management cluster validate-cluster`
 
-- Summary: ValidateCluster checks if residuals which affect integrating exist in a cluster
+- Summary: ValidateCluster checks if residuals which affect integrating exist in a
 - HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{name}/validate`
 - Auth: required
 - Body: required
@@ -1972,7 +1972,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 - Body: none
 - Flags:
   - `--cluster` (path, required): The cluster name of the clustersetting.
-  - `--name` (path, required, one of: PLUGIN_NAME_UNSPECIFIED|HPA|Insight|GPU|METALLB|Spiderpool|CustomMetrics|CronHPA|VPA|Hwameistor|Flannel|KubeOvn|OLM|EgressGateway|Snapshot|DRA): The name of the plugin which needs to disable.
+  - `--name` (path, required, one of: PLUGIN_NAME_UNSPECIFIED|HPA|Insight|GPU|METALLB|Spiderpool|CustomMetrics|CronHPA|VPA|Hwameistor|Flannel|KubeOvn|OLM|EgressGateway|Snapshot|DRA|GatewayAPI): The name of the plugin which needs to disable.
 
 ### `dce container-management clustersetting enable-plugin`
 
@@ -1982,7 +1982,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 - Body: required
 - Flags:
   - `--cluster` (path, required): The cluster name of the clustersetting.
-  - `--name` (path, required, one of: PLUGIN_NAME_UNSPECIFIED|HPA|Insight|GPU|METALLB|Spiderpool|CustomMetrics|CronHPA|VPA|Hwameistor|Flannel|KubeOvn|OLM|EgressGateway|Snapshot|DRA): The name of the plugin which needs to enable.
+  - `--name` (path, required, one of: PLUGIN_NAME_UNSPECIFIED|HPA|Insight|GPU|METALLB|Spiderpool|CustomMetrics|CronHPA|VPA|Hwameistor|Flannel|KubeOvn|OLM|EgressGateway|Snapshot|DRA|GatewayAPI): The name of the plugin which needs to enable.
 
 ### `dce container-management clustersetting get-cluster-setting`
 
@@ -2003,7 +2003,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 - Flags:
   - `--cluster` (path, required): The cluster name of the clustersetting.
   - `--available-enable` (query): if available_enable is true will return available gpu number
-- Output: list path `items`; columns `type`, `alias`, `isDynamic`
+- Output: list path `items`; columns `type`, `alias`, `isDynamic`, `provider`
 
 ### `dce container-management clustersetting list-plugins`
 
@@ -2017,7 +2017,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management clustersetting update-cluster-setting`
 
-- Summary: UpdateClusterSetting will update the cluster setting and returns the settings
+- Summary: UpdateClusterSetting will update the cluster setting and returns the
 - HTTP: `PUT /apis/kpanda.io/v1alpha1/clusters/{cluster}/settings`
 - Auth: required
 - Body: required
@@ -2205,7 +2205,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core compute-limit-range`
 
-- Summary: ComputeLimitRange returns the final effective quota detail of multi limit range in specified namespace
+- Summary: ComputeLimitRange returns the final effective quota detail of multi limit
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/limitranges:compute`
 - Auth: required
 - Body: none
@@ -2215,7 +2215,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core compute-resource-quota`
 
-- Summary: ComputeResourceQuota returns the final effective quota detail of multi quotas in specified namespace
+- Summary: ComputeResourceQuota returns the final effective quota detail of multi
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/resourcequotas:compute`
 - Auth: required
 - Body: none
@@ -2245,7 +2245,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core create-limit-range`
 
-- Summary: CreateLimitRange creates a limitrange in the specified cluster and namespace.
+- Summary: CreateLimitRange creates a limitrange in the specified cluster and
 - HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/limitranges`
 - Auth: required
 - Body: required
@@ -2264,7 +2264,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core create-persistent-volume`
 
-- Summary: CreatePersistentVolume creates a persistentvolume to the system by given persistentvolume data
+- Summary: CreatePersistentVolume creates a persistentvolume to the system by given
 - HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/persistentvolumes`
 - Auth: required
 - Body: required
@@ -2283,7 +2283,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core create-resource-quota`
 
-- Summary: CreateResourceQuota creates a resourceQuota to the system by given resourceQuota data
+- Summary: CreateResourceQuota creates a resourceQuota to the system by given
 - HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/resourcequotas`
 - Auth: required
 - Body: required
@@ -2355,7 +2355,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core delete-persistent-volume`
 
-- Summary: DeletePersistentVolume deletes a persistentvolume from the system by given persistentvolume name
+- Summary: DeletePersistentVolume deletes a persistentvolume from the system by given
 - HTTP: `DELETE /apis/kpanda.io/v1alpha1/clusters/{cluster}/persistentvolumes/{name}`
 - Auth: required
 - Body: none
@@ -2473,7 +2473,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core get-limit-range-json`
 
-- Summary: GetLimitRangeJSON gets the limitrange by namespace and name, returns a string in JSON format.
+- Summary: GetLimitRangeJSON gets the limitrange by namespace and name, returns a
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/limitranges/{name}/json`
 - Auth: required
 - Body: none
@@ -2536,7 +2536,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core get-persistent-volume`
 
-- Summary: GetPersistentVolume gets a persistentvolume from the system by given persistentvolume name
+- Summary: GetPersistentVolume gets a persistentvolume from the system by given
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/persistentvolumes/{name}`
 - Auth: required
 - Body: none
@@ -2568,7 +2568,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core get-persistent-volume-json`
 
-- Summary: GetPersistentVolumeJSON gets a persistentvolume json from the system by given persistentvolume name
+- Summary: GetPersistentVolumeJSON gets a persistentvolume json from the system by
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/persistentvolumes/{name}/json`
 - Auth: required
 - Body: none
@@ -2589,7 +2589,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core get-resource-quota`
 
-- Summary: GetResourceQuota gets a resourceQuota from the system by given resourceQuota name
+- Summary: GetResourceQuota gets a resourceQuota from the system by given
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/resourcequotas/{name}`
 - Auth: required
 - Body: none
@@ -2600,7 +2600,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core get-resource-quota-json`
 
-- Summary: GetResourceQuotaJSON gets a resourceQuota json from the system by given resourceQuota name
+- Summary: GetResourceQuotaJSON gets a resourceQuota json from the system by given
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/resourcequotas/{name}/json`
 - Auth: required
 - Body: none
@@ -2733,7 +2733,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core list-cluster-gpu-summary`
 
-- Summary: ListClusterGPUSummary lists gpu summary of all nodes of the specified cluster.
+- Summary: ListClusterGPUSummary lists gpu summary of all nodes of the specified
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/gpusummary`
 - Auth: required
 - Body: none
@@ -2958,7 +2958,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core list-limit-ranges`
 
-- Summary: ListLimitRanges lists all limitranges in the specified cluster and namespace.
+- Summary: ListLimitRanges lists all limitranges in the specified cluster and
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/limitranges`
 - Auth: required
 - Body: none
@@ -3359,7 +3359,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core update-persistent-volume`
 
-- Summary: UpdatePersistentVolume updates a persistentvolume from the system by given persistentvolume name
+- Summary: UpdatePersistentVolume updates a persistentvolume from the system by given
 - HTTP: `PUT /apis/kpanda.io/v1alpha1/clusters/{cluster}/persistentvolumes/{name}`
 - Auth: required
 - Body: required
@@ -3402,7 +3402,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management core update-resource-quota`
 
-- Summary: UpdateResourceQuota updates a resourceQuota from the system by given resourceQuota name
+- Summary: UpdateResourceQuota updates a resourceQuota from the system by given
 - HTTP: `PUT /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/resourcequotas/{name}`
 - Auth: required
 - Body: required
@@ -3472,7 +3472,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
   - `--search-vendor` (query): searchVendor
   - `--search-device-uuid` (query): searchDeviceUUID
   - `--search-gpuid` (query): searchGPUID
-- Output: list path `items`; columns `modelName`, `cluster`, `coreUtilization`, `deviceUUID`, `frameBufferMemoryUtilization`, `nodeName`
+- Output: list path `items`; columns `modelName`, `allocatableCore`, `allocatableFrameBufferMemory`, `allocatedCore`, `allocatedFrameBufferMemory`, `cluster`
 
 ## EtcdBackupRestore
 
@@ -3619,6 +3619,296 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 - Flags:
   - `--cluster` (path, required): Cluster represents which cluster the etcd snapstore belongs to.
 
+## Gateway
+
+### `dce container-management gateway create-gateway`
+
+- Summary: Gateway_CreateGateway
+- HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/gateways`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gateway of the cluster
+  - `--namespace` (path, required): Namespace specified the namespace of gateway.
+
+### `dce container-management gateway create-gateway-class`
+
+- Summary: Gateway_CreateGatewayClass
+- HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/gatewayclasses`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gatewayClass of the
+
+### `dce container-management gateway create-route`
+
+- Summary: Gateway_CreateRoute
+- HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/routes`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the route of the cluster
+  - `--namespace` (path, required): Namespace is the namespace of route.
+
+### `dce container-management gateway delete-gateway`
+
+- Summary: Gateway_DeleteGateway
+- HTTP: `DELETE /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/gateways/{name}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gateway of the cluster
+  - `--namespace` (path, required): Namespace specified the namespace of gateway.
+  - `--name` (path, required): Name is the name of gateway.
+
+### `dce container-management gateway delete-gateway-class`
+
+- Summary: Gateway_DeleteGatewayClass
+- HTTP: `DELETE /apis/kpanda.io/v1alpha1/clusters/{cluster}/gatewayclasses/{name}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gatewayClass of the
+  - `--name` (path, required): Name is the name of gatewayClass.
+
+### `dce container-management gateway delete-route`
+
+- Summary: Gateway_DeleteRoute
+- HTTP: `DELETE /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/routes/{name}`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the route of the cluster
+  - `--namespace` (path, required): Namespace is the namespace of route.
+  - `--name` (path, required): Name is the name of route.
+
+### `dce container-management gateway get-gateway`
+
+- Summary: Gateway_GetGateway
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/gateways/{name}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gateway of the cluster
+  - `--namespace` (path, required): Namespace specified the namespace of gateway.
+  - `--name` (path, required): Name is the name of the ingress.
+
+### `dce container-management gateway get-gateway-class`
+
+- Summary: Gateway_GetGatewayClass
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/gatewayclasses/{name}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gatewayClass of the
+  - `--name` (path, required): Name is the name of gatewayClass.
+
+### `dce container-management gateway get-gateway-class-json`
+
+- Summary: Gateway_GetGatewayClassJSON
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/gatewayclasses/{name}/json`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gatewayClass of the
+  - `--name` (path, required): Name is the name of gatewayClass.
+
+### `dce container-management gateway get-gateway-json`
+
+- Summary: Gateway_GetGatewayJSON
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/gateways/{name}/json`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the ingress of the cluster
+  - `--namespace` (path, required): Namespace specified the namespace of ingress.
+  - `--name` (path, required): Name is the name of the ingress.
+
+### `dce container-management gateway get-route`
+
+- Summary: Gateway_GetRoute
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/routes/{name}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the route of the cluster
+  - `--namespace` (path, required): Namespace is the namespace of route.
+  - `--name` (path, required): Name is the name of route.
+  - `--route-type` (query, default `GATEWAY_ROUTE_TYPE_UNSPECIFIED`, one of: GATEWAY_ROUTE_TYPE_UNSPECIFIED|GATEWAY_ROUTE_TYPE_HTTP|GATEWAY_ROUTE_TYPE_GRPC): routeType
+
+### `dce container-management gateway get-route-json`
+
+- Summary: Gateway_GetRouteJSON
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/routes/{name}/json`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the route of the cluster
+  - `--namespace` (path, required): Namespace is the namespace of route.
+  - `--name` (path, required): Name is the name of route.
+  - `--route-type` (query, default `GATEWAY_ROUTE_TYPE_UNSPECIFIED`, one of: GATEWAY_ROUTE_TYPE_UNSPECIFIED|GATEWAY_ROUTE_TYPE_HTTP|GATEWAY_ROUTE_TYPE_GRPC): routeType
+
+### `dce container-management gateway list-accessible-gateway-classes`
+
+- Summary: lists all gatewayclasses in accessible
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/accessiblegatewayclasses`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, must be specified,
+  - `--page` (query, int32): Page is the number of pages at the beginning.
+  - `--page-size` (query, int32): Size is the number of every page displayed.
+  - `--sort-by` (query, default `SORT_BY_UNSPECIFIED`, one of: SORT_BY_UNSPECIFIED|field_name|state|workspace|cluster|namespace|created_at): SortBy defines sort field, please see message kpanda.io.api.types.SortBy.
+  - `--sort-dir` (query, default `desc`, one of: desc|asc): OrderBy defines the type of sort, default type asc, can also specify desc.
+  - `--name` (query): Name is the name of the ingress.
+  - `--label-selector` (query): LabelSelector is the format after labels.FormatLabels used to filter
+  - `--field-selector` (query): FieldSelector is the format after labels.FormatLabels used to filter
+  - `--fuzzy-name` (query): FuzzyName is used to fuzzy search by multiple parameters including name.
+- Output: list path `items`; columns `metadata.name`, `metadata.namespace`, `metadata.creationTimestamp`; pagination `offset`
+
+### `dce container-management gateway list-cluster-gateways`
+
+- Summary: Gateway_ListClusterGateways
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/gateways`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, must be specified,
+  - `--page` (query, int32): Page is the number of pages at the beginning.
+  - `--page-size` (query, int32): Size is the number of every page displayed.
+  - `--sort-by` (query, default `SORT_BY_UNSPECIFIED`, one of: SORT_BY_UNSPECIFIED|field_name|state|workspace|cluster|namespace|created_at): SortBy defines sort field, please see message kpanda.io.api.types.SortBy.
+  - `--sort-dir` (query, default `desc`, one of: desc|asc): OrderBy defines the type of sort, default type asc, can also specify desc.
+  - `--name` (query): Name is the name of the ingress.
+  - `--label-selector` (query): LabelSelector is the format after labels.FormatLabels used to filter
+  - `--field-selector` (query): FieldSelector is the format after labels.FormatLabels used to filter
+  - `--fuzzy-name` (query): FuzzyName is used to fuzzy search by multiple parameters including name.
+- Output: list path `items`; columns `metadata.name`, `metadata.namespace`, `metadata.creationTimestamp`; pagination `offset`
+
+### `dce container-management gateway list-cluster-routes`
+
+- Summary: Gateway_ListClusterRoutes
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/routes`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, must be specified,
+  - `--route-type` (query, default `GATEWAY_ROUTE_TYPE_UNSPECIFIED`, one of: GATEWAY_ROUTE_TYPE_UNSPECIFIED|GATEWAY_ROUTE_TYPE_HTTP|GATEWAY_ROUTE_TYPE_GRPC): Route type is the type of route, default is unspecified.
+  - `--page` (query, int32): Page is the number of pages at the beginning.
+  - `--page-size` (query, int32): Size is the number of every page displayed.
+  - `--sort-by` (query, default `SORT_BY_UNSPECIFIED`, one of: SORT_BY_UNSPECIFIED|field_name|state|workspace|cluster|namespace|created_at): SortBy defines sort field, please see message kpanda.io.api.types.SortBy.
+  - `--sort-dir` (query, default `desc`, one of: desc|asc): OrderBy defines the type of sort, default type asc, can also specify desc.
+  - `--name` (query): Name is the name of the routes.
+  - `--label-selector` (query): LabelSelector is the format after labels.FormatLabels used to filter
+  - `--field-selector` (query): FieldSelector is the format after labels.FormatLabels used to filter
+  - `--fuzzy-name` (query): FuzzyName is used to fuzzy search by multiple parameters including name.
+- Output: list path `items`; columns `name`, `namespace`, `creationTimestamp`, `cluster`, `routeType`, `status`; pagination `offset`
+
+### `dce container-management gateway list-gateway-classes`
+
+- Summary: Gateway_ListGatewayClasses
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/gatewayclasses`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, must be specified,
+  - `--page` (query, int32): Page is the number of pages at the beginning.
+  - `--page-size` (query, int32): Size is the number of every page displayed.
+  - `--sort-by` (query, default `SORT_BY_UNSPECIFIED`, one of: SORT_BY_UNSPECIFIED|field_name|state|workspace|cluster|namespace|created_at): SortBy defines sort field, please see message kpanda.io.api.types.SortBy.
+  - `--sort-dir` (query, default `desc`, one of: desc|asc): OrderBy defines the type of sort, default type asc, can also specify desc.
+  - `--name` (query): Name is the name of the ingress.
+  - `--label-selector` (query): LabelSelector is the format after labels.FormatLabels used to filter
+  - `--field-selector` (query): FieldSelector is the format after labels.FormatLabels used to filter
+  - `--fuzzy-name` (query): FuzzyName is used to fuzzy search by multiple parameters including name.
+- Output: list path `items`; columns `metadata.name`, `metadata.namespace`, `metadata.creationTimestamp`; pagination `offset`
+
+### `dce container-management gateway list-gateway-pods`
+
+- Summary: Gateway_ListGatewayPods
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/gateways/{gateway}/pods`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster.
+  - `--namespace` (path, required): Namespace specified the namespace of gateway.
+  - `--gateway` (path, required): Name is the gateway of the gateway.
+  - `--name` (query): Name is to filter pods by pod name
+  - `--page` (query, int32): Page is the page number.
+  - `--page-size` (query, int32): PageSize is the number of items per page.
+  - `--sort-by` (query, default `SORT_BY_UNSPECIFIED`, one of: SORT_BY_UNSPECIFIED|field_name|state|workspace|cluster|namespace|created_at): SortBy determines the pod list order reference.
+  - `--sort-dir` (query, default `desc`, one of: desc|asc): OrderBy determines the pod list order.
+- Output: list path `items`; columns `metadata.name`, `metadata.namespace`, `status.phase`, `metadata.creationTimestamp`; pagination `offset`
+
+### `dce container-management gateway list-gateways`
+
+- Summary: Gateway_ListGateways
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/gateways`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gateways of the cluster
+  - `--namespace` (path, required): Namespace specified the namespace of gateway.
+  - `--page` (query, int32): Page is the number of pages at the beginning.
+  - `--page-size` (query, int32): Size is the number of every page displayed.
+  - `--sort-by` (query, default `SORT_BY_UNSPECIFIED`, one of: SORT_BY_UNSPECIFIED|field_name|state|workspace|cluster|namespace|created_at): SortBy defines sort field, please see message kpanda.io.api.types.SortBy.
+  - `--sort-dir` (query, default `desc`, one of: desc|asc): OrderBy defines the type of sort, default type asc, can also specify desc.
+  - `--name` (query): Name is the name of the ingress.
+  - `--label-selector` (query): LabelSelector is the format after labels.FormatLabels used to filter
+  - `--field-selector` (query): FieldSelector is the format after labels.FormatLabels used to filter
+  - `--fuzzy-name` (query): FuzzyName is used to fuzzy search by multiple parameters including name.
+- Output: list path `items`; columns `metadata.name`, `metadata.namespace`, `metadata.creationTimestamp`; pagination `offset`
+
+### `dce container-management gateway list-routes`
+
+- Summary: Gateway_ListRoutes
+- HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/routes`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the route of the cluster
+  - `--namespace` (path, required): Namespace is the namespace of route.
+  - `--route-type` (query, default `GATEWAY_ROUTE_TYPE_UNSPECIFIED`, one of: GATEWAY_ROUTE_TYPE_UNSPECIFIED|GATEWAY_ROUTE_TYPE_HTTP|GATEWAY_ROUTE_TYPE_GRPC): Route type is the type of route, default is unspecified.
+  - `--page` (query, int32): Page is the number of pages at the beginning.
+  - `--page-size` (query, int32): Size is the number of every page displayed.
+  - `--sort-by` (query, default `SORT_BY_UNSPECIFIED`, one of: SORT_BY_UNSPECIFIED|field_name|state|workspace|cluster|namespace|created_at): SortBy defines sort field, please see message kpanda.io.api.types.SortBy.
+  - `--sort-dir` (query, default `desc`, one of: desc|asc): OrderBy defines the type of sort, default type asc, can also specify desc.
+  - `--name` (query): Name is the name of the routes.
+  - `--label-selector` (query): LabelSelector is the format after labels.FormatLabels used to filter
+  - `--field-selector` (query): FieldSelector is the format after labels.FormatLabels used to filter
+  - `--fuzzy-name` (query): FuzzyName is used to fuzzy search by multiple parameters including name.
+- Output: list path `items`; columns `name`, `namespace`, `creationTimestamp`, `cluster`, `routeType`, `status`; pagination `offset`
+
+### `dce container-management gateway update-gateway`
+
+- Summary: Gateway_UpdateGateway
+- HTTP: `PUT /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/gateways/{name}`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gateway of the cluster
+  - `--namespace` (path, required): Namespace specified the namespace of gateway.
+  - `--name` (path, required): Name is the name of gateway.
+
+### `dce container-management gateway update-gateway-class`
+
+- Summary: Gateway_UpdateGatewayClass
+- HTTP: `PUT /apis/kpanda.io/v1alpha1/clusters/{cluster}/gatewayclasses/{name}`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the gatewayClass of the
+  - `--name` (path, required): Name is the name of gatewayClass.
+
+### `dce container-management gateway update-route`
+
+- Summary: Gateway_UpdateRoute
+- HTTP: `PUT /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/routes/{name}`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): Cluster is the name of the cluster, return all the route of the cluster
+  - `--namespace` (path, required): Namespace is the namespace of route.
+  - `--name` (path, required): Name is the name of route.
+
 ## Image
 
 ### `dce container-management image detect-kangaroo`
@@ -3628,6 +3918,17 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 - Auth: required
 - Body: none
 - Flags: none
+
+### `dce container-management image get-image-info`
+
+- Summary: GetImageInfo return the image detail information
+- HTTP: `GET /apis/kpanda.io/v1alpha1/registries/imageinfo`
+- Auth: required
+- Body: none
+- Flags:
+  - `--name` (query): Name is the image name.
+  - `--cluster` (query): Cluster is the current cluster.
+  - `--namespace` (query): Namespace is the current namespace.
 
 ### `dce container-management image list-artifacts`
 
@@ -3711,7 +4012,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management networking create-network-policy`
 
-- Summary: CreateNetworkPolicy creates a networkpolicy in the specified cluster and namespace.
+- Summary: CreateNetworkPolicy creates a networkpolicy in the specified cluster and
 - HTTP: `POST /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/networkpolicies`
 - Auth: required
 - Body: required
@@ -3754,7 +4055,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management networking get-ingress-json`
 
-- Summary: GetIngressJSON gets the ingress by namespace and name, returns a string in JSON
+- Summary: GetIngressJSON gets the ingress by namespace and name, returns a string in
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/ingresses/{name}/json`
 - Auth: required
 - Body: none
@@ -3777,7 +4078,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management networking get-network-policy-json`
 
-- Summary: GetNetworkPolicyJSON gets the networkpolicy by namespace and name, returns a string in JSON
+- Summary: GetNetworkPolicyJSON gets the networkpolicy by namespace and name, returns
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/networkpolicies/{name}/json`
 - Auth: required
 - Body: none
@@ -3807,7 +4108,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management networking list-cluster-network-policies`
 
-- Summary: ListClusterNetworkPolicies lists all networkpolicies in the specified cluster.
+- Summary: ListClusterNetworkPolicies lists all networkpolicies in the specified
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/networkpolicies`
 - Auth: required
 - Body: none
@@ -3871,7 +4172,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management networking list-network-policies`
 
-- Summary: ListNetworkPolicies lists all networkpolicies in the specified cluster and namespace.
+- Summary: ListNetworkPolicies lists all networkpolicies in the specified cluster and
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/networkpolicies`
 - Auth: required
 - Body: none
@@ -3911,7 +4212,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management networking update-network-policy`
 
-- Summary: UpdateNetworkPolicy updates the specified networkpolicy, the body must be a JSON
+- Summary: UpdateNetworkPolicy updates the specified networkpolicy, the body must be a
 - HTTP: `PUT /apis/kpanda.io/v1alpha1/clusters/{cluster}/namespaces/{namespace}/networkpolicies/{name}`
 - Auth: required
 - Body: required
@@ -4227,7 +4528,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 - Auth: required
 - Body: none
 - Flags: none
-- Output: list path `gpuSetting`; columns `type`, `alias`, `isDynamic`
+- Output: list path `gpuSetting`; columns `type`, `alias`, `isDynamic`, `provider`
 
 ## Storage
 
@@ -4305,7 +4606,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management storage list-accessible-storage-classes`
 
-- Summary: ListAccessibleStorageClasses lists all storageclasses in accessible clusters
+- Summary: ListAccessibleStorageClasses lists all storageclasses in accessible
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/accessiblestorageclasses`
 - Auth: required
 - Body: none
@@ -4324,7 +4625,7 @@ dce container-management cluster list-clusters -o json | jq '.items[].name'
 
 ### `dce container-management storage list-cluster-volume-snapshots`
 
-- Summary: ListClusterVolumeSnapshots will list all VolumeSnapshot by given cluster and regardless of
+- Summary: ListClusterVolumeSnapshots will list all VolumeSnapshot by given cluster
 - HTTP: `GET /apis/kpanda.io/v1alpha1/clusters/{cluster}/volumesnapshots`
 - Auth: required
 - Body: none

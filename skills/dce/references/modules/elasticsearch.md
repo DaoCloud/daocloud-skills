@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `dab35e0f167a06a05f0547c89bc898b662341987`
-- Files: `docs/openapi/mcamel/elasticsearch/elasticsearch-v0.28.0.json`
-- Resolved SHA: `dab35e0f167a06a05f0547c89bc898b662341987`
+- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
+- Files: `docs/openapi/mcamel/elasticsearch/elasticsearch-v0.29.0.json`
+- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 
 ## CloudShellService
 

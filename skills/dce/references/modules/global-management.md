@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3`
-- Files: `docs/openapi/ghippo/v0.45.1.json`
-- Resolved SHA: `4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3`
+- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
+- Files: `docs/openapi/ghippo/v0.49.0.json`
+- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 
 ## About
 
@@ -597,7 +597,7 @@ dce global-management group create-group \
   - `--search` (query): 搜索关键字
   - `--page` (query, default `1`, int32): 搜索偏移量
   - `--page-size` (query, default `20`, int32): 分页大小
-- Output: list path `items`; columns `name`, `id`, `createdAt`, `description`, `email`, `updatedAt`; pagination `offset`
+- Output: list path `items`; columns `name`, `id`, `createdAt`, `description`, `email`, `firstname`; pagination `offset`
 
 ### `dce global-management group list-group-roles`
 
@@ -663,6 +663,16 @@ dce global-management group update-group --id <id> \
 - Body: required
 - Flags:
   - `--id` (path, required): id
+
+## HeaderActions
+
+### `dce global-management headeractions info`
+
+- Summary: HeaderActions_Info
+- HTTP: `GET /apis/ghippo.io/v1alpha1/header-actions/info`
+- Auth: required
+- Body: none
+- Flags: none
 
 ## IDP
 
@@ -1155,7 +1165,7 @@ dce global-management group update-group --id <id> \
 - Auth: required
 - Body: none
 - Flags: none
-- Output: list path `categories`; columns `name`
+- Output: list path `categories`; columns `name`, `displayMode`
 
 ## Publish
 
@@ -1271,7 +1281,7 @@ echo '{
   - `--page` (query, default `1`, int32): page
   - `--page-size` (query, default `20`, int32): pageSize
   - `--search` (query): search
-- Output: list path `items`; columns `name`, `type`, `id`; pagination `offset`
+- Output: list path `items`; columns `name`, `type`, `id`, `firstname`, `lastname`; pagination `offset`
 
 ### `dce global-management role list-members-folders-by-folder-role`
 
@@ -1284,7 +1294,7 @@ echo '{
   - `--page` (query, default `1`, int32): page
   - `--page-size` (query, default `20`, int32): pageSize
   - `--search` (query): search
-- Output: list path `items`; columns `folderAlias`, `folderId`, `memberId`, `memberName`, `memberType`; pagination `offset`
+- Output: list path `items`; columns `firstname`, `folderAlias`, `folderId`, `lastname`, `memberId`, `memberName`; pagination `offset`
 
 ### `dce global-management role list-members-workspaces-by-workspace-role`
 
@@ -1297,7 +1307,7 @@ echo '{
   - `--page` (query, default `1`, int32): page
   - `--page-size` (query, default `20`, int32): pageSize
   - `--search` (query): search
-- Output: list path `items`; columns `memberId`, `memberName`, `memberType`, `workspaceAlias`, `workspaceId`; pagination `offset`
+- Output: list path `items`; columns `firstname`, `lastname`, `memberId`, `memberName`, `memberType`, `workspaceAlias`; pagination `offset`
 
 ### `dce global-management role list-roles`
 
@@ -2297,7 +2307,7 @@ dce global-management workspace create-workspace \
   - `--member-name` (query): memberName
   - `--member-type` (query): memberType
   - `--role-name` (query): roleName
-- Output: list path `items`; columns `folderId`, `memberId`, `memberName`, `memberType`, `roleName`; pagination `offset`
+- Output: list path `items`; columns `firstname`, `folderId`, `lastname`, `memberId`, `memberName`, `memberType`; pagination `offset`
 
 ### `dce global-management workspace list-members-roles-by-workspace`
 
@@ -2310,7 +2320,7 @@ dce global-management workspace create-workspace \
   - `--page` (query, default `1`, int32): page
   - `--page-size` (query, default `20`, int32): pageSize
   - `--member-name` (query): memberName
-- Output: list path `items`; columns `memberId`, `memberName`, `memberType`, `roleName`, `workspaceId`; pagination `offset`
+- Output: list path `items`; columns `firstname`, `lastname`, `memberId`, `memberName`, `memberType`, `roleName`; pagination `offset`
 
 ### `dce global-management workspace list-resource-quota-types`
 
@@ -2352,7 +2362,7 @@ dce global-management workspace create-workspace \
 - Flags:
   - `--workspace-id` (path, required, int32): workspaceId
   - `--resource-name` (path, required): resourceName
-- Output: list path `gpus`; columns `type`, `alias`, `isDynamic`
+- Output: list path `gpus`; columns `type`, `alias`, `isDynamic`, `provider`
 
 ### `dce global-management workspace list-workspaces`
 

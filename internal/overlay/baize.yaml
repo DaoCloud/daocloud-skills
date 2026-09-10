@@ -13,6 +13,14 @@ commands:
   query-time-series-vectors:
     ignore: true
 
+  # Upstream v0.29.1 declares both .../secret-options/{secretName} and
+  # .../secret-options/{secret_name}; the latter has no operationId, so lathe
+  # falls back to a path-derived name. It duplicates get-secret-options.
+  # Ignored here so the fallback command is never generated; drop this entry
+  # once upstream removes the duplicate path.
+  get-baize-io-v1alpha1-workspaces-workspace-clusters-cluster-namespaces-namespace-secret-options-secret-name:
+    ignore: true
+
   list-devices-gp-us:
     short: "List GPU devices"
     aliases: [list-devices-gpus, ls-gpus]
@@ -23,7 +31,7 @@ commands:
   delete-analysis: &workspace-id-param
     params:
       workspace: { help: "Workspace ID" }
-  get-cluster-gpu-settings: *workspace-id-param
+  list-cluster-gpu-settings: *workspace-id-param
   create-dataset: *workspace-id-param
   dataset-do-action: *workspace-id-param
   delete-dataset: *workspace-id-param
@@ -146,6 +154,12 @@ commands:
     params:
       page.page: { default: "1" }
       page.pageSize: { default: "20" }
+
+  # Upstream v0.29.1 leaks a protobuf field comment into the description of the
+  # {cluster} path parameter, so it renders as "int32 workspace = 1;".
+  get-prerequisite:
+    params:
+      cluster: { help: "Cluster name" }
 
   list-clusters:
     short: "List clusters"

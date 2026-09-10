@@ -1,29 +1,28 @@
+# All daocloud-api-docs sources are pinned to the same upstream commit
+# (main HEAD as of 2026-09-04). Bump them together when refreshing specs.
 sources:
   ghippo:
     display_name: global-management
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    # pinned to main HEAD as of 2026-05-11; bump when upgrading ghippo version
-    pinned_tag: 4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/ghippo/v0.45.1.json
+        - docs/openapi/ghippo/v0.49.0.json
 
   kpanda:
     display_name: container-management
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    # pinned to main HEAD as of 2026-05-11; bump when upgrading kpanda version
-    pinned_tag: 4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/kpanda/v0.46.0.json
+        - docs/openapi/kpanda/v0.50.0.json
 
   insight:
     display_name: insight
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    # pinned to main HEAD as of 2026-05-11; bump when upgrading kpanda version
-    pinned_tag: 4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
@@ -32,7 +31,7 @@ sources:
   gmagpie:
     display_name: operations-management
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: 0bb0ec92f301b9c8a56deafebd4138e333f92cec
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
@@ -41,16 +40,20 @@ sources:
   baize:
     display_name: ai-lab
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: 9fd0dfafa1400e6d98b14b85c9a27cd1c151f9bd
+    # Upstream reset the baize version scheme in 2026: the 0.111.x line was
+    # abandoned and numbering restarted at 0.2x.x. v0.29.1 (2026-09-02) is
+    # NEWER than v0.111.2 (2024-11-05), so do not pick the file by sorting
+    # version numbers -- always check the upstream commit date.
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/baize/v0.111.2.json
+        - docs/openapi/baize/v0.29.1.json
 
   amamba:
     display_name: workbench
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: 74a87ca82821c5c9ca1b07d1cf8bf037185d1408
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
@@ -59,25 +62,25 @@ sources:
   elasticsearch:
     display_name: elasticsearch
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/mcamel/elasticsearch/elasticsearch-v0.28.0.json
+        - docs/openapi/mcamel/elasticsearch/elasticsearch-v0.29.0.json
 
   kafka:
     display_name: kafka
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/mcamel/kafka/kafka-v0.30.0.json
+        - docs/openapi/mcamel/kafka/kafka-v0.31.0.json
 
   minio:
     display_name: minio
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
@@ -86,7 +89,7 @@ sources:
   mongodb:
     display_name: mongodb
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
@@ -95,34 +98,34 @@ sources:
   mysql:
     display_name: mysql
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/mcamel/mysql/mysql-v0.30.1.json
+        - docs/openapi/mcamel/mysql/mysql-v0.31.0.json
 
   postgresql:
     display_name: postgresql
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/mcamel/postgresql/postgresql-v0.22.0.json
+        - docs/openapi/mcamel/postgresql/postgresql-v0.22.1.json
 
   rabbitmq:
     display_name: rabbitmq
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/mcamel/rabbitmq/rabbitmq-v0.32.0.json
+        - docs/openapi/mcamel/rabbitmq/rabbitmq-v0.33.2.json
 
   redis:
     display_name: redis
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
@@ -131,56 +134,56 @@ sources:
   rocketmq:
     display_name: rocketmq
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/mcamel/rocketmq/rocketmq-v0.19.0.json
+        - docs/openapi/mcamel/rocketmq/rocketmq-v0.20.0.json
 
   seaweedfs:
     display_name: seaweedfs
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: dab35e0f167a06a05f0547c89bc898b662341987
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/mcamel/seaweedfs/seaweedfs-v0.1.3.json
+        - docs/openapi/mcamel/seaweedfs/seaweedfs-v0.3.0.json
 
   leopard:
     display_name: billing-center
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: 7a68df001114314cc6face7f60ba5c637c7942cd
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/leopard/v0.15.0.json
+        - docs/openapi/leopard/v0.17.0.json
 
   hydra:
     display_name: llm-studio
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: c05fd6920a216f94b31c8cb42db93e57cebef1f6
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/hydra/v0.16.1.json
+        - docs/openapi/hydra/v0.17.0.json
 
   virtnest:
     display_name: virtual-machines
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: 74a87ca82821c5c9ca1b07d1cf8bf037185d1408
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/virtnest/v0.20.0.json
+        - docs/openapi/virtnest/v0.21.0.json
 
   skoala:
     display_name: microservice-engine
     repo_url: https://github.com/DaoCloud/daocloud-api-docs.git
-    pinned_tag: 9fd0dfafa1400e6d98b14b85c9a27cd1c151f9bd
+    pinned_tag: ceaf84ad18936109ce070f14c2cc281b6a7f5b43
     backend: swagger
     swagger:
       files:
-        - docs/openapi/skoala/v0.55.0.json
+        - docs/openapi/skoala/v0.57.0.json
 
   crane:
     display_name: business-cockpit

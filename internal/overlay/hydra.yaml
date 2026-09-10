@@ -1,1 +1,8 @@
-commands: {}
+commands:
+  # hydra v0.17.0 redefines v1alpha1ModelServing as the two-field AutoRoute
+  # picker message, which collapses the generated default columns to
+  # name/accessModelName. The API still returns the full object; pin the
+  # columns that v0.16.1 produced until upstream fixes the name collision.
+  list-model-serving:
+    output:
+      default_columns: [name, namespace, creationTimestamp, id, modelName, accessModelName]
