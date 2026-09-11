@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `0bb0ec92f301b9c8a56deafebd4138e333f92cec`
+- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 - Files: `docs/openapi/gmagpie/v0.13.0.json`
-- Resolved SHA: `0bb0ec92f301b9c8a56deafebd4138e333f92cec`
+- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 
 ## Fee
 

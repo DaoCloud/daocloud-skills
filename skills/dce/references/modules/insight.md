@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3`
+- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 - Files: `docs/openapi/insight/v0.41.0.json`
-- Resolved SHA: `4bc92dd4c0c1637b4257f69e26eb8dd6cdd269f3`
+- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 
 ## Alert
 

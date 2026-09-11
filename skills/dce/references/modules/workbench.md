@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `74a87ca82821c5c9ca1b07d1cf8bf037185d1408`
+- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 - Files: `docs/openapi/amamba/v0.132.0.json`
-- Resolved SHA: `74a87ca82821c5c9ca1b07d1cf8bf037185d1408`
+- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 
 ## Aggregation
 

@@ -1,18 +1,15 @@
 package main
 
 import (
-	"errors"
-	"fmt"
 	"os"
 
-	"github.com/lathe-cli/lathe/pkg/config"
 	"github.com/lathe-cli/lathe/pkg/lathe"
-	"github.com/lathe-cli/lathe/pkg/runtime"
 
 	dceskills "github.com/DaoCloud/daocloud-skills"
 	generated "github.com/DaoCloud/daocloud-skills/internal/generated"
 )
 
+// Version, Commit, and Date are injected by the Makefile via -ldflags -X.
 var (
 	Version = "dev"
 	Commit  = "none"
@@ -20,28 +17,11 @@ var (
 )
 
 func main() {
-	m, err := config.Load(dceskills.CLIConfig)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "error:", err)
-		os.Exit(1)
-	}
-	config.Bind(m)
-
-	lathe.Version = Version
-	lathe.Commit = Commit
-	lathe.Date = Date
-
-	root := lathe.NewApp(m)
-	if err := generated.MountModules(root); err != nil {
-		fmt.Fprintln(os.Stderr, "error:", err)
-		os.Exit(1)
-	}
-
-	if err := root.Execute(); err != nil {
-		if errors.Is(err, runtime.ErrNotAuthenticated) {
-			fmt.Fprintf(os.Stderr, "not logged in — run: dce auth login --hostname <host>\n")
-			os.Exit(2)
-		}
-		os.Exit(1)
-	}
+	os.Exit(lathe.Run(lathe.RunOptions{
+		Manifest: dceskills.CLIConfig,
+		Mount:    generated.MountModules,
+		Version:  Version,
+		Commit:   Commit,
+		Date:     Date,
+	}))
 }

@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `7a68df001114314cc6face7f60ba5c637c7942cd`
-- Files: `docs/openapi/leopard/v0.15.0.json`
-- Resolved SHA: `7a68df001114314cc6face7f60ba5c637c7942cd`
+- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
+- Files: `docs/openapi/leopard/v0.17.0.json`
+- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 
 ## Bill
 

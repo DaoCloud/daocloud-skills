@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `9fd0dfafa1400e6d98b14b85c9a27cd1c151f9bd`
-- Files: `docs/openapi/baize/v0.111.2.json`
-- Resolved SHA: `9fd0dfafa1400e6d98b14b85c9a27cd1c151f9bd`
+- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
+- Files: `docs/openapi/baize/v0.29.1.json`
+- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
 
 ## AnalysisManagement
 
@@ -61,7 +61,17 @@
 
 ## ClusterService
 
-### `dce ai-lab clusterservice get-cluster-gpu-settings`
+### `dce ai-lab clusterservice get-prerequisite`
+
+- Summary: 需要 Operator 权限：operator-overview.get
+- HTTP: `GET /apis/baize.io/v1alpha1/clusters/{cluster}/prerequisites/{prerequisite}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): Cluster name
+  - `--prerequisite` (path, required, one of: PREREQUISITE_UNSPECIFIED|Dind|Kueue|Preflight|Kcover|InsightAgent): prerequisite
+
+### `dce ai-lab clusterservice list-cluster-gpu-settings`
 
 - Summary: 获取集群 GPU 配置
 - HTTP: `GET /apis/baize.io/v1alpha1/clusters/{cluster}/settings/gpu-resources`
@@ -70,7 +80,7 @@
 - Flags:
   - `--cluster` (path, required): cluster
   - `--workspace` (query, int32): Workspace ID
-- Output: list path `items`; columns `type`, `alias`
+- Output: list path `items`; columns `type`, `alias`, `isDynamic`, `provider`
 
 ### `dce ai-lab clusterservice list-cluster-namespaces`
 
@@ -104,6 +114,23 @@
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
 - Output: list path `items`; columns `name`, `cluster`, `clusterStatus`
 
+### `dce ai-lab clusterservice list-cluster-nodes`
+
+- Summary: 额外支持的搜索、排序字段：name,gpuVendor
+- HTTP: `GET /apis/baize.io/v1alpha1/clusters/{cluster}/nodes`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--resource-flavor` (query): resourceFlavor
+  - `--gpu-model` (query): gpuModel
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+- Output: list path `items`; columns `name`, `status.phase`, `arch`
+
 ### `dce ai-lab clusterservice list-clusters`
 
 - Summary: List clusters
@@ -117,7 +144,7 @@
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `name`, `clusterStatus`, `withAiSuite`, `withMetricsServer`
+- Output: list path `items`; columns `name`, `clusterStatus`, `withAiSuite`, `withDataset`, `withMetricsServer`
 
 ### `dce ai-lab clusterservice list-clusters2`
 
@@ -132,7 +159,7 @@
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `name`, `clusterStatus`, `withAiSuite`, `withMetricsServer`
+- Output: list path `items`; columns `name`, `clusterStatus`, `withAiSuite`, `withDataset`, `withMetricsServer`
 
 ### `dce ai-lab clusterservice list-pv-cs`
 
@@ -183,6 +210,17 @@
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
 - Output: list path `items`; columns `name`, `allowReclaim`, `cluster`, `isDefault`, `provisioner`
 
+## CurrentUserService
+
+### `dce ai-lab currentuserservice list-current-user-ssh-keys`
+
+- Summary: CurrentUserService_ListCurrentUserSSHKeys
+- HTTP: `GET /apis/baize.io/v1alpha1/current-user/ssh-keys`
+- Auth: required
+- Body: none
+- Flags: none
+- Output: list path `items`; columns `name`, `algorithm`, `expiresAt`, `fingerprint`, `state`
+
 ## DatasetManagement
 
 ### `dce ai-lab datasetmanagement create-dataset`
@@ -195,7 +233,6 @@
   - `--workspace` (path, required, int32): Workspace ID
   - `--cluster` (path, required): cluster
   - `--namespace` (path, required): namespace
-- Output: list path `sharedStoWorkspaces`; columns `alias`, `workspaceId`
 
 ### `dce ai-lab datasetmanagement dataset-do-action`
 
@@ -208,7 +245,6 @@
   - `--cluster` (path, required): cluster
   - `--namespace` (path, required): namespace
   - `--name` (path, required): name
-- Output: list path `sharedStoWorkspaces`; columns `alias`, `workspaceId`
 
 ### `dce ai-lab datasetmanagement delete-dataset`
 
@@ -221,7 +257,6 @@
   - `--cluster` (path, required): cluster
   - `--namespace` (path, required): namespace
   - `--name` (path, required): name
-- Output: list path `sharedStoWorkspaces`; columns `alias`, `workspaceId`
 
 ### `dce ai-lab datasetmanagement get-dataset`
 
@@ -234,7 +269,6 @@
   - `--cluster` (path, required): cluster
   - `--namespace` (path, required): namespace
   - `--name` (path, required): name
-- Output: list path `sharedStoWorkspaces`; columns `alias`, `workspaceId`
 
 ### `dce ai-lab datasetmanagement get-dataset-conda-options`
 
@@ -245,6 +279,19 @@
 - Flags: none
 - Output: list path `pythonVersions`
 
+### `dce ai-lab datasetmanagement get-dataset-reference-status`
+
+- Summary: 需要 Developer 权限：devloper-data-management.get
+- HTTP: `GET /apis/baize.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/datasets/{name}/reference-status`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
+  - `--cluster` (path, required): cluster
+  - `--namespace` (path, required): namespace
+  - `--name` (path, required): name
+- Output: list path `workspaces`; columns `referenced`, `workspaceId`
+
 ### `dce ai-lab datasetmanagement get-dataset-sync-process`
 
 - Summary: 需要 Developer 权限：devloper-data-management.get
@@ -253,6 +300,18 @@
 - Body: none
 - Flags:
   - `--workspace` (path, required, int32): Workspace ID
+  - `--cluster` (path, required): cluster
+  - `--namespace` (path, required): namespace
+  - `--name` (path, required): name
+
+### `dce ai-lab datasetmanagement get-dataset-upload`
+
+- Summary: 需要 Developer 权限：devloper-data-management.get
+- HTTP: `GET /apis/baize.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/datasets/{name}/upload`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
   - `--cluster` (path, required): cluster
   - `--namespace` (path, required): namespace
   - `--name` (path, required): name
@@ -274,6 +333,19 @@
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
 - Output: list path `items`; columns `name`, `namespace`, `cluster`
+
+### `dce ai-lab datasetmanagement get-secret-options`
+
+- Summary: DatasetManagement_GetSecretOptions
+- HTTP: `GET /apis/baize.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/secret-options/{secretName}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
+  - `--cluster` (path, required): cluster
+  - `--namespace` (path, required): namespace
+  - `--secret-name` (path, required): secretName
+  - `--source-type` (query, default `DATA_SOURCE_TYPE_UNSPECIFIED`, one of: DATA_SOURCE_TYPE_UNSPECIFIED|GIT|S3|HTTP|PVC|NFS|REFERENCE|HUGGING_FACE|MODEL_SCOPE|MANUAL|CONDA|DATABASE|HADOOP): - MANUAL: 手工上传数据集。数据写入由临时 SFTP 会话完成。
 
 ### `dce ai-lab datasetmanagement list-dataset-events`
 
@@ -303,6 +375,7 @@
   - `--workspace` (path, required, int32): Workspace ID
   - `--cluster` (query): cluster
   - `--namespace` (query): namespace
+  - `--shared-to` (query, int32): sharedTo
   - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
   - `--page.page` (query, default `1`, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
@@ -319,7 +392,7 @@ dce ai-lab datasetmanagement list-datasets \
 
 ### `dce ai-lab datasetmanagement list-datasets2`
 
-- Summary: 额外支持的搜索、排序字段：type,uri,phase,share,sharedStoWorkspaces
+- Summary: 额外支持的搜索、排序字段：type,uri,phase,share,sharedToWorkspaces
 - HTTP: `GET /apis/baize.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/datasets`
 - Auth: required
 - Body: none
@@ -327,12 +400,37 @@ dce ai-lab datasetmanagement list-datasets \
   - `--workspace` (path, required, int32): Workspace ID
   - `--cluster` (path, required): cluster
   - `--namespace` (path, required): namespace
+  - `--shared-to` (query, int32): sharedTo
   - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
   - `--page.page` (query, default `1`, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
 - Output: list path `items`; columns `name`, `namespace`, `status.phase`, `creationTimestamp`, `cluster`, `description`
+
+### `dce ai-lab datasetmanagement start-dataset-upload`
+
+- Summary: 需要 Developer 权限：devloper-data-management.update
+- HTTP: `POST /apis/baize.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/datasets/{name}/upload`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
+  - `--cluster` (path, required): cluster
+  - `--namespace` (path, required): namespace
+  - `--name` (path, required): name
+
+### `dce ai-lab datasetmanagement stop-dataset-upload`
+
+- Summary: 需要 Developer 权限：devloper-data-management.update
+- HTTP: `DELETE /apis/baize.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/datasets/{name}/upload`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
+  - `--cluster` (path, required): cluster
+  - `--namespace` (path, required): namespace
+  - `--name` (path, required): name
 
 ### `dce ai-lab datasetmanagement update-dataset`
 
@@ -345,7 +443,6 @@ dce ai-lab datasetmanagement list-datasets \
   - `--cluster` (path, required): cluster
   - `--namespace` (path, required): namespace
   - `--name` (path, required): name
-- Output: list path `sharedStoWorkspaces`; columns `alias`, `workspaceId`
 
 ### `dce ai-lab datasetmanagement validate-data-source-secrets`
 
@@ -354,6 +451,15 @@ dce ai-lab datasetmanagement list-datasets \
 - Auth: required
 - Body: required
 - Flags: none
+
+### `dce ai-lab datasetmanagement validate-database`
+
+- Summary: DatasetManagement_ValidateDatabase
+- HTTP: `POST /apis/baize.io/v1alpha1/datasets/validate-database`
+- Auth: required
+- Body: required
+- Flags: none
+- Output: list path `tables`
 
 ## DeviceService
 
@@ -372,6 +478,16 @@ dce ai-lab datasetmanagement list-datasets \
 - Output: list path `items`; columns `modelName`, `cluster`, `deviceUUID`, `nodeIP`, `nodeName`, `serialNumber`
 
 ## ImageService
+
+### `dce ai-lab imageservice get-image-info`
+
+- Summary: GetImageInfo resolves image metadata from an image reference.
+- HTTP: `GET /apis/baize.io/v1alpha1/workspaces/{workspace}/imageinfo`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
+  - `--image` (query): Image is the full image reference (e.g., "nginx:latest" or "10.5.10.120/docker.io/library/nginx:latest").
 
 ### `dce ai-lab imageservice list-artifacts`
 
@@ -470,6 +586,19 @@ dce ai-lab datasetmanagement list-datasets \
   - `--name` (path, required): name
 - Output: list path `models`; columns `name`, `modelPath`, `version`
 
+### `dce ai-lab inferenceservingmanagement get-inference-image-list`
+
+- Summary: 获取内置的推理服务镜像列表
+- HTTP: `GET /apis/baize.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/inference-images`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
+  - `--cluster` (path, required): cluster
+  - `--namespace` (path, required): namespace
+  - `--type` (query, default `FRAMEWORK_TYPE_UNSPECIFIED`, one of: FRAMEWORK_TYPE_UNSPECIFIED|FRAMEWORK_TYPE_TRITON|FRAMEWORK_TYPE_VLLM|FRAMEWORK_TYPE_CUSTOM): type
+- Output: list path `items`
+
 ### `dce ai-lab inferenceservingmanagement get-inference-serving`
 
 - Summary: 获取推理服务
@@ -528,7 +657,7 @@ dce ai-lab datasetmanagement list-datasets \
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `name`, `namespace`, `status.phase`, `creationTimestamp`, `authType`, `cluster`
+- Output: list path `items`; columns `name`, `namespace`, `status.phase`, `creationTimestamp`, `cluster`, `image`
 - Example:
 
 ```
@@ -552,7 +681,7 @@ dce ai-lab inferenceservingmanagement list-inference-servings \
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `name`, `namespace`, `status.phase`, `creationTimestamp`, `authType`, `cluster`
+- Output: list path `items`; columns `name`, `namespace`, `status.phase`, `creationTimestamp`, `cluster`, `image`
 
 ### `dce ai-lab inferenceservingmanagement update-inference-serving`
 
@@ -653,7 +782,7 @@ dce ai-lab inferenceservingmanagement list-inference-servings \
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `name`, `namespace`, `phase`, `type`, `creationTimestamp`, `cluster`
+- Output: list path `items`; columns `name`, `namespace`, `phase`, `type`, `creationTimestamp`, `uid`
 - Example:
 
 ```
@@ -678,7 +807,24 @@ dce ai-lab jobsmanagement list-jobs \
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `name`, `namespace`, `phase`, `type`, `creationTimestamp`, `cluster`
+- Output: list path `items`; columns `name`, `namespace`, `phase`, `type`, `creationTimestamp`, `uid`
+
+### `dce ai-lab jobsmanagement list-rdmas`
+
+- Summary: 需要 Developer 权限：devloper-job-center.get
+- HTTP: `GET /apis/baize.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/rdmas`
+- Auth: required
+- Body: none
+- Flags:
+  - `--workspace` (path, required, int32): workspace
+  - `--cluster` (path, required): cluster
+  - `--namespace` (path, required): namespace
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+- Output: list path `items`; columns `name`
 
 ### `dce ai-lab jobsmanagement list-schedulers`
 
@@ -772,6 +918,20 @@ dce ai-lab jobsmanagement list-jobs \
   - `--from` (query, int64): 起始时间
   - `--to` (query, int64): 结束时间，且作为单值指标的时间点
 
+### `dce ai-lab metricsservice get-gpu-grafana-dashboard`
+
+- Summary: GPU 监控面板
+- HTTP: `GET /apis/baize.io/v1alpha1/grafana-dashboards/gpu-overview`
+- Auth: required
+- Body: none
+- Flags:
+  - `--vendor` (query): vendor
+  - `--cluster` (query): cluster
+  - `--node` (query): node
+  - `--gpu-index` (query): gpuIndex
+  - `--from` (query): from
+  - `--to` (query): to
+
 ### `dce ai-lab metricsservice get-inference-service-grafana-dashboard`
 
 - Summary: 推理服务详细指标面板
@@ -788,7 +948,7 @@ dce ai-lab jobsmanagement list-jobs \
 
 ### `dce ai-lab metricsservice get-nvidia-gpu-grafana-dashboard`
 
-- Summary: 需要 Operator 权限：devloper-overview.get
+- Summary: Deprecated, use GetGPUGrafanaDashboard instead
 - HTTP: `GET /apis/baize.io/v1alpha1/grafana-dashboards/nvidia-gpu-overview`
 - Auth: required
 - Body: none
@@ -1147,7 +1307,7 @@ dce ai-lab notebookservice list-notebooks \
   - `--cluster` (path, required): cluster
   - `--namespace` (path, required): namespace
   - `--name` (path, required): name
-  - `--type` (query, default `JOB_TYPE_UNSPECIFIED`, one of: JOB_TYPE_UNSPECIFIED|PYTORCH|TENSORFLOW|PADDLE|MXNET|MPI|NOTEBOOK|INFERENCE|DATASET): - PYTORCH: jobs
+  - `--type` (query, default `JOB_TYPE_UNSPECIFIED`, one of: JOB_TYPE_UNSPECIFIED|PYTORCH|TENSORFLOW|PADDLE|MXNET|MPI|NOTEBOOK|INFERENCE|DATASET|SNAPSHOT_POD_TASKS): - PYTORCH: jobs
   - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
   - `--page.page` (query, default `1`, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
@@ -1189,7 +1349,17 @@ dce ai-lab notebookservice list-notebooks \
 - Body: required
 - Flags:
   - `--cluster` (path, required): cluster
-- Output: list path `resources`; columns `name`, `borrowingLimit`, `value`
+- Output: list path `flavors`; columns `name`
+
+### `dce ai-lab queuemanagement create-resource-flavor`
+
+- Summary: 需要 Operator 权限：operator-resourceflavor.create
+- HTTP: `POST /apis/baize.io/v1alpha1/clusters/{cluster}/kueue/resourceflavors`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): cluster
+- Output: list path `nodeDetails`; columns `name`, `status.phase`, `arch`
 
 ### `dce ai-lab queuemanagement delete-queue`
 
@@ -1200,7 +1370,18 @@ dce ai-lab notebookservice list-notebooks \
 - Flags:
   - `--cluster` (path, required): cluster
   - `--name` (path, required): name
-- Output: list path `resources`; columns `name`, `borrowingLimit`, `value`
+- Output: list path `flavors`; columns `name`
+
+### `dce ai-lab queuemanagement delete-resource-flavor`
+
+- Summary: 需要 Operator 权限：operator-resourceflavor.delete
+- HTTP: `DELETE /apis/baize.io/v1alpha1/clusters/{cluster}/kueue/resourceflavors/{name}`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--name` (path, required): name
+- Output: list path `nodeDetails`; columns `name`, `status.phase`, `arch`
 
 ### `dce ai-lab queuemanagement get-queue`
 
@@ -1212,7 +1393,7 @@ dce ai-lab notebookservice list-notebooks \
   - `--cluster` (path, required): cluster
   - `--name` (path, required): name
   - `--type` (query, default `QUEUE_TYPE_UNSPECIFIED`, one of: QUEUE_TYPE_UNSPECIFIED|KUEUE): 队列类型
-- Output: list path `resources`; columns `name`, `borrowingLimit`, `value`
+- Output: list path `flavors`; columns `name`
 
 ### `dce ai-lab queuemanagement get-queue-by-json`
 
@@ -1224,6 +1405,29 @@ dce ai-lab notebookservice list-notebooks \
   - `--cluster` (path, required): cluster
   - `--name` (path, required): name
   - `--type` (query, default `QUEUE_TYPE_UNSPECIFIED`, one of: QUEUE_TYPE_UNSPECIFIED|KUEUE): 队列类型
+
+### `dce ai-lab queuemanagement get-queue-reference-status`
+
+- Summary: 需要 Operator 权限：operator-queues.get
+- HTTP: `GET /apis/baize.io/v1alpha1/clusters/{cluster}/queues/{name}/reference-status`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--name` (path, required): name
+  - `--type` (query, default `QUEUE_TYPE_UNSPECIFIED`, one of: QUEUE_TYPE_UNSPECIFIED|KUEUE): 队列类型
+- Output: list path `workspaces`; columns `referenced`, `workspaceId`
+
+### `dce ai-lab queuemanagement get-resource-flavor`
+
+- Summary: 需要 Operator 权限：operator-resourceflavor.get
+- HTTP: `GET /apis/baize.io/v1alpha1/clusters/{cluster}/kueue/resourceflavors/{name}`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--name` (path, required): name
+- Output: list path `nodeDetails`; columns `name`, `status.phase`, `arch`
 
 ### `dce ai-lab queuemanagement list-queue-workloads`
 
@@ -1241,6 +1445,7 @@ dce ai-lab notebookservice list-notebooks \
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+  - `--workspace` (query, int32): Workspace ID
 - Output: list path `items`; columns `name`, `namespace`, `phase`, `creationTimestamp`, `cluster`, `preemptionPolicy`
 
 ### `dce ai-lab queuemanagement list-queues`
@@ -1250,19 +1455,20 @@ dce ai-lab notebookservice list-notebooks \
 - Auth: required
 - Body: none
 - Flags:
+  - `--workspace` (query, int32): Workspace ID
   - `--cluster` (query): cluster
   - `--type` (query, default `QUEUE_TYPE_UNSPECIFIED`, one of: QUEUE_TYPE_UNSPECIFIED|KUEUE): type
+  - `--resource-flavor` (query): resourceFlavor
   - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
   - `--page.page` (query, default `1`, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-  - `--workspace` (query, int32): Workspace ID
-- Output: list path `items`; columns `name`, `status.phase`, `type`, `cluster`, `description`, `strategy`
+- Output: list path `items`; columns `name`, `status.phase`, `type`, `cluster`, `description`, `preemptionWithinClusterQueue`
 
 ### `dce ai-lab queuemanagement list-queues2`
 
-- Summary: 额外支持的搜索、排序字段：workspace
+- Summary: 额外支持的搜索、排序字段：name
 - HTTP: `GET /apis/baize.io/v1alpha1/workspace/{workspace}/queues`
 - Auth: required
 - Body: none
@@ -1270,12 +1476,43 @@ dce ai-lab notebookservice list-notebooks \
   - `--workspace` (path, required, int32): Workspace ID
   - `--cluster` (query): cluster
   - `--type` (query, default `QUEUE_TYPE_UNSPECIFIED`, one of: QUEUE_TYPE_UNSPECIFIED|KUEUE): type
+  - `--resource-flavor` (query): resourceFlavor
   - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
   - `--page.page` (query, default `1`, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
-- Output: list path `items`; columns `name`, `status.phase`, `type`, `cluster`, `description`, `strategy`
+- Output: list path `items`; columns `name`, `status.phase`, `type`, `cluster`, `description`, `preemptionWithinClusterQueue`
+
+### `dce ai-lab queuemanagement list-resource-flavors`
+
+- Summary: 额外支持的搜索、排序字段：name
+- HTTP: `GET /apis/baize.io/v1alpha1/clusters/{cluster}/kueue/resourceflavors`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+- Output: list path `items`; columns `name`, `creationTimestamp`, `cluster`, `default`, `topologyName`
+
+### `dce ai-lab queuemanagement list-topologies`
+
+- Summary: 需要 Operator 权限：operator-topologies.get
+- HTTP: `GET /apis/baize.io/v1alpha1/clusters/{cluster}/kueue/topologies`
+- Auth: required
+- Body: none
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--page.total` (query, int64): 总共有多少条目，请求时可以不用传递
+  - `--page.page` (query, int32): 当前页索引，从 1 开始，为 0 时，会自动重置为默认值 constants.DefaultPage
+  - `--page.page-size` (query, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
+  - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
+  - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+- Output: list path `items`; columns `name`
 
 ### `dce ai-lab queuemanagement update-queue`
 
@@ -1286,7 +1523,18 @@ dce ai-lab notebookservice list-notebooks \
 - Flags:
   - `--cluster` (path, required): cluster
   - `--name` (path, required): name
-- Output: list path `resources`; columns `name`, `borrowingLimit`, `value`
+- Output: list path `flavors`; columns `name`
+
+### `dce ai-lab queuemanagement update-resource-flavor`
+
+- Summary: 需要 Operator 权限：operator-resourceflavor.update
+- HTTP: `PUT /apis/baize.io/v1alpha1/clusters/{cluster}/kueue/resourceflavors/{name}`
+- Auth: required
+- Body: required
+- Flags:
+  - `--cluster` (path, required): cluster
+  - `--name` (path, required): name
+- Output: list path `nodeDetails`; columns `name`, `status.phase`, `arch`
 
 ## WorkspaceService
 

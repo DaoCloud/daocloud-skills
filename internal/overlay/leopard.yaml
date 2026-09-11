@@ -71,11 +71,13 @@ commands:
 
   export-transactions:                      { ignore: true }
   activate-voucher:                         { ignore: true }
+  activate-voucher-for-user:                { ignore: true }
   batch-create-and-active-vouchers:         { ignore: true }
   batch-create-vouchers:                    { ignore: true }
   get-voucher-stat-by-current-user:         { ignore: true }
   list-active-vouchers-by-current-user:     { ignore: true }
   list-expired-vouchers-by-current-user:    { ignore: true }
+  list-vouchers:                            { ignore: true }
 
   balance:                                  { ignore: true }
   corporate-transfer-recharge:              { ignore: true }
@@ -87,6 +89,7 @@ commands:
   get-receiving-bank-infos:                 { ignore: true }
   get-refundable-amount:                    { ignore: true }
   get-user-state:                           { ignore: true }
+  list-account-balances:                    { ignore: true }
   list-domain-receiving-bank-infos:         { ignore: true }
   list-virtual-wallets:                     { ignore: true }
   recharge:                                 { ignore: true }
