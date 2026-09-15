@@ -1,0 +1,23 @@
+Use the repository's `dce` skill and the `dce` CLI to create one Pod in the
+specified DCE environment:
+
+- DCE address: ${DCE_HOST}
+- DCE bearer token: ${DCE_TOKEN}
+- Cluster: kpanda-global-cluster
+- Namespace: default
+- Pod name: k8s-ai-bench-dce-pod
+- Image: nginx:stable
+
+Follow the `dce` skill workflow to confirm the command and authentication
+status before creating the Pod. This DCE endpoint uses a certificate that is
+not trusted by the local machine, so include the global `--insecure` flag on
+every `dce` invocation, including `auth login`. The request must contain only
+this one Pod.
+Do not create any other resources and do not delete the Pod; `cleanup.sh` will
+handle deletion.
+
+After creating it, use the `dce` CLI to query the Pod and confirm its name,
+namespace, and container image. Do not repeat the token in your output.
+
+Only after both creation and verification succeed, output:
+DCE_POD_CREATED_OK
