@@ -15,12 +15,12 @@ if ! grep -Fq 'DCE_POD_CREATED_OK' "${log_path}"; then
   exit 1
 fi
 
-printf '%s' "${DCE_TOKEN}" | dce --hostname "${DCE_HOST}" auth login \
+printf '%s' "${DCE_TOKEN}" | dce --insecure --hostname "${DCE_HOST}" auth login \
   --auth-type bearer --with-token --skip-validate >/dev/null
 response_path="$(mktemp)"
 trap 'rm -f "${response_path}"' EXIT
 
-dce --hostname "${DCE_HOST}" container-management core get-pod \
+dce --insecure --hostname "${DCE_HOST}" container-management core get-pod \
   --cluster kpanda-global-cluster --namespace default \
   --name k8s-ai-bench-dce-pod -o json >"${response_path}"
 

@@ -7,10 +7,10 @@ set -euo pipefail
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 trap 'rm -f "${script_dir}/prompt.txt"' EXIT
 
-printf '%s' "${DCE_TOKEN}" | dce --hostname "${DCE_HOST}" auth login \
+printf '%s' "${DCE_TOKEN}" | dce --insecure --hostname "${DCE_HOST}" auth login \
   --auth-type bearer --with-token --skip-validate >/dev/null
 set +e
-delete_output="$(dce --hostname "${DCE_HOST}" container-management core delete-pod \
+delete_output="$(dce --insecure --hostname "${DCE_HOST}" container-management core delete-pod \
   --cluster kpanda-global-cluster --namespace default \
   --name k8s-ai-bench-dce-pod -o json 2>&1)"
 delete_status=$?

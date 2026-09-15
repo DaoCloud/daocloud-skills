@@ -9,7 +9,10 @@ specified DCE environment:
 - Image: nginx:stable
 
 Follow the `dce` skill workflow to confirm the command and authentication
-status before creating the Pod. The request must contain only this one Pod.
+status before creating the Pod. This DCE endpoint uses a certificate that is
+not trusted by the local machine, so include the global `--insecure` flag on
+every `dce` invocation, including `auth login`. The request must contain only
+this one Pod.
 Do not create any other resources and do not delete the Pod; `cleanup.sh` will
 handle deletion.
 
