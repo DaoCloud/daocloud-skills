@@ -4,10 +4,12 @@ set -euo pipefail
 : "${DCE_HOST:?DCE_HOST is required}"
 : "${DCE_TOKEN:?DCE_TOKEN is required}"
 
+dce_token="${DCE_TOKEN#Bearer }"
+
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 trap 'rm -f "${script_dir}/prompt.txt"' EXIT
 
-printf '%s' "${DCE_TOKEN}" | dce --insecure --hostname "${DCE_HOST}" auth login \
+printf '%s' "${dce_token}" | dce --insecure --hostname "${DCE_HOST}" auth login \
   --auth-type bearer --with-token --skip-validate >/dev/null
 set +e
 delete_output="$(dce --insecure --hostname "${DCE_HOST}" container-management core delete-pod \

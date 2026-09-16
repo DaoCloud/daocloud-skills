@@ -4,6 +4,11 @@ set -euo pipefail
 : "${DCE_HOST:?DCE_HOST is required}"
 : "${DCE_TOKEN:?DCE_TOKEN is required}"
 
+# dce auth login --with-token expects the JWT itself. Accept the conventional
+# Authorization header form in the environment for easier copy-paste.
+render_dce_token="${DCE_TOKEN#Bearer }"
+export DCE_TOKEN="${render_dce_token}"
+
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 template_dir="${script_dir}/task-template/dce-create-pod"
 destination="${1:-${script_dir}/.runtime/tasks/dce-create-pod}"

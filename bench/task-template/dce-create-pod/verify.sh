@@ -5,6 +5,8 @@ set -euo pipefail
 : "${DCE_TOKEN:?DCE_TOKEN is required}"
 : "${K8S_AI_BENCH_TASK_OUTPUT_DIR:?K8S_AI_BENCH_TASK_OUTPUT_DIR is required}"
 
+dce_token="${DCE_TOKEN#Bearer }"
+
 log_path="${K8S_AI_BENCH_TASK_OUTPUT_DIR}/log.txt"
 if [[ ! -f "${log_path}" ]]; then
   echo "task log not found: ${log_path}" >&2
@@ -15,7 +17,7 @@ if ! grep -Fq 'DCE_POD_CREATED_OK' "${log_path}"; then
   exit 1
 fi
 
-printf '%s' "${DCE_TOKEN}" | dce --insecure --hostname "${DCE_HOST}" auth login \
+printf '%s' "${dce_token}" | dce --insecure --hostname "${DCE_HOST}" auth login \
   --auth-type bearer --with-token --skip-validate >/dev/null
 response_path="$(mktemp)"
 trap 'rm -f "${response_path}"' EXIT
