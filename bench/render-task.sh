@@ -24,17 +24,10 @@ cp "${template_dir}/verify.sh" "${destination}/verify.sh"
 cp "${template_dir}/cleanup.sh" "${destination}/cleanup.sh"
 chmod 755 "${destination}/verify.sh" "${destination}/cleanup.sh"
 
-python3 - "${template_dir}/prompt.template" "${destination}/prompt.txt" <<'PY'
-import os
-import sys
-from pathlib import Path
-
-source = Path(sys.argv[1])
-target = Path(sys.argv[2])
-content = source.read_text(encoding="utf-8")
-for name in ("DCE_HOST", "DCE_TOKEN"):
-    content = content.replace("${" + name + "}", os.environ[name])
-target.write_text(content, encoding="utf-8")
-PY
+while IFS= read -r line || [[ -n "${line}" ]]; do
+  line="${line//\$\{DCE_HOST\}/${DCE_HOST}}"
+  line="${line//\$\{DCE_TOKEN\}/${DCE_TOKEN}}"
+  printf '%s\n' "${line}"
+done < "${template_dir}/prompt.template" > "${destination}/prompt.txt"
 
 printf 'Rendered task: %s\n' "${destination}"

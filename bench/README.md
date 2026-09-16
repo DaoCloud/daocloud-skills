@@ -1,85 +1,34 @@
-# DCE skill agent benchmark
+# Test the DCE skill with an agent
 
-This example uses [k8s-ai-bench](https://github.com/DaoCloud/ai-skills-bench) to
-evaluate whether a headless agent can use the repository's `dce` skill to
-create one Pod in a DCE environment. The task is kept as a template so the
-DCE address and bearer token are supplied at runtime instead of committed to
-the repository.
+This directory contains one end-to-end task. The agent must use the `dce`
+skill and DCE CLI to create one Pod, query it, and print the success marker.
+The benchmark then verifies the API result and removes the Pod.
 
-## How it works
+## Test flow
 
-1. `render-task.sh` reads `DCE_HOST` and `DCE_TOKEN` from the environment.
-2. It copies `bench/task-template/dce-create-pod` to the ignored
-   `bench/.runtime/tasks/dce-create-pod` directory and renders `prompt.txt`.
-3. `k8s-ai-bench` starts the configured agent bridge and sends the rendered
-   prompt through its standard input adapter.
-4. The agent reads `skills/dce/SKILL.md`, uses the DCE CLI to create the Pod,
-   and prints `DCE_POD_CREATED_OK` only after checking the result.
-5. The verifier queries the Pod with the DCE CLI. The cleanup hook deletes it
-   after the iteration.
+Run these steps from the repository root:
 
-The generated directory is intentionally ignored. Do not commit `DCE_TOKEN`
-or paste it into a matrix file.
+1. Make sure the DCE CLI is available as `dce`. The verifier and cleanup
+   scripts use this command. A logged-in agent CLI is also required for local
+   CLI agents such as Codex.
+2. Set `DCE_HOST` and `DCE_TOKEN`. The token may include the `Bearer ` prefix.
+3. Prepare the released benchmark binaries:
+   - macOS/Linux: `./bench/setup.sh`
+   - Windows PowerShell: `./bench/setup.ps1`
+4. Render the task prompt:
+   - macOS/Linux: `./bench/render-task.sh`
+   - Windows PowerShell: `./bench/render-task.ps1`
+5. Configure one agent in a matrix and set `runs.agent` to that agent.
+6. Run `k8s-ai-bench` with the matrix file.
 
-## Prerequisites
+The task lifecycle is:
 
-- A checkout of this repository.
-- `curl`, `tar`, and `python3` for downloading and rendering the prebuilt
-  benchmark and DCE CLI binaries.
-- A current DCE bearer token with permission to create, get, and delete Pods.
-- A logged-in Codex CLI.
-
-Set the DCE connection values in the shell where both the agent and benchmark
-will run:
-
-```bash
-export DCE_HOST='https://dce.example.invalid'
-export DCE_TOKEN='Bearer <current-token>'
+```text
+render prompt -> agent receives prompt -> agent creates and queries Pod
+             -> verifier checks DCE API -> cleanup deletes the Pod
 ```
 
-The value of `DCE_TOKEN` is passed to `dce auth login` through standard input;
-it is not put in a command-line argument. Keep the terminal session private.
-
-## Run with Codex
-
-Run these commands from the root of this repository. No Go installation or
-`k8s-ai-bench` checkout is required; `setup.sh` downloads the published
-prebuilt binaries.
-
-```bash
-export SKILLS_ROOT="$PWD"
-
-"$SKILLS_ROOT/bench/setup.sh"
-export PATH="$SKILLS_ROOT/bench/.build/bin:$PATH"
-
-"$SKILLS_ROOT/bench/render-task.sh"
-"$SKILLS_ROOT/bench/.build/bin/k8s-ai-bench" run \
-  --matrix-file "$SKILLS_ROOT/bench/eval-matrix-codex.yaml"
-```
-
-To test a different published version, set `K8S_AI_BENCH_VERSION` before
-running `setup.sh`, for example `export K8S_AI_BENCH_VERSION=v0.1.0`.
-
-The matrix runs only `dce-create-pod`. It uses the `codex` connector selected
-by `args: [--agent, codex]`; the model entry supplies the connector's model
-metadata and does not replace the Codex CLI login.
-
-Before a live run, the DCE skill's normal authentication check can be used:
-
-```bash
-dce --insecure --hostname "$DCE_HOST" auth status
-```
-
-If a run is interrupted, wait until no benchmark process is using the
-generated task and then remove only the generated directory:
-
-```bash
-rm -rf bench/.runtime
-```
-
-## Task contract
-
-The agent must create this Pod in `default` on `kpanda-global-cluster`:
+The task only permits this resource:
 
 ```yaml
 apiVersion: v1
@@ -93,13 +42,107 @@ spec:
       image: nginx:stable
 ```
 
-The verifier checks the success marker, Pod name, namespace, and container
-image. It does not accept a successful answer without querying DCE.
+## DCE skill workflow inside the task
 
-## Using another supported agent
+The prompt requires the agent to execute this sequence with the DCE CLI:
 
-The same rendered task can be used with the bridge's other connectors by
-copying the matrix and changing the agent entry and `runs.agent`, for example
-`claude`, `openclaw`, or `hermes`. Gateway connectors additionally need their
-own `*_BASE_URL`, `*_GATEWAY_TOKEN`, and `*_AGENT_TARGET` environment variables;
-those values are connector settings, not DCE credentials.
+1. Discover candidate commands:
+   `dce search "create pod" --json --limit 10`
+2. Inspect the exact create command:
+   `dce commands show container-management apps create-workload-by-json --json`
+3. Inspect the query command:
+   `dce commands show container-management core get-pod --json`
+4. Check the configured host:
+   `dce auth status --hostname "$DCE_HOST"`
+5. If needed, log in by piping `DCE_TOKEN` to
+   `dce auth login --hostname "$DCE_HOST" --auth-type bearer --with-token`.
+6. Create exactly the Pod described above.
+7. Query the Pod and verify its name, namespace, and image.
+8. Print `DCE_POD_CREATED_OK` only after the query succeeds.
+
+The benchmark verifier repeats the API query independently. The cleanup hook
+then deletes the test Pod, so the agent itself must not perform cleanup.
+
+## Run with Codex
+
+```bash
+export DCE_HOST='https://dce.example.invalid'
+export DCE_TOKEN='Bearer <current-token>'
+
+./bench/setup.sh
+export PATH="$PWD/bench/.build/bin:$PATH"
+./bench/render-task.sh
+./bench/.build/bin/k8s-ai-bench run \
+  --matrix-file ./bench/eval-matrix-codex.yaml
+```
+
+`setup.sh` downloads the released bench package. It checks for `curl` and
+`tar`, and attempts to install either through Homebrew, apt, or dnf when
+missing. If `dce` is not already on `PATH`, it downloads a local Unix DCE CLI
+copy into `bench/.build/bin`. It does not install or select the user's agent.
+
+On Windows, use PowerShell to download the bench ZIP with `setup.ps1`, then use
+WSL or Git Bash for the complete task run. The current benchmark executes task
+`setup.sh`, `verify.sh`, and `cleanup.sh` files directly, and the current DCE
+CLI release does not publish a native Windows binary.
+
+## Configure your own agent
+
+The matrix has three separate concerns:
+
+- `agents` describes how to start the agent and pass the prompt.
+- `models` is benchmark metadata. It does not install, authenticate, or select
+  the agent unless the configured bridge uses it.
+- `runs.agent` selects the agent for this run.
+
+For an agent that reads the prompt from stdin and writes its answer to stdout:
+
+```yaml
+skillsDir: ./skills
+tasksDir: ./bench/.runtime/tasks
+outputDir: .build/dce-skill-bench
+clusterCreationPolicy: DoNotCreate
+
+agents:
+  - id: my-agent
+    bin: /absolute/path/to/my-agent-stdin-wrapper
+    adapter: generic-stdin
+    args: []
+    env:
+      AGENT_ENDPOINT: ${AGENT_ENDPOINT}
+      AGENT_TOKEN: ${AGENT_TOKEN}
+
+models:
+  - id: my-agent-model
+    provider: custom
+    model: my-agent
+
+runs:
+  iterations: 1
+  concurrency: 1
+  taskPattern: "^dce-create-pod$"
+  agent: my-agent
+```
+
+The wrapper must consume the prompt from stdin and write the agent response to
+stdout. For the built-in bridge, use:
+
+```yaml
+bin: ./bench/.build/bin/k8s-ai-agent-bridge
+adapter: generic-stdin
+args: [--agent, codex]
+```
+
+Replace `codex` with another supported connector when appropriate. For a
+gateway agent, put its gateway URL, gateway token, and agent target under the
+agent's `env`; do not put gateway credentials in the task prompt. The DCE
+variables are separate: `DCE_HOST` and `DCE_TOKEN` tell the task agent where to
+perform the DCE operation.
+
+## Verify a run
+
+The verifier requires both the exact `DCE_POD_CREATED_OK` marker and a
+successful DCE API query matching the Pod name, namespace, and image. The
+cleanup hook deletes only `k8s-ai-bench-dce-pod`. If a run is interrupted,
+rerender the task before running it again; cleanup removes the generated
+`prompt.txt`.
