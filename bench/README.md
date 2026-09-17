@@ -69,7 +69,7 @@ then deletes the test Pod, so the agent itself must not perform cleanup.
 export DCE_HOST='https://dce.example.invalid'
 export DCE_TOKEN='Bearer <current-token>'
 export K8S_AI_BENCH_VERSION='v0.1.1-rc.1'
-export K8S_AI_BENCH_REPOSITORY='Phil-OSophy-42/ai-skills-bench'
+export K8S_AI_BENCH_REPOSITORY='DaoCloud/ai-skills-bench'
 
 ./bench/setup.sh
 export PATH="$PWD/bench/.build/bin:$PATH"
@@ -89,7 +89,7 @@ On Windows, use PowerShell for the complete flow:
 $env:DCE_HOST = 'https://dce.example.invalid'
 $env:DCE_TOKEN = 'Bearer <current-token>'
 $env:K8S_AI_BENCH_VERSION = 'v0.1.1-rc.1'
-$env:K8S_AI_BENCH_REPOSITORY = 'Phil-OSophy-42/ai-skills-bench'
+$env:K8S_AI_BENCH_REPOSITORY = 'DaoCloud/ai-skills-bench'
 
 .\bench\setup.ps1
 $env:Path = "$(Resolve-Path .\bench\.build\bin);$env:Path"
