@@ -4,7 +4,8 @@ const { execFileSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-const bin = path.join(__dirname, "..", "bin", "dce");
+const binaryName = process.platform === "win32" ? "dce.exe" : "dce";
+const bin = path.join(__dirname, "..", "bin", binaryName);
 const args = process.argv.slice(2);
 
 if (!fs.existsSync(bin)) {

@@ -26,6 +26,10 @@ jobs:
             arch: amd64
           - os: darwin
             arch: arm64
+          - os: windows
+            arch: amd64
+          - os: windows
+            arch: arm64
 
     runs-on: ubuntu-latest
 
@@ -52,11 +56,24 @@ jobs:
           COMMIT: ${{ github.sha }}
         run: |
           PKG_NAME="${BIN_NAME}-${VERSION}-${GOOS}-${GOARCH}"
-          ARCHIVE="${PKG_NAME}.tar.gz"
           mkdir -p "dist/${PKG_NAME}"
-          make build BIN_OUT="dist/${PKG_NAME}/${BIN_NAME}" VERSION="${VERSION}" COMMIT="${COMMIT}"
-          cp -R skills "dist/${PKG_NAME}/skills"
-          tar -czf "${ARCHIVE}" -C dist "${PKG_NAME}"
+          if [ "${GOOS}" = "windows" ]; then
+            ARCHIVE="${PKG_NAME}.zip"
+            make build BIN_OUT="dist/${PKG_NAME}/${BIN_NAME}.exe" VERSION="${VERSION}" COMMIT="${COMMIT}"
+          else
+            ARCHIVE="${PKG_NAME}.tar.gz"
+            make build BIN_OUT="dist/${PKG_NAME}/${BIN_NAME}" VERSION="${VERSION}" COMMIT="${COMMIT}"
+          fi
+          if [ "${GOOS}" = "windows" ]; then
+            # Other generated skill directories contain ':' in their names,
+            # which is not a valid Windows filename. Keep the DCE skill only.
+            mkdir -p "dist/${PKG_NAME}/skills"
+            cp -R skills/dce "dist/${PKG_NAME}/skills/"
+            (cd dist && zip -qr "../${ARCHIVE}" "${PKG_NAME}")
+          else
+            cp -R skills "dist/${PKG_NAME}/skills"
+            tar -czf "${ARCHIVE}" -C dist "${PKG_NAME}"
+          fi
           echo "output=${ARCHIVE}" >> "$GITHUB_OUTPUT"
 
       - name: Upload release asset
@@ -92,7 +109,7 @@ jobs:
       - name: Generate checksums
         working-directory: artifacts
         run: |
-          sha256sum * > checksums.txt
+          sha256sum -- * > checksums.txt
           cat checksums.txt
 
       - name: Upload checksums
