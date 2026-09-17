@@ -169,20 +169,24 @@ rerender the task before running it again; cleanup removes the generated
 
 ## Task template layout
 
-Platform-specific lifecycle scripts live together because they implement the
-same task:
+Platform-specific lifecycle files are separated while the shared prompt stays
+at the task root:
 
 ```text
 bench/task-template/dce-create-pod/
 ├── prompt.template
-├── task.yaml              # Unix runtime task
-├── verify.sh
-├── cleanup.sh
-├── task.windows.yaml      # Windows runtime task
-├── verify.ps1
-└── cleanup.ps1
+├── unix/
+│   ├── task.yaml
+│   ├── verify.sh
+│   └── cleanup.sh
+└── windows/
+    ├── task.yaml
+    ├── verify.ps1
+    └── cleanup.ps1
 ```
 
-The two renderers select the matching task YAML and scripts. The task does not
-automatically translate `.sh` to `.ps1`; when adding a cross-platform task,
-provide both variants and make each renderer reference the correct files.
+The two renderers select the matching platform directory and copy its
+`task.yaml` and lifecycle scripts into the runtime task directory. The task
+does not automatically translate `.sh` to `.ps1`; when adding a
+cross-platform task, provide both platform directories and make each renderer
+reference the correct one.

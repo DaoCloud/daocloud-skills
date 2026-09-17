@@ -5,16 +5,20 @@ if (-not $env:DCE_TOKEN) { throw 'DCE_TOKEN is required' }
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $templateDir = Join-Path $scriptDir 'task-template\dce-create-pod'
+$platformTemplateDir = Join-Path $templateDir 'windows'
 $destination = if ($args.Count -gt 0) { $args[0] } else { Join-Path $scriptDir '.runtime\tasks\dce-create-pod' }
 
 if (-not (Test-Path -LiteralPath $templateDir -PathType Container)) {
     throw "Task template not found: $templateDir"
 }
+if (-not (Test-Path -LiteralPath $platformTemplateDir -PathType Container)) {
+    throw "Windows task template not found: $platformTemplateDir"
+}
 
 New-Item -ItemType Directory -Force -Path $destination | Out-Null
-Copy-Item (Join-Path $templateDir 'task.windows.yaml') (Join-Path $destination 'task.yaml') -Force
-Copy-Item (Join-Path $templateDir 'verify.ps1') $destination -Force
-Copy-Item (Join-Path $templateDir 'cleanup.ps1') $destination -Force
+Copy-Item (Join-Path $platformTemplateDir 'task.yaml') (Join-Path $destination 'task.yaml') -Force
+Copy-Item (Join-Path $platformTemplateDir 'verify.ps1') $destination -Force
+Copy-Item (Join-Path $platformTemplateDir 'cleanup.ps1') $destination -Force
 
 $prompt = Get-Content (Join-Path $templateDir 'prompt.template') -Raw
 $prompt = $prompt.Replace('${DCE_HOST}', $env:DCE_HOST)

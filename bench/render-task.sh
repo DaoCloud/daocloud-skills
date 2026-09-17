@@ -11,17 +11,22 @@ export DCE_TOKEN="${render_dce_token}"
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 template_dir="${script_dir}/task-template/dce-create-pod"
+platform_template_dir="${template_dir}/unix"
 destination="${1:-${script_dir}/.runtime/tasks/dce-create-pod}"
 
 if [[ ! -d "${template_dir}" ]]; then
   echo "task template not found: ${template_dir}" >&2
   exit 1
 fi
+if [[ ! -d "${platform_template_dir}" ]]; then
+  echo "Unix task template not found: ${platform_template_dir}" >&2
+  exit 1
+fi
 
 mkdir -p "${destination}"
-cp "${template_dir}/task.yaml" "${destination}/task.yaml"
-cp "${template_dir}/verify.sh" "${destination}/verify.sh"
-cp "${template_dir}/cleanup.sh" "${destination}/cleanup.sh"
+cp "${platform_template_dir}/task.yaml" "${destination}/task.yaml"
+cp "${platform_template_dir}/verify.sh" "${destination}/verify.sh"
+cp "${platform_template_dir}/cleanup.sh" "${destination}/cleanup.sh"
 chmod 755 "${destination}/verify.sh" "${destination}/cleanup.sh"
 
 while IFS= read -r line || [[ -n "${line}" ]]; do
