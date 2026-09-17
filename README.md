@@ -141,7 +141,7 @@ Or run on demand without a global install:
 npx @daocloud-cli/dce --help
 ```
 
-The npm package downloads the matching prebuilt binary from GitHub Releases on install and verifies it against `checksums.txt`. Supported platforms: `darwin`/`linux` on `amd64`/`arm64`, Node.js >= 16.
+The npm package downloads the matching prebuilt binary from GitHub Releases on install and verifies it against `checksums.txt`. Supported platforms: `darwin`/`linux`/`windows` on `amd64`/`arm64`, Node.js >= 16.
 
 Alternatively, download a prebuilt archive from GitHub Releases directly:
 
@@ -157,6 +157,23 @@ sudo install -m 0755 "${PKG}/dce" /usr/local/bin/dce
 ```
 
 Use `OS=darwin` for macOS and `OS=linux` for Linux. Use `ARCH=arm64` for Apple Silicon or ARM64 Linux, and `ARCH=amd64` for Intel macOS or x86_64 Linux.
+
+On Windows, use PowerShell to download and extract the ZIP archive:
+
+```powershell
+$VERSION = "v0.2.0-rc.4"
+$PKG = "dce-${VERSION}-windows-amd64"
+Invoke-WebRequest "https://github.com/DaoCloud/daocloud-skills/releases/download/${VERSION}/${PKG}.zip" -OutFile dce.zip
+Expand-Archive dce.zip -DestinationPath . -Force
+& ".\${PKG}\dce.exe" --help
+```
+
+The npm installation works in Windows PowerShell as well:
+
+```powershell
+npm install -g @daocloud-cli/dce
+dce --help
+```
 
 Verify the CLI is available:
 
