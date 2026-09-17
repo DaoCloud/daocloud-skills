@@ -37,19 +37,15 @@
   - `--model` (query): Optional model keyword filter.
 - Output: list path `items`; columns `name`, `cost`, `displayValue`, `rank`, `revenue`, `userName`; pagination `cursor`
 
-### `dce business-cockpit businessoperationservice get-average-package-consumption-rate`
+### `dce business-cockpit businessoperationservice get-current-period-business-overview`
 
-- Summary: GetAveragePackageConsumptionRate returns the average workspace quota consumption rate.
-- HTTP: `GET /apis/crane.io/v1alpha1/business-operation/average-package-consumption-rate`
+- Summary: GetCurrentPeriodBusinessOverview returns the WS current-period business overview.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-operation/current-period-business-overview`
 - Auth: required
 - Body: none
 - Flags:
-  - `--start-time` (query, date-time): Start time for the statistics period (UTC, inclusive).
-  - `--end-time` (query, date-time): End time for the statistics period (UTC, exclusive).
-  - `--limit` (query, int32): Limit for top-N style queries.
-  - `--period` (query): Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear.
-  - `--model` (query): Optional model keyword filter.
-- Output: pagination `cursor`
+  - `--period` (query, default `BUSINESS_OVERVIEW_PERIOD_UNSPECIFIED`, one of: BUSINESS_OVERVIEW_PERIOD_UNSPECIFIED|BUSINESS_OVERVIEW_PERIOD_THIS_MONTH|BUSINESS_OVERVIEW_PERIOD_THIS_WEEK|BUSINESS_OVERVIEW_PERIOD_TODAY): period
+- Output: list path `activeUserTrend`; columns `activeUserCount`, `date`, `totalUserCount`
 
 ### `dce business-cockpit businessoperationservice get-department-application-model-gpu-flow`
 
@@ -93,6 +89,16 @@
   - `--model` (query): Optional model keyword filter.
 - Output: pagination `cursor`
 
+### `dce business-cockpit businessoperationservice get-department-quota-consumption`
+
+- Summary: GetDepartmentQuotaConsumption returns the current WS workspace quota snapshot.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-operation/department-quota-consumption`
+- Auth: required
+- Body: none
+- Flags:
+  - `--limit` (query, int32): limit
+- Output: list path `items`; columns `departmentName`, `quotaTokens`, `unlimitedQuota`, `usagePercent`, `usedTokens`, `workspace`; pagination `cursor`
+
 ### `dce business-cockpit businessoperationservice get-department-unit-business-cost`
 
 - Summary: GetDepartmentUnitBusinessCost returns the estimated unit business cost KPI.
@@ -120,6 +126,20 @@
   - `--period` (query): Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear.
   - `--model` (query): Optional model keyword filter.
 - Output: list path `items`; columns `name`, `cost`, `displayValue`, `rank`, `revenue`, `userName`; pagination `cursor`
+
+### `dce business-cockpit businessoperationservice get-department-value-quadrant`
+
+- Summary: GetDepartmentValueQuadrant returns department token consumption and active-user points.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-operation/department-value-quadrant`
+- Auth: required
+- Body: none
+- Flags:
+  - `--start-time` (query, date-time): Start time for the statistics period (UTC, inclusive).
+  - `--end-time` (query, date-time): End time for the statistics period (UTC, exclusive).
+  - `--limit` (query, int32): Limit for top-N style queries.
+  - `--period` (query): Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear.
+  - `--model` (query): Optional model keyword filter.
+- Output: list path `points`; columns `activeUsers`, `departmentId`, `departmentName`, `totalTokens`; pagination `cursor`
 
 ### `dce business-cockpit businessoperationservice get-monthly-arpu`
 
@@ -313,17 +333,6 @@
   - `--start-time` (query, date-time): Start of the query window (UTC, inclusive).
   - `--end-time` (query, date-time): End of the query window (UTC, exclusive).
 
-### `dce business-cockpit businessvalueservice get-app-consumption-distribution`
-
-- Summary: GetAppConsumptionDistribution returns the consumption distribution across applications.
-- HTTP: `GET /apis/crane.io/v1alpha1/business-value/app-consumption-distribution`
-- Auth: required
-- Body: none
-- Flags:
-  - `--time-range` (query): Time range filter: "today", "this-week", "this-month", "this-quarter". Default is "today".
-  - `--cluster` (query): Cluster filter (optional). If empty, all clusters are included football.
-- Output: list path `items`; columns `appName`, `percentage`
-
 ### `dce business-cockpit businessvalueservice get-capacity-bottleneck-forecast`
 
 - Summary: GetCapacityBottleneckForecast returns the predicted number of days until
@@ -331,6 +340,24 @@
 - Auth: required
 - Body: none
 - Flags: none
+
+### `dce business-cockpit businessvalueservice get-capacity-funnel`
+
+- Summary: GetCapacityFunnel returns billed token totals and high-margin model token totals.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/capacity-funnel`
+- Auth: required
+- Body: none
+- Flags:
+  - `--time-range` (query): Time range filter: "today", "this-week", "this-month", "this-quarter".
+
+### `dce business-cockpit businessvalueservice get-consumption-revenue-cost-summary`
+
+- Summary: GetConsumptionRevenueCostSummary returns global current and previous period totals.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/consumption-revenue-cost-summary`
+- Auth: required
+- Body: none
+- Flags:
+  - `--time-range` (query): One of "today", "this-week", "this-month", or "this-quarter".
 
 ### `dce business-cockpit businessvalueservice get-cumulative-token`
 
@@ -354,6 +381,14 @@
   - `--span` (query, default `CUMULATIVE_TOKEN_HISTORY_SPAN_UNSPECIFIED`, one of: CUMULATIVE_TOKEN_HISTORY_SPAN_UNSPECIFIED|CUMULATIVE_TOKEN_HISTORY_SPAN_HOUR|CUMULATIVE_TOKEN_HISTORY_SPAN_DAY): Bucket span used to aggregate history points.
 - Output: list path `points`; columns `time`, `totalTokens`
 
+### `dce business-cockpit businessvalueservice get-customer-concentration-thresholds`
+
+- Summary: GetCustomerConcentrationThresholds returns the warn/risk Top1 and Top3
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/customer-concentration-thresholds`
+- Auth: required
+- Body: none
+- Flags: none
+
 ### `dce business-cockpit businessvalueservice get-department-token-usage`
 
 - Summary: GetDepartmentTokenUsage returns per-department token usage and budget for the given time window.
@@ -365,16 +400,24 @@
   - `--end-time` (query, date-time): End of the query window (UTC, exclusive).
 - Output: list path `items`; columns `budgetTokenTotal`, `departmentName`, `tokenTotal`
 
-### `dce business-cockpit businessvalueservice get-internal-business-structure-distribution`
+### `dce business-cockpit businessvalueservice get-gross-profit-attribution-config`
 
-- Summary: GetInternalBusinessStructureDistribution returns internal business structure distribution for WS mode.
-- HTTP: `GET /apis/crane.io/v1alpha1/business-value/internal-business-structure-distribution`
+- Summary: GetGrossProfitAttributionConfig returns the gross profit attribution configuration
+- HTTP: `GET /apis/crane.io/v1alpha1/businessvalue/gross-profit-attribution-config`
+- Auth: required
+- Body: none
+- Flags: none
+
+### `dce business-cockpit businessvalueservice get-model-contribution`
+
+- Summary: GetModelContribution returns model-level revenue and token totals for an explicit UTC time window.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/model-contribution`
 - Auth: required
 - Body: none
 - Flags:
-  - `--time-range` (query): Time range filter: "today", "this-week", "this-month", "this-quarter". Default is "today".
-  - `--cluster` (query): Cluster filter (optional). If empty, all clusters are included.
-- Output: list path `items`; columns `name`, `value`
+  - `--start-time` (query, date-time): Start of the query window (UTC, inclusive).
+  - `--end-time` (query, date-time): End of the query window (UTC, exclusive).
+- Output: list path `items`; columns `modelName`, `revenueAmount`, `tokenTotal`
 
 ### `dce business-cockpit businessvalueservice get-month-end-forecast-metrics`
 
@@ -394,17 +437,40 @@
   - `--start-time` (query, date-time): Inclusive range start.
   - `--end-time` (query, date-time): Exclusive range end.
 
+### `dce business-cockpit businessvalueservice get-period-revenue-cost-trend`
+
+- Summary: GetPeriodRevenueCostTrend returns period-aware revenue and cost trend points.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/period-revenue-cost-trend`
+- Auth: required
+- Body: none
+- Flags:
+  - `--time-range` (query, required, default `PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED`, one of: PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED|PERIOD_REVENUE_COST_TREND_RANGE_TODAY|PERIOD_REVENUE_COST_TREND_RANGE_THIS_WEEK|PERIOD_REVENUE_COST_TREND_RANGE_THIS_MONTH|PERIOD_REVENUE_COST_TREND_RANGE_THIS_QUARTER): Restricted dashboard time range.
+  - `--tz-offset-minutes` (query, int32): Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset().
+- Output: list path `points`; columns `cost`, `revenue`, `time`
+
+### `dce business-cockpit businessvalueservice get-period-token-trend`
+
+- Summary: GetPeriodTokenTrend returns period-aware token output trend points.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/period-token-trend`
+- Auth: required
+- Body: none
+- Flags:
+  - `--time-range` (query, required, default `PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED`, one of: PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED|PERIOD_TOKEN_TREND_RANGE_TODAY|PERIOD_TOKEN_TREND_RANGE_THIS_WEEK|PERIOD_TOKEN_TREND_RANGE_THIS_MONTH|PERIOD_TOKEN_TREND_RANGE_THIS_QUARTER): Restricted dashboard time range.
+  - `--tz-offset-minutes` (query, required, int32): Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset().
+- Output: list path `points`; columns `time`, `totalTokens`
+
 ### `dce business-cockpit businessvalueservice get-rated-capacity`
 
 - Summary: GetRatedCapacity returns the rated capacity value (in millions).
 - HTTP: `GET /apis/crane.io/v1alpha1/business-value/rated-capacity`
 - Auth: required
 - Body: none
-- Flags: none
+- Flags:
+  - `--time-range` (query): Optional time range for period capacity calculation:
 
 ### `dce business-cockpit businessvalueservice get-revenue-margin-trend-forecast`
 
-- Summary: GetRevenueMarginTrendForecast returns 37 daily points (30 historical + 7 forecast)
+- Summary: GetRevenueMarginTrendForecast returns the successful response for the request
 - HTTP: `GET /apis/crane.io/v1alpha1/business-value/revenue-margin-trend-forecast`
 - Auth: required
 - Body: none
@@ -420,24 +486,52 @@
 - Flags: none
 - Output: list path `suggestions`; columns `type`, `content`
 
-### `dce business-cockpit businessvalueservice get-tenant-token-usage`
+### `dce business-cockpit businessvalueservice get-summary-metric-thresholds`
 
-- Summary: GetTenantTokenUsage returns per-tenant token usage and charge amount for the given time window.
-- HTTP: `GET /apis/crane.io/v1alpha1/business-value/tenant-token-usage`
+- Summary: GetSummaryMetricThresholds returns business rules for the business-value
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/summary-metric-thresholds`
+- Auth: required
+- Body: none
+- Flags: none
+- Output: list path `rules`; columns `metricId`, `operator`, `value`
+
+### `dce business-cockpit businessvalueservice get-tenant-consumption-distribution`
+
+- Summary: GetTenantConsumptionDistribution returns Top10 customer groups and an optional other group.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/tenant-consumption-distribution`
 - Auth: required
 - Body: none
 - Flags:
-  - `--start-time` (query, date-time): Start of the query window (UTC, inclusive).
-  - `--end-time` (query, date-time): End of the query window (UTC, exclusive).
-- Output: list path `items`; columns `price`, `tenantId`, `tenantName`, `tokenTotal`
+  - `--time-range` (query): One of "today", "this-week", "this-month", or "this-quarter".
+- Output: list path `items`; columns `isOther`, `revenue`, `tenantId`, `tenantName`, `tokenTotal`
+
+### `dce business-cockpit businessvalueservice get-tenant-growth-trend-top10`
+
+- Summary: GetTenantGrowthTrendTop10 returns all-model daily token usage for the top ten tenants.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/tenant-growth-trend-top10`
+- Auth: required
+- Body: none
+- Flags:
+  - `--start-time` (query, date-time): Inclusive start of the requested UTC time window.
+  - `--end-time` (query, date-time): Exclusive end of the requested UTC time window.
 
 ### `dce business-cockpit businessvalueservice get-token-throughput`
 
-- Summary: GetTokenThroughput returns the current per-second Token throughput.
+- Summary: GetTokenThroughput returns the current per-minute Token throughput.
 - HTTP: `GET /apis/crane.io/v1alpha1/business-value/token-throughput`
 - Auth: required
 - Body: none
 - Flags: none
+
+### `dce business-cockpit businessvalueservice get-token-throughput-history`
+
+- Summary: GetTokenThroughputHistory returns simulated historical throughput data points.
+- HTTP: `GET /apis/crane.io/v1alpha1/business-value/token-throughput-history`
+- Auth: required
+- Body: none
+- Flags:
+  - `--steps` (query, int32): Maximum number of recent historical data points to return.
+- Output: list path `points`; columns `timestamp`, `tokensPerMinute`
 
 ### `dce business-cockpit businessvalueservice get-value-attribution-module-boosts`
 
@@ -616,6 +710,30 @@
   - `--query.timezone` (query): Optional IANA timezone (e.g. "Asia/Shanghai") for rendering x-axis
 - Output: list path `items`; columns `id`, `precision`, `status`, `trend`, `trendPrecision`, `trendUnit`
 
+## ExpenseService
+
+### `dce business-cockpit expenseservice get-balance-voucher-overview`
+
+- Summary: GetBalanceVoucherOverview returns balance/voucher stock and flow points.
+- HTTP: `GET /apis/crane.io/v1alpha1/expense/balance-voucher-overview`
+- Auth: required
+- Body: none
+- Flags:
+  - `--range` (query, required, default `BALANCE_VOUCHER_OVERVIEW_RANGE_UNSPECIFIED`, one of: BALANCE_VOUCHER_OVERVIEW_RANGE_UNSPECIFIED|BALANCE_VOUCHER_OVERVIEW_RANGE_LAST_30_DAYS|BALANCE_VOUCHER_OVERVIEW_RANGE_LAST_12_MONTHS): range
+  - `--time-zone` (query, required): timeZone
+- Output: list path `points`; columns `balanceAvailable`, `balanceTotalMicros`, `bucketStart`, `rechargeAmountMicros`, `rechargeAvailable`, `voucherEffectiveAmountMicros`
+
+### `dce business-cockpit expenseservice get-platform-revenue-analytics`
+
+- Summary: GetPlatformRevenueAnalytics returns ordered balance-paid and voucher-consumption
+- HTTP: `GET /apis/crane.io/v1alpha1/expense/platform-revenue-analytics`
+- Auth: required
+- Body: none
+- Flags:
+  - `--range` (query, required, default `PLATFORM_REVENUE_RANGE_UNSPECIFIED`, one of: PLATFORM_REVENUE_RANGE_UNSPECIFIED|PLATFORM_REVENUE_RANGE_LAST_30_DAYS|PLATFORM_REVENUE_RANGE_CURRENT_YEAR): range
+  - `--time-zone` (query, required): IANA time-zone name used to derive local day and month boundaries.
+- Output: list path `points`; columns `bucketStart`, `rechargeAmountMicros`, `voucherConsumptionAmountMicros`
+
 ## FinopsPanelService
 
 ### `dce business-cockpit finopspanelservice get-allocation-summary`
@@ -629,16 +747,6 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `rows`; columns `type`, `allocCost`, `object`, `revenue`, `roi`, `tokenUsage`
 
-### `dce business-cockpit finopspanelservice get-asset-machine-count`
-
-- Summary: FinopsPanelService_GetAssetMachineCount
-- HTTP: `GET /apis/crane.io/v1alpha1/finops/asset-machine-count`
-- Auth: required
-- Body: none
-- Flags:
-  - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
-  - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
-
 ### `dce business-cockpit finopspanelservice get-asset-return-matrix`
 
 - Summary: FinopsPanelService_GetAssetReturnMatrix
@@ -649,26 +757,6 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `points`; columns `bookValue`, `machine`, `profitValue`, `status`, `utilization`
-
-### `dce business-cockpit finopspanelservice get-average-machine-profit`
-
-- Summary: FinopsPanelService_GetAverageMachineProfit
-- HTTP: `GET /apis/crane.io/v1alpha1/finops/average-machine-profit`
-- Auth: required
-- Body: none
-- Flags:
-  - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
-  - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
-
-### `dce business-cockpit finopspanelservice get-average-machine-revenue`
-
-- Summary: FinopsPanelService_GetAverageMachineRevenue
-- HTTP: `GET /apis/crane.io/v1alpha1/finops/average-machine-revenue`
-- Auth: required
-- Body: none
-- Flags:
-  - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
-  - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
 ### `dce business-cockpit finopspanelservice get-budget-forecast`
 
@@ -685,16 +773,6 @@
 
 - Summary: FinopsPanelService_GetBudgetRemaining
 - HTTP: `GET /apis/crane.io/v1alpha1/finops/budget-remaining`
-- Auth: required
-- Body: none
-- Flags:
-  - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
-  - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
-
-### `dce business-cockpit finopspanelservice get-cost-recovery-rate`
-
-- Summary: FinopsPanelService_GetCostRecoveryRate
-- HTTP: `GET /apis/crane.io/v1alpha1/finops/cost-recovery-rate`
 - Auth: required
 - Body: none
 - Flags:
@@ -721,7 +799,7 @@
 - Flags:
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
-- Output: list path `rows`; columns `addedCost`, `expectedRevenue`, `plan`, `profitImpact`, `recommendation`, `recoveryPeriod`
+- Output: list path `rows`; columns `action`, `addedCost`, `existingQuantity`, `expectedRevenue`, `hasMonthlyBudgetImpact`, `hasProfitImpact`
 
 ### `dce business-cockpit finopspanelservice get-finops-suggestions`
 
@@ -745,16 +823,6 @@
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 - Output: list path `rows`; columns `bookValue`, `config`, `depreciation`, `machine`, `monthToken`, `payback`
 
-### `dce business-cockpit finopspanelservice get-monthly-cost`
-
-- Summary: FinopsPanelService_GetMonthlyCost
-- HTTP: `GET /apis/crane.io/v1alpha1/finops/monthly-cost`
-- Auth: required
-- Body: none
-- Flags:
-  - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
-  - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
-
 ### `dce business-cockpit finopspanelservice get-monthly-profit`
 
 - Summary: FinopsPanelService_GetMonthlyProfit
@@ -765,10 +833,10 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
-### `dce business-cockpit finopspanelservice get-monthly-revenue`
+### `dce business-cockpit finopspanelservice get-overview`
 
-- Summary: FinopsPanelService_GetMonthlyRevenue
-- HTTP: `GET /apis/crane.io/v1alpha1/finops/monthly-revenue`
+- Summary: FinopsPanelService_GetOverview
+- HTTP: `GET /apis/crane.io/v1alpha1/finops/overview`
 - Auth: required
 - Body: none
 - Flags:
@@ -790,36 +858,6 @@
 
 - Summary: FinopsPanelService_GetUnitTokenCost
 - HTTP: `GET /apis/crane.io/v1alpha1/finops/unit-token-cost`
-- Auth: required
-- Body: none
-- Flags:
-  - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
-  - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
-
-### `dce business-cockpit finopspanelservice get-unit-token-profit`
-
-- Summary: FinopsPanelService_GetUnitTokenProfit
-- HTTP: `GET /apis/crane.io/v1alpha1/finops/unit-token-profit`
-- Auth: required
-- Body: none
-- Flags:
-  - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
-  - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
-
-### `dce business-cockpit finopspanelservice get-unit-token-revenue`
-
-- Summary: FinopsPanelService_GetUnitTokenRevenue
-- HTTP: `GET /apis/crane.io/v1alpha1/finops/unit-token-revenue`
-- Auth: required
-- Body: none
-- Flags:
-  - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
-  - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
-
-### `dce business-cockpit finopspanelservice get-weighted-payback-period`
-
-- Summary: FinopsPanelService_GetWeightedPaybackPeriod
-- HTTP: `GET /apis/crane.io/v1alpha1/finops/weighted-payback-period`
 - Auth: required
 - Body: none
 - Flags:
@@ -857,45 +895,9 @@
 - Flags:
   - `--time-window` (query): timeWindow
   - `--cluster` (query): cluster
-  - `--sla-baseline` (query): slaBaseline
 - Output: list path `groupStates`; columns `key`, `message`, `status`
 
-### `dce business-cockpit productionoperationsservice get-singlepage-models-cost`
-
-- Summary: ProductionOperationsService_GetSinglepageModelsCost
-- HTTP: `GET /apis/crane.io/v1alpha1/singlepage/modelscost`
-- Auth: required
-- Body: none
-- Flags:
-  - `--time-window` (query): timeWindow
-  - `--cluster` (query): cluster
-  - `--limit` (query, int32): limit
-- Output: list path `items`; columns `modelName`, `costAvailable`, `costBarPercent`, `costDisplayValue`, `costPerMillionTokens`, `rank`; pagination `cursor`
-
-### `dce business-cockpit productionoperationsservice get-synergy-tab`
-
-- Summary: ProductionOperationsService_GetSynergyTab
-- HTTP: `GET /apis/crane.io/v1alpha1/production-ops/synergy`
-- Auth: required
-- Body: none
-- Flags:
-  - `--time-window` (query): timeWindow
-  - `--cluster` (query): cluster
-  - `--sla-baseline` (query): slaBaseline
-- Output: list path `gpuPoolRank`; columns `cardCount`, `dailyOutputPerCard`, `memoryUtilization`, `note`, `poolName`, `powerDraw`
-
 ## ResourceCostService
-
-### `dce business-cockpit resourcecostservice get-cost-attribution`
-
-- Summary: GetCostAttribution returns cost attribution breakdown.
-- HTTP: `GET /apis/crane.io/v1alpha1/resource-cost/attribution`
-- Auth: required
-- Body: none
-- Flags:
-  - `--cluster` (query): Optional cluster name filter. Empty means all clusters.
-  - `--time-range` (query, default `THIS_MONTH`, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS): Time range for token/revenue queries. Default is THIS_MONTH.
-- Output: list path `items`; columns `name`, `cost`, `key`, `percent`
 
 ### `dce business-cockpit resourcecostservice get-cost-kpis`
 
@@ -926,17 +928,6 @@
   - `--cluster` (query): Optional cluster name filter. Empty means all clusters.
   - `--time-range` (query, default `THIS_MONTH`, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS): Time range for token/revenue queries. Default is THIS_MONTH.
 - Output: list path `items`; columns `type`, `content`
-
-### `dce business-cockpit resourcecostservice get-cost-waterfall`
-
-- Summary: GetCostWaterfall returns cost optimization waterfall data.
-- HTTP: `GET /apis/crane.io/v1alpha1/resource-cost/waterfall`
-- Auth: required
-- Body: none
-- Flags:
-  - `--cluster` (query): Optional cluster name filter. Empty means all clusters.
-  - `--time-range` (query, default `THIS_MONTH`, one of: THIS_MONTH|THIS_WEEK|LAST_MONTH|LAST_7_DAYS|LAST_30_DAYS): Time range for token/revenue queries. Default is THIS_MONTH.
-- Output: list path `items`; columns `key`, `label`, `value`
 
 ### `dce business-cockpit resourcecostservice get-gpu-efficiency`
 
@@ -1107,10 +1098,79 @@
 - Flags: none
 - Output: list path `deviceStates`
 
-### `dce business-cockpit singlepageservice get-gross-profit-attribution-config`
+### `dce business-cockpit singlepageservice get-popular-model-contribution`
 
-- Summary: SinglePageService_GetGrossProfitAttributionConfig
-- HTTP: `GET /apis/crane.io/v1alpha1/singlepage/gross-profit-attribution-config`
+- Summary: SinglePageService_GetPopularModelContribution
+- HTTP: `GET /apis/crane.io/v1alpha1/singlepage/popular-model-contribution`
+- Auth: required
+- Body: none
+- Flags:
+  - `--time-window` (query): timeWindow
+  - `--cluster` (query): cluster
+  - `--limit` (query, int32): limit
+- Output: list path `items`; columns `modelName`, `rank`, `requestBarPercent`, `requestCount`, `requestDisplayValue`, `requestRate`; pagination `cursor`
+
+### `dce business-cockpit singlepageservice get-realtime-request-rate`
+
+- Summary: SinglePageService_GetRealtimeRequestRate
+- HTTP: `GET /apis/crane.io/v1alpha1/singlepage/realtime-request-rate`
 - Auth: required
 - Body: none
 - Flags: none
+
+### `dce business-cockpit singlepageservice get-revenue-per-minute`
+
+- Summary: SinglePageService_GetRevenuePerMinute
+- HTTP: `GET /apis/crane.io/v1alpha1/singlepage/revenue-per-minute`
+- Auth: required
+- Body: none
+- Flags: none
+
+### `dce business-cockpit singlepageservice get-revenue-per-minute-history`
+
+- Summary: SinglePageService_GetRevenuePerMinuteHistory
+- HTTP: `GET /apis/crane.io/v1alpha1/singlepage/revenue-per-minute-history`
+- Auth: required
+- Body: none
+- Flags:
+  - `--steps` (query, int32): steps
+- Output: list path `points`; columns `revenuePerMinute`, `timestamp`
+
+### `dce business-cockpit singlepageservice get-token-latency`
+
+- Summary: SinglePageService_GetTokenLatency
+- HTTP: `GET /apis/crane.io/v1alpha1/singlepage/token-latency`
+- Auth: required
+- Body: none
+- Flags:
+  - `--tz-offset-minutes` (query, int32): Client timezone offset from UTC in minutes. Follows JavaScript
+
+### `dce business-cockpit singlepageservice get-usage-capacity-trend`
+
+- Summary: SinglePageService_GetUsageCapacityTrend
+- HTTP: `GET /apis/crane.io/v1alpha1/singlepage/usage-capacity-trend`
+- Auth: required
+- Body: none
+- Flags: none
+- Output: list path `actualPoints`; columns `date`, `gpuUtilizationAvailable`, `gpuUtilizationPct`, `inputTokens`, `inputTokensAvailable`, `outputTokens`
+
+## UserMetricsService
+
+### `dce business-cockpit usermetricsservice get-new-user-trend`
+
+- Summary: GetNewUserTrend returns recent daily or monthly new-user counts.
+- HTTP: `GET /apis/crane.io/v1alpha1/user-metrics/new-user-trend`
+- Auth: required
+- Body: none
+- Flags:
+  - `--range` (query, required, default `NEW_USER_TREND_RANGE_UNSPECIFIED`, one of: NEW_USER_TREND_RANGE_UNSPECIFIED|NEW_USER_TREND_RANGE_LAST_30_DAYS|NEW_USER_TREND_RANGE_LAST_1_YEAR): range
+- Output: list path `points`; columns `bucketStart`, `newUsersCount`
+
+### `dce business-cockpit usermetricsservice get-registered-user-metrics`
+
+- Summary: GetRegisteredUserMetrics returns current and previous-period registration counts.
+- HTTP: `GET /apis/crane.io/v1alpha1/user-metrics/registered-users`
+- Auth: required
+- Body: none
+- Flags:
+  - `--time-range` (query, required): Supported values: "today", "this-week", "this-month", "this-quarter".
