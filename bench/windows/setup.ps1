@@ -21,7 +21,7 @@ $architecture = switch ($rawArchitecture.ToUpperInvariant()) {
 $releaseVersion = $version.TrimStart('v')
 $archive = "k8s-ai-bench_${releaseVersion}_windows_${architecture}.zip"
 $url = "https://github.com/$repository/releases/download/$version/$archive"
-$archivePath = Join-Path ([System.IO.Path]::GetTempPath()) ([System.IO.Path]::GetRandomFileName())
+$archivePath = Join-Path ([System.IO.Path]::GetTempPath()) "$([guid]::NewGuid()).zip"
 
 try {
     New-Item -ItemType Directory -Force -Path $destination | Out-Null
@@ -32,7 +32,7 @@ try {
     if (-not (Get-Command dce.exe -ErrorAction SilentlyContinue)) {
         $dceArchive = "dce-$dceVersion-windows-$architecture.zip"
         $dceUrl = "https://github.com/$dceRepository/releases/download/$dceVersion/$dceArchive"
-        $dceArchivePath = Join-Path ([System.IO.Path]::GetTempPath()) ([System.IO.Path]::GetRandomFileName())
+        $dceArchivePath = Join-Path ([System.IO.Path]::GetTempPath()) "$([guid]::NewGuid()).zip"
         $dceExtractPath = Join-Path ([System.IO.Path]::GetTempPath()) ([System.IO.Path]::GetRandomFileName())
         try {
             New-Item -ItemType Directory -Force -Path $dceExtractPath | Out-Null
