@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 
 $version = if ($env:K8S_AI_BENCH_VERSION) { $env:K8S_AI_BENCH_VERSION } else { 'v0.1.1-rc.1' }
 $repository = if ($env:K8S_AI_BENCH_REPOSITORY) { $env:K8S_AI_BENCH_REPOSITORY } else { 'DaoCloud/ai-skills-bench' }
-$dceVersion = if ($env:DCE_CLI_VERSION) { $env:DCE_CLI_VERSION } else { 'v0.2.0-rc.12' }
+$dceVersion = if ($env:DCE_CLI_VERSION) { $env:DCE_CLI_VERSION } else { 'v0.1.0-rc.12' }
 $dceRepository = if ($env:DCE_CLI_REPOSITORY) { $env:DCE_CLI_REPOSITORY } else { 'DaoCloud/daocloud-skills' }
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $destination = if ($args.Count -gt 0) { $args[0] } else { Join-Path $scriptDir '.build\bin' }
