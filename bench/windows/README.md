@@ -11,6 +11,7 @@ $env:DCE_HOST = 'https://dce.example.invalid'
 $env:DCE_TOKEN = 'Bearer <current-token>'
 $env:K8S_AI_BENCH_VERSION = 'v0.1.1-rc.1'
 $env:K8S_AI_BENCH_REPOSITORY = 'DaoCloud/ai-skills-bench'
+$env:DCE_CLI_VERSION = 'v0.2.0-rc.12'
 ```
 
 `DCE_TOKEN` may include the `Bearer ` prefix. The scripts remove that prefix

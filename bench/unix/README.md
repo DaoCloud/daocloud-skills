@@ -30,7 +30,7 @@ Override the repositories or versions when testing another release:
 ```bash
 export K8S_AI_BENCH_REPOSITORY='DaoCloud/ai-skills-bench'
 export DCE_CLI_REPOSITORY='DaoCloud/daocloud-skills'
-export DCE_CLI_VERSION='v0.1.0-rc.12'
+export DCE_CLI_VERSION='v0.2.0-rc.12'
 ```
 
 ## 3. Render the task

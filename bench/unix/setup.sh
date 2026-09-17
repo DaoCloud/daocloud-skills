@@ -3,7 +3,7 @@ set -euo pipefail
 
 version="${K8S_AI_BENCH_VERSION:-v0.1.1-rc.1}"
 repository="${K8S_AI_BENCH_REPOSITORY:-DaoCloud/ai-skills-bench}"
-dce_version="${DCE_CLI_VERSION:-v0.1.0-rc.12}"
+dce_version="${DCE_CLI_VERSION:-v0.2.0-rc.12}"
 dce_repository="${DCE_CLI_REPOSITORY:-DaoCloud/daocloud-skills}"
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 destination="${1:-${script_dir}/.build/bin}"
