@@ -1,0 +1,74 @@
+# DCE skill benchmark on Windows
+
+This guide runs the sample DCE task natively in Windows PowerShell. WSL and
+Git Bash are not required. Run PowerShell from the `daocloud-skills`
+repository root.
+
+## 1. Set the DCE environment
+
+```powershell
+$env:DCE_HOST = 'https://dce.example.invalid'
+$env:DCE_TOKEN = 'Bearer <current-token>'
+$env:K8S_AI_BENCH_VERSION = 'v0.1.1-rc.1'
+$env:K8S_AI_BENCH_REPOSITORY = 'DaoCloud/ai-skills-bench'
+```
+
+`DCE_TOKEN` may include the `Bearer ` prefix. The scripts remove that prefix
+when calling `dce auth login`.
+
+## 2. Download the tools
+
+```powershell
+.\bench\windows\setup.ps1
+$env:Path = "$(Resolve-Path .\bench\windows\.build\bin);$env:Path"
+```
+
+The setup script detects amd64 or arm64, downloads the matching Windows
+benchmark ZIP, and extracts the `.exe` files. If `dce.exe` is not already on
+`PATH`, it downloads the Windows DCE CLI into the same directory. Override the
+DCE release with `DCE_CLI_VERSION` and `DCE_CLI_REPOSITORY`.
+
+The setup script does not install the agent. For Codex, install and log in to
+Codex on this same Windows machine.
+
+## 3. Render the task
+
+```powershell
+.\bench\windows\render-task.ps1
+```
+
+This substitutes `DCE_HOST` and `DCE_TOKEN` into the prompt and creates the
+runtime task under `bench\windows\.runtime\tasks\dce-create-pod`.
+
+## 4. Run with Codex
+
+```powershell
+.\bench\windows\.build\bin\k8s-ai-bench.exe run `
+  --matrix-file .\bench\windows\eval-matrix-codex.yaml
+```
+
+The matrix runs `k8s-ai-agent-bridge.exe --agent codex`. The bridge invokes
+`codex.exe exec --ephemeral` and passes the rendered prompt through stdin. If
+Codex is not on `PATH`, set its full path before running:
+
+```powershell
+$env:CODEX_BIN = 'C:\Users\<user>\AppData\Roaming\npm\codex.exe'
+```
+
+To use another agent, copy the matrix and change `agents`, `models`, and
+`runs.agent`. A generic stdin wrapper must read the prompt from stdin and
+write its answer to stdout.
+
+## DCE task workflow
+
+The prompt asks the agent to discover and inspect the DCE commands, authenticate
+to `DCE_HOST`, create the single Pod, query it, and print
+`DCE_POD_CREATED_OK`. The verifier independently checks the marker and the DCE
+API response. Cleanup deletes only `k8s-ai-bench-dce-pod`.
+
+The Windows template is in
+`bench\windows\task-template\dce-create-pod\`:
+
+```text
+prompt.template  task.yaml  verify.ps1  cleanup.ps1
+```
