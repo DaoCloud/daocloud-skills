@@ -12,9 +12,9 @@ if (-not (Test-Path -LiteralPath $templateDir -PathType Container)) {
 }
 
 New-Item -ItemType Directory -Force -Path $destination | Out-Null
-Copy-Item (Join-Path $templateDir 'task.yaml') $destination -Force
-Copy-Item (Join-Path $templateDir 'verify.sh') $destination -Force
-Copy-Item (Join-Path $templateDir 'cleanup.sh') $destination -Force
+Copy-Item (Join-Path $templateDir 'task.windows.yaml') (Join-Path $destination 'task.yaml') -Force
+Copy-Item (Join-Path $templateDir 'verify.ps1') $destination -Force
+Copy-Item (Join-Path $templateDir 'cleanup.ps1') $destination -Force
 
 $prompt = Get-Content (Join-Path $templateDir 'prompt.template') -Raw
 $prompt = $prompt.Replace('${DCE_HOST}', $env:DCE_HOST)

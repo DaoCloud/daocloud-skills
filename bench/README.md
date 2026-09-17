@@ -8,14 +8,14 @@ The benchmark then verifies the API result and removes the Pod.
 
 Run these steps from the repository root:
 
-1. Make sure the DCE CLI is available as `dce`. The verifier and cleanup
-   scripts use this command. A logged-in agent CLI is also required for local
-   CLI agents such as Codex.
+1. Ensure the selected agent CLI is available and logged in when using a local
+   CLI agent such as Codex. The setup script checks for `dce`/`dce.exe` and
+   downloads the matching platform CLI when it is missing.
 2. Set `DCE_HOST` and `DCE_TOKEN`. The token may include the `Bearer ` prefix.
 3. Prepare the released benchmark binaries:
    - macOS/Linux: `./bench/setup.sh`
    - Windows PowerShell: `./bench/setup.ps1`
-4. Render the task prompt:
+4. Render the task and prompt:
    - macOS/Linux: `./bench/render-task.sh`
    - Windows PowerShell: `./bench/render-task.ps1`
 5. Configure one agent in a matrix and set `runs.agent` to that agent.
@@ -81,10 +81,30 @@ export PATH="$PWD/bench/.build/bin:$PATH"
 missing. If `dce` is not already on `PATH`, it downloads a local Unix DCE CLI
 copy into `bench/.build/bin`. It does not install or select the user's agent.
 
-On Windows, use PowerShell to download the bench ZIP with `setup.ps1`, then use
-WSL or Git Bash for the complete task run. The current benchmark executes task
-`setup.sh`, `verify.sh`, and `cleanup.sh` files directly, and the current DCE
-CLI release does not publish a native Windows binary.
+On Windows, use PowerShell for the complete flow:
+
+```powershell
+$env:DCE_HOST = 'https://dce.example.invalid'
+$env:DCE_TOKEN = 'Bearer <current-token>'
+
+.\bench\setup.ps1
+$env:Path = "$(Resolve-Path .\bench\.build\bin);$env:Path"
+.\bench\render-task.ps1
+.\bench\.build\bin\k8s-ai-bench.exe run `
+  --matrix-file .\bench\eval-matrix-codex.yaml
+```
+
+The Windows renderer copies the PowerShell task variant into the runtime
+directory. The generated `task.yaml` references `verify.ps1` and `cleanup.ps1`;
+the Unix renderer generates a task that references `verify.sh` and
+`cleanup.sh`. No WSL or Git Bash is required for the benchmark lifecycle.
+This requires `k8s-ai-bench` v0.1.1-rc.1 or a later release, which includes
+PowerShell task-script dispatch.
+
+`setup.ps1` checks for `dce.exe` on `PATH`. If it is missing, it downloads the
+Windows DCE CLI release into `bench\.build\bin` (override the release with
+`DCE_CLI_VERSION` and `DCE_CLI_REPOSITORY`). The agent selected in the matrix
+is not installed by the setup script.
 
 ## Configure your own agent
 
@@ -146,3 +166,23 @@ successful DCE API query matching the Pod name, namespace, and image. The
 cleanup hook deletes only `k8s-ai-bench-dce-pod`. If a run is interrupted,
 rerender the task before running it again; cleanup removes the generated
 `prompt.txt`.
+
+## Task template layout
+
+Platform-specific lifecycle scripts live together because they implement the
+same task:
+
+```text
+bench/task-template/dce-create-pod/
+├── prompt.template
+├── task.yaml              # Unix runtime task
+├── verify.sh
+├── cleanup.sh
+├── task.windows.yaml      # Windows runtime task
+├── verify.ps1
+└── cleanup.ps1
+```
+
+The two renderers select the matching task YAML and scripts. The task does not
+automatically translate `.sh` to `.ps1`; when adding a cross-platform task,
+provide both variants and make each renderer reference the correct files.
