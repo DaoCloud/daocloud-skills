@@ -1,0 +1,22 @@
+# Run from the daocloud-skills repository root after rendering the task.
+skillsDir: ./skills
+tasksDir: ./bench/windows/.runtime/tasks
+outputDir: ./bench/windows/.build/dce-skill-bench
+clusterCreationPolicy: DoNotCreate
+
+agents:
+  - id: codex
+    bin: ./bench/windows/.build/bin/k8s-ai-agent-bridge.exe
+    adapter: generic-stdin
+    args: [--agent, codex]
+
+models:
+  - id: codex
+    provider: openai
+    model: gpt-5.3-codex
+
+runs:
+  iterations: 1
+  concurrency: 1
+  taskPattern: "dce-create-pod"
+  agent: codex
