@@ -1,0 +1,12 @@
+skills:
+  - container-management-cluster-diagnosis/SKILL.md
+  - dce/SKILL.md
+
+script:
+  - promptFile: prompt.txt
+
+setup: setup.sh
+verifier: verify.sh
+cleanup: cleanup.sh
+difficulty: medium
+timeout: 10m

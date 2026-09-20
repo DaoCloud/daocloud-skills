@@ -1,0 +1,25 @@
+Use the repository's `container-management-cluster-diagnosis` skill and the `dce` CLI
+to run a full health inspection of one cluster in the specified DCE environment:
+
+- DCE address: ${DCE_HOST}
+- DCE bearer token: ${DCE_TOKEN}
+- Cluster: kpanda-global-cluster
+
+Follow the cluster-diagnosis skill workflow to confirm the command and
+authentication status first, then inspect the cluster overview, node health, and
+Pod inventory before drawing any conclusion. This DCE endpoint uses a
+certificate that is not trusted by the local machine, so include the global
+`--insecure` flag on every `dce` invocation, including `auth login`.
+
+This is a read-only inspection task. Do not create, delete, update, or restart
+any resources, and do not attempt remediation; `cleanup.sh` will handle
+deletion. Do not repeat the token in your output.
+
+Present the final report as structured Markdown following the skill's output
+format. Additionally, for every abnormal Pod you find, include one line of
+exactly this form:
+
+Pod: <namespace>/<name> (<reason>)
+
+Only after the inspection is complete, output:
+CLUSTER_DIAGNOSIS_OK
