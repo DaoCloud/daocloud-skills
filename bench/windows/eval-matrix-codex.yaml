@@ -18,5 +18,6 @@ models:
 runs:
   iterations: 1
   concurrency: 1
-  taskPattern: "dce-create-pod"
+  # taskPattern is a regex; narrow it (e.g. "pod-diagnosis") to run a subset.
+  taskPattern: ".*"
   agent: codex
