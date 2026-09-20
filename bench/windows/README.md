@@ -32,16 +32,19 @@ DCE release with `DCE_CLI_VERSION` and `DCE_CLI_REPOSITORY`.
 The setup script does not install the agent. For Codex, install and log in to
 Codex on this same Windows machine.
 
-## 3. Render the task
+## 3. Render the task(s)
 
 ```powershell
-.\bench\windows\render-task.ps1                    # default: dce-create-pod
-.\bench\windows\render-task.ps1 pod-diagnosis      # any template under task-template\
+.\bench\windows\render-task.ps1                    # render every template under task-template\
+.\bench\windows\render-task.ps1 pod-diagnosis      # render a single task
 ```
 
-This substitutes `DCE_HOST` and `DCE_TOKEN` into the prompt and creates the
-runtime task under `bench\windows\.runtime\tasks\<task-name>`. Pass a task name
-to render a template other than the default.
+This substitutes `DCE_HOST` and `DCE_TOKEN` into each prompt and creates the
+runtime tasks under `bench\windows\.runtime\tasks\<task-name>`. With no
+arguments every template is rendered; pass a task name to render only that
+one. Which rendered tasks a matrix run executes is selected by its
+`runs.taskPattern` regex, so narrow the pattern instead of re-rendering when
+you only want a subset.
 
 ## 4. Run with Codex
 

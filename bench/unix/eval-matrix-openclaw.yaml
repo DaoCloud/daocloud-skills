@@ -28,5 +28,5 @@ models:
 runs:
   iterations: 1
   concurrency: 1
-  taskPattern: "dce-create-pod"
+  taskPattern: ".*"
   agent: openclaw

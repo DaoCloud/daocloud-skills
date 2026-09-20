@@ -33,16 +33,19 @@ export DCE_CLI_REPOSITORY='DaoCloud/daocloud-skills'
 export DCE_CLI_VERSION='v0.2.0-rc.12'
 ```
 
-## 3. Render the task
+## 3. Render the task(s)
 
 ```bash
-./bench/unix/render-task.sh                    # default: dce-create-pod
-./bench/unix/render-task.sh pod-diagnosis      # any template under task-template/
+./bench/unix/render-task.sh                    # render every template under task-template/
+./bench/unix/render-task.sh pod-diagnosis      # render a single task
 ```
 
-This substitutes `DCE_HOST` and `DCE_TOKEN` into the prompt and creates the
-runtime task under `bench/unix/.runtime/tasks/<task-name>`. Pass a task name to
-render a template other than the default.
+This substitutes `DCE_HOST` and `DCE_TOKEN` into each prompt and creates the
+runtime tasks under `bench/unix/.runtime/tasks/<task-name>`. With no arguments
+every template is rendered; pass a task name to render only that one. Which
+rendered tasks a matrix run executes is selected by its `runs.taskPattern`
+regex, so narrow the pattern instead of re-rendering when you only want a
+subset.
 
 ## 4. Run with Codex
 
