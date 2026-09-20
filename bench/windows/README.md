@@ -35,11 +35,13 @@ Codex on this same Windows machine.
 ## 3. Render the task
 
 ```powershell
-.\bench\windows\render-task.ps1
+.\bench\windows\render-task.ps1                    # default: dce-create-pod
+.\bench\windows\render-task.ps1 pod-diagnosis      # any template under task-template\
 ```
 
 This substitutes `DCE_HOST` and `DCE_TOKEN` into the prompt and creates the
-runtime task under `bench\windows\.runtime\tasks\dce-create-pod`.
+runtime task under `bench\windows\.runtime\tasks\<task-name>`. Pass a task name
+to render a template other than the default.
 
 ## 4. Run with Codex
 
@@ -72,4 +74,28 @@ The Windows template is in
 
 ```text
 prompt.template  task.yaml  verify.ps1  cleanup.ps1
+```
+
+### Pod diagnosis task
+
+`pod-diagnosis` evaluates the `container-management-pod-diagnosis` skill. It is
+a read-only diagnosis task, so it adds a `setup.ps1` lifecycle script:
+
+```text
+setup.ps1 creates a fixture Pod with a known root cause
+  -> the agent diagnoses the Pod and prints POD_DIAGNOSIS_OK
+  -> verify.ps1 checks the marker, the expected root cause in the agent answer,
+     and that the fixture Pod is still untouched via the DCE API
+  -> cleanup.ps1 deletes the fixture Pod
+```
+
+The fixture Pod is `k8s-ai-bench-diag-pod` in the `default` namespace of
+`kpanda-global-cluster`. `setup.ps1` is idempotent: it removes a leftover
+fixture before recreating it and waits until the expected failure state is
+observable before the agent starts.
+
+To run it, render it and point a matrix `runs.taskPattern` at `pod-diagnosis`:
+
+```powershell
+.\bench\windows\render-task.ps1 pod-diagnosis
 ```
