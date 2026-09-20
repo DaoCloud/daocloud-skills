@@ -71,12 +71,14 @@ for state in pod.get("status", {}).get("containerStatuses") or []:
         print(waiting["reason"])
         break
 ' || true)"
-  if [[ "${reason}" == "ImagePullBackOff" ]]; then
-    echo "Fixture pod ${pod_name} is in ImagePullBackOff."
-    exit 0
-  fi
+  case "${reason}" in
+    ImagePullBackOff|ErrImagePull)
+      echo "Fixture pod ${pod_name} is failing image pulls (${reason})."
+      exit 0
+      ;;
+  esac
   if (( SECONDS >= deadline )); then
-    echo "fixture pod did not reach ImagePullBackOff within 180s (last reason: ${reason:-none})" >&2
+    echo "fixture pod did not reach an image-pull failure state within 180s (last reason: ${reason:-none})" >&2
     exit 1
   fi
   sleep 5

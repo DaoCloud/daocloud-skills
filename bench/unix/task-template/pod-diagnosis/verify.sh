@@ -21,8 +21,8 @@ if ! grep -Fq 'POD_DIAGNOSIS_OK' "${log_path}"; then
   echo "agent did not emit POD_DIAGNOSIS_OK" >&2
   exit 1
 fi
-if ! grep -Fqi 'ImagePullBackOff' "${log_path}"; then
-  echo "agent did not identify ImagePullBackOff as the root cause" >&2
+if ! grep -Eqi 'ImagePullBackOff|ErrImagePull' "${log_path}"; then
+  echo "agent did not identify an image-pull failure as the root cause" >&2
   exit 1
 fi
 
@@ -55,7 +55,7 @@ for state in pod.get("status", {}).get("containerStatuses") or []:
     waiting = (state.get("state") or {}).get("waiting") or {}
     if waiting.get("reason"):
         reasons.append(waiting["reason"])
-if "ImagePullBackOff" not in reasons:
-    raise SystemExit(f"fixture pod is not in ImagePullBackOff: {reasons!r}")
-print(f"DCE API verified {pod_name} is still in ImagePullBackOff with image {fixture_image}.")
+if not any(r in ("ImagePullBackOff", "ErrImagePull") for r in reasons):
+    raise SystemExit(f"fixture pod is not in an image-pull failure state: {reasons!r}")
+print(f"DCE API verified {pod_name} is still failing image pulls with image {fixture_image}.")
 PY
