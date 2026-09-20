@@ -7,7 +7,7 @@ set -euo pipefail
 cluster="kpanda-global-cluster"
 namespace="default"
 pending_pod="k8s-ai-bench-diag-pending-pod"
-cfg_pod="k8s-ai-bench-diag-cfg-pod"
+pvc_pod="k8s-ai-bench-diag-pvc-pod"
 
 dce_token="${DCE_TOKEN#Bearer }"
 
@@ -17,7 +17,7 @@ trap 'rm -f "${script_dir}/prompt.txt"' EXIT
 printf '%s' "${dce_token}" | dce --insecure --hostname "${DCE_HOST}" auth login \
   --auth-type bearer --with-token --skip-validate >/dev/null
 status=0
-for pod_name in "${pending_pod}" "${cfg_pod}"; do
+for pod_name in "${pending_pod}" "${pvc_pod}"; do
   set +e
   delete_output="$(dce --insecure --hostname "${DCE_HOST}" container-management core delete-pod \
     --cluster "${cluster}" --namespace "${namespace}" --name "${pod_name}" -o json 2>&1)"

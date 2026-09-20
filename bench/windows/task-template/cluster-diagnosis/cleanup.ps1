@@ -6,7 +6,7 @@ if (-not $env:DCE_TOKEN) { throw 'DCE_TOKEN is required' }
 $cluster = 'kpanda-global-cluster'
 $namespace = 'default'
 $pendingPod = 'k8s-ai-bench-diag-pending-pod'
-$cfgPod = 'k8s-ai-bench-diag-cfg-pod'
+$pvcPod = 'k8s-ai-bench-diag-pvc-pod'
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $promptPath = Join-Path $scriptDir 'prompt.txt'
@@ -23,7 +23,7 @@ try {
         throw "DCE authentication failed with exit code $LASTEXITCODE"
     }
 
-    foreach ($podName in @($pendingPod, $cfgPod)) {
+    foreach ($podName in @($pendingPod, $pvcPod)) {
         $deleteOutput = & dce --insecure --hostname $env:DCE_HOST container-management core delete-pod `
             --cluster $cluster --namespace $namespace --name $podName -o json 2>&1
         $deleteStatus = $LASTEXITCODE

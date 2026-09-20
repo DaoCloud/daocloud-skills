@@ -6,7 +6,7 @@ if (-not $env:DCE_TOKEN) { throw 'DCE_TOKEN is required' }
 $cluster = 'kpanda-global-cluster'
 $namespace = 'default'
 $pendingPod = 'k8s-ai-bench-diag-pending-pod'
-$cfgPod = 'k8s-ai-bench-diag-cfg-pod'
+$pvcPod = 'k8s-ai-bench-diag-pvc-pod'
 
 $dceToken = $env:DCE_TOKEN
 if ($dceToken.StartsWith('Bearer ')) {
@@ -23,7 +23,7 @@ try {
     }
 
     # Idempotency: remove any leftover fixtures from a previous aborted run.
-    foreach ($podName in @($pendingPod, $cfgPod)) {
+    foreach ($podName in @($pendingPod, $pvcPod)) {
         & dce --insecure --hostname $env:DCE_HOST container-management core delete-pod `
             --cluster $cluster --namespace $namespace --name $podName -o json | Out-Null
     }
@@ -55,39 +55,37 @@ try {
 }
 "@
 
-    # Fixture 2: a container referencing a missing ConfigMap key fails before
-    # the image is pulled, with a deterministic CreateContainerConfigError.
-    $cfgJson = @"
+    # Fixture 2: a Pod referencing a missing PersistentVolumeClaim is held
+    # Pending by the scheduler with an unbound-volume failure. Like fixture 1
+    # it is never scheduled, so no image pull is ever attempted.
+    $pvcJson = @"
 {
   "apiVersion": "v1",
   "kind": "Pod",
   "metadata": {
-    "name": "$cfgPod",
+    "name": "$pvcPod",
     "namespace": "$namespace"
   },
   "spec": {
     "containers": [
       {
         "name": "main",
-        "image": "nginx:stable",
-        "env": [
-          {
-            "name": "MISSING",
-            "valueFrom": {
-              "configMapKeyRef": {
-                "name": "k8s-ai-bench-nonexistent-config",
-                "key": "value"
-              }
-            }
-          }
-        ]
+        "image": "nginx:stable"
+      }
+    ],
+    "volumes": [
+      {
+        "name": "data",
+        "persistentVolumeClaim": {
+          "claimName": "k8s-ai-bench-nonexistent-pvc"
+        }
       }
     ]
   }
 }
 "@
 
-    foreach ($fixture in @(@{ Json = $pendingJson; File = 'pending-body.json' }, @{ Json = $cfgJson; File = 'cfg-body.json' })) {
+    foreach ($fixture in @(@{ Json = $pendingJson; File = 'pending-body.json' }, @{ Json = $pvcJson; File = 'pvc-body.json' })) {
         $bodyJson = [pscustomobject]@{ data = $fixture.Json } | ConvertTo-Json -Compress
         $bodyPath = Join-Path $workDir $fixture.File
         [System.IO.File]::WriteAllText($bodyPath, $bodyJson, $utf8NoBom)
@@ -101,7 +99,7 @@ try {
     $deadline = (Get-Date).AddSeconds(180)
     while ($true) {
         $pendingPhase = $null
-        $cfgReason = $null
+        $pvcPhase = $null
 
         $pendingResponse = & dce --insecure --hostname $env:DCE_HOST container-management core get-pod `
             --cluster $cluster --namespace $namespace --name $pendingPod -o json
@@ -112,27 +110,21 @@ try {
             }
         }
 
-        $cfgResponse = & dce --insecure --hostname $env:DCE_HOST container-management core get-pod `
-            --cluster $cluster --namespace $namespace --name $cfgPod -o json
-        if ($LASTEXITCODE -eq 0 -and $cfgResponse) {
+        $pvcResponse = & dce --insecure --hostname $env:DCE_HOST container-management core get-pod `
+            --cluster $cluster --namespace $namespace --name $pvcPod -o json
+        if ($LASTEXITCODE -eq 0 -and $pvcResponse) {
             try {
-                $cfgPodObj = ($cfgResponse -join "`n") | ConvertFrom-Json
-                foreach ($state in @($cfgPodObj.status.containerStatuses)) {
-                    if ($state.state.waiting.reason) {
-                        $cfgReason = $state.state.waiting.reason
-                        break
-                    }
-                }
+                $pvcPhase = (($pvcResponse -join "`n") | ConvertFrom-Json).status.phase
             } catch {
             }
         }
 
-        if ($pendingPhase -eq 'Pending' -and $cfgReason -eq 'CreateContainerConfigError') {
-            Write-Host "Fixture pods ready: $pendingPod Pending, $cfgPod CreateContainerConfigError."
+        if ($pendingPhase -eq 'Pending' -and $pvcPhase -eq 'Pending') {
+            Write-Host "Fixture pods ready: $pendingPod and $pvcPod are Pending for different scheduling reasons."
             exit 0
         }
         if ((Get-Date) -ge $deadline) {
-            throw "Fixtures not ready within 180s (pending phase: $pendingPhase, cfg reason: $cfgReason)"
+            throw "Fixtures not ready within 180s (pending phase: $pendingPhase, pvc phase: $pvcPhase)"
         }
         Start-Sleep -Seconds 5
     }

@@ -7,7 +7,7 @@ set -euo pipefail
 cluster="kpanda-global-cluster"
 namespace="default"
 pending_pod="k8s-ai-bench-diag-pending-pod"
-cfg_pod="k8s-ai-bench-diag-cfg-pod"
+pvc_pod="k8s-ai-bench-diag-pvc-pod"
 
 dce_token="${DCE_TOKEN#Bearer }"
 
@@ -15,7 +15,7 @@ printf '%s' "${dce_token}" | dce --insecure --hostname "${DCE_HOST}" auth login 
   --auth-type bearer --with-token --skip-validate >/dev/null
 
 # Idempotency: remove any leftover fixtures from a previous aborted run.
-for pod_name in "${pending_pod}" "${cfg_pod}"; do
+for pod_name in "${pending_pod}" "${pvc_pod}"; do
   dce --insecure --hostname "${DCE_HOST}" container-management core delete-pod \
     --cluster "${cluster}" --namespace "${namespace}" --name "${pod_name}" -o json >/dev/null 2>&1 || true
 done
@@ -50,39 +50,37 @@ cat > "${work_dir}/pending.json" <<EOF
 }
 EOF
 
-# Fixture 2: a container referencing a missing ConfigMap key fails before the
-# image is pulled, with a deterministic CreateContainerConfigError state.
-cat > "${work_dir}/cfg.json" <<EOF
+# Fixture 2: a Pod referencing a missing PersistentVolumeClaim is held
+# Pending by the scheduler with an unbound-volume failure. Like fixture 1 it
+# is never scheduled, so no image pull is ever attempted.
+cat > "${work_dir}/pvc.json" <<EOF
 {
   "apiVersion": "v1",
   "kind": "Pod",
   "metadata": {
-    "name": "${cfg_pod}",
+    "name": "${pvc_pod}",
     "namespace": "${namespace}"
   },
   "spec": {
     "containers": [
       {
         "name": "main",
-        "image": "nginx:stable",
-        "env": [
-          {
-            "name": "MISSING",
-            "valueFrom": {
-              "configMapKeyRef": {
-                "name": "k8s-ai-bench-nonexistent-config",
-                "key": "value"
-              }
-            }
-          }
-        ]
+        "image": "nginx:stable"
+      }
+    ],
+    "volumes": [
+      {
+        "name": "data",
+        "persistentVolumeClaim": {
+          "claimName": "k8s-ai-bench-nonexistent-pvc"
+        }
       }
     ]
   }
 }
 EOF
 
-for fixture in pending cfg; do
+for fixture in pending pvc; do
   python3 - "${work_dir}/${fixture}.json" "${work_dir}/${fixture}-body.json" <<'PY'
 import json
 import sys
@@ -106,24 +104,20 @@ try:
     print(json.load(sys.stdin).get("status", {}).get("phase", ""))
 except Exception:
     pass' || true)"
-  cfg_reason="$(dce --insecure --hostname "${DCE_HOST}" container-management core get-pod \
-    --cluster "${cluster}" --namespace "${namespace}" --name "${cfg_pod}" -o json 2>/dev/null \
+  pvc_phase="$(dce --insecure --hostname "${DCE_HOST}" container-management core get-pod \
+    --cluster "${cluster}" --namespace "${namespace}" --name "${pvc_pod}" -o json 2>/dev/null \
     | python3 -c 'import json,sys
 try:
-    for state in json.load(sys.stdin).get("status", {}).get("containerStatuses") or []:
-        waiting = (state.get("state") or {}).get("waiting") or {}
-        if waiting.get("reason"):
-            print(waiting["reason"])
-            break
+    print(json.load(sys.stdin).get("status", {}).get("phase", ""))
 except Exception:
     pass' || true)"
 
-  if [[ "${pending_phase}" == "Pending" && "${cfg_reason}" == "CreateContainerConfigError" ]]; then
-    echo "Fixture pods ready: ${pending_pod} Pending, ${cfg_pod} CreateContainerConfigError."
+  if [[ "${pending_phase}" == "Pending" && "${pvc_phase}" == "Pending" ]]; then
+    echo "Fixture pods ready: ${pending_pod} and ${pvc_pod} are Pending for different scheduling reasons."
     exit 0
   fi
   if (( SECONDS >= deadline )); then
-    echo "fixtures not ready within 180s (pending phase: ${pending_phase:-none}, cfg reason: ${cfg_reason:-none})" >&2
+    echo "fixtures not ready within 180s (pending phase: ${pending_phase:-none}, pvc phase: ${pvc_phase:-none})" >&2
     exit 1
   fi
   sleep 5
