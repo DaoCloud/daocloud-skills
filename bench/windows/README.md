@@ -82,25 +82,3 @@ The Windows template is in
 ```text
 prompt.template  task.yaml  verify.ps1  cleanup.ps1
 ```
-
-### Pod diagnosis task
-
-`pod-diagnosis` evaluates the `container-management-pod-diagnosis` skill. It is
-a read-only diagnosis task, so it adds a `setup.ps1` lifecycle script:
-
-```text
-setup.ps1 creates a fixture Pod with a known root cause
-  -> the agent diagnoses the Pod and prints POD_DIAGNOSIS_OK
-  -> verify.ps1 checks the marker, the expected root cause in the agent answer,
-     and that the fixture Pod is still untouched via the DCE API
-  -> cleanup.ps1 deletes the fixture Pod
-```
-
-The fixture Pod is `k8s-ai-bench-diag-pod` in the `default` namespace of
-`kpanda-global-cluster`. `setup.ps1` is idempotent: it removes a leftover
-fixture before recreating it and waits until the expected failure state is
-observable before the agent starts.
-
-All templates are rendered by default, so running only this task is just a
-matter of narrowing a matrix's `runs.taskPattern` to `pod-diagnosis` (or
-rendering it alone with `.\bench\windows\render-task.ps1 pod-diagnosis`).
