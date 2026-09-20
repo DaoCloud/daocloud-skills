@@ -32,14 +32,19 @@ DCE release with `DCE_CLI_VERSION` and `DCE_CLI_REPOSITORY`.
 The setup script does not install the agent. For Codex, install and log in to
 Codex on this same Windows machine.
 
-## 3. Render the task
+## 3. Render the task(s)
 
 ```powershell
-.\bench\windows\render-task.ps1
+.\bench\windows\render-task.ps1                    # render every template under task-template\
+.\bench\windows\render-task.ps1 pod-diagnosis      # render a single task
 ```
 
-This substitutes `DCE_HOST` and `DCE_TOKEN` into the prompt and creates the
-runtime task under `bench\windows\.runtime\tasks\dce-create-pod`.
+This substitutes `DCE_HOST` and `DCE_TOKEN` into each prompt and creates the
+runtime tasks under `bench\windows\.runtime\tasks\<task-name>`. With no
+arguments every template is rendered; pass a task name to render only that
+one. Which rendered tasks a matrix run executes is selected by its
+`runs.taskPattern` regex, so narrow the pattern instead of re-rendering when
+you only want a subset.
 
 ## 4. Run with Codex
 
@@ -55,6 +60,10 @@ Codex is not on `PATH`, set its full path before running:
 ```powershell
 $env:CODEX_BIN = 'C:\Users\<user>\AppData\Roaming\npm\codex.exe'
 ```
+
+The committed matrices use `taskPattern: ".*"`, so one run executes every
+rendered task. To focus a run on a subset, narrow the regex, e.g.
+`taskPattern: "pod-diagnosis"` — no re-rendering needed.
 
 To use another agent, copy the matrix and change `agents`, `models`, and
 `runs.agent`. A generic stdin wrapper must read the prompt from stdin and

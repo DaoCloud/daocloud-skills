@@ -1,0 +1,33 @@
+# OpenClaw DCE skill evaluation, adapted from
+# ai-skills-bench examples/dce/eval-matrix-openclaw-dce.yaml
+# The dce CLI and skill access must exist in the remote OpenClaw runtime;
+# gateway connection and DCE coordinates are configured here via env.
+skillsDir: ./skills
+tasksDir: ./bench/unix/.runtime/tasks
+outputDir: ./bench/unix/.build/dce-skill-bench-openclaw
+clusterCreationPolicy: DoNotCreate
+
+agents:
+  - id: openclaw
+    bin: ./bench/unix/.build/bin/k8s-ai-agent-bridge
+    adapter: generic-stdin
+    args: [--agent, openclaw]
+    env:
+      OPENCLAW_BASE_URL: ${OPENCLAW_BASE_URL}
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN}
+      OPENCLAW_AGENT_TARGET: ${OPENCLAW_AGENT_TARGET}
+      DCE_HOST: ${DCE_HOST}
+      DCE_TOKEN: ${DCE_TOKEN}
+      DCE_INSECURE_SKIP_VERIFY: ${DCE_INSECURE_SKIP_VERIFY}
+
+models:
+  - id: openclaw-dce
+    provider: openai
+    model: openclaw/default
+
+runs:
+  iterations: 1
+  concurrency: 1
+  # taskPattern is a regex; narrow it (e.g. "pod-diagnosis") to run a subset.
+  taskPattern: ".*"
+  agent: openclaw

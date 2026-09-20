@@ -1,0 +1,26 @@
+Use the repository's `container-management-pod-diagnosis` skill and the `dce` CLI to
+diagnose one specific Pod in the specified DCE environment and report the root cause:
+
+- DCE address: ${DCE_HOST}
+- DCE bearer token: ${DCE_TOKEN}
+- Cluster: kpanda-global-cluster
+- Namespace: default
+- Pod name: k8s-ai-bench-diag-pod
+
+Follow the pod-diagnosis skill workflow to confirm the command and authentication
+status first, then inspect the Pod's status, events, and container state before
+drawing any conclusion. This DCE endpoint uses a certificate that is not trusted
+by the local machine, so include the global `--insecure` flag on every `dce`
+invocation, including `auth login`.
+
+This is a read-only diagnosis task. Do not create, delete, update, or restart any
+resources, and do not attempt remediation; `cleanup.sh` will handle deletion.
+Do not repeat the token in your output.
+
+Present the final diagnosis as structured Markdown following the skill's output
+format, and include exactly one line of the form:
+
+Root Cause: <short reason>
+
+Only after the diagnosis is complete, output:
+POD_DIAGNOSIS_OK
