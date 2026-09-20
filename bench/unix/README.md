@@ -36,11 +36,13 @@ export DCE_CLI_VERSION='v0.2.0-rc.12'
 ## 3. Render the task
 
 ```bash
-./bench/unix/render-task.sh
+./bench/unix/render-task.sh                    # default: dce-create-pod
+./bench/unix/render-task.sh pod-diagnosis      # any template under task-template/
 ```
 
 This substitutes `DCE_HOST` and `DCE_TOKEN` into the prompt and creates the
-runtime task under `bench/unix/.runtime/tasks/dce-create-pod`.
+runtime task under `bench/unix/.runtime/tasks/<task-name>`. Pass a task name to
+render a template other than the default.
 
 ## 4. Run with Codex
 
@@ -69,4 +71,28 @@ The Unix template is in
 
 ```text
 prompt.template  task.yaml  verify.sh  cleanup.sh
+```
+
+### Pod diagnosis task
+
+`pod-diagnosis` evaluates the `container-management-pod-diagnosis` skill. It is
+a read-only diagnosis task, so it adds a `setup.sh` lifecycle script:
+
+```text
+setup.sh creates a fixture Pod with a known root cause
+  -> the agent diagnoses the Pod and prints POD_DIAGNOSIS_OK
+  -> verify.sh checks the marker, the expected root cause in the agent answer,
+     and that the fixture Pod is still untouched via the DCE API
+  -> cleanup.sh deletes the fixture Pod
+```
+
+The fixture Pod is `k8s-ai-bench-diag-pod` in the `default` namespace of
+`kpanda-global-cluster`. `setup.sh` is idempotent: it removes a leftover
+fixture before recreating it and waits until the expected failure state is
+observable before the agent starts.
+
+To run it, render it and point a matrix `runs.taskPattern` at `pod-diagnosis`:
+
+```bash
+./bench/unix/render-task.sh pod-diagnosis
 ```
