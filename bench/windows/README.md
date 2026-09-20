@@ -61,6 +61,10 @@ Codex is not on `PATH`, set its full path before running:
 $env:CODEX_BIN = 'C:\Users\<user>\AppData\Roaming\npm\codex.exe'
 ```
 
+The committed matrices use `taskPattern: ".*"`, so one run executes every
+rendered task. To focus a run on a subset, narrow the regex, e.g.
+`taskPattern: "pod-diagnosis"` — no re-rendering needed.
+
 To use another agent, copy the matrix and change `agents`, `models`, and
 `runs.agent`. A generic stdin wrapper must read the prompt from stdin and
 write its answer to stdout.
@@ -97,8 +101,6 @@ The fixture Pod is `k8s-ai-bench-diag-pod` in the `default` namespace of
 fixture before recreating it and waits until the expected failure state is
 observable before the agent starts.
 
-To run it, render it and point a matrix `runs.taskPattern` at `pod-diagnosis`:
-
-```powershell
-.\bench\windows\render-task.ps1 pod-diagnosis
-```
+All templates are rendered by default, so running only this task is just a
+matter of narrowing a matrix's `runs.taskPattern` to `pod-diagnosis` (or
+rendering it alone with `.\bench\windows\render-task.ps1 pod-diagnosis`).
