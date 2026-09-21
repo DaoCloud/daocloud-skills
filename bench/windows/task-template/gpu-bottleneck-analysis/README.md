@@ -6,11 +6,13 @@ the bottleneck first if inference traffic grows by 30%.
 
 ## Test scenario
 
-The target cluster `jinye-gpu-cluster-1` exposes two GPU pools:
+The task targets the cluster named by `K8S_AI_BENCH_GPU_CLUSTER` (default
+`jinye-gpu-cluster-1`) in namespace `K8S_AI_BENCH_GPU_NAMESPACE` (default
+`default`). The target cluster is expected to expose two GPU pools:
 
-- a physical GPU pool on `worker-node-1` (mode `GPU`), typically already
-  fully allocated by pre-existing workloads, and
-- a HAMi vGPU pool on `controller-node-1` (mode `VGPU`).
+- a physical GPU pool (mode `GPU`), typically already fully allocated by
+  pre-existing workloads, and
+- a HAMi vGPU pool (mode `VGPU`).
 
 `setup.sh` (Unix) / `setup.ps1` (Windows) saturates the vGPU pool
 deterministically:
@@ -22,8 +24,9 @@ deterministically:
 2. It reads the live pool size from `sum(kpanda_gpu_count) by (mode)` and
    creates the Deployment `k8s-ai-bench-gpu-saturate` with one replica per
    vGPU slice. Each Pod requests `nvidia.com/vgpu: 1` plus small
-   `nvidia.com/gpucores`/`nvidia.com/gpumem` slices, is pinned to the vGPU
-   node, and uses the nonexistent image `nginx:stable-nonexistent`.
+   `nvidia.com/gpucores`/`nvidia.com/gpumem` slices and uses the nonexistent
+   image `nginx:stable-nonexistent`. No node pinning is needed: the HAMi
+   scheduler only admits vGPU requests onto nodes that expose vGPU devices.
 3. Because the image cannot be pulled, every Pod is *bound* by the HAMi
    scheduler — reserving a vGPU slice in `kpanda_gpu_allocated` — but never
    starts a container, so no real GPU compute or memory is consumed.
@@ -33,10 +36,10 @@ deterministically:
 5. Setup finishes only once `sum(kpanda_gpu_allocated) by (mode)` reports the
    pool as fully allocated.
 
-Together with the healthy contrast cluster `jinye-hami-cluster` (large
-headroom in both modes), this gives the +30% projection a single
-deterministic answer: `jinye-gpu-cluster-1` exhausts its scheduling capacity
-first, while GPU core utilization stays near zero.
+Together with any healthy contrast cluster (large headroom in both modes),
+this gives the +30% projection a single deterministic answer: the target
+cluster exhausts its scheduling capacity first, while GPU core utilization
+stays near zero.
 
 ## Agent contract
 
@@ -63,7 +66,7 @@ The task is strictly read-only.
 2. The reported VGPU census numbers match the live metrics API at verify
    time — both the pool total and the allocated count are re-queried and
    compared for equality, so fabricated numbers fail.
-3. The bottleneck line names `jinye-gpu-cluster-1` with a valid constraint:
+3. The bottleneck line names the target cluster with a valid constraint:
    `compute` is always rejected (core utilization is idle by design), the
    VGPU mode must be `scheduling` (its VRAM stays below capacity), and the
    GPU mode accepts `scheduling` or `vram` because pre-existing workloads
@@ -74,7 +77,7 @@ The task is strictly read-only.
 
 ## Expected result
 
-A passing run identifies `jinye-gpu-cluster-1` as the first bottleneck with a
+A passing run identifies the target cluster as the first bottleneck with a
 scheduling constraint (or `vram` when naming the fully-allocated GPU mode).
 When both pools are saturated, both modes are legitimate answers — observed
 runs have produced either. `cleanup.sh` / `cleanup.ps1` deletes the fixture
@@ -83,11 +86,13 @@ which the next run's baseline wait absorbs.
 
 ## Environment requirements
 
-- The DCE at `DCE_HOST` must manage `jinye-gpu-cluster-1` with HAMi
-  installed and `insight-agent` reporting the `kpanda_gpu_*` recording
-  rules.
+- The DCE at `DCE_HOST` must manage the target cluster with HAMi installed
+  and `insight-agent` reporting the `kpanda_gpu_*` recording rules.
 - The vGPU pool must be free of foreign allocations at setup time; the
   baseline wait tolerates slow release from previous runs.
+- Override `K8S_AI_BENCH_GPU_CLUSTER` (default `jinye-gpu-cluster-1`) and
+  `K8S_AI_BENCH_GPU_NAMESPACE` (default `default`) to run against a
+  different cluster or namespace.
 
 ## Running the task
 

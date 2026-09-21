@@ -4,11 +4,11 @@ set -euo pipefail
 : "${DCE_HOST:?DCE_HOST is required}"
 : "${DCE_TOKEN:?DCE_TOKEN is required}"
 
-cluster="jinye-gpu-cluster-1"
-namespace="default"
+# Target environment. Override with K8S_AI_BENCH_GPU_CLUSTER /
+# K8S_AI_BENCH_GPU_NAMESPACE when running against a different DCE.
+cluster="${K8S_AI_BENCH_GPU_CLUSTER:-jinye-gpu-cluster-1}"
+namespace="${K8S_AI_BENCH_GPU_NAMESPACE:-default}"
 deployment="k8s-ai-bench-gpu-saturate"
-node="controller-node-1"
-mode="VGPU"
 
 # Consumed by the inline python helpers below through os.environ.
 export DEPLOYMENT_NAME="${deployment}"
@@ -113,10 +113,12 @@ fi
 work_dir="$(mktemp -d "${TMPDIR:-/tmp}/gpu-bottleneck-setup.XXXXXX")"
 trap 'rm -rf "${work_dir}"' EXIT
 
-# Fixture: a Deployment whose replicas request one vGPU slice each, pinned to
-# the vGPU node. The intentionally nonexistent image keeps every pod Pending
-# after binding, so the pods reserve vGPU allocation (kpanda_gpu_allocated
-# counts bound pods) without consuming any real GPU compute or memory.
+# Fixture: a Deployment whose replicas request one vGPU slice each. No node
+# pinning is needed: the HAMi scheduler only admits vGPU requests onto nodes
+# that expose vGPU devices. The intentionally nonexistent image keeps every
+# pod Pending after binding, so the pods reserve vGPU allocation
+# (kpanda_gpu_allocated counts bound pods) without consuming any real GPU
+# compute or memory.
 cat > "${work_dir}/deployment.json" <<EOF
 {
   "apiVersion": "apps/v1",
@@ -131,7 +133,6 @@ cat > "${work_dir}/deployment.json" <<EOF
     "template": {
       "metadata": {"labels": {"app": "${deployment}"}},
       "spec": {
-        "nodeSelector": {"kubernetes.io/hostname": "${node}"},
         "containers": [
           {
             "name": "main",

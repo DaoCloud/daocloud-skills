@@ -5,8 +5,10 @@ set -euo pipefail
 : "${DCE_TOKEN:?DCE_TOKEN is required}"
 : "${K8S_AI_BENCH_TASK_OUTPUT_DIR:?K8S_AI_BENCH_TASK_OUTPUT_DIR is required}"
 
-cluster="jinye-gpu-cluster-1"
-namespace="default"
+# Target environment. Override with K8S_AI_BENCH_GPU_CLUSTER /
+# K8S_AI_BENCH_GPU_NAMESPACE when running against a different DCE.
+cluster="${K8S_AI_BENCH_GPU_CLUSTER:-jinye-gpu-cluster-1}"
+namespace="${K8S_AI_BENCH_GPU_NAMESPACE:-default}"
 deployment="k8s-ai-bench-gpu-saturate"
 
 log_path="${K8S_AI_BENCH_TASK_OUTPUT_DIR}/log.txt"
@@ -19,7 +21,7 @@ if ! grep -Fq 'GPU_BOTTLENECK_OK' "${log_path}"; then
   exit 1
 fi
 
-census="$(grep -Eo 'Census: jinye-gpu-cluster-1 mode=VGPU total=[0-9]+ allocated=[0-9]+' "${log_path}" | head -n 1 || true)"
+census="$(grep -Eo "Census: ${cluster} mode=VGPU total=[0-9]+ allocated=[0-9]+" "${log_path}" | head -n 1 || true)"
 if [[ -z "${census}" ]]; then
   echo "agent did not report a VGPU census line for ${cluster}" >&2
   exit 1
@@ -28,7 +30,7 @@ fi
 reported_total="${BASH_REMATCH[1]}"
 reported_allocated="${BASH_REMATCH[2]}"
 
-bottleneck="$(grep -Eo 'Bottleneck: jinye-gpu-cluster-1 \((GPU|VGPU), (compute|scheduling|vram)\)' "${log_path}" | head -n 1 || true)"
+bottleneck="$(grep -Eo "Bottleneck: ${cluster} \((GPU|VGPU), (compute|scheduling|vram)\)" "${log_path}" | head -n 1 || true)"
 if [[ -z "${bottleneck}" ]]; then
   echo "agent did not identify ${cluster} as the first bottleneck" >&2
   exit 1

@@ -6,8 +6,10 @@ if (-not $env:K8S_AI_BENCH_TASK_OUTPUT_DIR) {
     throw 'K8S_AI_BENCH_TASK_OUTPUT_DIR is required'
 }
 
-$cluster = 'jinye-gpu-cluster-1'
-$namespace = 'default'
+# Target environment. Override with K8S_AI_BENCH_GPU_CLUSTER /
+# K8S_AI_BENCH_GPU_NAMESPACE when running against a different DCE.
+$cluster = if ($env:K8S_AI_BENCH_GPU_CLUSTER) { $env:K8S_AI_BENCH_GPU_CLUSTER } else { 'jinye-gpu-cluster-1' }
+$namespace = if ($env:K8S_AI_BENCH_GPU_NAMESPACE) { $env:K8S_AI_BENCH_GPU_NAMESPACE } else { 'default' }
 $deployment = 'k8s-ai-bench-gpu-saturate'
 
 $logPath = Join-Path $env:K8S_AI_BENCH_TASK_OUTPUT_DIR 'log.txt'
@@ -18,7 +20,7 @@ if (-not (Select-String -LiteralPath $logPath -Pattern 'GPU_BOTTLENECK_OK' -Simp
     throw 'Agent did not emit GPU_BOTTLENECK_OK'
 }
 
-$censusMatch = Select-String -LiteralPath $logPath -Pattern 'Census: jinye-gpu-cluster-1 mode=VGPU total=(\d+) allocated=(\d+)' |
+$censusMatch = Select-String -LiteralPath $logPath -Pattern "Census: $cluster mode=VGPU total=(\d+) allocated=(\d+)" |
     Select-Object -First 1
 if (-not $censusMatch) {
     throw "Agent did not report a VGPU census line for $cluster"
@@ -26,7 +28,7 @@ if (-not $censusMatch) {
 $reportedTotal = [int]$censusMatch.Matches[0].Groups[1].Value
 $reportedAllocated = [int]$censusMatch.Matches[0].Groups[2].Value
 
-$bottleneckMatch = Select-String -LiteralPath $logPath -Pattern 'Bottleneck: jinye-gpu-cluster-1 \((GPU|VGPU), (compute|scheduling|vram)\)' |
+$bottleneckMatch = Select-String -LiteralPath $logPath -Pattern "Bottleneck: $cluster \((GPU|VGPU), (compute|scheduling|vram)\)" |
     Select-Object -First 1
 if (-not $bottleneckMatch) {
     throw "Agent did not identify $cluster as the first bottleneck"

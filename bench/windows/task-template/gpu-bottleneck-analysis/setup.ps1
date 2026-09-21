@@ -3,10 +3,11 @@
 if (-not $env:DCE_HOST) { throw 'DCE_HOST is required' }
 if (-not $env:DCE_TOKEN) { throw 'DCE_TOKEN is required' }
 
-$cluster = 'jinye-gpu-cluster-1'
-$namespace = 'default'
+# Target environment. Override with K8S_AI_BENCH_GPU_CLUSTER /
+# K8S_AI_BENCH_GPU_NAMESPACE when running against a different DCE.
+$cluster = if ($env:K8S_AI_BENCH_GPU_CLUSTER) { $env:K8S_AI_BENCH_GPU_CLUSTER } else { 'jinye-gpu-cluster-1' }
+$namespace = if ($env:K8S_AI_BENCH_GPU_NAMESPACE) { $env:K8S_AI_BENCH_GPU_NAMESPACE } else { 'default' }
 $deployment = 'k8s-ai-bench-gpu-saturate'
-$node = 'controller-node-1'
 
 $dceToken = $env:DCE_TOKEN
 if ($dceToken.StartsWith('Bearer ')) {
@@ -110,11 +111,12 @@ try {
         throw "No VGPU capacity reported for $cluster (kpanda_gpu_count mode=VGPU is empty)"
     }
 
-    # Fixture: a Deployment whose replicas request one vGPU slice each, pinned
-    # to the vGPU node. The intentionally nonexistent image keeps every pod
-    # Pending after binding, so the pods reserve vGPU allocation
-    # (kpanda_gpu_allocated counts bound pods) without consuming any real GPU
-    # compute or memory.
+    # Fixture: a Deployment whose replicas request one vGPU slice each. No
+    # node pinning is needed: the HAMi scheduler only admits vGPU requests
+    # onto nodes that expose vGPU devices. The intentionally nonexistent
+    # image keeps every pod Pending after binding, so the pods reserve vGPU
+    # allocation (kpanda_gpu_allocated counts bound pods) without consuming
+    # any real GPU compute or memory.
     $deploymentJson = @"
 {
   "apiVersion": "apps/v1",
@@ -129,7 +131,6 @@ try {
     "template": {
       "metadata": {"labels": {"app": "$deployment"}},
       "spec": {
-        "nodeSelector": {"kubernetes.io/hostname": "$node"},
         "containers": [
           {
             "name": "main",

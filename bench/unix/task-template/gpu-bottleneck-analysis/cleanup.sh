@@ -4,8 +4,10 @@ set -euo pipefail
 : "${DCE_HOST:?DCE_HOST is required}"
 : "${DCE_TOKEN:?DCE_TOKEN is required}"
 
-cluster="jinye-gpu-cluster-1"
-namespace="default"
+# Target environment. Override with K8S_AI_BENCH_GPU_CLUSTER /
+# K8S_AI_BENCH_GPU_NAMESPACE when running against a different DCE.
+cluster="${K8S_AI_BENCH_GPU_CLUSTER:-jinye-gpu-cluster-1}"
+namespace="${K8S_AI_BENCH_GPU_NAMESPACE:-default}"
 deployment="k8s-ai-bench-gpu-saturate"
 
 dce_token="${DCE_TOKEN#Bearer }"
