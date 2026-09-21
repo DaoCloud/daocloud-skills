@@ -240,45 +240,24 @@
         }
       }
     },
-    "/apis/crane.io/v1alpha1/business-operation/average-package-consumption-rate": {
+    "/apis/crane.io/v1alpha1/business-operation/current-period-business-overview": {
       "get": {
         "tags": [
           "BusinessOperationService"
         ],
-        "summary": "GetAveragePackageConsumptionRate returns the average workspace quota consumption rate.",
-        "operationId": "BusinessOperationService_GetAveragePackageConsumptionRate",
+        "summary": "GetCurrentPeriodBusinessOverview returns the WS current-period business overview.",
+        "operationId": "BusinessOperationService_GetCurrentPeriodBusinessOverview",
         "parameters": [
           {
+            "enum": [
+              "BUSINESS_OVERVIEW_PERIOD_UNSPECIFIED",
+              "BUSINESS_OVERVIEW_PERIOD_THIS_MONTH",
+              "BUSINESS_OVERVIEW_PERIOD_THIS_WEEK",
+              "BUSINESS_OVERVIEW_PERIOD_TODAY"
+            ],
             "type": "string",
-            "format": "date-time",
-            "description": "Start time for the statistics period (UTC, inclusive).",
-            "name": "startTime",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "format": "date-time",
-            "description": "End time for the statistics period (UTC, exclusive).",
-            "name": "endTime",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "format": "int32",
-            "description": "Limit for top-N style queries.",
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear.",
+            "default": "BUSINESS_OVERVIEW_PERIOD_UNSPECIFIED",
             "name": "period",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Optional model keyword filter.",
-            "name": "model",
             "in": "query"
           }
         ],
@@ -286,7 +265,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/businessoperationKpiPanelResponse"
+              "$ref": "#/definitions/businessoperationGetCurrentPeriodBusinessOverviewResponse"
             }
           },
           "default": {
@@ -472,6 +451,37 @@
         }
       }
     },
+    "/apis/crane.io/v1alpha1/business-operation/department-quota-consumption": {
+      "get": {
+        "tags": [
+          "BusinessOperationService"
+        ],
+        "summary": "GetDepartmentQuotaConsumption returns the current WS workspace quota snapshot.",
+        "operationId": "BusinessOperationService_GetDepartmentQuotaConsumption",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessoperationGetDepartmentQuotaConsumptionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/apis/crane.io/v1alpha1/business-operation/department-token-consumption-top": {
       "get": {
         "tags": [
@@ -635,6 +645,64 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/businessoperationRankingPanelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/business-operation/department-value-quadrant": {
+      "get": {
+        "tags": [
+          "BusinessOperationService"
+        ],
+        "summary": "GetDepartmentValueQuadrant returns department token consumption and active-user points.",
+        "operationId": "BusinessOperationService_GetDepartmentValueQuadrant",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start time for the statistics period (UTC, inclusive).",
+            "name": "startTime",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "date-time",
+            "description": "End time for the statistics period (UTC, exclusive).",
+            "name": "endTime",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Limit for top-N style queries.",
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Preset period key, such as thisMonth / lastMonth / thisQuarter / thisYear.",
+            "name": "period",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Optional model keyword filter.",
+            "name": "model",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessoperationDepartmentValueQuadrantPanelResponse"
             }
           },
           "default": {
@@ -1265,43 +1333,6 @@
         }
       }
     },
-    "/apis/crane.io/v1alpha1/business-value/app-consumption-distribution": {
-      "get": {
-        "tags": [
-          "BusinessValueService"
-        ],
-        "summary": "GetAppConsumptionDistribution returns the consumption distribution across applications.",
-        "operationId": "BusinessValueService_GetAppConsumptionDistribution",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Time range filter: \"today\", \"this-week\", \"this-month\", \"this-quarter\". Default is \"today\".",
-            "name": "timeRange",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Cluster filter (optional). If empty, all clusters are included football.",
-            "name": "cluster",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/businessvalueGetAppConsumptionDistributionResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
     "/apis/crane.io/v1alpha1/business-value/capacity-bottleneck-forecast": {
       "get": {
         "tags": [
@@ -1314,6 +1345,68 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/businessvalueGetCapacityBottleneckForecastResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/business-value/capacity-funnel": {
+      "get": {
+        "tags": [
+          "BusinessValueService"
+        ],
+        "summary": "GetCapacityFunnel returns billed token totals and high-margin model token totals.",
+        "operationId": "BusinessValueService_GetCapacityFunnel",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Time range filter: \"today\", \"this-week\", \"this-month\", \"this-quarter\".\nDefaults to \"today\" when omitted.",
+            "name": "timeRange",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessvalueGetCapacityFunnelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/business-value/consumption-revenue-cost-summary": {
+      "get": {
+        "tags": [
+          "BusinessValueService"
+        ],
+        "summary": "GetConsumptionRevenueCostSummary returns global current and previous period totals.",
+        "operationId": "BusinessValueService_GetConsumptionRevenueCostSummary",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "One of \"today\", \"this-week\", \"this-month\", or \"this-quarter\".",
+            "name": "timeRange",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessvalueGetConsumptionRevenueCostSummaryResponse"
             }
           },
           "default": {
@@ -1415,6 +1508,29 @@
         }
       }
     },
+    "/apis/crane.io/v1alpha1/business-value/customer-concentration-thresholds": {
+      "get": {
+        "tags": [
+          "BusinessValueService"
+        ],
+        "summary": "GetCustomerConcentrationThresholds returns the warn/risk Top1 and Top3\npercentage boundaries used to classify customer concentration risk.",
+        "operationId": "BusinessValueService_GetCustomerConcentrationThresholds",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessvalueGetCustomerConcentrationThresholdsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/apis/crane.io/v1alpha1/business-value/department-token-usage": {
       "get": {
         "tags": [
@@ -1454,24 +1570,26 @@
         }
       }
     },
-    "/apis/crane.io/v1alpha1/business-value/internal-business-structure-distribution": {
+    "/apis/crane.io/v1alpha1/business-value/model-contribution": {
       "get": {
         "tags": [
           "BusinessValueService"
         ],
-        "summary": "GetInternalBusinessStructureDistribution returns internal business structure distribution for WS mode.",
-        "operationId": "BusinessValueService_GetInternalBusinessStructureDistribution",
+        "summary": "GetModelContribution returns model-level revenue and token totals for an explicit UTC time window.\nThe request uses the half-open interval [start_time, end_time).",
+        "operationId": "BusinessValueService_GetModelContribution",
         "parameters": [
           {
             "type": "string",
-            "description": "Time range filter: \"today\", \"this-week\", \"this-month\", \"this-quarter\". Default is \"today\".",
-            "name": "timeRange",
+            "format": "date-time",
+            "description": "Start of the query window (UTC, inclusive).",
+            "name": "startTime",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Cluster filter (optional). If empty, all clusters are included.",
-            "name": "cluster",
+            "format": "date-time",
+            "description": "End of the query window (UTC, exclusive).",
+            "name": "endTime",
             "in": "query"
           }
         ],
@@ -1479,7 +1597,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/businessvalueGetInternalBusinessStructureDistributionResponse"
+              "$ref": "#/definitions/businessvalueGetModelContributionResponse"
             }
           },
           "default": {
@@ -1553,6 +1671,101 @@
         }
       }
     },
+    "/apis/crane.io/v1alpha1/business-value/period-revenue-cost-trend": {
+      "get": {
+        "tags": [
+          "BusinessValueService"
+        ],
+        "summary": "GetPeriodRevenueCostTrend returns period-aware revenue and cost trend points.",
+        "operationId": "BusinessValueService_GetPeriodRevenueCostTrend",
+        "parameters": [
+          {
+            "enum": [
+              "PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED",
+              "PERIOD_REVENUE_COST_TREND_RANGE_TODAY",
+              "PERIOD_REVENUE_COST_TREND_RANGE_THIS_WEEK",
+              "PERIOD_REVENUE_COST_TREND_RANGE_THIS_MONTH",
+              "PERIOD_REVENUE_COST_TREND_RANGE_THIS_QUARTER"
+            ],
+            "type": "string",
+            "default": "PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED",
+            "description": "Restricted dashboard time range.",
+            "name": "timeRange",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset().",
+            "name": "tzOffsetMinutes",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessvalueGetPeriodRevenueCostTrendResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/business-value/period-token-trend": {
+      "get": {
+        "tags": [
+          "BusinessValueService"
+        ],
+        "summary": "GetPeriodTokenTrend returns period-aware token output trend points.",
+        "operationId": "BusinessValueService_GetPeriodTokenTrend",
+        "parameters": [
+          {
+            "enum": [
+              "PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED",
+              "PERIOD_TOKEN_TREND_RANGE_TODAY",
+              "PERIOD_TOKEN_TREND_RANGE_THIS_WEEK",
+              "PERIOD_TOKEN_TREND_RANGE_THIS_MONTH",
+              "PERIOD_TOKEN_TREND_RANGE_THIS_QUARTER"
+            ],
+            "type": "string",
+            "default": "PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED",
+            "description": "Restricted dashboard time range.",
+            "name": "timeRange",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset().",
+            "name": "tzOffsetMinutes",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessvalueGetPeriodTokenTrendResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/apis/crane.io/v1alpha1/business-value/rated-capacity": {
       "get": {
         "tags": [
@@ -1560,6 +1773,14 @@
         ],
         "summary": "GetRatedCapacity returns the rated capacity value (in millions).",
         "operationId": "BusinessValueService_GetRatedCapacity",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Optional time range for period capacity calculation:\n\"today\", \"this-week\", \"this-month\", \"this-quarter\".\nWhen omitted, period_capacity_tokens is not computed.",
+            "name": "timeRange",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1581,7 +1802,7 @@
         "tags": [
           "BusinessValueService"
         ],
-        "summary": "GetRevenueMarginTrendForecast returns 37 daily points (30 historical + 7 forecast)\nfor the \"Revenue and Margin Trend and Forecast\" panel.\nThis panel uses a fixed window and ignores dashboard time-range switching.",
+        "summary": "GetRevenueMarginTrendForecast returns the successful response for the request\nlocal calendar day for the \"Revenue and Margin Trend and Forecast\" panel.\nAVAILABLE responses contain 37 daily points (30 historical + 7 forecast),\nwhile INSUFFICIENT_DATA responses contain 30 historical points only.\nThis panel uses a fixed window and ignores dashboard time-range switching.",
         "operationId": "BusinessValueService_GetRevenueMarginTrendForecast",
         "responses": {
           "200": {
@@ -1622,25 +1843,79 @@
         }
       }
     },
-    "/apis/crane.io/v1alpha1/business-value/tenant-token-usage": {
+    "/apis/crane.io/v1alpha1/business-value/summary-metric-thresholds": {
       "get": {
         "tags": [
           "BusinessValueService"
         ],
-        "summary": "GetTenantTokenUsage returns per-tenant token usage and charge amount for the given time window.\nResults are sorted by token_total descending. The frontend uses this data to compute\nactive tenants, ARPU, customer segmentation, and consumption distribution (Top10).",
-        "operationId": "BusinessValueService_GetTenantTokenUsage",
+        "summary": "GetSummaryMetricThresholds returns business rules for the business-value\nSecurity · Power · FinOps summary status labels.",
+        "operationId": "BusinessValueService_GetSummaryMetricThresholds",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessvalueGetSummaryMetricThresholdsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/business-value/tenant-consumption-distribution": {
+      "get": {
+        "tags": [
+          "BusinessValueService"
+        ],
+        "summary": "GetTenantConsumptionDistribution returns Top10 customer groups and an optional other group.",
+        "operationId": "BusinessValueService_GetTenantConsumptionDistribution",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "One of \"today\", \"this-week\", \"this-month\", or \"this-quarter\".",
+            "name": "timeRange",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessvalueGetTenantConsumptionDistributionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/business-value/tenant-growth-trend-top10": {
+      "get": {
+        "tags": [
+          "BusinessValueService"
+        ],
+        "summary": "GetTenantGrowthTrendTop10 returns all-model daily token usage for the top ten tenants.",
+        "operationId": "BusinessValueService_GetTenantGrowthTrendTop10",
         "parameters": [
           {
             "type": "string",
             "format": "date-time",
-            "description": "Start of the query window (UTC, inclusive).",
+            "description": "Inclusive start of the requested UTC time window.",
             "name": "startTime",
             "in": "query"
           },
           {
             "type": "string",
             "format": "date-time",
-            "description": "End of the query window (UTC, exclusive).",
+            "description": "Exclusive end of the requested UTC time window.",
             "name": "endTime",
             "in": "query"
           }
@@ -1649,7 +1924,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/businessvalueGetTenantTokenUsageResponse"
+              "$ref": "#/definitions/businessvalueGetTenantGrowthTrendTop10Response"
             }
           },
           "default": {
@@ -1666,13 +1941,45 @@
         "tags": [
           "BusinessValueService"
         ],
-        "summary": "GetTokenThroughput returns the current per-second Token throughput.",
+        "summary": "GetTokenThroughput returns the current per-minute Token throughput.",
         "operationId": "BusinessValueService_GetTokenThroughput",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/businessvalueGetTokenThroughputResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/business-value/token-throughput-history": {
+      "get": {
+        "tags": [
+          "BusinessValueService"
+        ],
+        "summary": "GetTokenThroughputHistory returns simulated historical throughput data points.\nEach point's tokens_per_second is randomly generated within mock data min/max bounds.",
+        "operationId": "BusinessValueService_GetTokenThroughputHistory",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Maximum number of recent historical data points to return.",
+            "name": "steps",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessvalueGetTokenThroughputHistoryResponse"
             }
           },
           "default": {
@@ -1704,6 +2011,29 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/businessvalueGetValueAttributionModuleBoostsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/businessvalue/gross-profit-attribution-config": {
+      "get": {
+        "tags": [
+          "BusinessValueService"
+        ],
+        "summary": "GetGrossProfitAttributionConfig returns the gross profit attribution configuration\ncontaining reason breakdowns for increase, decrease, and equal scenarios.",
+        "operationId": "BusinessValueService_GetGrossProfitAttributionConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businessvalueGetGrossProfitAttributionConfigResponse"
             }
           },
           "default": {
@@ -2283,6 +2613,93 @@
         }
       }
     },
+    "/apis/crane.io/v1alpha1/expense/balance-voucher-overview": {
+      "get": {
+        "tags": [
+          "ExpenseService"
+        ],
+        "summary": "GetBalanceVoucherOverview returns balance/voucher stock and flow points.",
+        "operationId": "ExpenseService_GetBalanceVoucherOverview",
+        "parameters": [
+          {
+            "enum": [
+              "BALANCE_VOUCHER_OVERVIEW_RANGE_UNSPECIFIED",
+              "BALANCE_VOUCHER_OVERVIEW_RANGE_LAST_30_DAYS",
+              "BALANCE_VOUCHER_OVERVIEW_RANGE_LAST_12_MONTHS"
+            ],
+            "type": "string",
+            "default": "BALANCE_VOUCHER_OVERVIEW_RANGE_UNSPECIFIED",
+            "name": "range",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "timeZone",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/expenseGetBalanceVoucherOverviewResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/expense/platform-revenue-analytics": {
+      "get": {
+        "tags": [
+          "ExpenseService"
+        ],
+        "summary": "GetPlatformRevenueAnalytics returns ordered balance-paid and voucher-consumption\npoints together with source totals for the same local-calendar window.",
+        "operationId": "ExpenseService_GetPlatformRevenueAnalytics",
+        "parameters": [
+          {
+            "enum": [
+              "PLATFORM_REVENUE_RANGE_UNSPECIFIED",
+              "PLATFORM_REVENUE_RANGE_LAST_30_DAYS",
+              "PLATFORM_REVENUE_RANGE_CURRENT_YEAR"
+            ],
+            "type": "string",
+            "default": "PLATFORM_REVENUE_RANGE_UNSPECIFIED",
+            "name": "range",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "IANA time-zone name used to derive local day and month boundaries.",
+            "name": "timeZone",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/expenseGetPlatformRevenueAnalyticsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/apis/crane.io/v1alpha1/finops/allocation-summary": {
       "get": {
         "tags": [
@@ -2330,53 +2747,6 @@
         }
       }
     },
-    "/apis/crane.io/v1alpha1/finops/asset-machine-count": {
-      "get": {
-        "tags": [
-          "FinopsPanelService"
-        ],
-        "operationId": "FinopsPanelService_GetAssetMachineCount",
-        "parameters": [
-          {
-            "enum": [
-              "FINANCIAL_PERIOD_THIS_MONTH",
-              "FINANCIAL_PERIOD_LAST_MONTH",
-              "FINANCIAL_PERIOD_THIS_QUARTER",
-              "FINANCIAL_PERIOD_THIS_YEAR"
-            ],
-            "type": "string",
-            "default": "FINANCIAL_PERIOD_THIS_MONTH",
-            "name": "financialPeriod",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "ACCOUNTING_SCOPE_MERGED",
-              "ACCOUNTING_SCOPE_EXTERNAL_REVENUE",
-              "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"
-            ],
-            "type": "string",
-            "default": "ACCOUNTING_SCOPE_MERGED",
-            "name": "accountingScope",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/finopsMetricPanelResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
     "/apis/crane.io/v1alpha1/finops/asset-return-matrix": {
       "get": {
         "tags": [
@@ -2413,100 +2783,6 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/finopsAssetReturnMatrixResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/crane.io/v1alpha1/finops/average-machine-profit": {
-      "get": {
-        "tags": [
-          "FinopsPanelService"
-        ],
-        "operationId": "FinopsPanelService_GetAverageMachineProfit",
-        "parameters": [
-          {
-            "enum": [
-              "FINANCIAL_PERIOD_THIS_MONTH",
-              "FINANCIAL_PERIOD_LAST_MONTH",
-              "FINANCIAL_PERIOD_THIS_QUARTER",
-              "FINANCIAL_PERIOD_THIS_YEAR"
-            ],
-            "type": "string",
-            "default": "FINANCIAL_PERIOD_THIS_MONTH",
-            "name": "financialPeriod",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "ACCOUNTING_SCOPE_MERGED",
-              "ACCOUNTING_SCOPE_EXTERNAL_REVENUE",
-              "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"
-            ],
-            "type": "string",
-            "default": "ACCOUNTING_SCOPE_MERGED",
-            "name": "accountingScope",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/finopsMetricPanelResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/crane.io/v1alpha1/finops/average-machine-revenue": {
-      "get": {
-        "tags": [
-          "FinopsPanelService"
-        ],
-        "operationId": "FinopsPanelService_GetAverageMachineRevenue",
-        "parameters": [
-          {
-            "enum": [
-              "FINANCIAL_PERIOD_THIS_MONTH",
-              "FINANCIAL_PERIOD_LAST_MONTH",
-              "FINANCIAL_PERIOD_THIS_QUARTER",
-              "FINANCIAL_PERIOD_THIS_YEAR"
-            ],
-            "type": "string",
-            "default": "FINANCIAL_PERIOD_THIS_MONTH",
-            "name": "financialPeriod",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "ACCOUNTING_SCOPE_MERGED",
-              "ACCOUNTING_SCOPE_EXTERNAL_REVENUE",
-              "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"
-            ],
-            "type": "string",
-            "default": "ACCOUNTING_SCOPE_MERGED",
-            "name": "accountingScope",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/finopsMetricPanelResponse"
             }
           },
           "default": {
@@ -2571,53 +2847,6 @@
           "FinopsPanelService"
         ],
         "operationId": "FinopsPanelService_GetBudgetRemaining",
-        "parameters": [
-          {
-            "enum": [
-              "FINANCIAL_PERIOD_THIS_MONTH",
-              "FINANCIAL_PERIOD_LAST_MONTH",
-              "FINANCIAL_PERIOD_THIS_QUARTER",
-              "FINANCIAL_PERIOD_THIS_YEAR"
-            ],
-            "type": "string",
-            "default": "FINANCIAL_PERIOD_THIS_MONTH",
-            "name": "financialPeriod",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "ACCOUNTING_SCOPE_MERGED",
-              "ACCOUNTING_SCOPE_EXTERNAL_REVENUE",
-              "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"
-            ],
-            "type": "string",
-            "default": "ACCOUNTING_SCOPE_MERGED",
-            "name": "accountingScope",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/finopsMetricPanelResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/crane.io/v1alpha1/finops/cost-recovery-rate": {
-      "get": {
-        "tags": [
-          "FinopsPanelService"
-        ],
-        "operationId": "FinopsPanelService_GetCostRecoveryRate",
         "parameters": [
           {
             "enum": [
@@ -2800,53 +3029,6 @@
         }
       }
     },
-    "/apis/crane.io/v1alpha1/finops/monthly-cost": {
-      "get": {
-        "tags": [
-          "FinopsPanelService"
-        ],
-        "operationId": "FinopsPanelService_GetMonthlyCost",
-        "parameters": [
-          {
-            "enum": [
-              "FINANCIAL_PERIOD_THIS_MONTH",
-              "FINANCIAL_PERIOD_LAST_MONTH",
-              "FINANCIAL_PERIOD_THIS_QUARTER",
-              "FINANCIAL_PERIOD_THIS_YEAR"
-            ],
-            "type": "string",
-            "default": "FINANCIAL_PERIOD_THIS_MONTH",
-            "name": "financialPeriod",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "ACCOUNTING_SCOPE_MERGED",
-              "ACCOUNTING_SCOPE_EXTERNAL_REVENUE",
-              "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"
-            ],
-            "type": "string",
-            "default": "ACCOUNTING_SCOPE_MERGED",
-            "name": "accountingScope",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/finopsMetricPanelResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
     "/apis/crane.io/v1alpha1/finops/monthly-profit": {
       "get": {
         "tags": [
@@ -2894,12 +3076,12 @@
         }
       }
     },
-    "/apis/crane.io/v1alpha1/finops/monthly-revenue": {
+    "/apis/crane.io/v1alpha1/finops/overview": {
       "get": {
         "tags": [
           "FinopsPanelService"
         ],
-        "operationId": "FinopsPanelService_GetMonthlyRevenue",
+        "operationId": "FinopsPanelService_GetOverview",
         "parameters": [
           {
             "enum": [
@@ -2929,7 +3111,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/finopsMetricPanelResponse"
+              "$ref": "#/definitions/finopsFinopsOverviewResponse"
             }
           },
           "default": {
@@ -3082,147 +3264,6 @@
         }
       }
     },
-    "/apis/crane.io/v1alpha1/finops/unit-token-profit": {
-      "get": {
-        "tags": [
-          "FinopsPanelService"
-        ],
-        "operationId": "FinopsPanelService_GetUnitTokenProfit",
-        "parameters": [
-          {
-            "enum": [
-              "FINANCIAL_PERIOD_THIS_MONTH",
-              "FINANCIAL_PERIOD_LAST_MONTH",
-              "FINANCIAL_PERIOD_THIS_QUARTER",
-              "FINANCIAL_PERIOD_THIS_YEAR"
-            ],
-            "type": "string",
-            "default": "FINANCIAL_PERIOD_THIS_MONTH",
-            "name": "financialPeriod",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "ACCOUNTING_SCOPE_MERGED",
-              "ACCOUNTING_SCOPE_EXTERNAL_REVENUE",
-              "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"
-            ],
-            "type": "string",
-            "default": "ACCOUNTING_SCOPE_MERGED",
-            "name": "accountingScope",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/finopsMetricPanelResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/crane.io/v1alpha1/finops/unit-token-revenue": {
-      "get": {
-        "tags": [
-          "FinopsPanelService"
-        ],
-        "operationId": "FinopsPanelService_GetUnitTokenRevenue",
-        "parameters": [
-          {
-            "enum": [
-              "FINANCIAL_PERIOD_THIS_MONTH",
-              "FINANCIAL_PERIOD_LAST_MONTH",
-              "FINANCIAL_PERIOD_THIS_QUARTER",
-              "FINANCIAL_PERIOD_THIS_YEAR"
-            ],
-            "type": "string",
-            "default": "FINANCIAL_PERIOD_THIS_MONTH",
-            "name": "financialPeriod",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "ACCOUNTING_SCOPE_MERGED",
-              "ACCOUNTING_SCOPE_EXTERNAL_REVENUE",
-              "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"
-            ],
-            "type": "string",
-            "default": "ACCOUNTING_SCOPE_MERGED",
-            "name": "accountingScope",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/finopsMetricPanelResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/crane.io/v1alpha1/finops/weighted-payback-period": {
-      "get": {
-        "tags": [
-          "FinopsPanelService"
-        ],
-        "operationId": "FinopsPanelService_GetWeightedPaybackPeriod",
-        "parameters": [
-          {
-            "enum": [
-              "FINANCIAL_PERIOD_THIS_MONTH",
-              "FINANCIAL_PERIOD_LAST_MONTH",
-              "FINANCIAL_PERIOD_THIS_QUARTER",
-              "FINANCIAL_PERIOD_THIS_YEAR"
-            ],
-            "type": "string",
-            "default": "FINANCIAL_PERIOD_THIS_MONTH",
-            "name": "financialPeriod",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "ACCOUNTING_SCOPE_MERGED",
-              "ACCOUNTING_SCOPE_EXTERNAL_REVENUE",
-              "ACCOUNTING_SCOPE_INTERNAL_ALLOCATION"
-            ],
-            "type": "string",
-            "default": "ACCOUNTING_SCOPE_MERGED",
-            "name": "accountingScope",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/finopsMetricPanelResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
     "/apis/crane.io/v1alpha1/platform-config/runtime-mode": {
       "get": {
         "tags": [
@@ -3262,11 +3303,6 @@
             "type": "string",
             "name": "cluster",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "slaBaseline",
-            "in": "query"
           }
         ],
         "responses": {
@@ -3303,90 +3339,6 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/productionopsGetRealtimeHeadlinesResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/crane.io/v1alpha1/production-ops/synergy": {
-      "get": {
-        "tags": [
-          "ProductionOperationsService"
-        ],
-        "operationId": "ProductionOperationsService_GetSynergyTab",
-        "parameters": [
-          {
-            "type": "string",
-            "name": "timeWindow",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "cluster",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "slaBaseline",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/productionopsGetSynergyTabResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/crane.io/v1alpha1/resource-cost/attribution": {
-      "get": {
-        "tags": [
-          "ResourceCostService"
-        ],
-        "summary": "GetCostAttribution returns cost attribution breakdown.",
-        "operationId": "ResourceCostService_GetCostAttribution",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Optional cluster name filter. Empty means all clusters.",
-            "name": "cluster",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "THIS_MONTH",
-              "THIS_WEEK",
-              "LAST_MONTH",
-              "LAST_7_DAYS",
-              "LAST_30_DAYS"
-            ],
-            "type": "string",
-            "default": "THIS_MONTH",
-            "description": "Time range for token/revenue queries. Default is THIS_MONTH.\n\n - THIS_MONTH: Current calendar month (default)\n - THIS_WEEK: Current calendar week (Monday to now)\n - LAST_MONTH: Previous calendar month\n - LAST_7_DAYS: Rolling last 7 days\n - LAST_30_DAYS: Rolling last 30 days",
-            "name": "timeRange",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/resourceconstCostAttributionResponse"
             }
           },
           "default": {
@@ -3613,51 +3565,6 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/resourceconstCostSuggestionsResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/crane.io/v1alpha1/resource-cost/waterfall": {
-      "get": {
-        "tags": [
-          "ResourceCostService"
-        ],
-        "summary": "GetCostWaterfall returns cost optimization waterfall data.",
-        "operationId": "ResourceCostService_GetCostWaterfall",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Optional cluster name filter. Empty means all clusters.",
-            "name": "cluster",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "THIS_MONTH",
-              "THIS_WEEK",
-              "LAST_MONTH",
-              "LAST_7_DAYS",
-              "LAST_30_DAYS"
-            ],
-            "type": "string",
-            "default": "THIS_MONTH",
-            "description": "Time range for token/revenue queries. Default is THIS_MONTH.\n\n - THIS_MONTH: Current calendar month (default)\n - THIS_WEEK: Current calendar week (Monday to now)\n - LAST_MONTH: Previous calendar month\n - LAST_7_DAYS: Rolling last 7 days\n - LAST_30_DAYS: Rolling last 30 days",
-            "name": "timeRange",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/resourceconstCostWaterfallResponse"
             }
           },
           "default": {
@@ -4112,34 +4019,12 @@
         }
       }
     },
-    "/apis/crane.io/v1alpha1/singlepage/gross-profit-attribution-config": {
+    "/apis/crane.io/v1alpha1/singlepage/popular-model-contribution": {
       "get": {
         "tags": [
           "SinglePageService"
         ],
-        "operationId": "SinglePageService_GetGrossProfitAttributionConfig",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/singlepageGetGrossProfitAttributionConfigResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        }
-      }
-    },
-    "/apis/crane.io/v1alpha1/singlepage/modelscost": {
-      "get": {
-        "tags": [
-          "ProductionOperationsService"
-        ],
-        "operationId": "ProductionOperationsService_GetSinglepageModelsCost",
+        "operationId": "SinglePageService_GetPopularModelContribution",
         "parameters": [
           {
             "type": "string",
@@ -4162,7 +4047,203 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/productionopsGetSinglepageModelsCostResponse"
+              "$ref": "#/definitions/singlepageGetPopularModelContributionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/singlepage/realtime-request-rate": {
+      "get": {
+        "tags": [
+          "SinglePageService"
+        ],
+        "operationId": "SinglePageService_GetRealtimeRequestRate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/singlepageGetRealtimeRequestRateResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/singlepage/revenue-per-minute": {
+      "get": {
+        "tags": [
+          "SinglePageService"
+        ],
+        "operationId": "SinglePageService_GetRevenuePerMinute",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/singlepageGetRevenuePerMinuteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/singlepage/revenue-per-minute-history": {
+      "get": {
+        "tags": [
+          "SinglePageService"
+        ],
+        "operationId": "SinglePageService_GetRevenuePerMinuteHistory",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "name": "steps",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/singlepageGetRevenuePerMinuteHistoryResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/singlepage/token-latency": {
+      "get": {
+        "tags": [
+          "SinglePageService"
+        ],
+        "operationId": "SinglePageService_GetTokenLatency",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Client timezone offset from UTC in minutes. Follows JavaScript\nDate.getTimezoneOffset() where UTC+8 is -480.",
+            "name": "tzOffsetMinutes",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/singlepageGetTokenLatencyResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/singlepage/usage-capacity-trend": {
+      "get": {
+        "tags": [
+          "SinglePageService"
+        ],
+        "operationId": "SinglePageService_GetUsageCapacityTrend",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/singlepageGetUsageCapacityTrendResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/user-metrics/new-user-trend": {
+      "get": {
+        "tags": [
+          "UserMetricsService"
+        ],
+        "summary": "GetNewUserTrend returns recent daily or monthly new-user counts.",
+        "operationId": "UserMetricsService_GetNewUserTrend",
+        "parameters": [
+          {
+            "enum": [
+              "NEW_USER_TREND_RANGE_UNSPECIFIED",
+              "NEW_USER_TREND_RANGE_LAST_30_DAYS",
+              "NEW_USER_TREND_RANGE_LAST_1_YEAR"
+            ],
+            "type": "string",
+            "default": "NEW_USER_TREND_RANGE_UNSPECIFIED",
+            "name": "range",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/usermetricsGetNewUserTrendResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
+    "/apis/crane.io/v1alpha1/user-metrics/registered-users": {
+      "get": {
+        "tags": [
+          "UserMetricsService"
+        ],
+        "summary": "GetRegisteredUserMetrics returns current and previous-period registration counts.",
+        "operationId": "UserMetricsService_GetRegisteredUserMetrics",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Supported values: \"today\", \"this-week\", \"this-month\", \"this-quarter\".",
+            "name": "timeRange",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/usermetricsGetRegisteredUserMetricsResponse"
             }
           },
           "default": {
@@ -4176,6 +4257,34 @@
     }
   },
   "definitions": {
+    "businessoperationActiveUserTrendPoint": {
+      "description": "ActiveUserTrendPoint contains active and cumulative total users for one UTC natural day.",
+      "type": "object",
+      "properties": {
+        "activeUserCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "date": {
+          "type": "string"
+        },
+        "totalUserCount": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "businessoperationBusinessOverviewPeriod": {
+      "description": "BusinessOverviewPeriod is the bounded period selector for the current-period business overview.",
+      "type": "string",
+      "default": "BUSINESS_OVERVIEW_PERIOD_UNSPECIFIED",
+      "enum": [
+        "BUSINESS_OVERVIEW_PERIOD_UNSPECIFIED",
+        "BUSINESS_OVERVIEW_PERIOD_THIS_MONTH",
+        "BUSINESS_OVERVIEW_PERIOD_THIS_WEEK",
+        "BUSINESS_OVERVIEW_PERIOD_TODAY"
+      ]
+    },
     "businessoperationBusinessPanelMeta": {
       "description": "BusinessPanelMeta contains summary and warning information shared by panel responses.",
       "type": "object",
@@ -4505,6 +4614,33 @@
         }
       }
     },
+    "businessoperationDepartmentQuotaConsumptionItem": {
+      "description": "DepartmentQuotaConsumptionItem is one workspace quota row with its resolved department name.",
+      "type": "object",
+      "properties": {
+        "departmentName": {
+          "type": "string"
+        },
+        "quotaTokens": {
+          "type": "number",
+          "format": "double"
+        },
+        "unlimitedQuota": {
+          "type": "boolean"
+        },
+        "usagePercent": {
+          "type": "number",
+          "format": "double"
+        },
+        "usedTokens": {
+          "type": "number",
+          "format": "double"
+        },
+        "workspace": {
+          "type": "string"
+        }
+      }
+    },
     "businessoperationDepartmentTokenConsumptionRankItem": {
       "description": "DepartmentTokenConsumptionRankItem is a department token consumption rank item.",
       "type": "object",
@@ -4523,6 +4659,179 @@
         "userName": {
           "type": "string",
           "title": "WS 模式下 panel 直接展示 token_usage_hourly.user_name 作为对象名，\ndepartment 字段保留下来用于内部聚合键。"
+        }
+      }
+    },
+    "businessoperationDepartmentValueQuadrantPanelResponse": {
+      "description": "DepartmentValueQuadrantPanelResponse returns the WS department value quadrant panel.",
+      "type": "object",
+      "properties": {
+        "meta": {
+          "$ref": "#/definitions/businessoperationBusinessPanelMeta"
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessoperationDepartmentValueQuadrantPoint"
+          }
+        }
+      }
+    },
+    "businessoperationDepartmentValueQuadrantPoint": {
+      "description": "DepartmentValueQuadrantPoint is one department's raw quadrant metrics.",
+      "type": "object",
+      "properties": {
+        "activeUsers": {
+          "type": "string",
+          "format": "int64"
+        },
+        "departmentId": {
+          "type": "string"
+        },
+        "departmentName": {
+          "type": "string"
+        },
+        "totalTokens": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "businessoperationGetCurrentPeriodBusinessOverviewResponse": {
+      "description": "GetCurrentPeriodBusinessOverviewResponse contains the WS current-period business overview metrics.",
+      "type": "object",
+      "properties": {
+        "activeDepartmentCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "activeUserChangeCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "activeUserCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "activeUserCoveragePercent": {
+          "type": "number",
+          "format": "double"
+        },
+        "activeUserTrend": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessoperationActiveUserTrendPoint"
+          }
+        },
+        "cachedTokens": {
+          "type": "string",
+          "format": "int64"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "inputTokens": {
+          "type": "string",
+          "format": "int64"
+        },
+        "maasCostYuan": {
+          "type": "number",
+          "format": "double"
+        },
+        "meta": {
+          "$ref": "#/definitions/businessoperationBusinessPanelMeta"
+        },
+        "newDepartmentCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "outputTokens": {
+          "type": "string",
+          "format": "int64"
+        },
+        "registeredUserCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "requestChangePercent": {
+          "type": "number",
+          "format": "double"
+        },
+        "requestCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "selfDeployedCostYuan": {
+          "type": "number",
+          "format": "double"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "statisticsTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "totalCostYuan": {
+          "type": "number",
+          "format": "double"
+        },
+        "totalTokens": {
+          "type": "string",
+          "format": "int64"
+        },
+        "unitCostYuanPerMillionTokens": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "businessoperationGetDepartmentQuotaConsumptionResponse": {
+      "description": "GetDepartmentQuotaConsumptionResponse contains organization totals and the usage ranking.",
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessoperationDepartmentQuotaConsumptionItem"
+          }
+        },
+        "limitedQuotaUsedTokens": {
+          "description": "Consumption in finite-quota workspaces, used to calculate the organization quota utilization rate.",
+          "type": "number",
+          "format": "double"
+        },
+        "organizationQuotaTokens": {
+          "description": "Sum of active finite workspace quotas.",
+          "type": "number",
+          "format": "double"
+        },
+        "remainingQuotaTokens": {
+          "description": "Remaining quota after consumption in finite-quota workspaces only.",
+          "type": "number",
+          "format": "double"
+        },
+        "statisticsTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "usedTokens": {
+          "description": "Actual current-month consumption across all active workspaces, including unlimited workspaces.",
+          "type": "number",
+          "format": "double"
+        },
+        "warningDepartmentCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "warningThresholdPercent": {
+          "type": "number",
+          "format": "double"
         }
       }
     },
@@ -4897,16 +5206,22 @@
         }
       }
     },
-    "businessvalueAppConsumptionItem": {
-      "description": "AppConsumptionItem represents consumption ratio for a single application.",
+    "businessvalueConsumptionRevenueCostTotals": {
+      "description": "ConsumptionRevenueCostTotals contains global operating totals for one period.",
       "type": "object",
       "properties": {
-        "appName": {
-          "description": "Application name (e.g., \"API 接入\", \"Web 工作台 001\").",
-          "type": "string"
+        "cost": {
+          "description": "Total cost amount in yuan.",
+          "type": "number",
+          "format": "double"
         },
-        "percentage": {
-          "description": "Consumption percentage (0-100).",
+        "revenue": {
+          "description": "Total revenue amount in yuan.",
+          "type": "number",
+          "format": "double"
+        },
+        "tokenTotal": {
+          "description": "Total token usage in the period.",
           "type": "number",
           "format": "double"
         }
@@ -4936,6 +5251,22 @@
         "CUMULATIVE_TOKEN_HISTORY_SPAN_DAY"
       ]
     },
+    "businessvalueCustomerConcentrationThresholdLevel": {
+      "description": "CustomerConcentrationThresholdLevel defines the Top1/Top3 percentage boundaries for one risk level.",
+      "type": "object",
+      "properties": {
+        "top1Percentage": {
+          "description": "Top1 percentage boundary (0-100).",
+          "type": "number",
+          "format": "double"
+        },
+        "top3Percentage": {
+          "description": "Top3 percentage boundary (0-100).",
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
     "businessvalueDepartmentTokenUsageItem": {
       "description": "DepartmentTokenUsageItem represents a single department's usage and budget in the time window.",
       "type": "object",
@@ -4956,6 +5287,16 @@
         }
       }
     },
+    "businessvalueForecastAvailability": {
+      "description": "ForecastAvailability describes whether forecast data is present in the\nresponse. UNSPECIFIED is reserved for protobuf compatibility only.",
+      "type": "string",
+      "default": "FORECAST_AVAILABILITY_UNSPECIFIED",
+      "enum": [
+        "FORECAST_AVAILABILITY_UNSPECIFIED",
+        "FORECAST_AVAILABILITY_AVAILABLE",
+        "FORECAST_AVAILABILITY_INSUFFICIENT_DATA"
+      ]
+    },
     "businessvalueGetApiKeyCountResponse": {
       "description": "GetApiKeyCountResponse is the response for GetApiKeyCount.",
       "type": "object",
@@ -4969,20 +5310,6 @@
           "description": "Response timestamp (UTC).",
           "type": "string",
           "format": "date-time"
-        }
-      }
-    },
-    "businessvalueGetAppConsumptionDistributionResponse": {
-      "description": "GetAppConsumptionDistributionResponse is the response message for GetAppConsumptionDistribution.",
-      "type": "object",
-      "properties": {
-        "items": {
-          "description": "List of application consumption items sorted by percentage descending, capped at 10.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/businessvalueAppConsumptionItem"
-          }
         }
       }
     },
@@ -5019,6 +5346,66 @@
           "description": "Current capacity utilization percentage.",
           "type": "number",
           "format": "double"
+        }
+      }
+    },
+    "businessvalueGetCapacityFunnelResponse": {
+      "description": "GetCapacityFunnelResponse is the response for GetCapacityFunnel.",
+      "type": "object",
+      "properties": {
+        "billedTokens": {
+          "description": "Total billed tokens in the requested time range.",
+          "type": "number",
+          "format": "double"
+        },
+        "highMarginTokens": {
+          "description": "Total tokens from high-margin models in the requested time range.",
+          "type": "number",
+          "format": "double"
+        },
+        "timestamp": {
+          "description": "Response timestamp (UTC).",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "businessvalueGetConsumptionRevenueCostSummaryResponse": {
+      "description": "GetConsumptionRevenueCostSummaryResponse is the response for global operating totals.",
+      "type": "object",
+      "properties": {
+        "current": {
+          "description": "Global totals for the requested period.",
+          "$ref": "#/definitions/businessvalueConsumptionRevenueCostTotals"
+        },
+        "currentEnd": {
+          "description": "Exclusive end of the resolved current period.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "currentStart": {
+          "description": "Inclusive start of the resolved current period.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "previous": {
+          "description": "Global totals for the previous period at the same elapsed progress.",
+          "$ref": "#/definitions/businessvalueConsumptionRevenueCostTotals"
+        },
+        "previousEnd": {
+          "description": "Exclusive end of the resolved previous period.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "previousStart": {
+          "description": "Inclusive start of the resolved previous period.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "timestamp": {
+          "description": "Response timestamp (UTC).",
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -5087,6 +5474,20 @@
         }
       }
     },
+    "businessvalueGetCustomerConcentrationThresholdsResponse": {
+      "description": "GetCustomerConcentrationThresholdsResponse is the response message for GetCustomerConcentrationThresholds.\nIt intentionally excludes risk display names, translations, and colors, which are\nowned by the Dashboard i18n layer.",
+      "type": "object",
+      "properties": {
+        "risk": {
+          "description": "Risk-level Top1/Top3 percentage boundaries.",
+          "$ref": "#/definitions/businessvalueCustomerConcentrationThresholdLevel"
+        },
+        "warn": {
+          "description": "Warn-level Top1/Top3 percentage boundaries.",
+          "$ref": "#/definitions/businessvalueCustomerConcentrationThresholdLevel"
+        }
+      }
+    },
     "businessvalueGetDepartmentTokenUsageResponse": {
       "description": "GetDepartmentTokenUsageResponse is the response for GetDepartmentTokenUsage.",
       "type": "object",
@@ -5106,17 +5507,37 @@
         }
       }
     },
-    "businessvalueGetInternalBusinessStructureDistributionResponse": {
-      "description": "GetInternalBusinessStructureDistributionResponse is the response message for GetInternalBusinessStructureDistribution.",
+    "businessvalueGetGrossProfitAttributionConfigResponse": {
+      "description": "GetGrossProfitAttributionConfigResponse is the response for GetGrossProfitAttributionConfig.",
+      "type": "object",
+      "properties": {
+        "decrease": {
+          "$ref": "#/definitions/businessvalueGrossProfitAttributionScenario"
+        },
+        "equal": {
+          "$ref": "#/definitions/businessvalueGrossProfitAttributionScenario"
+        },
+        "increase": {
+          "$ref": "#/definitions/businessvalueGrossProfitAttributionScenario"
+        }
+      }
+    },
+    "businessvalueGetModelContributionResponse": {
+      "description": "GetModelContributionResponse is the response for GetModelContribution.",
       "type": "object",
       "properties": {
         "items": {
-          "description": "List of internal business structure items sorted by value descending.",
+          "description": "All models with revenue or token usage in the window, sorted by revenue_amount descending.",
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/businessvalueInternalBusinessStructureItem"
+            "$ref": "#/definitions/businessvalueModelContributionItem"
           }
+        },
+        "timestamp": {
+          "description": "Response timestamp (UTC).",
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -5124,6 +5545,10 @@
       "description": "GetMonthEndForecastMetricsResponse is the response message for GetMonthEndForecastMetrics.",
       "type": "object",
       "properties": {
+        "forecastAvailability": {
+          "description": "Whether forecast data is available in this response.",
+          "$ref": "#/definitions/businessvalueForecastAvailability"
+        },
         "monthEndCostForecastAmount": {
           "description": "Month-end cost forecast amount.",
           "type": "number",
@@ -5201,12 +5626,73 @@
         }
       }
     },
+    "businessvalueGetPeriodRevenueCostTrendResponse": {
+      "description": "GetPeriodRevenueCostTrendResponse returns the normalized period metadata and ordered points.",
+      "type": "object",
+      "properties": {
+        "granularity": {
+          "description": "Hour or day granularity chosen for the requested period.",
+          "$ref": "#/definitions/businessvaluePeriodRevenueCostTrendGranularity"
+        },
+        "periodEnd": {
+          "description": "Exclusive period end of the returned axis, encoded as an absolute timestamp.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "periodStart": {
+          "description": "Inclusive period start in the client's local calendar, encoded as an absolute timestamp.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "points": {
+          "description": "Trend points ordered by time ascending.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessvaluePeriodRevenueCostTrendPoint"
+          }
+        }
+      }
+    },
+    "businessvalueGetPeriodTokenTrendResponse": {
+      "description": "GetPeriodTokenTrendResponse returns the normalized period metadata and ordered points.",
+      "type": "object",
+      "properties": {
+        "granularity": {
+          "description": "Hour or day granularity chosen for the requested period.",
+          "$ref": "#/definitions/businessvaluePeriodTokenTrendGranularity"
+        },
+        "periodEnd": {
+          "description": "Exclusive period end of the returned axis, encoded as an absolute timestamp.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "periodStart": {
+          "description": "Inclusive period start in the client's local calendar, encoded as an absolute timestamp.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "points": {
+          "description": "Trend points ordered by time ascending.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessvaluePeriodTokenTrendPoint"
+          }
+        }
+      }
+    },
     "businessvalueGetRatedCapacityResponse": {
       "description": "GetRatedCapacityResponse is the response message for GetRatedCapacity.",
       "type": "object",
       "properties": {
+        "periodCapacityTokens": {
+          "description": "Total capacity tokens for the requested time range period.\nOnly populated when time_range is provided in the request.",
+          "type": "number",
+          "format": "double"
+        },
         "ratedCapacityMillion": {
-          "description": "Rated capacity value in millions (e.g., 2.10 means 2.10M tok/s).",
+          "description": "Rated capacity value in millions of tokens per minute.",
           "type": "number",
           "format": "double"
         }
@@ -5216,13 +5702,17 @@
       "description": "GetRevenueMarginTrendForecastResponse is the response message for GetRevenueMarginTrendForecast.",
       "type": "object",
       "properties": {
+        "forecastAvailability": {
+          "description": "Whether forecast data is available in this response.",
+          "$ref": "#/definitions/businessvalueForecastAvailability"
+        },
         "forecastStartDate": {
-          "description": "The date at which forecast data begins (first forecast point's date).\nFrontend uses this to split solid (history) vs dashed (forecast) lines.",
+          "description": "The date at which forecast data begins (first forecast point's date),\nencoded as canonical UTC midnight for the intended service-local\ncalendar day. Set only when availability is AVAILABLE.",
           "type": "string",
           "format": "date-time"
         },
         "points": {
-          "description": "Exactly 37 daily points ordered by date ascending.\nPoints [0..29] are historical, points [30..36] are forecast.",
+          "description": "Daily points ordered by date ascending.\nAVAILABLE responses contain 37 points (30 historical + 7 forecast).\nINSUFFICIENT_DATA responses contain only the 30 historical points.",
           "type": "array",
           "items": {
             "type": "object",
@@ -5250,17 +5740,40 @@
         }
       }
     },
-    "businessvalueGetTenantTokenUsageResponse": {
-      "description": "GetTenantTokenUsageResponse is the response for GetTenantTokenUsage.",
+    "businessvalueGetSummaryMetricThresholdsResponse": {
+      "description": "GetSummaryMetricThresholdsResponse is the response message for GetSummaryMetricThresholds.",
       "type": "object",
       "properties": {
-        "items": {
-          "description": "All tenants with token usage in the window, sorted by token_total descending.",
+        "rules": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/businessvalueTenantTokenUsageItem"
+            "$ref": "#/definitions/businessvalueSummaryMetricThresholdRule"
           }
+        }
+      }
+    },
+    "businessvalueGetTenantConsumptionDistributionResponse": {
+      "description": "GetTenantConsumptionDistributionResponse is the response for tenant consumption distribution.",
+      "type": "object",
+      "properties": {
+        "items": {
+          "description": "At most ten customer groups and one aggregated other item.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessvalueTenantConsumptionDistributionItem"
+          }
+        },
+        "periodEnd": {
+          "description": "Exclusive end of the resolved period.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "periodStart": {
+          "description": "Inclusive start of the resolved period.",
+          "type": "string",
+          "format": "date-time"
         },
         "timestamp": {
           "description": "Response timestamp (UTC).",
@@ -5269,32 +5782,70 @@
         }
       }
     },
+    "businessvalueGetTenantGrowthTrendTop10Response": {
+      "description": "GetTenantGrowthTrendTop10Response returns the top ten tenant growth trend.",
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/businessvalueTenantGrowthTrendData"
+        },
+        "periodEnd": {
+          "description": "Exclusive end of the resolved UTC time window.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "periodStart": {
+          "description": "Inclusive start of the resolved UTC time window.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "timestamp": {
+          "description": "Response timestamp in UTC.",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "businessvalueGetTokenThroughputHistoryResponse": {
+      "description": "GetTokenThroughputHistoryResponse is the response for GetTokenThroughputHistory.",
+      "type": "object",
+      "properties": {
+        "points": {
+          "description": "Cached historical throughput data points ordered oldest to newest.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessvalueThroughputHistoryPoint"
+          }
+        }
+      }
+    },
     "businessvalueGetTokenThroughputResponse": {
       "description": "GetTokenThroughputResponse is the response message for GetTokenThroughput.",
       "type": "object",
       "properties": {
-        "cacheTokensPerSecond": {
-          "description": "Cache tokens per second.",
+        "cacheTokensPerMinute": {
+          "description": "Cache tokens per minute.",
           "type": "number",
           "format": "double"
         },
-        "inputTokensPerSecond": {
-          "description": "Input tokens per second.",
+        "inputTokensPerMinute": {
+          "description": "Input tokens per minute.",
           "type": "number",
           "format": "double"
         },
-        "outputTokensPerSecond": {
-          "description": "Output tokens per second.",
+        "outputTokensPerMinute": {
+          "description": "Output tokens per minute.",
           "type": "number",
           "format": "double"
         },
         "timestamp": {
-          "description": "Timestamp of the response.",
+          "description": "Timestamp of the cached sample.",
           "type": "string",
           "format": "date-time"
         },
-        "totalTokensPerSecond": {
-          "description": "Current total tokens per second (aggregate).",
+        "totalTokensPerMinute": {
+          "description": "Current total tokens per minute (aggregate).",
           "type": "number",
           "format": "double"
         }
@@ -5329,20 +5880,132 @@
         }
       }
     },
-    "businessvalueInternalBusinessStructureItem": {
-      "description": "InternalBusinessStructureItem represents a single internal business structure item.",
+    "businessvalueGrossProfitAttributionReason": {
+      "description": "GrossProfitAttributionReason represents a single attribution reason with its percentage weight.",
       "type": "object",
       "properties": {
-        "name": {
-          "description": "Structure name (for example: \"部门A\", \"Agent\", \"Copilot\").",
-          "type": "string"
+        "percentage": {
+          "type": "number",
+          "format": "double"
         },
-        "value": {
-          "description": "Integer metric value used for rank-bar rendering.",
-          "type": "string",
-          "format": "int64"
+        "reasonId": {
+          "type": "string"
         }
       }
+    },
+    "businessvalueGrossProfitAttributionScenario": {
+      "description": "GrossProfitAttributionScenario holds the list of reasons for a given profit-change scenario.",
+      "type": "object",
+      "properties": {
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessvalueGrossProfitAttributionReason"
+          }
+        }
+      }
+    },
+    "businessvalueModelContributionItem": {
+      "description": "ModelContributionItem represents a single model's revenue and token totals in the time window.",
+      "type": "object",
+      "properties": {
+        "modelName": {
+          "description": "Model name.",
+          "type": "string"
+        },
+        "revenueAmount": {
+          "description": "Revenue amount in normal currency units (yuan).",
+          "type": "number",
+          "format": "double"
+        },
+        "tokenTotal": {
+          "description": "Total token usage (input_tokens + output_tokens) in the time window.",
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "businessvaluePeriodRevenueCostTrendGranularity": {
+      "description": "PeriodRevenueCostTrendGranularity declares the bucket size returned by the API.",
+      "type": "string",
+      "default": "PERIOD_REVENUE_COST_TREND_GRANULARITY_UNSPECIFIED",
+      "enum": [
+        "PERIOD_REVENUE_COST_TREND_GRANULARITY_UNSPECIFIED",
+        "PERIOD_REVENUE_COST_TREND_GRANULARITY_HOUR",
+        "PERIOD_REVENUE_COST_TREND_GRANULARITY_DAY"
+      ]
+    },
+    "businessvaluePeriodRevenueCostTrendPoint": {
+      "description": "PeriodRevenueCostTrendPoint represents one hourly or daily revenue-and-cost bucket.",
+      "type": "object",
+      "properties": {
+        "cost": {
+          "description": "Cost within the bucket. Unset for future buckets.",
+          "type": "number",
+          "format": "double"
+        },
+        "revenue": {
+          "description": "Revenue within the bucket. Unset for future buckets.",
+          "type": "number",
+          "format": "double"
+        },
+        "time": {
+          "description": "Absolute bucket start timestamp. Clients restore their local bucket with tz_offset_minutes.",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "businessvaluePeriodRevenueCostTrendRange": {
+      "description": "PeriodRevenueCostTrendRange restricts the supported dashboard ranges.",
+      "type": "string",
+      "default": "PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED",
+      "enum": [
+        "PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED",
+        "PERIOD_REVENUE_COST_TREND_RANGE_TODAY",
+        "PERIOD_REVENUE_COST_TREND_RANGE_THIS_WEEK",
+        "PERIOD_REVENUE_COST_TREND_RANGE_THIS_MONTH",
+        "PERIOD_REVENUE_COST_TREND_RANGE_THIS_QUARTER"
+      ]
+    },
+    "businessvaluePeriodTokenTrendGranularity": {
+      "description": "PeriodTokenTrendGranularity declares the bucket size returned by the API.",
+      "type": "string",
+      "default": "PERIOD_TOKEN_TREND_GRANULARITY_UNSPECIFIED",
+      "enum": [
+        "PERIOD_TOKEN_TREND_GRANULARITY_UNSPECIFIED",
+        "PERIOD_TOKEN_TREND_GRANULARITY_HOUR",
+        "PERIOD_TOKEN_TREND_GRANULARITY_DAY"
+      ]
+    },
+    "businessvaluePeriodTokenTrendPoint": {
+      "description": "PeriodTokenTrendPoint represents one hourly or daily token-output bucket.",
+      "type": "object",
+      "properties": {
+        "time": {
+          "description": "Absolute bucket start timestamp. Clients restore their local bucket with tz_offset_minutes.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "totalTokens": {
+          "description": "Token output within the bucket. Unset for future buckets.",
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "businessvaluePeriodTokenTrendRange": {
+      "description": "PeriodTokenTrendRange restricts the supported dashboard ranges.",
+      "type": "string",
+      "default": "PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED",
+      "enum": [
+        "PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED",
+        "PERIOD_TOKEN_TREND_RANGE_TODAY",
+        "PERIOD_TOKEN_TREND_RANGE_THIS_WEEK",
+        "PERIOD_TOKEN_TREND_RANGE_THIS_MONTH",
+        "PERIOD_TOKEN_TREND_RANGE_THIS_QUARTER"
+      ]
     },
     "businessvalueRevenueMarginTrendPoint": {
       "description": "RevenueMarginTrendPoint represents a single daily data point in the trend series.",
@@ -5354,7 +6017,7 @@
           "format": "double"
         },
         "date": {
-          "description": "Date of this data point (truncated to day, UTC).",
+          "description": "Date of this data point encoded as canonical UTC midnight for the\nintended service-local calendar day.",
           "type": "string",
           "format": "date-time"
         },
@@ -5395,25 +6058,99 @@
         "SUGGESTION_TYPE_SUCCESS"
       ]
     },
-    "businessvalueTenantTokenUsageItem": {
-      "description": "TenantTokenUsageItem represents a single tenant's usage and charge in the time window.",
+    "businessvalueSummaryMetricThresholdRule": {
+      "description": "SummaryMetricThresholdRule defines one summary metric attention condition.",
       "type": "object",
       "properties": {
-        "price": {
-          "description": "Charge amount in yuan calculated via the SKU charger.",
+        "metricId": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "businessvalueTenantConsumptionDistributionItem": {
+      "description": "TenantConsumptionDistributionItem represents a customer group in the requested period.",
+      "type": "object",
+      "properties": {
+        "isOther": {
+          "description": "Whether this item aggregates all groups below the Top10 cutoff.",
+          "type": "boolean"
+        },
+        "revenue": {
+          "description": "Revenue amount in yuan calculated with the SKU charger.",
           "type": "number",
           "format": "double"
         },
         "tenantId": {
-          "description": "Tenant identifier.",
+          "description": "Customer-group identifier. Empty for the aggregated other item.",
           "type": "string"
         },
         "tenantName": {
-          "description": "Display name of the tenant.",
+          "description": "Customer-group display name.",
           "type": "string"
         },
         "tokenTotal": {
-          "description": "Total token usage (input_tokens + output_tokens) in the time window.",
+          "description": "Total token usage in the requested period.",
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "businessvalueTenantGrowthTrendData": {
+      "description": "TenantGrowthTrendData contains labels and series for the growth trend chart.",
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "series": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessvalueTenantGrowthTrendSeries"
+          }
+        }
+      }
+    },
+    "businessvalueTenantGrowthTrendSeries": {
+      "description": "TenantGrowthTrendSeries is one tenant's daily token usage series.",
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        }
+      }
+    },
+    "businessvalueThroughputHistoryPoint": {
+      "description": "ThroughputHistoryPoint represents one historical throughput data point.",
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "description": "UTC timestamp of the cached sample.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "tokensPerMinute": {
+          "description": "Cached tokens per minute value.",
           "type": "number",
           "format": "double"
         }
@@ -5883,6 +6620,163 @@
         }
       }
     },
+    "expenseBalanceVoucherOverviewGranularity": {
+      "description": "BalanceVoucherOverviewGranularity declares the overview bucket size.",
+      "type": "string",
+      "default": "BALANCE_VOUCHER_OVERVIEW_GRANULARITY_UNSPECIFIED",
+      "enum": [
+        "BALANCE_VOUCHER_OVERVIEW_GRANULARITY_UNSPECIFIED",
+        "BALANCE_VOUCHER_OVERVIEW_GRANULARITY_DAY",
+        "BALANCE_VOUCHER_OVERVIEW_GRANULARITY_MONTH"
+      ]
+    },
+    "expenseBalanceVoucherOverviewPoint": {
+      "type": "object",
+      "properties": {
+        "balanceAvailable": {
+          "type": "boolean"
+        },
+        "balanceTotalMicros": {
+          "type": "string",
+          "format": "int64"
+        },
+        "bucketStart": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "rechargeAmountMicros": {
+          "type": "string",
+          "format": "int64"
+        },
+        "rechargeAvailable": {
+          "type": "boolean"
+        },
+        "voucherEffectiveAmountMicros": {
+          "type": "string",
+          "format": "int64"
+        },
+        "voucherEffectiveAvailable": {
+          "type": "boolean"
+        },
+        "voucherRemainingAvailable": {
+          "type": "boolean"
+        },
+        "voucherRemainingTotalMicros": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "expenseBalanceVoucherOverviewRange": {
+      "description": "BalanceVoucherOverviewRange restricts the overview to a recent rolling window.",
+      "type": "string",
+      "default": "BALANCE_VOUCHER_OVERVIEW_RANGE_UNSPECIFIED",
+      "enum": [
+        "BALANCE_VOUCHER_OVERVIEW_RANGE_UNSPECIFIED",
+        "BALANCE_VOUCHER_OVERVIEW_RANGE_LAST_30_DAYS",
+        "BALANCE_VOUCHER_OVERVIEW_RANGE_LAST_12_MONTHS"
+      ]
+    },
+    "expenseGetBalanceVoucherOverviewResponse": {
+      "type": "object",
+      "properties": {
+        "granularity": {
+          "$ref": "#/definitions/expenseBalanceVoucherOverviewGranularity"
+        },
+        "periodEnd": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "periodStart": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/expenseBalanceVoucherOverviewPoint"
+          }
+        }
+      }
+    },
+    "expenseGetPlatformRevenueAnalyticsResponse": {
+      "description": "GetPlatformRevenueAnalyticsResponse contains one reconcilable analytics snapshot.",
+      "type": "object",
+      "properties": {
+        "granularity": {
+          "$ref": "#/definitions/expensePlatformRevenueGranularity"
+        },
+        "periodEnd": {
+          "description": "Exclusive UTC query-window end.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "periodStart": {
+          "description": "Inclusive UTC query-window start.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/expensePlatformRevenuePoint"
+          }
+        },
+        "rechargeTotalAmountMicros": {
+          "description": "Sum of balance-paid consumption across every returned point.",
+          "type": "string",
+          "format": "int64"
+        },
+        "voucherConsumptionTotalAmountMicros": {
+          "description": "Sum of voucher_consumption_amount_micros across every returned point.",
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "expensePlatformRevenueGranularity": {
+      "description": "PlatformRevenueGranularity declares the calendar bucket size in the response.",
+      "type": "string",
+      "default": "PLATFORM_REVENUE_GRANULARITY_UNSPECIFIED",
+      "enum": [
+        "PLATFORM_REVENUE_GRANULARITY_UNSPECIFIED",
+        "PLATFORM_REVENUE_GRANULARITY_DAY",
+        "PLATFORM_REVENUE_GRANULARITY_MONTH"
+      ]
+    },
+    "expensePlatformRevenuePoint": {
+      "description": "PlatformRevenuePoint represents one local-calendar bucket.",
+      "type": "object",
+      "properties": {
+        "bucketStart": {
+          "description": "Inclusive bucket start converted to UTC.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "rechargeAmountMicros": {
+          "description": "Bill amount_due balance-paid consumption amount, in micro-yuan.",
+          "type": "string",
+          "format": "int64"
+        },
+        "voucherConsumptionAmountMicros": {
+          "description": "Consumed bill voucher_payment amount, in micro-yuan.",
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "expensePlatformRevenueRange": {
+      "description": "PlatformRevenueRange restricts platform-revenue queries to bounded windows.",
+      "type": "string",
+      "default": "PLATFORM_REVENUE_RANGE_UNSPECIFIED",
+      "enum": [
+        "PLATFORM_REVENUE_RANGE_UNSPECIFIED",
+        "PLATFORM_REVENUE_RANGE_LAST_30_DAYS",
+        "PLATFORM_REVENUE_RANGE_CURRENT_YEAR"
+      ]
+    },
     "finopsAccountingScope": {
       "type": "string",
       "default": "ACCOUNTING_SCOPE_MERGED",
@@ -5986,11 +6880,35 @@
     "finopsExpansionImpactRow": {
       "type": "object",
       "properties": {
+        "action": {
+          "type": "string"
+        },
         "addedCost": {
           "type": "string"
         },
+        "existingQuantity": {
+          "type": "integer",
+          "format": "int32"
+        },
         "expectedRevenue": {
           "type": "string"
+        },
+        "hasMonthlyBudgetImpact": {
+          "type": "boolean"
+        },
+        "hasProfitImpact": {
+          "type": "boolean"
+        },
+        "hasRevenueImpact": {
+          "type": "boolean"
+        },
+        "machine": {
+          "description": "Machine identifiers and action codes are intentionally language-neutral.\nThe dashboard translates action codes for the active locale.",
+          "type": "string"
+        },
+        "monthlyBudgetImpact": {
+          "type": "number",
+          "format": "double"
         },
         "plan": {
           "type": "string"
@@ -5998,11 +6916,27 @@
         "profitImpact": {
           "type": "string"
         },
+        "profitImpactValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "profitRate": {
+          "type": "number",
+          "format": "double"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
         "recommendation": {
           "type": "string"
         },
         "recoveryPeriod": {
           "type": "string"
+        },
+        "revenueImpact": {
+          "type": "number",
+          "format": "double"
         }
       }
     },
@@ -6015,6 +6949,47 @@
         "FINANCIAL_PERIOD_THIS_QUARTER",
         "FINANCIAL_PERIOD_THIS_YEAR"
       ]
+    },
+    "finopsFinopsOverviewResponse": {
+      "type": "object",
+      "properties": {
+        "assetMachineCount": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "averageMachineProfit": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "averageMachineRevenue": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "budgetRemaining": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "costRecoveryRate": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "monthlyCost": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "monthlyProfit": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "monthlyRevenue": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "unitTokenCost": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "unitTokenProfit": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "unitTokenRevenue": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        },
+        "weightedPaybackPeriod": {
+          "$ref": "#/definitions/finopsMetricPanelResponse"
+        }
+      }
     },
     "finopsGapReason": {
       "type": "string",
@@ -6360,9 +7335,6 @@
         "cluster": {
           "type": "string"
         },
-        "slaBaseline": {
-          "type": "string"
-        },
         "timeWindow": {
           "type": "string"
         }
@@ -6438,8 +7410,8 @@
           "$ref": "#/definitions/productionopsTabMeta"
         },
         "queueKpis": {
+          "description": "Carries queue depth, GPU utilization, deployed model count, GPU pool\ncount, and overall SLA achievement cards.",
           "type": "array",
-          "title": "TODO(data-source): populate these cards from queue_depth, KV cache hit\nrate, GPU average utilization, and degradation/throttling sources. This\narray currently carries the 队列深度、KV Cache 命中率、GPU 平均利用率、降级/限流状态 四张 panel。",
           "items": {
             "type": "object",
             "$ref": "#/definitions/productionopsMetricCard"
@@ -6475,134 +7447,19 @@
         }
       }
     },
-    "productionopsGetSinglepageModelsCostRequest": {
-      "type": "object",
-      "properties": {
-        "cluster": {
-          "type": "string"
-        },
-        "limit": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "timeWindow": {
-          "type": "string"
-        }
-      }
-    },
-    "productionopsGetSinglepageModelsCostResponse": {
-      "type": "object",
-      "properties": {
-        "filters": {
-          "$ref": "#/definitions/productionopsGetSinglepageModelsCostRequest"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/productionopsSinglepageModelCostItem"
-          }
-        },
-        "meta": {
-          "$ref": "#/definitions/productionopsTabMeta"
-        }
-      }
-    },
-    "productionopsGetSynergyTabResponse": {
-      "type": "object",
-      "properties": {
-        "filters": {
-          "$ref": "#/definitions/productionopsGetProductionOpsTabRequest"
-        },
-        "gpuPoolRank": {
-          "description": "TODO(data-source): replace the fake GPU pool rank with card count,\nutilization, per-card output value, and power telemetry.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/productionopsGpuPoolRankRow"
-          }
-        },
-        "groupStates": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/productionopsContentGroupState"
-          }
-        },
-        "meta": {
-          "$ref": "#/definitions/productionopsTabMeta"
-        },
-        "mismatchReport": {
-          "description": "TODO(data-source): replace the fake mismatch report with model-GPU mismatch\nanalysis and migration action recommendations.",
-          "$ref": "#/definitions/productionopsMismatchReport"
-        },
-        "modelRank": {
-          "description": "TODO(data-source): replace the fake model rank with model daily output,\nunit cost, latency percentile, and SLA status.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/productionopsModelRankRow"
-          }
-        },
-        "suggestions": {
-          "description": "TODO(data-source): replace the fake suggestions with placement optimization\ninsights and cost governance recommendations.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/productionopsRecommendationItem"
-          }
-        },
-        "synergyKpis": {
-          "description": "TODO(data-source): populate these cards from deployed model inventory, GPU\npool inventory, best match rate, mismatch loss, and weighted SLA sources.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/productionopsMetricCard"
-          }
-        },
-        "unitCostCompare": {
-          "description": "Unit Token cost comparison is intentionally separated from model_rank so\nthe panel can render cost rows even when the model ranking falls back or\nhas no runtime rows.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/productionopsModelRankRow"
-          }
-        }
-      }
-    },
-    "productionopsGpuPoolRankRow": {
-      "type": "object",
-      "properties": {
-        "cardCount": {
-          "type": "string"
-        },
-        "dailyOutputPerCard": {
-          "type": "string"
-        },
-        "memoryUtilization": {
-          "type": "string"
-        },
-        "note": {
-          "type": "string"
-        },
-        "poolName": {
-          "type": "string"
-        },
-        "powerDraw": {
-          "type": "string"
-        },
-        "utilization": {
-          "type": "string"
-        }
-      }
-    },
     "productionopsMetricCard": {
       "type": "object",
       "properties": {
+        "availability": {
+          "type": "string"
+        },
         "id": {
           "type": "string"
         },
         "label": {
+          "type": "string"
+        },
+        "status": {
           "type": "string"
         },
         "subItems": {
@@ -6622,64 +7479,6 @@
           "type": "string"
         },
         "value": {
-          "type": "string"
-        }
-      }
-    },
-    "productionopsMismatchItem": {
-      "type": "object",
-      "properties": {
-        "action": {
-          "type": "string"
-        },
-        "currentGpu": {
-          "type": "string"
-        },
-        "impact": {
-          "type": "string"
-        },
-        "modelName": {
-          "type": "string"
-        },
-        "recommendedGpu": {
-          "type": "string"
-        }
-      }
-    },
-    "productionopsMismatchReport": {
-      "type": "object",
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/productionopsMismatchItem"
-          }
-        },
-        "potential": {
-          "type": "string"
-        }
-      }
-    },
-    "productionopsModelRankRow": {
-      "type": "object",
-      "properties": {
-        "costPerMillionToken": {
-          "type": "string"
-        },
-        "dailyOutput": {
-          "type": "string"
-        },
-        "modelName": {
-          "type": "string"
-        },
-        "note": {
-          "type": "string"
-        },
-        "sla": {
-          "type": "string"
-        },
-        "ttftP99": {
           "type": "string"
         }
       }
@@ -6709,51 +7508,6 @@
         },
         "type": {
           "type": "string"
-        }
-      }
-    },
-    "productionopsSinglepageModelCostItem": {
-      "type": "object",
-      "properties": {
-        "costAvailable": {
-          "type": "boolean"
-        },
-        "costBarPercent": {
-          "type": "number",
-          "format": "double"
-        },
-        "costDisplayValue": {
-          "type": "string"
-        },
-        "costPerMillionTokens": {
-          "type": "number",
-          "format": "double"
-        },
-        "modelName": {
-          "type": "string"
-        },
-        "rank": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "requestBarPercent": {
-          "type": "number",
-          "format": "double"
-        },
-        "requestCount": {
-          "type": "string",
-          "format": "int64"
-        },
-        "requestDisplayValue": {
-          "type": "string"
-        },
-        "requestRate": {
-          "type": "number",
-          "format": "double"
-        },
-        "totalTokens": {
-          "type": "string",
-          "format": "int64"
         }
       }
     },
@@ -6813,6 +7567,12 @@
         "name": {
           "type": "string"
         },
+        "present": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          }
+        },
         "values": {
           "type": "array",
           "items": {
@@ -6848,40 +7608,6 @@
         }
       },
       "additionalProperties": {}
-    },
-    "resourceconstCostAttributionItem": {
-      "description": "CostAttributionItem is one item in the cost attribution breakdown.",
-      "type": "object",
-      "properties": {
-        "cost": {
-          "type": "number",
-          "format": "double"
-        },
-        "key": {
-          "type": "string",
-          "title": "i18n key, e.g. \"gpu_compute\""
-        },
-        "name": {
-          "type": "string"
-        },
-        "percent": {
-          "type": "number",
-          "format": "double"
-        }
-      }
-    },
-    "resourceconstCostAttributionResponse": {
-      "description": "CostAttributionResponse contains the cost attribution breakdown.",
-      "type": "object",
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/resourceconstCostAttributionItem"
-          }
-        }
-      }
     },
     "resourceconstCostKpisResponse": {
       "description": "CostKpisResponse contains GPU KPI summary metrics.",
@@ -6974,36 +7700,6 @@
           "items": {
             "type": "object",
             "$ref": "#/definitions/resourceconstCostSuggestionItem"
-          }
-        }
-      }
-    },
-    "resourceconstCostWaterfallItem": {
-      "description": "CostWaterfallItem holds one step in the cost optimization waterfall.",
-      "type": "object",
-      "properties": {
-        "key": {
-          "type": "string",
-          "title": "i18n key, e.g. \"scheduling\""
-        },
-        "label": {
-          "type": "string"
-        },
-        "value": {
-          "type": "number",
-          "format": "double"
-        }
-      }
-    },
-    "resourceconstCostWaterfallResponse": {
-      "description": "CostWaterfallResponse contains the waterfall chart data.",
-      "type": "object",
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/resourceconstCostWaterfallItem"
           }
         }
       }
@@ -7399,17 +8095,121 @@
         }
       }
     },
-    "singlepageGetGrossProfitAttributionConfigResponse": {
+    "singlepageGetPopularModelContributionRequest": {
       "type": "object",
       "properties": {
-        "decrease": {
-          "$ref": "#/definitions/singlepageGrossProfitAttributionScenario"
+        "cluster": {
+          "type": "string"
         },
-        "equal": {
-          "$ref": "#/definitions/singlepageGrossProfitAttributionScenario"
+        "limit": {
+          "type": "integer",
+          "format": "int32"
         },
-        "increase": {
-          "$ref": "#/definitions/singlepageGrossProfitAttributionScenario"
+        "timeWindow": {
+          "type": "string"
+        }
+      }
+    },
+    "singlepageGetPopularModelContributionResponse": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "$ref": "#/definitions/singlepageGetPopularModelContributionRequest"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/singlepagePopularModelContributionItem"
+          }
+        },
+        "meta": {
+          "$ref": "#/definitions/singlepageSinglepageTabMeta"
+        }
+      }
+    },
+    "singlepageGetRealtimeRequestRateResponse": {
+      "type": "object",
+      "properties": {
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "requestCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "requestDisplayValue": {
+          "type": "string"
+        },
+        "requestRate": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "singlepageGetRevenuePerMinuteHistoryResponse": {
+      "type": "object",
+      "properties": {
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/singlepageRevenuePerMinuteHistoryPoint"
+          }
+        }
+      }
+    },
+    "singlepageGetRevenuePerMinuteResponse": {
+      "type": "object",
+      "properties": {
+        "revenuePerMinute": {
+          "type": "number",
+          "format": "double"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "singlepageGetTokenLatencyResponse": {
+      "type": "object",
+      "properties": {
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "simulated": {
+          "type": "boolean"
+        },
+        "tpot": {
+          "$ref": "#/definitions/singlepageTokenLatencyQuantiles"
+        },
+        "ttft": {
+          "$ref": "#/definitions/singlepageTokenLatencyQuantiles"
+        }
+      }
+    },
+    "singlepageGetUsageCapacityTrendResponse": {
+      "type": "object",
+      "properties": {
+        "actualPoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/singlepageUsageCapacityTrendPoint"
+          }
+        },
+        "forecastAvailable": {
+          "type": "boolean"
+        },
+        "forecastPoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/singlepageUsageCapacityTrendPoint"
+          }
         }
       }
     },
@@ -7464,6 +8264,52 @@
         "GPU_STATE_ERROR"
       ]
     },
+    "singlepageGpuNodeState": {
+      "type": "string",
+      "default": "GPU_NODE_STATE_BUSY",
+      "enum": [
+        "GPU_NODE_STATE_BUSY",
+        "GPU_NODE_STATE_IDLE",
+        "GPU_NODE_STATE_ERROR"
+      ]
+    },
+    "singlepageGpuNodeStatus": {
+      "type": "object",
+      "properties": {
+        "busyCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "繁忙 GPU 卡数"
+        },
+        "cluster": {
+          "type": "string",
+          "title": "集群名称"
+        },
+        "errorCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "异常 GPU 卡数"
+        },
+        "gpuTotal": {
+          "type": "integer",
+          "format": "int32",
+          "title": "节点 GPU 卡数"
+        },
+        "idleCount": {
+          "type": "integer",
+          "format": "int32",
+          "title": "空闲 GPU 卡数"
+        },
+        "node": {
+          "type": "string",
+          "title": "节点名称"
+        },
+        "state": {
+          "title": "节点汇总状态",
+          "$ref": "#/definitions/singlepageGpuNodeState"
+        }
+      }
+    },
     "singlepageGpuResourceStatusResponse": {
       "type": "object",
       "properties": {
@@ -7474,7 +8320,7 @@
         },
         "deviceStates": {
           "type": "array",
-          "title": "每张卡的状态 (grid)",
+          "title": "每张卡的状态（兼容与统计）",
           "items": {
             "$ref": "#/definitions/singlepageGpuDeviceState"
           }
@@ -7483,6 +8329,11 @@
           "type": "integer",
           "format": "int32",
           "title": "异常 GPU 卡数"
+        },
+        "gpuPowerKw": {
+          "type": "number",
+          "format": "double",
+          "title": "GPU 总功率 (kW)"
         },
         "gpuTotal": {
           "type": "integer",
@@ -7514,6 +8365,19 @@
           "format": "double",
           "title": "网络吞吐量 (Gb/s)"
         },
+        "nodeStatuses": {
+          "type": "array",
+          "title": "有 GPU 的节点状态",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/singlepageGpuNodeStatus"
+          }
+        },
+        "totalPowerLimit": {
+          "type": "number",
+          "format": "double",
+          "title": "GPU 总功率上限 (kW)"
+        },
         "utilizationPct": {
           "type": "number",
           "format": "double",
@@ -7521,32 +8385,211 @@
         }
       }
     },
-    "singlepageGrossProfitAttributionReason": {
+    "singlepagePopularModelContributionItem": {
       "type": "object",
       "properties": {
-        "displayName": {
+        "modelName": {
           "type": "string"
         },
-        "percentage": {
+        "rank": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "requestBarPercent": {
           "type": "number",
           "format": "double"
         },
-        "reasonId": {
+        "requestCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "requestDisplayValue": {
           "type": "string"
+        },
+        "requestRate": {
+          "type": "number",
+          "format": "double"
+        },
+        "revenueAmount": {
+          "type": "number",
+          "format": "double"
+        },
+        "revenueAvailable": {
+          "type": "boolean"
+        },
+        "revenueBarPercent": {
+          "type": "number",
+          "format": "double"
+        },
+        "revenueDisplayValue": {
+          "type": "string"
+        },
+        "totalTokens": {
+          "type": "string",
+          "format": "int64"
+        },
+        "workspaceBarPercent": {
+          "type": "number",
+          "format": "double"
+        },
+        "workspaceCount": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
-    "singlepageGrossProfitAttributionScenario": {
+    "singlepageRevenuePerMinuteHistoryPoint": {
       "type": "object",
       "properties": {
-        "reasons": {
+        "revenuePerMinute": {
+          "type": "number",
+          "format": "double"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "singlepageSinglepageTabMeta": {
+      "type": "object",
+      "properties": {
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "partial": {
+          "type": "boolean"
+        },
+        "warnings": {
           "type": "array",
           "items": {
-            "type": "object",
-            "$ref": "#/definitions/singlepageGrossProfitAttributionReason"
+            "type": "string"
           }
         }
       }
+    },
+    "singlepageTokenLatencyQuantiles": {
+      "type": "object",
+      "properties": {
+        "p50Ms": {
+          "type": "number",
+          "format": "double"
+        },
+        "p90Ms": {
+          "type": "number",
+          "format": "double"
+        },
+        "p99Ms": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "singlepageUsageCapacityTrendPoint": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "gpuUtilizationAvailable": {
+          "type": "boolean"
+        },
+        "gpuUtilizationPct": {
+          "type": "number",
+          "format": "double"
+        },
+        "inputTokens": {
+          "type": "string",
+          "format": "int64"
+        },
+        "inputTokensAvailable": {
+          "type": "boolean"
+        },
+        "outputTokens": {
+          "type": "string",
+          "format": "int64"
+        },
+        "outputTokensAvailable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "usermetricsGetNewUserTrendResponse": {
+      "description": "GetNewUserTrendResponse contains a complete ordered new-user trend.",
+      "type": "object",
+      "properties": {
+        "granularity": {
+          "$ref": "#/definitions/usermetricsNewUserTrendGranularity"
+        },
+        "periodEnd": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "periodStart": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/usermetricsNewUserTrendPoint"
+          }
+        }
+      }
+    },
+    "usermetricsGetRegisteredUserMetricsResponse": {
+      "description": "GetRegisteredUserMetricsResponse contains current and previous-period counts.",
+      "type": "object",
+      "properties": {
+        "comparisonDelta": {
+          "type": "string",
+          "format": "int64"
+        },
+        "currentCount": {
+          "type": "string",
+          "format": "int64"
+        },
+        "previousCount": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "usermetricsNewUserTrendGranularity": {
+      "description": "NewUserTrendGranularity identifies the bucket size returned in a trend.",
+      "type": "string",
+      "default": "NEW_USER_TREND_GRANULARITY_UNSPECIFIED",
+      "enum": [
+        "NEW_USER_TREND_GRANULARITY_UNSPECIFIED",
+        "NEW_USER_TREND_GRANULARITY_DAY",
+        "NEW_USER_TREND_GRANULARITY_MONTH"
+      ]
+    },
+    "usermetricsNewUserTrendPoint": {
+      "description": "NewUserTrendPoint represents one UTC calendar bucket.",
+      "type": "object",
+      "properties": {
+        "bucketStart": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "newUsersCount": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "usermetricsNewUserTrendRange": {
+      "description": "NewUserTrendRange identifies a supported recent UTC calendar range.",
+      "type": "string",
+      "default": "NEW_USER_TREND_RANGE_UNSPECIFIED",
+      "enum": [
+        "NEW_USER_TREND_RANGE_UNSPECIFIED",
+        "NEW_USER_TREND_RANGE_LAST_30_DAYS",
+        "NEW_USER_TREND_RANGE_LAST_1_YEAR"
+      ]
     }
   },
   "tags": [
@@ -7558,6 +8601,9 @@
     },
     {
       "name": "ComputePowerCollaborationService"
+    },
+    {
+      "name": "ExpenseService"
     },
     {
       "name": "FinopsPanelService"
@@ -7576,6 +8622,9 @@
     },
     {
       "name": "SinglePageService"
+    },
+    {
+      "name": "UserMetricsService"
     }
   ]
 }
