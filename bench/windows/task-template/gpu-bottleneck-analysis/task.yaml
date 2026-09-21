@@ -1,0 +1,12 @@
+skills:
+  - container-management-gpu-bottleneck-analysis/SKILL.md
+  - dce/SKILL.md
+
+script:
+  - promptFile: prompt.txt
+
+setup: setup.ps1
+verifier: verify.ps1
+cleanup: cleanup.ps1
+difficulty: hard
+timeout: 15m
