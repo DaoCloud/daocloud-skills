@@ -3,8 +3,8 @@ $ErrorActionPreference = 'Stop'
 if (-not $env:DCE_HOST) { throw 'DCE_HOST is required' }
 if (-not $env:DCE_TOKEN) { throw 'DCE_TOKEN is required' }
 
-$cluster = 'kpanda-global-cluster'
-$namespace = 'default'
+$cluster = if ($env:K8S_AI_BENCH_DIAG_CLUSTER) { $env:K8S_AI_BENCH_DIAG_CLUSTER } else { 'kpanda-global-cluster' }
+$namespace = if ($env:K8S_AI_BENCH_DIAG_NAMESPACE) { $env:K8S_AI_BENCH_DIAG_NAMESPACE } else { 'default' }
 $pendingPod = 'k8s-ai-bench-diag-pending-pod'
 $pvcPod = 'k8s-ai-bench-diag-pvc-pod'
 

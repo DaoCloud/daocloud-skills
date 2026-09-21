@@ -9,6 +9,10 @@ set -euo pipefail
 render_dce_token="${DCE_TOKEN#Bearer }"
 export DCE_TOKEN="${render_dce_token}"
 
+# Task templates may reference the target cluster through this placeholder;
+# kpanda-global-cluster is the built-in management cluster of every DCE.
+render_diag_cluster="${K8S_AI_BENCH_DIAG_CLUSTER:-kpanda-global-cluster}"
+
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 template_root="${script_dir}/task-template"
 
@@ -35,6 +39,7 @@ render_task() {
   while IFS= read -r line || [[ -n "${line}" ]]; do
     line="${line//\$\{DCE_HOST\}/${DCE_HOST}}"
     line="${line//\$\{DCE_TOKEN\}/${DCE_TOKEN}}"
+    line="${line//\$\{K8S_AI_BENCH_DIAG_CLUSTER\}/${render_diag_cluster}}"
     printf '%s\n' "${line}"
   done < "${template_dir}/prompt.template" > "${destination}/prompt.txt"
 

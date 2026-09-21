@@ -34,6 +34,10 @@ function RenderTask {
         $dceToken = $dceToken.Substring(7)
     }
     $prompt = $prompt.Replace('${DCE_TOKEN}', $dceToken)
+    # Task templates may reference the target cluster through this placeholder;
+    # kpanda-global-cluster is the built-in management cluster of every DCE.
+    $diagCluster = if ($env:K8S_AI_BENCH_DIAG_CLUSTER) { $env:K8S_AI_BENCH_DIAG_CLUSTER } else { 'kpanda-global-cluster' }
+    $prompt = $prompt.Replace('${K8S_AI_BENCH_DIAG_CLUSTER}', $diagCluster)
     [System.IO.File]::WriteAllText((Join-Path $destination 'prompt.txt'), $prompt, $utf8NoBom)
 
     Write-Host "Rendered task: $destination"

@@ -6,9 +6,10 @@ the bottleneck first if inference traffic grows by 30%.
 
 ## Test scenario
 
-The task targets the cluster named by `K8S_AI_BENCH_GPU_CLUSTER` (default
-`jinye-gpu-cluster-1`) in namespace `K8S_AI_BENCH_GPU_NAMESPACE` (default
-`default`). The target cluster is expected to expose two GPU pools:
+The task targets the cluster named by `K8S_AI_BENCH_GPU_CLUSTER` (required,
+no default — e.g. `jinye-gpu-cluster-1`) in namespace
+`K8S_AI_BENCH_GPU_NAMESPACE` (required, no default — e.g. `default`). The
+target cluster is expected to expose two GPU pools:
 
 - a physical GPU pool (mode `GPU`), typically already fully allocated by
   pre-existing workloads, and
@@ -90,9 +91,9 @@ which the next run's baseline wait absorbs.
   and `insight-agent` reporting the `kpanda_gpu_*` recording rules.
 - The vGPU pool must be free of foreign allocations at setup time; the
   baseline wait tolerates slow release from previous runs.
-- Override `K8S_AI_BENCH_GPU_CLUSTER` (default `jinye-gpu-cluster-1`) and
-  `K8S_AI_BENCH_GPU_NAMESPACE` (default `default`) to run against a
-  different cluster or namespace.
+- `K8S_AI_BENCH_GPU_CLUSTER` and `K8S_AI_BENCH_GPU_NAMESPACE` are required
+  environment variables (no defaults); every lifecycle script fails fast
+  when they are unset.
 
 ## Running the task
 

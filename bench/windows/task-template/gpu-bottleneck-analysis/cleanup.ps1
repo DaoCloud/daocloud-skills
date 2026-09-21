@@ -2,11 +2,11 @@ $ErrorActionPreference = 'Stop'
 
 if (-not $env:DCE_HOST) { throw 'DCE_HOST is required' }
 if (-not $env:DCE_TOKEN) { throw 'DCE_TOKEN is required' }
+if (-not $env:K8S_AI_BENCH_GPU_CLUSTER) { throw 'K8S_AI_BENCH_GPU_CLUSTER is required (name of the GPU cluster to saturate, e.g. jinye-gpu-cluster-1)' }
+if (-not $env:K8S_AI_BENCH_GPU_NAMESPACE) { throw 'K8S_AI_BENCH_GPU_NAMESPACE is required (namespace for the fixture Deployment, e.g. default)' }
 
-# Target environment. Override with K8S_AI_BENCH_GPU_CLUSTER /
-# K8S_AI_BENCH_GPU_NAMESPACE when running against a different DCE.
-$cluster = if ($env:K8S_AI_BENCH_GPU_CLUSTER) { $env:K8S_AI_BENCH_GPU_CLUSTER } else { 'jinye-gpu-cluster-1' }
-$namespace = if ($env:K8S_AI_BENCH_GPU_NAMESPACE) { $env:K8S_AI_BENCH_GPU_NAMESPACE } else { 'default' }
+$cluster = $env:K8S_AI_BENCH_GPU_CLUSTER
+$namespace = $env:K8S_AI_BENCH_GPU_NAMESPACE
 $deployment = 'k8s-ai-bench-gpu-saturate'
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path

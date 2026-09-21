@@ -4,11 +4,11 @@ set -euo pipefail
 : "${DCE_HOST:?DCE_HOST is required}"
 : "${DCE_TOKEN:?DCE_TOKEN is required}"
 : "${K8S_AI_BENCH_TASK_OUTPUT_DIR:?K8S_AI_BENCH_TASK_OUTPUT_DIR is required}"
+: "${K8S_AI_BENCH_GPU_CLUSTER:?K8S_AI_BENCH_GPU_CLUSTER is required (name of the GPU cluster to saturate, e.g. jinye-gpu-cluster-1)}"
+: "${K8S_AI_BENCH_GPU_NAMESPACE:?K8S_AI_BENCH_GPU_NAMESPACE is required (namespace for the fixture Deployment, e.g. default)}"
 
-# Target environment. Override with K8S_AI_BENCH_GPU_CLUSTER /
-# K8S_AI_BENCH_GPU_NAMESPACE when running against a different DCE.
-cluster="${K8S_AI_BENCH_GPU_CLUSTER:-jinye-gpu-cluster-1}"
-namespace="${K8S_AI_BENCH_GPU_NAMESPACE:-default}"
+cluster="${K8S_AI_BENCH_GPU_CLUSTER}"
+namespace="${K8S_AI_BENCH_GPU_NAMESPACE}"
 deployment="k8s-ai-bench-gpu-saturate"
 
 log_path="${K8S_AI_BENCH_TASK_OUTPUT_DIR}/log.txt"

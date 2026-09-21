@@ -3,7 +3,7 @@ to run a full health inspection of one cluster in the specified DCE environment:
 
 - DCE address: ${DCE_HOST}
 - DCE bearer token: ${DCE_TOKEN}
-- Cluster: kpanda-global-cluster
+- Cluster: ${K8S_AI_BENCH_DIAG_CLUSTER}
 
 Follow the cluster-diagnosis skill workflow to confirm the command and
 authentication status first, then inspect the cluster overview, node health, and

@@ -5,8 +5,8 @@ set -euo pipefail
 : "${DCE_TOKEN:?DCE_TOKEN is required}"
 : "${K8S_AI_BENCH_TASK_OUTPUT_DIR:?K8S_AI_BENCH_TASK_OUTPUT_DIR is required}"
 
-cluster="kpanda-global-cluster"
-namespace="default"
+cluster="${K8S_AI_BENCH_DIAG_CLUSTER:-kpanda-global-cluster}"
+namespace="${K8S_AI_BENCH_DIAG_NAMESPACE:-default}"
 pending_pod="k8s-ai-bench-diag-pending-pod"
 pvc_pod="k8s-ai-bench-diag-pvc-pod"
 

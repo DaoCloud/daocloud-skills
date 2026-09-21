@@ -5,9 +5,11 @@ health inspection of one cluster and report every abnormal Pod.
 
 ## Test scenario
 
-`setup.sh` (Unix) / `setup.ps1` (Windows) creates two Pods in `default` on
-`kpanda-global-cluster`, each held Pending for a *different* scheduling
-reason:
+`setup.sh` (Unix) / `setup.ps1` (Windows) creates two Pods in the target
+cluster and namespace, each held Pending for a *different* scheduling
+reason. The target is selected by `K8S_AI_BENCH_DIAG_CLUSTER` (default
+`kpanda-global-cluster`, the built-in management cluster of every DCE) and
+`K8S_AI_BENCH_DIAG_NAMESPACE` (default `default`):
 
 - `k8s-ai-bench-diag-pending-pod` requests `cpu: 100` and `memory: 200Gi` —
   an impossible request that keeps it Pending forever with a
@@ -52,8 +54,8 @@ deletes both Pods afterwards.
 
 ## Running the task
 
-`DCE_HOST`/`DCE_TOKEN` must point at a DCE instance that manages
-`kpanda-global-cluster`. See `bench/unix/README.md` (or
-`bench/windows/README.md` on Windows) for the full runbook; in short: set the
-two environment variables, render the task, and run a matrix whose
-`runs.taskPattern` selects this task, e.g. `taskPattern: "cluster-diagnosis"`.
+`DCE_HOST`/`DCE_TOKEN` must point at a DCE instance that manages the target
+cluster. See `bench/unix/README.md` (or `bench/windows/README.md` on Windows)
+for the full runbook; in short: set the environment variables, render the
+task, and run a matrix whose `runs.taskPattern` selects this task, e.g.
+`taskPattern: "cluster-diagnosis"`.
