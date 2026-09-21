@@ -1,0 +1,35 @@
+Use the repository's `container-management-gpu-bottleneck-analysis` skill and the `dce` CLI
+to analyze GPU pool capacity in the specified DCE environment and answer: if inference
+traffic grows by 30% tonight, which GPU pool will become the bottleneck first?
+
+- DCE address: ${DCE_HOST}
+- DCE bearer token: ${DCE_TOKEN}
+
+Follow the gpu-bottleneck-analysis skill workflow to confirm the command and
+authentication status first, then discover the GPU clusters, collect the kpanda
+GPU recording-rule metrics per cluster and per GPU mode, inspect the GPU
+workloads, and run the +30% projection before drawing any conclusion. If
+inference QPS metrics are not available, use the skill's fallback projection
+and state so in the report. This DCE endpoint uses a certificate that is not
+trusted by the local machine, so include the global `--insecure` flag on every
+`dce` invocation, including `auth login`.
+
+This is a read-only analysis task. Do not create, delete, update, or restart
+any resources; `cleanup.sh` will handle deletion. Do not repeat the token in
+your output.
+
+Present the final report as structured Markdown following the skill's output
+format. Additionally, include these machine-readable lines:
+
+For every GPU cluster and GPU mode you analyzed, one line of exactly this form:
+
+Census: <cluster> mode=<mode> total=<N> allocated=<M>
+
+For the first bottleneck GPU pool, one line of exactly this form:
+
+Bottleneck: <cluster> (<mode>, <constraint>)
+
+Use one of these constraint values: compute, scheduling, vram.
+
+Only after the analysis is complete, output:
+GPU_BOTTLENECK_OK
