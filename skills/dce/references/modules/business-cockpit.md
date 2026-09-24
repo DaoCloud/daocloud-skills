@@ -444,8 +444,7 @@
 - Auth: required
 - Body: none
 - Flags:
-  - `--time-range` (query, required, default `PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED`, one of: PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED|PERIOD_REVENUE_COST_TREND_RANGE_TODAY|PERIOD_REVENUE_COST_TREND_RANGE_THIS_WEEK|PERIOD_REVENUE_COST_TREND_RANGE_THIS_MONTH|PERIOD_REVENUE_COST_TREND_RANGE_THIS_QUARTER): Restricted dashboard time range.
-  - `--tz-offset-minutes` (query, int32): Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset().
+  - `--time-range` (query, required, default `DASHBOARD_TIME_RANGE_UNSPECIFIED`, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER): Required UTC natural dashboard time range.
 - Output: list path `points`; columns `cost`, `revenue`, `time`
 
 ### `dce business-cockpit businessvalueservice get-period-token-trend`
@@ -455,8 +454,7 @@
 - Auth: required
 - Body: none
 - Flags:
-  - `--time-range` (query, required, default `PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED`, one of: PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED|PERIOD_TOKEN_TREND_RANGE_TODAY|PERIOD_TOKEN_TREND_RANGE_THIS_WEEK|PERIOD_TOKEN_TREND_RANGE_THIS_MONTH|PERIOD_TOKEN_TREND_RANGE_THIS_QUARTER): Restricted dashboard time range.
-  - `--tz-offset-minutes` (query, required, int32): Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset().
+  - `--time-range` (query, required, default `DASHBOARD_TIME_RANGE_UNSPECIFIED`, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER): Required UTC natural dashboard time range.
 - Output: list path `points`; columns `time`, `totalTokens`
 
 ### `dce business-cockpit businessvalueservice get-rated-capacity`
@@ -466,7 +464,7 @@
 - Auth: required
 - Body: none
 - Flags:
-  - `--time-range` (query): Optional time range for period capacity calculation:
+  - `--time-range` (query, required, default `DASHBOARD_TIME_RANGE_UNSPECIFIED`, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER): Required UTC natural dashboard period for capacity calculation.
 
 ### `dce business-cockpit businessvalueservice get-revenue-margin-trend-forecast`
 
@@ -540,7 +538,7 @@
 - Auth: required
 - Body: none
 - Flags:
-  - `--time-range` (query): Time range filter: "today", "this-week", "this-month", "this-quarter".
+  - `--time-range` (query, required, default `DASHBOARD_TIME_RANGE_UNSPECIFIED`, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER): Required UTC natural dashboard period for cost attribution.
 - Output: list path `moduleItems`; columns `costSavings`, `moduleName`, `sharePercent`
 
 ## ComputePowerCollaborationService
@@ -864,6 +862,17 @@
   - `--financial-period` (query, default `FINANCIAL_PERIOD_THIS_MONTH`, one of: FINANCIAL_PERIOD_THIS_MONTH|FINANCIAL_PERIOD_LAST_MONTH|FINANCIAL_PERIOD_THIS_QUARTER|FINANCIAL_PERIOD_THIS_YEAR): financialPeriod
   - `--accounting-scope` (query, default `ACCOUNTING_SCOPE_MERGED`, one of: ACCOUNTING_SCOPE_MERGED|ACCOUNTING_SCOPE_EXTERNAL_REVENUE|ACCOUNTING_SCOPE_INTERNAL_ALLOCATION): accountingScope
 
+## ModelMetricsService
+
+### `dce business-cockpit modelmetricsservice get-active-model-metrics`
+
+- Summary: GetActiveModelMetrics returns active-model counts for a UTC natural time range.
+- HTTP: `GET /apis/crane.io/v1alpha1/model-metrics/active-model-metrics`
+- Auth: required
+- Body: none
+- Flags:
+  - `--time-range` (query, required, default `DASHBOARD_TIME_RANGE_UNSPECIFIED`, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER): Required UTC natural dashboard period.
+
 ## PlatformConfigService
 
 ### `dce business-cockpit platformconfigservice get-runtime-mode`
@@ -1173,4 +1182,4 @@
 - Auth: required
 - Body: none
 - Flags:
-  - `--time-range` (query, required): Supported values: "today", "this-week", "this-month", "this-quarter".
+  - `--time-range` (query, required, default `DASHBOARD_TIME_RANGE_UNSPECIFIED`, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER): Required UTC natural dashboard period.

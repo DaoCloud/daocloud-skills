@@ -1681,25 +1681,18 @@
         "parameters": [
           {
             "enum": [
-              "PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED",
-              "PERIOD_REVENUE_COST_TREND_RANGE_TODAY",
-              "PERIOD_REVENUE_COST_TREND_RANGE_THIS_WEEK",
-              "PERIOD_REVENUE_COST_TREND_RANGE_THIS_MONTH",
-              "PERIOD_REVENUE_COST_TREND_RANGE_THIS_QUARTER"
+              "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+              "DASHBOARD_TIME_RANGE_TODAY",
+              "DASHBOARD_TIME_RANGE_THIS_WEEK",
+              "DASHBOARD_TIME_RANGE_THIS_MONTH",
+              "DASHBOARD_TIME_RANGE_THIS_QUARTER"
             ],
             "type": "string",
-            "default": "PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED",
-            "description": "Restricted dashboard time range.",
+            "default": "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+            "description": "Required UTC natural dashboard time range.",
             "name": "timeRange",
             "in": "query",
             "required": true
-          },
-          {
-            "type": "integer",
-            "format": "int32",
-            "description": "Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset().",
-            "name": "tzOffsetMinutes",
-            "in": "query"
           }
         ],
         "responses": {
@@ -1728,24 +1721,16 @@
         "parameters": [
           {
             "enum": [
-              "PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED",
-              "PERIOD_TOKEN_TREND_RANGE_TODAY",
-              "PERIOD_TOKEN_TREND_RANGE_THIS_WEEK",
-              "PERIOD_TOKEN_TREND_RANGE_THIS_MONTH",
-              "PERIOD_TOKEN_TREND_RANGE_THIS_QUARTER"
+              "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+              "DASHBOARD_TIME_RANGE_TODAY",
+              "DASHBOARD_TIME_RANGE_THIS_WEEK",
+              "DASHBOARD_TIME_RANGE_THIS_MONTH",
+              "DASHBOARD_TIME_RANGE_THIS_QUARTER"
             ],
             "type": "string",
-            "default": "PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED",
-            "description": "Restricted dashboard time range.",
+            "default": "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+            "description": "Required UTC natural dashboard time range.",
             "name": "timeRange",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "integer",
-            "format": "int32",
-            "description": "Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset().",
-            "name": "tzOffsetMinutes",
             "in": "query",
             "required": true
           }
@@ -1775,10 +1760,19 @@
         "operationId": "BusinessValueService_GetRatedCapacity",
         "parameters": [
           {
+            "enum": [
+              "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+              "DASHBOARD_TIME_RANGE_TODAY",
+              "DASHBOARD_TIME_RANGE_THIS_WEEK",
+              "DASHBOARD_TIME_RANGE_THIS_MONTH",
+              "DASHBOARD_TIME_RANGE_THIS_QUARTER"
+            ],
             "type": "string",
-            "description": "Optional time range for period capacity calculation:\n\"today\", \"this-week\", \"this-month\", \"this-quarter\".\nWhen omitted, period_capacity_tokens is not computed.",
+            "default": "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+            "description": "Required UTC natural dashboard period for capacity calculation.",
             "name": "timeRange",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -2000,10 +1994,19 @@
         "operationId": "BusinessValueService_GetValueAttributionModuleBoosts",
         "parameters": [
           {
+            "enum": [
+              "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+              "DASHBOARD_TIME_RANGE_TODAY",
+              "DASHBOARD_TIME_RANGE_THIS_WEEK",
+              "DASHBOARD_TIME_RANGE_THIS_MONTH",
+              "DASHBOARD_TIME_RANGE_THIS_QUARTER"
+            ],
             "type": "string",
-            "description": "Time range filter: \"today\", \"this-week\", \"this-month\", \"this-quarter\".\nDefaults to \"this-month\" when omitted.",
+            "default": "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+            "description": "Required UTC natural dashboard period for cost attribution.",
             "name": "timeRange",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -3264,6 +3267,46 @@
         }
       }
     },
+    "/apis/crane.io/v1alpha1/model-metrics/active-model-metrics": {
+      "get": {
+        "tags": [
+          "ModelMetricsService"
+        ],
+        "summary": "GetActiveModelMetrics returns active-model counts for a UTC natural time range.",
+        "operationId": "ModelMetricsService_GetActiveModelMetrics",
+        "parameters": [
+          {
+            "enum": [
+              "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+              "DASHBOARD_TIME_RANGE_TODAY",
+              "DASHBOARD_TIME_RANGE_THIS_WEEK",
+              "DASHBOARD_TIME_RANGE_THIS_MONTH",
+              "DASHBOARD_TIME_RANGE_THIS_QUARTER"
+            ],
+            "type": "string",
+            "default": "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+            "description": "Required UTC natural dashboard period.",
+            "name": "timeRange",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelmetricsGetActiveModelMetricsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        }
+      }
+    },
     "/apis/crane.io/v1alpha1/platform-config/runtime-mode": {
       "get": {
         "tags": [
@@ -4232,8 +4275,16 @@
         "operationId": "UserMetricsService_GetRegisteredUserMetrics",
         "parameters": [
           {
+            "enum": [
+              "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+              "DASHBOARD_TIME_RANGE_TODAY",
+              "DASHBOARD_TIME_RANGE_THIS_WEEK",
+              "DASHBOARD_TIME_RANGE_THIS_MONTH",
+              "DASHBOARD_TIME_RANGE_THIS_QUARTER"
+            ],
             "type": "string",
-            "description": "Supported values: \"today\", \"this-week\", \"this-month\", \"this-quarter\".",
+            "default": "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+            "description": "Required UTC natural dashboard period.",
             "name": "timeRange",
             "in": "query",
             "required": true
@@ -5951,23 +6002,11 @@
           "format": "double"
         },
         "time": {
-          "description": "Absolute bucket start timestamp. Clients restore their local bucket with tz_offset_minutes.",
+          "description": "UTC bucket start timestamp.",
           "type": "string",
           "format": "date-time"
         }
       }
-    },
-    "businessvaluePeriodRevenueCostTrendRange": {
-      "description": "PeriodRevenueCostTrendRange restricts the supported dashboard ranges.",
-      "type": "string",
-      "default": "PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED",
-      "enum": [
-        "PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED",
-        "PERIOD_REVENUE_COST_TREND_RANGE_TODAY",
-        "PERIOD_REVENUE_COST_TREND_RANGE_THIS_WEEK",
-        "PERIOD_REVENUE_COST_TREND_RANGE_THIS_MONTH",
-        "PERIOD_REVENUE_COST_TREND_RANGE_THIS_QUARTER"
-      ]
     },
     "businessvaluePeriodTokenTrendGranularity": {
       "description": "PeriodTokenTrendGranularity declares the bucket size returned by the API.",
@@ -5984,7 +6023,7 @@
       "type": "object",
       "properties": {
         "time": {
-          "description": "Absolute bucket start timestamp. Clients restore their local bucket with tz_offset_minutes.",
+          "description": "UTC bucket start timestamp.",
           "type": "string",
           "format": "date-time"
         },
@@ -5994,18 +6033,6 @@
           "format": "double"
         }
       }
-    },
-    "businessvaluePeriodTokenTrendRange": {
-      "description": "PeriodTokenTrendRange restricts the supported dashboard ranges.",
-      "type": "string",
-      "default": "PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED",
-      "enum": [
-        "PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED",
-        "PERIOD_TOKEN_TREND_RANGE_TODAY",
-        "PERIOD_TOKEN_TREND_RANGE_THIS_WEEK",
-        "PERIOD_TOKEN_TREND_RANGE_THIS_MONTH",
-        "PERIOD_TOKEN_TREND_RANGE_THIS_QUARTER"
-      ]
     },
     "businessvalueRevenueMarginTrendPoint": {
       "description": "RevenueMarginTrendPoint represents a single daily data point in the trend series.",
@@ -6175,6 +6202,18 @@
           "format": "double"
         }
       }
+    },
+    "commonDashboardTimeRange": {
+      "description": "DashboardTimeRange identifies a UTC natural dashboard period.",
+      "type": "string",
+      "default": "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+      "enum": [
+        "DASHBOARD_TIME_RANGE_UNSPECIFIED",
+        "DASHBOARD_TIME_RANGE_TODAY",
+        "DASHBOARD_TIME_RANGE_THIS_WEEK",
+        "DASHBOARD_TIME_RANGE_THIS_MONTH",
+        "DASHBOARD_TIME_RANGE_THIS_QUARTER"
+      ]
     },
     "computepowercollaborationCarbonPathMonth": {
       "type": "object",
@@ -7301,6 +7340,27 @@
         "message": {
           "description": "错误消息，会自动切换中英文",
           "type": "string"
+        }
+      }
+    },
+    "modelmetricsGetActiveModelMetricsResponse": {
+      "description": "GetActiveModelMetricsResponse contains active-model counts for the requested time range.",
+      "type": "object",
+      "properties": {
+        "activeModelCount": {
+          "description": "Count of distinct active models in the requested time range.",
+          "type": "string",
+          "format": "int64"
+        },
+        "offlineModelCount": {
+          "description": "Count of active models whose current status is offline.",
+          "type": "string",
+          "format": "int64"
+        },
+        "onlineModelCount": {
+          "description": "Count of active models whose current status is online.",
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -8607,6 +8667,9 @@
     },
     {
       "name": "FinopsPanelService"
+    },
+    {
+      "name": "ModelMetricsService"
     },
     {
       "name": "PlatformConfigService"

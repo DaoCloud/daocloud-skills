@@ -521,8 +521,7 @@ var Specs = []runtime.CommandSpec{
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/business-value/period-revenue-cost-trend",
 		Params: []runtime.ParamSpec{
-			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Restricted dashboard time range. (query, required, one of: PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED|PERIOD_REVENUE_COST_TREND_RANGE_TODAY|PERIOD_REVENUE_COST_TREND_RANGE_THIS_WEEK|PERIOD_REVENUE_COST_TREND_RANGE_THIS_MONTH|PERIOD_REVENUE_COST_TREND_RANGE_THIS_QUARTER)", Required: true, Default: "PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED", Enum: []string{"PERIOD_REVENUE_COST_TREND_RANGE_UNSPECIFIED", "PERIOD_REVENUE_COST_TREND_RANGE_TODAY", "PERIOD_REVENUE_COST_TREND_RANGE_THIS_WEEK", "PERIOD_REVENUE_COST_TREND_RANGE_THIS_MONTH", "PERIOD_REVENUE_COST_TREND_RANGE_THIS_QUARTER"}},
-			{Name: "tzOffsetMinutes", Flag: "tz-offset-minutes", In: "query", GoType: "int64", Help: "Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset(). (query, int32)", Required: false, Format: "int32"},
+			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Required UTC natural dashboard time range. (query, required, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER)", Required: true, Default: "DASHBOARD_TIME_RANGE_UNSPECIFIED", Enum: []string{"DASHBOARD_TIME_RANGE_UNSPECIFIED", "DASHBOARD_TIME_RANGE_TODAY", "DASHBOARD_TIME_RANGE_THIS_WEEK", "DASHBOARD_TIME_RANGE_THIS_MONTH", "DASHBOARD_TIME_RANGE_THIS_QUARTER"}},
 		},
 		Output: runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"cost", "revenue", "time"}},
 	},
@@ -534,8 +533,7 @@ var Specs = []runtime.CommandSpec{
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/business-value/period-token-trend",
 		Params: []runtime.ParamSpec{
-			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Restricted dashboard time range. (query, required, one of: PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED|PERIOD_TOKEN_TREND_RANGE_TODAY|PERIOD_TOKEN_TREND_RANGE_THIS_WEEK|PERIOD_TOKEN_TREND_RANGE_THIS_MONTH|PERIOD_TOKEN_TREND_RANGE_THIS_QUARTER)", Required: true, Default: "PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED", Enum: []string{"PERIOD_TOKEN_TREND_RANGE_UNSPECIFIED", "PERIOD_TOKEN_TREND_RANGE_TODAY", "PERIOD_TOKEN_TREND_RANGE_THIS_WEEK", "PERIOD_TOKEN_TREND_RANGE_THIS_MONTH", "PERIOD_TOKEN_TREND_RANGE_THIS_QUARTER"}},
-			{Name: "tzOffsetMinutes", Flag: "tz-offset-minutes", In: "query", GoType: "int64", Help: "Client timezone offset in minutes, following JavaScript Date.getTimezoneOffset(). (query, required, int32)", Required: true, Format: "int32"},
+			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Required UTC natural dashboard time range. (query, required, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER)", Required: true, Default: "DASHBOARD_TIME_RANGE_UNSPECIFIED", Enum: []string{"DASHBOARD_TIME_RANGE_UNSPECIFIED", "DASHBOARD_TIME_RANGE_TODAY", "DASHBOARD_TIME_RANGE_THIS_WEEK", "DASHBOARD_TIME_RANGE_THIS_MONTH", "DASHBOARD_TIME_RANGE_THIS_QUARTER"}},
 		},
 		Output: runtime.OutputHints{ListPath: "points", DefaultColumns: []string{"time", "totalTokens"}},
 	},
@@ -547,7 +545,7 @@ var Specs = []runtime.CommandSpec{
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/business-value/rated-capacity",
 		Params: []runtime.ParamSpec{
-			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Optional time range for period capacity calculation: (query)", Required: false},
+			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Required UTC natural dashboard period for capacity calculation. (query, required, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER)", Required: true, Default: "DASHBOARD_TIME_RANGE_UNSPECIFIED", Enum: []string{"DASHBOARD_TIME_RANGE_UNSPECIFIED", "DASHBOARD_TIME_RANGE_TODAY", "DASHBOARD_TIME_RANGE_THIS_WEEK", "DASHBOARD_TIME_RANGE_THIS_MONTH", "DASHBOARD_TIME_RANGE_THIS_QUARTER"}},
 		},
 	},
 	{
@@ -629,7 +627,7 @@ var Specs = []runtime.CommandSpec{
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/business-value/value-attribution-module-boosts",
 		Params: []runtime.ParamSpec{
-			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Time range filter: \"today\", \"this-week\", \"this-month\", \"this-quarter\". (query)", Required: false},
+			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Required UTC natural dashboard period for cost attribution. (query, required, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER)", Required: true, Default: "DASHBOARD_TIME_RANGE_UNSPECIFIED", Enum: []string{"DASHBOARD_TIME_RANGE_UNSPECIFIED", "DASHBOARD_TIME_RANGE_TODAY", "DASHBOARD_TIME_RANGE_THIS_WEEK", "DASHBOARD_TIME_RANGE_THIS_MONTH", "DASHBOARD_TIME_RANGE_THIS_QUARTER"}},
 		},
 		Output: runtime.OutputHints{ListPath: "moduleItems", DefaultColumns: []string{"costSavings", "moduleName", "sharePercent"}},
 	},
@@ -1003,6 +1001,17 @@ var Specs = []runtime.CommandSpec{
 		},
 	},
 	{
+		Group:       "ModelMetricsService",
+		Use:         "get-active-model-metrics",
+		Short:       "GetActiveModelMetrics returns active-model counts for a UTC natural time range.",
+		OperationID: "ModelMetricsService_GetActiveModelMetrics",
+		Method:      "GET",
+		PathTpl:     "/apis/crane.io/v1alpha1/model-metrics/active-model-metrics",
+		Params: []runtime.ParamSpec{
+			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Required UTC natural dashboard period. (query, required, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER)", Required: true, Default: "DASHBOARD_TIME_RANGE_UNSPECIFIED", Enum: []string{"DASHBOARD_TIME_RANGE_UNSPECIFIED", "DASHBOARD_TIME_RANGE_TODAY", "DASHBOARD_TIME_RANGE_THIS_WEEK", "DASHBOARD_TIME_RANGE_THIS_MONTH", "DASHBOARD_TIME_RANGE_THIS_QUARTER"}},
+		},
+	},
+	{
 		Group:       "PlatformConfigService",
 		Use:         "get-runtime-mode",
 		Short:       "GetRuntimeMode returns the current deployment runtime mode (csp or ws).",
@@ -1336,7 +1345,7 @@ var Specs = []runtime.CommandSpec{
 		Method:      "GET",
 		PathTpl:     "/apis/crane.io/v1alpha1/user-metrics/registered-users",
 		Params: []runtime.ParamSpec{
-			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Supported values: \"today\", \"this-week\", \"this-month\", \"this-quarter\". (query, required)", Required: true},
+			{Name: "timeRange", Flag: "time-range", In: "query", GoType: "string", Help: "Required UTC natural dashboard period. (query, required, one of: DASHBOARD_TIME_RANGE_UNSPECIFIED|DASHBOARD_TIME_RANGE_TODAY|DASHBOARD_TIME_RANGE_THIS_WEEK|DASHBOARD_TIME_RANGE_THIS_MONTH|DASHBOARD_TIME_RANGE_THIS_QUARTER)", Required: true, Default: "DASHBOARD_TIME_RANGE_UNSPECIFIED", Enum: []string{"DASHBOARD_TIME_RANGE_UNSPECIFIED", "DASHBOARD_TIME_RANGE_TODAY", "DASHBOARD_TIME_RANGE_THIS_WEEK", "DASHBOARD_TIME_RANGE_THIS_MONTH", "DASHBOARD_TIME_RANGE_THIS_QUARTER"}},
 		},
 	},
 }
