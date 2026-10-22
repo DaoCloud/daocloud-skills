@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
+- Pinned tag: `fdb1444c45f1b6daa07b27204906187fb3b72077`
 - Files: `docs/openapi/mcamel/mongodb/mongodb-v0.20.0.json`
-- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
+- Resolved SHA: `fdb1444c45f1b6daa07b27204906187fb3b72077`
 
 ## CloudShellService
 

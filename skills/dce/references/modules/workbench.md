@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
-- Files: `docs/openapi/amamba/v0.132.0.json`
-- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
+- Pinned tag: `fdb1444c45f1b6daa07b27204906187fb3b72077`
+- Files: `docs/openapi/amamba/v0.133.0.json`
+- Resolved SHA: `fdb1444c45f1b6daa07b27204906187fb3b72077`
 
 ## Aggregation
 
@@ -817,7 +817,7 @@ dce amamba applicationservice list-applications --workspace-id <ws> --name my-ap
   - `--search-vendor` (query): SearchVendor filters devices by vendor.
   - `--search-device-uuid` (query): SearchDeviceUUID filters devices by device UUID.
   - `--search-gpu-id` (query): SearchGPUID filters devices by GPU ID.
-- Output: list path `items`; columns `modelName`, `cluster`, `coreUtilization`, `deviceUuid`, `frameBufferMemoryUtilization`, `nodeName`
+- Output: list path `items`; columns `modelName`, `allocatableCore`, `allocatableFrameBufferMemory`, `allocatedCore`, `allocatedFrameBufferMemory`, `cluster`
 
 ### `dce workbench core list-kairship-instance`
 
@@ -3414,6 +3414,7 @@ dce amamba pipelines list-pipelines --workspace-id <ws> --name build- -o json
 - Flags:
   - `--toolchain-id` (path, required, int32): toolchainId
   - `--resource-id` (path, required, int32): resourceId
+- Output: list path `results`; columns `error`, `workspaceId`
 
 ### `dce workbench toolchain admin-create-toolchain-instance`
 
@@ -3504,6 +3505,7 @@ dce amamba pipelines list-pipelines --workspace-id <ws> --name build- -o json
 - Flags:
   - `--toolchain-id` (path, required, int32): toolchainId
   - `--resource-id` (path, required, int32): resourceId
+- Output: list path `results`; columns `error`, `workspaceId`
 
 ### `dce workbench toolchain admin-update-toolchain-instance`
 
@@ -3521,9 +3523,10 @@ dce amamba pipelines list-pipelines --workspace-id <ws> --name build- -o json
 - Auth: required
 - Body: required
 - Flags:
-  - `--workspace-id` (path, required): workspaceId
+  - `--workspace-id` (path, required): single-workspace form; leave empty when workspace_ids is used instead.
   - `--toolchain-id` (path, required, int32): toolchainId
   - `--resource-id` (path, required, int32): resourceId
+- Output: list path `results`; columns `error`, `workspaceId`
 - Example: `dce amamba toolchain bind-toolchain-resources --workspace-id <ws> --resource <id>`
 
 ### `dce workbench toolchain create-toolchain-instance`
@@ -3632,9 +3635,10 @@ dce amamba pipelines list-pipelines --workspace-id <ws> --name build- -o json
 - Auth: required
 - Body: required
 - Flags:
-  - `--workspace-id` (path, required): workspaceId
+  - `--workspace-id` (path, required): single-workspace form; leave empty when workspace_ids is used instead.
   - `--toolchain-id` (path, required, int32): toolchainId
   - `--resource-id` (path, required, int32): resourceId
+- Output: list path `results`; columns `error`, `workspaceId`
 - Example: `dce amamba toolchain unbind-toolchain-resources --workspace-id <ws> --resource <id>`
 
 ### `dce workbench toolchain update-toolchain-instance`

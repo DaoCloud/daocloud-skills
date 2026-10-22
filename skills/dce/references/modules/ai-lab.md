@@ -4,9 +4,9 @@
 
 - Backend: `swagger`
 - Repository: https://github.com/DaoCloud/daocloud-api-docs.git
-- Pinned tag: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
-- Files: `docs/openapi/baize/v0.29.1.json`
-- Resolved SHA: `ceaf84ad18936109ce070f14c2cc281b6a7f5b43`
+- Pinned tag: `fdb1444c45f1b6daa07b27204906187fb3b72077`
+- Files: `docs/openapi/baize/v0.30.0.json`
+- Resolved SHA: `fdb1444c45f1b6daa07b27204906187fb3b72077`
 
 ## AnalysisManagement
 
@@ -176,6 +176,7 @@
   - `--page.page-size` (query, default `20`, int32): 每页数据量，为 -1 时表示查询全部，为 0 时会重置为默认值
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
+  - `--with-used` (query): 是否跳过 PVC 的业务过滤规则。
 - Output: list path `items`; columns `name`, `namespace`, `capacity`, `cluster`, `storageClass`
 
 ### `dce ai-lab clusterservice list-resource-affinities`
@@ -407,6 +408,18 @@ dce ai-lab datasetmanagement list-datasets \
   - `--page.sort` (query): 排序规则，支持字符串和数字类型的字段进行排序
   - `--page.search` (query): 搜索关键字，支持模糊搜索,精准匹配和高级搜索.
 - Output: list path `items`; columns `name`, `namespace`, `status.phase`, `creationTimestamp`, `cluster`, `description`
+
+### `dce ai-lab datasetmanagement preview-dataset-share-access`
+
+- Summary: 需要 Developer 权限：devloper-data-management.get
+- HTTP: `POST /apis/baize.io/v1alpha1/workspaces/{workspace}/clusters/{cluster}/namespaces/{namespace}/datasets/share-capabilities`
+- Auth: required
+- Body: required
+- Flags:
+  - `--workspace` (path, required, int32): Workspace ID
+  - `--cluster` (path, required): cluster
+  - `--namespace` (path, required): namespace
+- Output: list path `workspaces`; columns `allowed`, `maxAccessMode`, `workspaceId`
 
 ### `dce ai-lab datasetmanagement start-dataset-upload`
 
