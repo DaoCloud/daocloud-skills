@@ -37,6 +37,7 @@ commands:
   delete-dataset: *workspace-id-param
   get-dataset: *workspace-id-param
   get-dataset-sync-process: *workspace-id-param
+  preview-dataset-share-access: *workspace-id-param
   update-dataset: *workspace-id-param
   create-inference-serving: *workspace-id-param
   delete-inference-serving: *workspace-id-param

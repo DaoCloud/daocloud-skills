@@ -1088,7 +1088,7 @@ var Specs = []runtime.CommandSpec{
 			{Name: "searchDeviceUuid", Flag: "search-device-uuid", In: "query", GoType: "string", Help: "SearchDeviceUUID filters devices by device UUID. (query)", Required: false},
 			{Name: "searchGpuId", Flag: "search-gpu-id", In: "query", GoType: "string", Help: "SearchGPUID filters devices by GPU ID. (query)", Required: false},
 		},
-		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "cluster", "coreUtilization", "deviceUuid", "frameBufferMemoryUtilization", "nodeName"}},
+		Output:   runtime.OutputHints{ListPath: "items", DefaultColumns: []string{"modelName", "allocatableCore", "allocatableFrameBufferMemory", "allocatedCore", "allocatedFrameBufferMemory", "cluster"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4520,8 +4520,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"RESOURCE_TYPE_UNSPECIFIED", "RESOURCE_TYPE_JIRA_PROJECT", "RESOURCE_TYPE_GITLAB_PROJECT", "RESOURCE_TYPE_SONARQUBE", "RESOURCE_TYPE_TESTLINK_PROJECT", "RESOURCE_TYPE_NEXUS_REPOSITORY"}}, "workspaceId": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"RESOURCE_TYPE_UNSPECIFIED", "RESOURCE_TYPE_JIRA_PROJECT", "RESOURCE_TYPE_GITLAB_PROJECT", "RESOURCE_TYPE_SONARQUBE", "RESOURCE_TYPE_TESTLINK_PROJECT", "RESOURCE_TYPE_NEXUS_REPOSITORY"}}, "workspaceId": &runtime.SchemaSpec{Type: "string", Description: "single-workspace form; leave empty when workspace_ids is used instead.\nOnly the admin interface accepts the batch form."}, "workspaceIds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
+		Output:   runtime.OutputHints{ListPath: "results", DefaultColumns: []string{"error", "workspaceId"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4652,8 +4653,9 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"RESOURCE_TYPE_UNSPECIFIED", "RESOURCE_TYPE_JIRA_PROJECT", "RESOURCE_TYPE_GITLAB_PROJECT", "RESOURCE_TYPE_SONARQUBE", "RESOURCE_TYPE_TESTLINK_PROJECT", "RESOURCE_TYPE_NEXUS_REPOSITORY"}}, "workspaceId": &runtime.SchemaSpec{Type: "string"}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"RESOURCE_TYPE_UNSPECIFIED", "RESOURCE_TYPE_JIRA_PROJECT", "RESOURCE_TYPE_GITLAB_PROJECT", "RESOURCE_TYPE_SONARQUBE", "RESOURCE_TYPE_TESTLINK_PROJECT", "RESOURCE_TYPE_NEXUS_REPOSITORY"}}, "workspaceId": &runtime.SchemaSpec{Type: "string", Description: "single-workspace form; leave empty when workspace_ids is used instead.\nOnly the admin interface accepts the batch form."}, "workspaceIds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
+		Output:   runtime.OutputHints{ListPath: "results", DefaultColumns: []string{"error", "workspaceId"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4681,14 +4683,15 @@ var Specs = []runtime.CommandSpec{
 		Method:      "POST",
 		PathTpl:     "/apis/pipeline.amamba.io/v1alpha1/workspaces/{workspaceId}/toolchains/{toolchainId}/resources/{resourceId}:bind",
 		Params: []runtime.ParamSpec{
-			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
+			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "single-workspace form; leave empty when workspace_ids is used instead. (path, required)", Required: true},
 			{Name: "toolchainId", Flag: "toolchain-id", In: "path", GoType: "string", Help: "toolchainId (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "resourceId", Flag: "resource-id", In: "path", GoType: "string", Help: "resourceId (path, required, int32)", Required: true, Format: "int32"},
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"RESOURCE_TYPE_UNSPECIFIED", "RESOURCE_TYPE_JIRA_PROJECT", "RESOURCE_TYPE_GITLAB_PROJECT", "RESOURCE_TYPE_SONARQUBE", "RESOURCE_TYPE_TESTLINK_PROJECT", "RESOURCE_TYPE_NEXUS_REPOSITORY"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"RESOURCE_TYPE_UNSPECIFIED", "RESOURCE_TYPE_JIRA_PROJECT", "RESOURCE_TYPE_GITLAB_PROJECT", "RESOURCE_TYPE_SONARQUBE", "RESOURCE_TYPE_TESTLINK_PROJECT", "RESOURCE_TYPE_NEXUS_REPOSITORY"}}, "workspaceIds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
+		Output:   runtime.OutputHints{ListPath: "results", DefaultColumns: []string{"error", "workspaceId"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4839,14 +4842,15 @@ var Specs = []runtime.CommandSpec{
 		Method:      "POST",
 		PathTpl:     "/apis/pipeline.amamba.io/v1alpha1/workspaces/{workspaceId}/toolchains/{toolchainId}/resources/{resourceId}:unbind",
 		Params: []runtime.ParamSpec{
-			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "workspaceId (path, required)", Required: true},
+			{Name: "workspaceId", Flag: "workspace-id", In: "path", GoType: "string", Help: "single-workspace form; leave empty when workspace_ids is used instead. (path, required)", Required: true},
 			{Name: "toolchainId", Flag: "toolchain-id", In: "path", GoType: "string", Help: "toolchainId (path, required, int32)", Required: true, Format: "int32"},
 			{Name: "resourceId", Flag: "resource-id", In: "path", GoType: "string", Help: "resourceId (path, required, int32)", Required: true, Format: "int32"},
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"RESOURCE_TYPE_UNSPECIFIED", "RESOURCE_TYPE_JIRA_PROJECT", "RESOURCE_TYPE_GITLAB_PROJECT", "RESOURCE_TYPE_SONARQUBE", "RESOURCE_TYPE_TESTLINK_PROJECT", "RESOURCE_TYPE_NEXUS_REPOSITORY"}}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"type": &runtime.SchemaSpec{Type: "string", Enum: []string{"RESOURCE_TYPE_UNSPECIFIED", "RESOURCE_TYPE_JIRA_PROJECT", "RESOURCE_TYPE_GITLAB_PROJECT", "RESOURCE_TYPE_SONARQUBE", "RESOURCE_TYPE_TESTLINK_PROJECT", "RESOURCE_TYPE_NEXUS_REPOSITORY"}}, "workspaceIds": &runtime.SchemaSpec{Type: "array", Items: &runtime.SchemaSpec{Type: "string"}}}},
 		},
+		Output:   runtime.OutputHints{ListPath: "results", DefaultColumns: []string{"error", "workspaceId"}},
 		Security: &runtime.SecurityHint{},
 	},
 	{
@@ -4878,7 +4882,7 @@ var Specs = []runtime.CommandSpec{
 		},
 		RequestBody: &runtime.RequestBody{
 			Required: true,
-			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"atomic": &runtime.SchemaSpec{Type: "boolean"}, "charts": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "chartName": &runtime.SchemaSpec{Type: "string"}, "releaseName": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "debug": &runtime.SchemaSpec{Type: "boolean"}, "deployTarget": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "repo": &runtime.SchemaSpec{Type: "string"}, "wait": &runtime.SchemaSpec{Type: "boolean", Description: "If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful. It will wait for as long as timeout."}}},
+			Schema:   &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"atomic": &runtime.SchemaSpec{Type: "boolean"}, "charts": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"annotations": &runtime.SchemaSpec{Type: "object", AdditionalProperties: &runtime.AdditionalPropertiesSpec{Schema: &runtime.SchemaSpec{Type: "string"}}}, "chartName": &runtime.SchemaSpec{Type: "string"}, "releaseName": &runtime.SchemaSpec{Type: "string"}, "values": &runtime.SchemaSpec{Type: "string"}, "version": &runtime.SchemaSpec{Type: "string"}}}, "debug": &runtime.SchemaSpec{Type: "boolean"}, "deployTarget": &runtime.SchemaSpec{Type: "object", Properties: map[string]*runtime.SchemaSpec{"cluster": &runtime.SchemaSpec{Type: "string"}, "namespace": &runtime.SchemaSpec{Type: "string"}}}, "repo": &runtime.SchemaSpec{Type: "string"}, "timeout": &runtime.SchemaSpec{Type: "string", Description: "Time to wait for any individual Kubernetes operation (like Jobs for hooks).\nEmpty means use kpanda default (5m0s)."}, "wait": &runtime.SchemaSpec{Type: "boolean", Description: "If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful. It will wait for as long as timeout."}}},
 		},
 		Security: &runtime.SecurityHint{},
 	},
