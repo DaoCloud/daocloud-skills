@@ -129,6 +129,9 @@ jobs:
   publish-npm:
     needs: checksum
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -136,8 +139,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest
 
       - name: Get version
         id: version
@@ -162,9 +168,8 @@ jobs:
       - name: Publish to npm
         working-directory: npm
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TAG: ${{ github.event.release.prerelease && 'next' || 'latest' }}
-        run: npm publish --access public --tag "$NPM_TAG"
+        run: npm publish --access public --provenance --tag "$NPM_TAG"
 
   docker:
     runs-on: ubuntu-latest
